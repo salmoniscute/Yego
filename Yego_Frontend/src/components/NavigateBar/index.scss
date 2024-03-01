@@ -1,0 +1,63 @@
+#navigateBar {
+    position: relative;
+    height: 4.25rem;
+    width: calc(90vw);
+    max-width: calc(1200px);
+    margin: 0;
+    padding: 0.95rem max(5vw, calc(50vw - 600px));
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    z-index: 1;
+    justify-content: space-between;
+
+    background-color: #F5F5F5; 
+
+    .rightButton{
+        display: flex;
+
+        .dropdownMenu {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 8px 5px;
+            background-color: #ccc;
+            position: relative;
+            white-space: nowrap; 
+            width: 130px;
+            justify-content: center;
+            margin-right: 20px;
+
+            > div {
+                font-weight: bold;
+            }
+            .icon{
+                padding: 0px 10px;
+            }
+
+            .dropdownContent {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ccc;
+
+                div {
+                    padding: 8px 12px;
+                    cursor: pointer;
+                    text-align: center;
+                }
+            }
+        }
+
+        .loginButton{
+            text-decoration: none;
+            background-color: #ccc;
+            color: #000;
+            font-weight: bold;
+            align-items: center;
+            padding: 8px 20px;
+        }
+    }
+
+}
