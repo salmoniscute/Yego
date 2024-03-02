@@ -13,6 +13,11 @@
 
     background-color: #F5F5F5; 
 
+    .leftLogo{
+        font-size: x-large;
+        font-weight: 600;
+    }
+
     .rightButton{
         display: flex;
 
@@ -20,11 +25,11 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 8px 5px;
+            padding: 0.5em 0.5em;
             background-color: #ccc;
             position: relative;
             white-space: nowrap; 
-            width: 130px;
+            width: 8em;
             justify-content: center;
             margin-right: 20px;
 
@@ -32,7 +37,7 @@
                 font-weight: bold;
             }
             .icon{
-                padding: 0px 10px;
+                padding: 0px 0.6em;
             }
 
             .dropdownContent {

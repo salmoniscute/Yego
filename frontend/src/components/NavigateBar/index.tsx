@@ -12,7 +12,7 @@ export default function NavigateBar(): React.ReactElement {
     return (
         <div id="navigateBar">
             <div className="leftLogo">
-                <p>Yego</p>
+                <p>YEGO</p>
             </div>
             <div className="rightButton">
                 <div className="dropdownMenu" onClick={() => {setOpenStatus(!openStatus)}}>
