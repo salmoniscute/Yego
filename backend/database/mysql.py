@@ -3,9 +3,9 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.schema import CreateTable
 
-from models.user import (
-    User
-)
+from models.user import User
+from models.course import Course
+
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -14,10 +14,6 @@ engine = create_async_engine(
 )
 
 SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False, autocommit=False)
-
-
-class Base(DeclarativeBase):
-    pass
 
 
 @asynccontextmanager
@@ -31,6 +27,7 @@ async def init_db():
     async with SessionLocal() as db:
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Course.__table__, if_not_exists=True))
 
 
 async def close_db():
