@@ -58,7 +58,7 @@ async def get_user(uid: str) -> dict:
     if user:
         return user
     
-    raise HTTPException(status_code=404, detail="User does not exists")
+    raise HTTPException(status_code=404, detail="User does not exist")
 
     
 @router.put(
