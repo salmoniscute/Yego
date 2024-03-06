@@ -10,6 +10,9 @@ on:
 jobs:
   deploy-react-to-gh-pages:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     permissions:
       contents: write
     env:
