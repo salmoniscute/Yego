@@ -1,44 +1,67 @@
 import {
+    CSSProperties,
+    Dispatch,
     ReactElement,
+    SetStateAction,
+    useCallback,
+    useContext,
+    useMemo,
     useState
 } from "react";
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretUp, faCaretDown, faGlobe } from "@fortawesome/free-solid-svg-icons";
-
 import "./index.scss";
+import getText, { localMap } from "utils/getText";
+import languageContext from "context/language";
 
-export default function NavigateBar(): ReactElement {
-    const [openStatus, setOpenStatus] = useState<boolean>(false);
-    const [language, setLanguage] = useState<string>("正體中文");
+type propsType = Readonly<{
+    setLanguage: Dispatch<SetStateAction<string>>,
+}>;
+
+export default function NavigateBar(props: propsType): ReactElement {
+    const { setLanguage } = props;
+
+    const languageCode = useContext(languageContext);
+
+    const getTextWrap = useCallback((id: string) => {
+        return getText(id, languageCode);
+    }, [getText, languageCode]);
+
+    const languageList: Array<string> = useMemo(
+        () => Object.keys(localMap).map(
+            key => getText("current_language", key)
+        ),
+        [localMap]
+    );
+    const changeLanguage: Array<() => void> = useMemo(
+        () => Object.keys(localMap).map(
+            key => () => setLanguage(key)
+        ),
+        [localMap]
+    );
+
     return (
         <div id="navigateBar">
-            <div className="leftLogo">
-                <p>YEGO</p>
+            <div className="logo">
+                <h1>YEGO</h1>
             </div>
-            <div className="rightButton">
-                <div className="dropdownMenu" onClick={() => { setOpenStatus(!openStatus) }}>
-                    <FontAwesomeIcon icon={faGlobe} className="icon" />
-                    <div>{language}</div>
-                    {openStatus ? <FontAwesomeIcon icon={faCaretUp} className="icon" /> : <FontAwesomeIcon icon={faCaretDown} className="icon" />}
-                    {openStatus && (
-                        <div className="dropdownContent">
-                            {language === "正體中文" ? (
-                                <div onClick={() => {
-                                    setLanguage("English");
-                                }}>English</div>
-                            ) : (
-                                <div onClick={() => {
-                                    setLanguage("正體中文");
-                                }}>正體中文</div>
-                            )}
-                        </div>
-                    )}
+            <label className="dropdownMenu">
+                <input type="checkbox" />
+                <div className="ms">language</div>
+                <div className="body-bold">{getTextWrap("current_language")}</div>
+                <div className="ms dropDown">arrow_drop_down</div>
+                <div className="mask" style={{ "--length": languageList.length } as CSSProperties}>
+                    <div className="content body-bold">
+                        {
+                            languageList.map((name, i) => <div
+                                key={i}
+                                onClick={changeLanguage[i]}
+                            ><p>{name}</p></div>)
+                        }
+                    </div>
                 </div>
-
-                <Link className="loginButton" to={"/"} >登入</Link>
-            </div>
+            </label>
+            <Link className="loginButton body-bold" to={"/login"} >{getTextWrap("login")}</Link>
         </div>
     );
 }

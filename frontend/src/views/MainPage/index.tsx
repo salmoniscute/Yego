@@ -2,6 +2,7 @@ import {
     Dispatch,
     ReactElement,
     SetStateAction,
+    useCallback,
     useContext,
     useEffect,
     useState
@@ -24,6 +25,7 @@ import getText from "utils/getText";
 
 import "./index.scss";
 import { getDueAssignments } from "api/assignment";
+import languageContext from "context/language";
 
 interface HelpInfo {
     id: string,
@@ -64,7 +66,13 @@ export default function MainPage(props: propsType): ReactElement {
     const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
 
+    const languageCode = useContext(languageContext);
     const userData = useContext(userDataContext);
+
+    const getTextWrap = useCallback((id: string) => {
+        return getText(id, languageCode);
+    }, [getText, languageCode]);
+
 
     useEffect(() => {
         if (userData === null) {
@@ -88,12 +96,12 @@ export default function MainPage(props: propsType): ReactElement {
         getDueAssignments().then(data => {
             setDueAssignment(data);
         });
-    }, []);
+    }, [setWebAnnouncementList, userData]);
 
     return userData === null ? <Navigate to="/" /> : <div id="mainPage">
         <div className="main">
             <div className="webAnnouncement">
-                <h2>{getText("website_announcement")}</h2>
+                <h2>{getTextWrap("website_announcement")}</h2>
                 <div className="content body-bold">
                     {
                         webAnnouncementList.map(data => <div
@@ -110,11 +118,11 @@ export default function MainPage(props: propsType): ReactElement {
                     }
                 </div>
                 <div className="seeMore">
-                    <Link to="" >{getText("see_more")}</Link>
+                    <Link to="" >{getTextWrap("see_more")}</Link>
                 </div>
             </div>
             <div className="currentCourse">
-                <h2>{getText("this_semester_courses")}</h2>
+                <h2>{getTextWrap("this_semester_courses")}</h2>
                 <div className="content body">
                     {
                         currentCourse.map(data => <div
@@ -127,7 +135,7 @@ export default function MainPage(props: propsType): ReactElement {
                 </div>
             </div>
             <div className="pastCourse">
-                <h2>{getText("past_courses")}</h2>
+                <h2>{getTextWrap("past_courses")}</h2>
                 <div className="content body">
                     {
                         pastCourse.map(data => <div
@@ -142,7 +150,7 @@ export default function MainPage(props: propsType): ReactElement {
         </div>
         {
             userData.role === "student" ? <div className="side">
-                <h2>{getText("assignments_due_soon")}</h2>
+                <h2>{getTextWrap("assignments_due_soon")}</h2>
                 <div className="content">
                     {
                         dueAssignment.map(data => <Link
@@ -154,7 +162,7 @@ export default function MainPage(props: propsType): ReactElement {
                         </Link>)
                     }
                 </div>
-                <h2>{getText("platform_friendly_area")}</h2>
+                <h2>{getTextWrap("platform_friendly_area")}</h2>
                 <div className="content">
                     {
                         HelpList.map(data => <Link
@@ -167,7 +175,7 @@ export default function MainPage(props: propsType): ReactElement {
                     }
                 </div>
             </div> : <div className="side">
-                <h2>{getText("teacher_ta_friendly_area")}</h2>
+                <h2>{getTextWrap("teacher_ta_friendly_area")}</h2>
                 <div className="content">
                     {
                         HelpList.map(data => <Link

@@ -1,0 +1,33 @@
+#sideBar {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    width: 15rem;
+    height: 40rem;
+    .mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        transition-property:
+            height,
+            width,
+            border-radius;
+        transition-duration: 0.3s;
+    }
+}
+#sideBar[data-show=false] {
+    .mask {
+        height: 0%;
+        width: 100%;
+        border-radius: 100% 0 0 100%;
+    }
+}
+#sideBar[data-show=true] {
+    .mask {
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+    }
+}

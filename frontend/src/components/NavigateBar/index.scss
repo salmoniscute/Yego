@@ -1,68 +1,92 @@
 #navigateBar {
     position: relative;
-    height: 4.25rem;
-    width: calc(90vw);
-    max-width: calc(1200px);
-    margin: 0;
-    padding: 0.95rem max(5vw, calc(50vw - 600px));
+    width: calc(100% - min(10%, 8rem));
     display: flex;
+    padding-left: min(10%, 8rem);
     align-items: center;
-    gap: 2.5rem;
-    z-index: 1;
-    justify-content: space-between;
-
-    background-color: #F5F5F5; 
-
-    .leftLogo{
-        font-size: x-large;
-        font-weight: 600;
-    }
-
-    .rightButton{
+    gap: 1.5rem;
+    z-index: 10;
+    background-color: #f0f0f0;
+    label.dropdownMenu {
+        position: relative;
         display: flex;
-
-        .dropdownMenu {
+        justify-content: space-between;
+        gap: 0.5rem;
+        height: 3rem;
+        width: 8rem;
+        line-height: 3rem;
+        padding: 0 0.8rem;
+        background-color: #cecece;
+        text-align: center;
+        > * {
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0.5em 0.5em;
-            background-color: #ccc;
-            position: relative;
-            white-space: nowrap; 
-            width: 8em;
-            justify-content: center;
-            margin-right: 20px;
-
-            > div {
-                font-weight: bold;
-            }
-            .icon{
-                padding: 0px 0.6em;
-            }
-
-            .dropdownContent {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #ccc;
-
-                div {
-                    padding: 8px 12px;
-                    cursor: pointer;
-                    text-align: center;
+        }
+        .dropDown {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        input {
+            display: none;
+        }
+        .mask {
+            position: absolute;
+            top: 100%;
+            left: 0%;
+            width: 100%;
+            background-color: #fff;
+            overflow: hidden;
+            transition: height 0.3s;
+            cursor: default;
+            .content {
+                > div {
+                    transition: background-color 0.3s;
+                    p {
+                        margin: 0 auto;
+                        width: fit-content;
+                        color: #949494;
+                        cursor: pointer;
+                        transition: color 0.3s;
+                    }
+                }
+                > div:has(p:hover) {
+                    background-color: #cecece;
+                    p {
+                        color: #000;
+                    }
                 }
             }
         }
-
-        .loginButton{
-            text-decoration: none;
-            background-color: #ccc;
-            color: #000;
-            font-weight: bold;
-            align-items: center;
-            padding: 8px 20px;
+    }
+    label.dropdownMenu:has(input:not(:checked)) {
+        .mask {
+            height: 0;
+        }
+        .dropDown {
+            transform: rotate(0deg);
         }
     }
+    label.dropdownMenu:has(input:checked) {
+        .mask {
+            height: calc(3rem * var(--length));
+        }
+        .dropDown {
+            transform: rotate(180deg);
+        }
+    }
+}
 
+#navigateBar:has(.loginButton) {
+    .logo {
+        margin-right: auto;
+    }
+    .loginButton {
+        margin-right: 1.5rem;
+        height: 3rem;
+        width: 5.5rem;
+        text-align: center;
+        line-height: 3rem;
+        color: #000;
+        background-color: #cecece;
+        text-decoration: none;
+    }
 }

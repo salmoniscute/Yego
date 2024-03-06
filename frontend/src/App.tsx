@@ -12,18 +12,20 @@ import {
     useLocation
 } from "react-router-dom";
 
+import { User } from "./schemas/user";
+import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
+
 import userDataContext from "./context/userData";
+import languageContext from "context/language";
 
 import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
 import MainPage from "./views/MainPage";
-import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
-import { User } from "./schemas/user";
 
 
 export default function App(): ReactElement {
-    // 網站公告清單
     const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
+    const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
 
     const location = useLocation();
 
@@ -38,17 +40,19 @@ export default function App(): ReactElement {
 
     return (
         <userDataContext.Provider value={userData}>
-            <div id="app">
-                <NavigateBar />
-                <Routes>
-                    <Route path="/" element={<MainPage
-                        webAnnouncementList={webAnnouncementList}
-                        setWebAnnouncementList={setWebAnnouncementList}
-                    />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-                <Footer />
-            </div>
+            <languageContext.Provider value={language}>
+                <div id="app">
+                    <NavigateBar setLanguage={setLanguage} />
+                    <Routes>
+                        <Route path="/" element={<MainPage
+                            webAnnouncementList={webAnnouncementList}
+                            setWebAnnouncementList={setWebAnnouncementList}
+                        />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                    <Footer />
+                </div>
+            </languageContext.Provider>
         </userDataContext.Provider>
     );
 }
