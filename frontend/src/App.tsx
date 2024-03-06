@@ -1,22 +1,54 @@
-import { ReactElement } from "react";
-import { Routes } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import {
+    ReactElement,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
+import {
+    Navigate,
+    Route,
+    Routes,
+    useLocation
+} from "react-router-dom";
+
+import userDataContext from "./context/userData";
 
 import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
-import CourseForum from "./components/CourseForum";
+import MainPage from "./views/MainPage";
+import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
+import { User } from "./schemas/user";
+
 
 export default function App(): ReactElement {
-    return (
-        <div id="app">
-            <NavigateBar />
-            
-            {/* for test  不需要的話可以助解掉*/}
-            <CourseForum crouseID=""/> 
-            
-            <Routes>
+    // 網站公告清單
+    const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
 
-            </Routes>
-            <Footer />
-        </div>
+    const location = useLocation();
+
+    const token = localStorage.getItem("access_token");
+    const userData = useMemo(() => {
+        try {
+            return token === null ? null : jwtDecode(token) as User;
+        }
+        catch { }
+        return null;
+    }, [token]);
+
+    return (
+        <userDataContext.Provider value={userData}>
+            <div id="app">
+                <NavigateBar />
+                <Routes>
+                    <Route path="/" element={<MainPage
+                        webAnnouncementList={webAnnouncementList}
+                        setWebAnnouncementList={setWebAnnouncementList}
+                    />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+                <Footer />
+            </div>
+        </userDataContext.Provider>
     );
 }
