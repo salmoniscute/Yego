@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./index.scss";
-import UserIcon from "../../assets/testUser.png"
 
 import { MdPushPin , MdOutlinePushPin} from "react-icons/md";
 type propsType = Readonly<{
@@ -11,6 +10,8 @@ type propsType = Readonly<{
     cbAuthorID : string,
     cbTime : string,
 }>;
+
+const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 export default function CourseBulletin(props:propsType): React.ReactElement {
 

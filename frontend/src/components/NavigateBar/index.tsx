@@ -1,12 +1,15 @@
-import React ,{useState} from "react";
+import {
+    ReactElement,
+    useState
+} from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretUp,faCaretDown,faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faCaretDown, faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 import "./index.scss";
 
-export default function NavigateBar(): React.ReactElement {
+export default function NavigateBar(): ReactElement {
     const [openStatus, setOpenStatus] = useState<boolean>(false);
     const [language, setLanguage] = useState<string>("正體中文");
     return (
@@ -15,10 +18,10 @@ export default function NavigateBar(): React.ReactElement {
                 <p>YEGO</p>
             </div>
             <div className="rightButton">
-                <div className="dropdownMenu" onClick={() => {setOpenStatus(!openStatus)}}>
-                    <FontAwesomeIcon icon={faGlobe} className="icon"/>
+                <div className="dropdownMenu" onClick={() => { setOpenStatus(!openStatus) }}>
+                    <FontAwesomeIcon icon={faGlobe} className="icon" />
                     <div>{language}</div>
-                    {openStatus ? <FontAwesomeIcon icon={faCaretUp} className="icon"/> : <FontAwesomeIcon icon={faCaretDown} className="icon"/>}
+                    {openStatus ? <FontAwesomeIcon icon={faCaretUp} className="icon" /> : <FontAwesomeIcon icon={faCaretDown} className="icon" />}
                     {openStatus && (
                         <div className="dropdownContent">
                             {language === "正體中文" ? (
@@ -33,7 +36,7 @@ export default function NavigateBar(): React.ReactElement {
                         </div>
                     )}
                 </div>
-                
+
                 <Link className="loginButton" to={"/"} >登入</Link>
             </div>
         </div>
