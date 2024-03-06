@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.course import CourseCrudManager
 from schemas import course as CourseSchema
 from .depends import check_course_id
+from auth.jwt import create_jwt
 
 CourseCrud = CourseCrudManager()
 router = APIRouter(
@@ -19,15 +20,12 @@ async def create_course(newCourse: CourseSchema.CourseCreate):
     """
     Create a user with the following information:
     - **course_id**
-    - **password**
+    - **teacher**
+    - **course_code**
+    - **academic_year**
+    - **semester**
     - **name**
-    - **role**
-    - **email**
-    - **department**
-    - **country**
-    - **introduction** (optional)
-    - **avatar** (optional)
-    
+    - **outline**
     """
     
     
@@ -42,14 +40,14 @@ async def create_course(newCourse: CourseSchema.CourseCreate):
 
 @router.get(
     "/course", 
-    response_model=CourseSchema.CourseRead,
     response_description="Get a couse",  
 )
 async def get_course(course_id: str = None):
 
     course = await CourseCrud.get_course_by_id(course_id)
+    
     if course:
-        return course
+        return create_jwt(course)
     raise HTTPException(status_code=404, detail=f"Course doesn't exist")
     
 

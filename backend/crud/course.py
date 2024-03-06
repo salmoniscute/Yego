@@ -24,7 +24,6 @@ class CourseCrudManager:
         return course
 
     async def get_course_by_id(self, course_id: str, db_session: AsyncSession):
-        print("before select")
         stmt = select(
             CourseModel.course_id,
             CourseModel.teacher,
@@ -36,7 +35,6 @@ class CourseCrudManager:
         ).where(CourseModel.course_id == course_id)
         result = await db_session.execute(stmt)
         course = result.first()
-        print("after select")
         if course:
             return course
         
