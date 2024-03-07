@@ -5,12 +5,17 @@ from uvicorn import Config, Server
 from config import HOST, PORT
 
 from .routers import (
-    info_router
+    info_router,
+    user_router,
+    course_router
 )
 
 app = FastAPI()
 
 app.include_router(info_router)
+app.include_router(user_router)
+app.include_router(course_router)
+
 
 origins = [
     "http://localhost:3000",
