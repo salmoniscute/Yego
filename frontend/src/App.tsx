@@ -20,6 +20,8 @@ import MainPage from "./views/MainPage";
 import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
 import { User } from "./schemas/user";
 
+import CourseForum from "components/CourseForum";
+
 
 export default function App(): ReactElement {
     // 網站公告清單
@@ -44,6 +46,9 @@ export default function App(): ReactElement {
                     <Route path="/" element={<MainPage
                         webAnnouncementList={webAnnouncementList}
                         setWebAnnouncementList={setWebAnnouncementList}
+                    />} />
+                    <Route path="/salmontest" element={<CourseForum
+                        courseID=""
                     />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

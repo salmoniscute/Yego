@@ -1,8 +1,17 @@
-import React from "react";
+import {
+    useEffect,
+    useState
+} from "react";
 import { Link } from "react-router-dom";
 
 import "./index.scss";
-import CourseBulletin from "../CourseBulletin";
+import { MdPushPin , MdOutlinePushPin} from "react-icons/md";
+
+import { CourseBulletinInfo } from "schemas/courseBulletin";
+
+import { getCourseBulletinList } from "api/courseBulletin";
+
+const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 type propsType = Readonly<{
     courseID:string
@@ -14,11 +23,40 @@ export default function CourseBulletinPage(props:propsType): React.ReactElement 
 
     } = props;
 
+    const [courseBulletinList,setCourseBulletin] =  useState<Array<CourseBulletinInfo>>([]);
+
+    useEffect(()=>{
+        console.log("hi");
+        getCourseBulletinList().then(data =>{
+            setCourseBulletin(data);
+        });
+    },[]);
+
     return (
         <div id="courseBulletinPage">
             <p>課程公告</p>
-            <CourseBulletin cbName="老師今天身體不適，所以今天不上課。" cbAuthorID="pinky" cbInfor="hello" cbTime="2024/1/1"/>
-            <CourseBulletin cbName="老師今天身體不適，所以今天不上課。" cbAuthorID="pinky" cbInfor="hello" cbTime="2024/1/1"/>
+
+            <div className="courseBulletin">
+                {
+                    courseBulletinList.map(data =>
+                    <div className = "courseBulletinContent">
+                        <div className="cbPin">
+                            <MdOutlinePushPin/>
+                        </div>
+                        <div className="cb">
+                            <p className="cbTitle">{data.title}</p>
+                            <div className="cbContent">
+                                <img src={UserIcon}/>
+                                <div>
+                                    <p className="cbAuther">{data.publisher}</p>
+                                    <p className="cbTime">{data.release_time}</p>
+                                    <p className="cbInfor">{data.content}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>)
+                }
+            </div>
         </div>
     );
 }
