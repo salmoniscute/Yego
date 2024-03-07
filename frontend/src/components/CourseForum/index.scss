@@ -26,11 +26,11 @@
 
     .forumCategory{
         display: flex;
-        margin: 3em 9em;
+        justify-content: space-around;
+        margin: 3em;
         white-space: nowrap;
         div{
             cursor: pointer;
-            margin-right: 7em;
             font-size: large;
             font-weight: 600;
         }

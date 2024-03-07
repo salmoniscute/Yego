@@ -26,7 +26,6 @@ export default function CourseBulletinPage(props:propsType): React.ReactElement 
     const [courseBulletinList,setCourseBulletin] =  useState<Array<CourseBulletinInfo>>([]);
 
     useEffect(()=>{
-        console.log("hi");
         getCourseBulletinList().then(data =>{
             setCourseBulletin(data);
         });
