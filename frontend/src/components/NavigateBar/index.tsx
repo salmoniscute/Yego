@@ -1,44 +1,90 @@
 import {
+    CSSProperties,
+    Dispatch,
     ReactElement,
-    useState
+    SetStateAction,
+    useContext,
+    useMemo,
 } from "react";
 import { Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretUp, faCaretDown, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { AssignmentInfo } from "schemas/assignment";
+import { Course } from "schemas/course";
+
+import functionContext from "context/function";
+import userDataContext from "context/userData";
+
+import SideBar from "components/SideBar";
+
+import getTextOrigin, { localMap } from "utils/getText";
 
 import "./index.scss";
 
-export default function NavigateBar(): ReactElement {
-    const [openStatus, setOpenStatus] = useState<boolean>(false);
-    const [language, setLanguage] = useState<string>("正體中文");
+type propsType = Readonly<{
+    setLanguage: Dispatch<SetStateAction<string>>,
+    dueAssignment: Array<AssignmentInfo>,
+    currentCourse: Array<Course>,
+}>;
+
+export default function NavigateBar(props: propsType): ReactElement {
+    const {
+        setLanguage,
+        dueAssignment,
+        currentCourse,
+    } = props;
+
+    const {
+        getText
+    } = useContext(functionContext);
+    const userData = useContext(userDataContext);
+
+    const languageList: Array<string> = useMemo(
+        () => Object.keys(localMap).map(
+            key => getTextOrigin("current_language", key)
+        ), []
+    );
+    const changeLanguage: Array<() => void> = useMemo(
+        () => Object.keys(localMap).map(
+            key => () => setLanguage(key)
+        ), [setLanguage]
+    );
+
     return (
         <div id="navigateBar">
-            <div className="leftLogo">
-                <p>YEGO</p>
+            <div className="logo">
+                <h1>YEGO</h1>
             </div>
-            <div className="rightButton">
-                <div className="dropdownMenu" onClick={() => { setOpenStatus(!openStatus) }}>
-                    <FontAwesomeIcon icon={faGlobe} className="icon" />
-                    <div>{language}</div>
-                    {openStatus ? <FontAwesomeIcon icon={faCaretUp} className="icon" /> : <FontAwesomeIcon icon={faCaretDown} className="icon" />}
-                    {openStatus && (
-                        <div className="dropdownContent">
-                            {language === "正體中文" ? (
-                                <div onClick={() => {
-                                    setLanguage("English");
-                                }}>English</div>
-                            ) : (
-                                <div onClick={() => {
-                                    setLanguage("正體中文");
-                                }}>正體中文</div>
-                            )}
-                        </div>
-                    )}
+            <label className="dropdownMenu">
+                <input type="checkbox" />
+                <div className="ms">language</div>
+                <div className="body-bold">{getText("current_language")}</div>
+                <div className="ms dropDown">arrow_drop_down</div>
+                <div className="mask" style={{ "--length": languageList.length } as CSSProperties}>
+                    <div className="content body-bold">
+                        {
+                            languageList.map((name, i) => <div
+                                key={i}
+                                onClick={changeLanguage[i]}
+                            ><p>{name}</p></div>)
+                        }
+                    </div>
                 </div>
-
-                <Link className="loginButton" to={"/"} >登入</Link>
-            </div>
+            </label>
+            {
+                userData === null ? <Link
+                    className="loginButton body-bold"
+                    to={"/login"} >
+                    {getText("login")}
+                </Link> : <div className="notification">
+                    <p className="ms">notifications</p>
+                </div>
+            }
+            {
+                userData === null ? undefined : <SideBar
+                    dueAssignment={dueAssignment}
+                    currentCourse={currentCourse}
+                />
+            }
         </div>
     );
 }

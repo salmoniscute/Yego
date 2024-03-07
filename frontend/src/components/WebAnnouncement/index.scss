@@ -1,0 +1,33 @@
+.webAnnouncement {
+    h2 {
+        margin: 1.25em 0;
+        user-select: none;
+    }
+    .content {
+        flex-direction: column;
+        gap: 0.5rem;
+        overflow: hidden;
+        .block {
+            width: calc(100% - 2rem);
+            svg {
+                height: 1rem;
+                margin: 0 0.25rem;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+    }
+    .seeMore {
+        margin: 0.75rem 0;
+        display: flex;
+        justify-content: right;
+        a {
+            color: #949494;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #000;
+        }
+    }
+}
