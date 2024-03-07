@@ -1,7 +1,6 @@
 #footer {
-    width: calc(100% - 10vw);
+    width: calc(100% - max(10vw, 100vw - 1200px));
     position: relative;
-    width: calc(90vw);
     max-width: calc(1200px);
     margin: 0;
     height: 8rem;
@@ -9,39 +8,37 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: #F5F5F5; 
+    background-color: #f5f5f5;
 
     padding: 0.95rem max(5vw, calc(50vw - 600px));
 
-    .leftFooter{
-        margin:20px 0px;
-        h6{
+    .leftFooter {
+        margin: 20px 0px;
+        h6 {
             margin-top: 0px;
             margin-bottom: 15px;
         }
-        p{
+        p {
             font-size: 14px;
             margin: 2px 0px;
         }
     }
 
-    .rightFooter{
-        p{
-            margin:2px 0px;
+    .rightFooter {
+        p {
+            margin: 2px 0px;
             font-size: 14px;
         }
-        > p{
+        > p {
             font-weight: bold;
             font-size: large;
-            margin:5px 0px;
+            margin: 5px 0px;
         }
-        a{
-            text-decoration:none;
+        a {
+            text-decoration: none;
             color: black;
-            margin:3px 0px;
+            margin: 3px 0px;
             font-size: 14px;
         }
-        
     }
-    
 }

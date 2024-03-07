@@ -1,5 +1,6 @@
 #navigateBar {
     position: relative;
+    height: 5.5rem;
     width: calc(100% - min(10%, 8rem));
     display: flex;
     padding-left: min(10%, 8rem);
@@ -7,6 +8,9 @@
     gap: 1.5rem;
     z-index: 10;
     background-color: #f0f0f0;
+    h1 {
+        margin: 0;
+    }
     label.dropdownMenu {
         position: relative;
         display: flex;
@@ -88,5 +92,23 @@
         color: #000;
         background-color: #cecece;
         text-decoration: none;
+    }
+}
+
+#navigateBar:not(:has(.loginButton)) {
+    .dropdownMenu {
+        margin-right: auto;
+    }
+    .notification {
+        width: 3rem;
+        height: 3rem;
+        line-height: 3rem;
+        font-size: 1.25rem;
+        text-align: center;
+        background-color: #d9d9d9;
+        cursor: pointer;
+        p {
+            margin: 0;
+        }
     }
 }

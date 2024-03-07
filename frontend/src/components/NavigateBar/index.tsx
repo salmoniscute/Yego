@@ -3,41 +3,50 @@ import {
     Dispatch,
     ReactElement,
     SetStateAction,
-    useCallback,
     useContext,
     useMemo,
-    useState
 } from "react";
 import { Link } from "react-router-dom";
 
+import { AssignmentInfo } from "schemas/assignment";
+import { Course } from "schemas/course";
+
+import functionContext from "context/function";
+import userDataContext from "context/userData";
+
+import SideBar from "components/SideBar";
+
+import getTextOrigin, { localMap } from "utils/getText";
+
 import "./index.scss";
-import getText, { localMap } from "utils/getText";
-import languageContext from "context/language";
 
 type propsType = Readonly<{
     setLanguage: Dispatch<SetStateAction<string>>,
+    dueAssignment: Array<AssignmentInfo>,
+    currentCourse: Array<Course>,
 }>;
 
 export default function NavigateBar(props: propsType): ReactElement {
-    const { setLanguage } = props;
+    const {
+        setLanguage,
+        dueAssignment,
+        currentCourse,
+    } = props;
 
-    const languageCode = useContext(languageContext);
-
-    const getTextWrap = useCallback((id: string) => {
-        return getText(id, languageCode);
-    }, [getText, languageCode]);
+    const {
+        getText
+    } = useContext(functionContext);
+    const userData = useContext(userDataContext);
 
     const languageList: Array<string> = useMemo(
         () => Object.keys(localMap).map(
-            key => getText("current_language", key)
-        ),
-        [localMap]
+            key => getTextOrigin("current_language", key)
+        ), []
     );
     const changeLanguage: Array<() => void> = useMemo(
         () => Object.keys(localMap).map(
             key => () => setLanguage(key)
-        ),
-        [localMap]
+        ), [setLanguage]
     );
 
     return (
@@ -48,7 +57,7 @@ export default function NavigateBar(props: propsType): ReactElement {
             <label className="dropdownMenu">
                 <input type="checkbox" />
                 <div className="ms">language</div>
-                <div className="body-bold">{getTextWrap("current_language")}</div>
+                <div className="body-bold">{getText("current_language")}</div>
                 <div className="ms dropDown">arrow_drop_down</div>
                 <div className="mask" style={{ "--length": languageList.length } as CSSProperties}>
                     <div className="content body-bold">
@@ -61,7 +70,21 @@ export default function NavigateBar(props: propsType): ReactElement {
                     </div>
                 </div>
             </label>
-            <Link className="loginButton body-bold" to={"/login"} >{getTextWrap("login")}</Link>
+            {
+                userData === null ? <Link
+                    className="loginButton body-bold"
+                    to={"/login"} >
+                    {getText("login")}
+                </Link> : <div className="notification">
+                    <p className="ms">notifications</p>
+                </div>
+            }
+            {
+                userData === null ? undefined : <SideBar
+                    dueAssignment={dueAssignment}
+                    currentCourse={currentCourse}
+                />
+            }
         </div>
     );
 }

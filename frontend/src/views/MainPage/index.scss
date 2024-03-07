@@ -27,38 +27,12 @@
                     color: #000;
                     text-decoration: none;
                 }
+                a:hover {
+                    text-decoration: underline;
+                }
             }
         }
 
-        .webAnnouncement {
-            .content {
-                flex-direction: column;
-                gap: 0.5rem;
-                overflow: hidden;
-                .block {
-                    width: calc(100% - 2rem);
-                    svg {
-                        height: 1rem;
-                        margin: 0 0.25rem;
-                        object-fit: contain;
-                        object-position: center;
-                    }
-                }
-            }
-            .seeMore {
-                margin: 0.75rem 0;
-                display: flex;
-                justify-content: right;
-                a {
-                    color: #949494;
-                    text-decoration: none;
-                    transition: color 0.3s;
-                }
-                a:hover {
-                    color: #000;
-                }
-            }
-        }
         .currentCourse, .pastCourse {
             .content {
                 flex-wrap: wrap;

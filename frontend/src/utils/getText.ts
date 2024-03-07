@@ -8,7 +8,7 @@ export const localMap: {
     "zh_Hant": zh_Hant,
 };
 
-export default function getText(id: string, language?: string): string {
+export default function getTextOrigin(id: string, language?: string): string {
     const zone = language || localStorage.getItem("local") || "zh_Hant";
     const localData = localMap[zone] || localMap.en_US;
     const result = localData[id] || localMap.en_US[id] || id;

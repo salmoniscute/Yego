@@ -1,11 +1,19 @@
 {
     "current_language": "繁體中文",
     "login": "登入",
+    "sidebar_menu": "選單",
     "website_announcement": "網站公告",
     "see_more": "查看更多",
     "this_semester_courses": "本學期課程",
     "past_courses": "過去課程",
     "assignments_due_soon": "即將截止的作業",
     "platform_friendly_area": "平台友善專區",
-    "teacher_ta_friendly_area": "教師/助教友善專區"
+    "teacher_ta_friendly_area": "教師/助教友善專區",
+    "personal_homepage": "個人首頁",
+    "due_soon": "即將截止",
+    "calendar": "行事曆",
+    "report_bug": "回報問題",
+    "dark_mode": "深色模式",
+    "use_tutorial": "使用教學",
+    "setting": "設定"
 }

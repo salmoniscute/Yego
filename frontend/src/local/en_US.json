@@ -1,11 +1,19 @@
 {
     "current_language": "English",
     "login": "Login",
+    "sidebar_menu": "Menu",
     "website_announcement": "Website Announcement",
     "see_more": "See More",
     "this_semester_courses": "This semester Courses",
     "past_courses": "Past Courses",
     "assignments_due_soon": "Assignments Due Soon",
     "platform_friendly_area": "Platform Firendly Area",
-    "teacher_ta_friendly_area": "Teacher/TA Firendly Area"
+    "teacher_ta_friendly_area": "Teacher/TA Firendly Area",
+    "personal_homepage": "Personal Homepage",
+    "due_soon": "Due Soon",
+    "calendar": "Calendar",
+    "report_bug": "Report bug",
+    "dark_mode": "Dark mode",
+    "use_tutorial": "Use tutorial",
+    "setting": "Setting"
 }
