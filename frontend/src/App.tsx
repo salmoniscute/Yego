@@ -31,6 +31,7 @@ import MainPage from "./views/MainPage";
 
 import getTextOrigin from "utils/getText";
 
+
 export default function App(): ReactElement {
     const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
     const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
