@@ -56,6 +56,7 @@ export default function SideBar(props: propsType): ReactElement {
                     <div>{getText("dark_mode")}</div>
                     <Link to="/help">{getText("use_tutorial")}</Link>
                     <Link to="/setting">{getText("setting")}</Link>
+                    <Link to="/logout">{getText("logout")}</Link>
                 </div>
             </div>
         </div>
