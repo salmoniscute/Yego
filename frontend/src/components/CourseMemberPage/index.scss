@@ -1,11 +1,28 @@
 #courseMemberPage{
-    margin: 3em 6em;
-    display:  flex;
-    > p{
-        font-size: large;
-        font-weight: 600;
-        white-space: nowrap;
-        margin-right: 9em;
+    margin: 3em 4em;
+    .courseMember{
+        .courseMemberTab{
+            display: flex;
+            justify-content: space-between;
+            p{
+                font-size: large;
+                width: calc(100% / 5);
+                font-weight: 600;
+            }
+        }
+        .courseMemberContent{
+            cursor: pointer;
+            display: flex;
+            p{
+                font-size: medium;
+                width: calc(100% / 5);
+            }
+
+        }
+        .courseMemberContent:hover{
+            background-color: #f5f5f5;
+        }
+
     }
 
 }

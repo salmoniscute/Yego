@@ -6,7 +6,7 @@
     .titleInfor{
         display: flex;
         margin: 2.5em 0em;
-        h6{
+        h2{
             margin:0rem 0rem;
             margin-right: 3rem;
             align-self: center;
@@ -26,11 +26,11 @@
 
     .forumCategory{
         display: flex;
-        margin: 3em 9em;
+        justify-content: space-around;
+        margin: 3em;
         white-space: nowrap;
         div{
             cursor: pointer;
-            margin-right: 7em;
             font-size: large;
             font-weight: 600;
         }

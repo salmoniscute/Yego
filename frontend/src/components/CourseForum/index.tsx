@@ -8,16 +8,17 @@ import { Link } from "react-router-dom";
 import { LuClipboardCheck } from "react-icons/lu";
 import CourseBulletinPage from "../CourseBulletinPage";
 import CourseMemberPage from "../CourseMemberPage";
+import DiscussionPage from "components/DiscussionPage";
 
 import "./index.scss";
 
 type propsType = Readonly<{
-    crouseID: string,
+    courseID: string,
 }>;
 
 export default function CourseForum(props: propsType): React.ReactElement {
     const {
-        crouseID
+        courseID
     } = props;
 
     const [signIn, setSignIn] = useState<string>("已簽到");
@@ -25,8 +26,8 @@ export default function CourseForum(props: propsType): React.ReactElement {
     const [activeTab, setActiveTab] = useState<string>('公告');
 
     const tab = [
-        {label:'公告' , component : <CourseBulletinPage courseID= {crouseID}/>},
-        {label:'討論區'},
+        {label:'公告' , component : <CourseBulletinPage courseID= {courseID}/>},
+        {label:'討論區', component : <DiscussionPage courseID={courseID}/>},
         {label:'課程教材'},
         {label:'成績'},
         {label:'成員' , component : <CourseMemberPage/>}
@@ -35,7 +36,7 @@ export default function CourseForum(props: propsType): React.ReactElement {
     return (
         <div id="courseForum">
             <div className="titleInfor">
-                <h6>課程名稱</h6>
+                <h2>課程名稱</h2>
                 <div className="signIn" onClick={()=>{}}>
                     簽到
                     <LuClipboardCheck className="cfIcon"/>

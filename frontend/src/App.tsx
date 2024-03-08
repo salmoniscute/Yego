@@ -29,7 +29,15 @@ import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
 import MainPage from "./views/MainPage";
 
+import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
+import { User } from "./schemas/user";
+import LoginPage from "./components/LoginPage";
+import Wanyegongao from "./components/Wanyegongao";
+
+
 import getTextOrigin from "utils/getText";
+
+
 
 export default function App(): ReactElement {
     const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
@@ -73,6 +81,7 @@ export default function App(): ReactElement {
 
     return (
         <userDataContext.Provider value={userData}>
+
             <functionContext.Provider value={{
                 getText: getText
             }}>
@@ -94,6 +103,7 @@ export default function App(): ReactElement {
                     <Footer />
                 </div>
             </functionContext.Provider>
+
         </userDataContext.Provider>
     );
 }
