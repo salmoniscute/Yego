@@ -27,12 +27,9 @@ import { getWebAnnouncementList } from "api/webAnnouncement";
 
 import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
-import MainPage from "./views/MainPage";
 
-import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
-import { User } from "./schemas/user";
-import LoginPage from "./components/LoginPage";
-import Wanyegongao from "./components/Wanyegongao";
+import MainPage from "./views/MainPage";
+import WebAnnouncementPage from "views/WebAnnouncementPage";
 
 
 import getTextOrigin from "utils/getText";
@@ -98,6 +95,7 @@ export default function App(): ReactElement {
                             currentCourse={currentCourse}
                             pastCourse={pastCourse}
                         />} />
+                        <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
