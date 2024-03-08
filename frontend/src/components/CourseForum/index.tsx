@@ -6,9 +6,9 @@ import {
 import { Link } from "react-router-dom";
 
 import { LuClipboardCheck } from "react-icons/lu";
-import CourseBulletinPage from "../CourseBulletinPage";
-import CourseMemberPage from "../CourseMemberPage";
-import DiscussionPage from "components/DiscussionPage";
+import CourseBulletinPage from "../../views/CourseBulletinPage";
+import CourseMemberPage from "../../views/CourseMemberPage";
+import DiscussionPage from "views/DiscussionPage";
 
 import "./index.scss";
 
