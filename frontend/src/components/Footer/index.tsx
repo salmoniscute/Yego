@@ -8,7 +8,7 @@ export default function Footer(): React.ReactElement {
     return (
         <div id="footer">
             <div className="leftFooter">
-                <h6>YEGO 成功大學數位學習平台</h6>
+                <h2>YEGO 成功大學數位學習平台</h2>
                 <p>國立成功大學 版權所有</p>
                 <p>Copyright © National Cheng Kung University all rights reserved</p>
             </div>

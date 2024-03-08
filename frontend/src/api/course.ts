@@ -8,7 +8,7 @@ export async function getCurrentCourseList(): Promise<Array<Course>> {
             course_code: "A2-001",
             academic_year: 112,
             semester: 2,
-            name: "Course 0",
+            name: "Course 3",
             outline: "Outline",
         },
         {
@@ -17,7 +17,7 @@ export async function getCurrentCourseList(): Promise<Array<Course>> {
             course_code: "A2-002",
             academic_year: 112,
             semester: 2,
-            name: "Course 1",
+            name: "Course 4",
             outline: "Outline",
         },
         {
@@ -26,7 +26,7 @@ export async function getCurrentCourseList(): Promise<Array<Course>> {
             course_code: "A2-003",
             academic_year: 112,
             semester: 2,
-            name: "Course 2",
+            name: "Course 5",
             outline: "Outline",
         },
     ];
