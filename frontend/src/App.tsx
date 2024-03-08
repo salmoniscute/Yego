@@ -29,11 +29,17 @@ import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
 
 import MainPage from "./views/MainPage";
+import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
 
 
 import getTextOrigin from "utils/getText";
 
+
+function Logout(): ReactElement {
+    localStorage.removeItem("access_token")
+    return <Navigate to="/" />
+}
 
 
 export default function App(): ReactElement {
@@ -45,14 +51,14 @@ export default function App(): ReactElement {
 
     const location = useLocation();
 
-    const token = localStorage.getItem("access_token");
     const userData = useMemo(() => {
+        const token = localStorage.getItem("access_token");
         try {
             return token === null ? null : jwtDecode(token) as User;
         }
         catch { }
         return null;
-    }, [token]);
+    }, [location.pathname]);
 
     const getText = useCallback((id: string) => {
         return getTextOrigin(id, language);
@@ -78,7 +84,6 @@ export default function App(): ReactElement {
 
     return (
         <userDataContext.Provider value={userData}>
-
             <functionContext.Provider value={{
                 getText: getText
             }}>
@@ -95,13 +100,14 @@ export default function App(): ReactElement {
                             currentCourse={currentCourse}
                             pastCourse={pastCourse}
                         />} />
+                        <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
+                        <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
                 </div>
             </functionContext.Provider>
-
         </userDataContext.Provider>
     );
 }
