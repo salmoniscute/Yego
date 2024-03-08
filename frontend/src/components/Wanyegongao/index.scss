@@ -1,0 +1,19 @@
+.container {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: min(90vw, 1200px);
+    width: 70rem;
+    margin: auto;
+
+    .title{
+      width: auto;
+      height: 50px;
+    }
+    
+    .announcementtitle{
+        height: 500px;
+        background-color: #e10000;
+    }
+
+  }

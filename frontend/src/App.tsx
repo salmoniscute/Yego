@@ -19,6 +19,8 @@ import Footer from "./components/Footer";
 import MainPage from "./views/MainPage";
 import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
 import { User } from "./schemas/user";
+import LoginPage from "./components/LoginPage";
+import Wanyegongao from "./components/Wanyegongao";
 
 
 export default function App(): ReactElement {
@@ -46,6 +48,9 @@ export default function App(): ReactElement {
                         setWebAnnouncementList={setWebAnnouncementList}
                     />} />
                     <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="/LoginPage" element={<LoginPage />} />
+                    <Route path="/Wanyegongao" element={<Wanyegongao/>} />
+
                 </Routes>
                 <Footer />
             </div>
