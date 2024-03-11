@@ -1,6 +1,7 @@
 import {
     useEffect,
-    useState
+    useState,
+    CSSProperties,
 } from "react";
 import { Link } from "react-router-dom";
 
@@ -27,6 +28,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
 
     const [discussionTopicReplyList,setDiscussionTopicReply] = useState<Array<DiscussionTopicReply>>([]);
     const [discussionTopicContent , setDiscussionTopicContent] = useState<DiscussionTopicContent>();
+    const [showReplyArea, setShowReplyArea] = useState<boolean>(false);
+    const [replyText, setReplyText] = useState<string>(""); 
 
     useEffect(()=>{
         getDiscussionTopicReplyList().then(data=>{
@@ -34,6 +37,11 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         });
         
     },[])
+
+    const handleToggleReplyArea = () => {
+        setShowReplyArea(!showReplyArea);
+    };
+
 
     return (
         <div id="discussionReplyPage">
@@ -58,7 +66,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                 <p>{data.release_time}</p>
                             </div>
                             <p>{data.content}</p>
-                            <div className="replyButton"> 
+                            <div className="replyButton" onClick={handleToggleReplyArea}> 
                                 <p>回覆</p>
                                 <TiArrowBack/>
                             </div>
@@ -66,6 +74,16 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     )
                 }
             </div>
+                <div className={`replyArea ${showReplyArea ? 'visible' : 'hidden'}`}>
+                    <img src={UserIcon}/>
+                    <textarea
+                        placeholder="回覆內容"
+                        value={replyText}
+                        onChange={(e) => setReplyText(e.target.value)}
+                        rows={1}
+                    />
+                </div>
+            
             
         </div>
     );

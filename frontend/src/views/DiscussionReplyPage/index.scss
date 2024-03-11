@@ -49,9 +49,37 @@
                     margin-right: 0.5em;
                 }
             }
+            
         }
     }
-
+    .replyArea {
+        position: relative;
+        overflow: hidden;
+        padding: 1em 5em;
+        display: flex;
+        background-color: #c7c7c7;
+        img{
+            width: 2.5em;
+            height: 2.5em;
+            margin-right: 1em;
+        }
+        textarea{
+            width: 100%; 
+            border: 0; 
+            font-size: large;
+            resize:none; 
+            outline: none;
+            background-color: #c7c7c7;
+        }
+        
+    }
     
+    .replyArea.visible {
+        
+    }
+    .replyArea.hidden {
+        
+    }
+
 
 }
