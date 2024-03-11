@@ -44,7 +44,8 @@ export default function MainPage(props: propsType): ReactElement {
                 <h2>{getText("this_semester_courses")}</h2>
                 <div className="content body">
                     {
-                        currentCourse.map(data => <div
+                        currentCourse.map((data, i) => <div
+                            key={i}
                             className="block"
                             title={data.name}
                         >
@@ -57,7 +58,8 @@ export default function MainPage(props: propsType): ReactElement {
                 <h2>{getText("past_courses")}</h2>
                 <div className="content body">
                     {
-                        pastCourse.map(data => <div
+                        pastCourse.map((data, i) => <div
+                            key={i}
                             className="block"
                             title={data.name}
                         >
@@ -73,7 +75,8 @@ export default function MainPage(props: propsType): ReactElement {
                     <h2>{getText("assignments_due_soon")}</h2>
                     <div className="content">
                         {
-                            dueAssignment.map(data => <Link
+                            dueAssignment.map((data, i) => <Link
+                                key={i}
                                 to={`/course/${data.course_id}/${data.uid}`}
                                 className="block"
                             >

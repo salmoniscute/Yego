@@ -34,6 +34,7 @@ import WebAnnouncementPage from "views/WebAnnouncementPage";
 
 
 import getTextOrigin from "utils/getText";
+import CoursePage from "views/CoursePage";
 
 
 function Logout(): ReactElement {
@@ -103,6 +104,7 @@ export default function App(): ReactElement {
                         <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
+                        <Route path="/course/:courseId/*" element={<CoursePage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
