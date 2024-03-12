@@ -23,3 +23,7 @@ class BaseType:
     discussion_id = Annotated[str, mapped_column(String(10), primary_key=True)]
     
     topic_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    reply_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    file_id = Annotated[str, mapped_column(String(10), primary_key=True)]

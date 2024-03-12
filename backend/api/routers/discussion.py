@@ -63,7 +63,7 @@ async def update_discussion(newDiscussion: DiscussionSchema.DiscussionUpdate, di
     "/discussion/{discussion_id_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_discussion_id(discussion_id: str = Depends(check_discussion_id)):
+async def delete_discussion(discussion_id: str = Depends(check_discussion_id)):
 
     await DiscussionCrud.delete_discussion_by_id(discussion_id)
     

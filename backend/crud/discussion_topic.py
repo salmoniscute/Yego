@@ -7,14 +7,14 @@ from schemas import discussion_topic as DiscussionTopicSchema
 
 @crud_class_decorator
 class DiscussionTopicCrudManager:
-    async def create_discussion_topic(self, newDiscussion: DiscussionTopicSchema.DiscussionTopicCreate, db_session: AsyncSession):
+    async def create_discussion_topic(self, newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, db_session: AsyncSession):
         discussion_topic = DiscussionTopicModel(
-            topic_id=newDiscussion.topic_id,
-            discussion_id=newDiscussion.discussion_id,
-            publisher=newDiscussion.publisher,
-            title=newDiscussion.title,
-            release_time=newDiscussion.release_time,
-            content=newDiscussion.content
+            topic_id=newDiscussionTopic.topic_id,
+            discussion_id=newDiscussionTopic.discussion_id,
+            publisher=newDiscussionTopic.publisher,
+            title=newDiscussionTopic.title,
+            release_time=newDiscussionTopic.release_time,
+            content=newDiscussionTopic.content
         )
         db_session.add(discussion_topic)
         await db_session.commit()
@@ -38,12 +38,12 @@ class DiscussionTopicCrudManager:
         
         return None
 
-    async def update_discussion_topic_by_topic_id(self, topic_id: str, updatediscussion: DiscussionTopicSchema.DiscussionTopicUpdate, db_session: AsyncSession):
+    async def update_discussion_topic_by_topic_id(self, topic_id: str, updateDiscussionTopic: DiscussionTopicSchema.DiscussionTopicUpdate, db_session: AsyncSession):
         stmt = update(DiscussionTopicModel).where(DiscussionTopicModel.topic_id == topic_id).values(
-            publisher=updatediscussion.publisher,
-            title=updatediscussion.title,
-            release_time=updatediscussion.release_time,
-            content=updatediscussion.content
+            publisher=updateDiscussionTopic.publisher,
+            title=updateDiscussionTopic.title,
+            release_time=updateDiscussionTopic.release_time,
+            content=updateDiscussionTopic.content
         )
         await db_session.execute(stmt)
         await db_session.commit()

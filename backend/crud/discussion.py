@@ -34,10 +34,10 @@ class DiscussionCrudManager:
         
         return None
 
-    async def update_discussion_by_id(self, discussion_id: str, updatediscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
+    async def update_discussion_by_id(self, discussion_id: str, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
         stmt = update(DiscussionModel).where(DiscussionModel.discussion_id == discussion_id).values(
-            title=updatediscussion.title,
-            discription=updatediscussion.discription
+            title=updateDiscussion.title,
+            discription=updateDiscussion.discription
         )
         await db_session.execute(stmt)
         await db_session.commit()

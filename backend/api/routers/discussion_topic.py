@@ -14,7 +14,7 @@ router = APIRouter(
     "/discussion_topic", 
     response_model=DiscussionTopicSchema.DiscussionTopicCreate,
     status_code=201,
-    response_description="The discussion has been successfully created."
+    response_description="The discussion topic has been successfully created."
 )
 async def create_discussion_topic(newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate):
     """
@@ -65,7 +65,7 @@ async def update_discussion_topic(newDiscussionTopic: DiscussionTopicSchema.Disc
     "/discussion_topic/{topic_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_discussion_id(topic_id: str = Depends(check_discussion_topic_id)):
+async def delete_discussion_topic(topic_id: str = Depends(check_discussion_topic_id)):
 
     await DiscussionTopicCrud.delete_discussion_topic_by_topic_id(topic_id)
     

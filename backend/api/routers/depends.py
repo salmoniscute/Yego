@@ -5,12 +5,16 @@ from crud.course import CourseCrudManager
 from crud.course_bulletin import CourseBulletinCrudManager
 from crud.discussion import DiscussionCrudManager
 from crud.discussion_topic import DiscussionTopicCrudManager
+from crud.discussion_reply import DiscussionReplyCrudManager
+from crud.discussion_topic_file import DiscussionTopicFileCrudManager
 
 UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
 DiscussionCrud = DiscussionCrudManager()
 DiscussionTopicCrud = DiscussionTopicCrudManager()
+DiscussionReplyCrud = DiscussionReplyCrudManager()
+DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -51,3 +55,19 @@ async def check_discussion_topic_id(topic_id: str):
         raise HTTPException(status_code=404, detail="Discussion topic does not exist")
     
     return discussion_topic.topic_id
+
+async def check_discussion_reply_id(reply_id: str):
+    discussion_reply = await DiscussionReplyCrud.get_discussion_reply_by_reply_id(reply_id)
+    
+    if not discussion_reply:
+        raise HTTPException(status_code=404, detail="Discussion reply does not exist")
+    
+    return discussion_reply.reply_id
+
+async def check_discussion_topic_file_id(file_id: str):
+    discussion_topic_file = await DiscussionTopicFileCrud.get_discussion_topic_file_by_file_id(file_id)
+    
+    if not discussion_topic_file:
+        raise HTTPException(status_code=404, detail="Discussion topic file does not exist")
+    
+    return discussion_topic_file.file_id

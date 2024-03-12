@@ -12,7 +12,7 @@ class Discussion_topic(Base):
     content : Mapped[BaseType.str_100]
 
 
-    def __init__(self,topic_id:str, discussion_id:str, publisher:float, title:str, release_time:str, content:str) -> None:
+    def __init__(self,topic_id:str, discussion_id:str, publisher:str, title:str, release_time:str, content:str) -> None:
         self.topic_id = topic_id
         self.discussion_id = discussion_id
         self.publisher = publisher

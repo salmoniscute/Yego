@@ -10,7 +10,9 @@ from .routers import (
     course_router,
     course_bulletin_router,
     discussion_router,
-    discussion_topic_router
+    discussion_topic_router,
+    discussion_reply_router,
+    discussion_topic_file_router
 )
 
 app = FastAPI()
@@ -21,6 +23,8 @@ app.include_router(course_router)
 app.include_router(course_bulletin_router)
 app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
+app.include_router(discussion_reply_router)
+app.include_router(discussion_topic_file_router)
 
 
 origins = [
