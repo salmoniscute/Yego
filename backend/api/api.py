@@ -7,7 +7,8 @@ from config import HOST, PORT
 from .routers import (
     info_router,
     user_router,
-    course_router
+    course_router,
+    course_bulletin_router
 )
 
 app = FastAPI()
@@ -15,6 +16,7 @@ app = FastAPI()
 app.include_router(info_router)
 app.include_router(user_router)
 app.include_router(course_router)
+app.include_router(course_bulletin_router)
 
 
 origins = [

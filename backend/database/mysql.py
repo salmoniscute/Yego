@@ -5,7 +5,7 @@ from sqlalchemy.schema import CreateTable
 
 from models.user import User
 from models.course import Course
-
+from models.course_bulletin import Course_bulletin
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -28,6 +28,7 @@ async def init_db():
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Course_bulletin.__table__, if_not_exists=True))
 
 
 async def close_db():
