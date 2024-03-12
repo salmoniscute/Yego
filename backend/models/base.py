@@ -18,4 +18,8 @@ class BaseType:
     course_id = Annotated[str, mapped_column(String(10), primary_key=True)]
     
     cb_id = Annotated[str, mapped_column(String(10), primary_key=True)]
-    datetime = Annotated[datetime, mapped_column(DateTime)]
+    datetime = Annotated[datetime, mapped_column(DateTime)] #jwt problem
+    
+    discussion_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    topic_id = Annotated[str, mapped_column(String(10), primary_key=True)]
