@@ -32,6 +32,9 @@ import MainPage from "./views/MainPage";
 import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
 
+import DiscussionReplyPage from "views/DiscussionReplyPage";
+import CourseForum from "components/CourseForum";
+import LandingPage from "views/LandingPage";
 
 import getTextOrigin from "utils/getText";
 
@@ -94,6 +97,7 @@ export default function App(): ReactElement {
                         currentCourse={currentCourse}
                     />
                     <Routes>
+                        <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList}/>} />
                         <Route path="/" element={<MainPage
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
@@ -103,6 +107,8 @@ export default function App(): ReactElement {
                         <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
+                        <Route path="/salmontest" element={<DiscussionReplyPage />} />
+                        <Route path="/salmontest1" element={<CourseForum courseID=""/>} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />

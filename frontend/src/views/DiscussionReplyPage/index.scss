@@ -1,0 +1,85 @@
+#discussionReplyPage{
+    position: relative;
+    margin: 6em 17em;
+
+    .mainDiscussionTopic{
+        background-color: #EEEEEE;
+        padding: 1em 5em;
+        .discussionTopicTop{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            img{
+                width: 2.5em;
+                height: 2.5em;
+                margin-right: 1em;
+            }
+            h3{
+                margin-right:0.5em;
+                font-size: large;
+            }
+        }
+        > h3{
+            font-size: x-large;
+            margin: 0.5em 0em;
+        }
+
+        .discussionTopicBottom{
+            display: flex;
+            justify-content: end;
+            p{
+                cursor: pointer;
+                background-color: #DBDBDB;
+                padding: 1em 1em;
+                border-radius: 0.3em;
+            }
+        }
+
+        .discussionTopicReply{
+            > p {
+                padding-left:3.5em;
+                margin: 0em 0em;
+            }
+            .replyButton{
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding-left:3.5em;
+                > p{
+                    margin-right: 0.5em;
+                }
+            }
+            
+        }
+    }
+    .replyArea {
+        position: relative;
+        overflow: hidden;
+        padding: 1em 5em;
+        display: flex;
+        background-color: #c7c7c7;
+        img{
+            width: 2.5em;
+            height: 2.5em;
+            margin-right: 1em;
+        }
+        textarea{
+            width: 100%; 
+            border: 0; 
+            font-size: large;
+            resize:none; 
+            outline: none;
+            background-color: #c7c7c7;
+        }
+        
+    }
+    
+    .replyArea.visible {
+        
+    }
+    .replyArea.hidden {
+        
+    }
+
+
+}
