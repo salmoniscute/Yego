@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -43,7 +43,6 @@ const CustomToolbar: React.FC = () => (
   </div>
 );
 
-// 编辑器组件，包括自定义工具栏和内容容器
 class Editor extends Component<{ placeholder?: string }, { editorHtml: string }> {
   constructor(props: { placeholder?: string }) {
     super(props);
@@ -55,27 +54,9 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
     this.setState({ editorHtml: html });
   }
 
-  render() {
-    return (
-      <div id="postEditor">
-        <button className='btn expand-btn'><CgExpand /></button>
-        <button className='btn close-btn'><RxCross2 /></button>
-        <div className="text-editor">
-          <input type="text" placeholder='標題｜少於20字' className='title'/>
-          <ReactQuill
-            onChange={this.handleChange}
-            placeholder='內文｜'
-            modules={Editor.modules}
-            formats={Editor.formats}
-            theme={"snow"} // 设置为 "snow" 使用默认主题
-          />
-          <CustomToolbar />
-          <button className='bottom-btn'>存檔</button>
-          <button className='bottom-btn'>發布</button>
-        </div>
-      </div>
-    );
-  }
+
+    
+  
 
   static modules = {
     toolbar: {
@@ -107,4 +88,30 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
   ];
 }
 
-export default Editor;
+export default function PostEditor(): ReactElement {
+  const [close, setClose] = useState(false);
+  const Close = () => {
+    setClose(true);
+  }
+  return <>
+    <div className={close === false ? 'window' : 'close'}>
+        <div id="postEditor">
+          <button className='btn expand-btn'><CgExpand /></button>
+          <button className='btn close-btn' onClick={Close}><RxCross2 /></button>
+          <div className="text-editor">
+            <input type="text" placeholder='標題｜少於20字' className='title'/>
+            <ReactQuill
+         
+              placeholder='內文｜'
+              modules={Editor.modules}
+              formats={Editor.formats}
+              theme={"snow"} // 设置为 "snow" 使用默认主题
+            />
+            <CustomToolbar />
+            <button className='bottom-btn'>存檔</button>
+            <button className='bottom-btn'>發布</button>
+          </div>
+        </div>
+      </div>
+  </>
+}

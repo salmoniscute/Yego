@@ -17,7 +17,6 @@ import userDataContext from "context/userData";
 import WebAnnouncement from "components/WebAnnouncement";
 import PlatformFriendlyArea from "components/PlatformFriendlyArea";
 import ReportPage from "views/ReportPage";
-import PostEditor from "components/PostEditor";
 
 import "./index.scss";
 
@@ -93,7 +92,6 @@ export default function MainPage(props: propsType): ReactElement {
     </div>
 
     <ReportPage />
-    <PostEditor />
     </div>
     ;
 };
