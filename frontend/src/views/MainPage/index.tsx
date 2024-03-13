@@ -16,7 +16,6 @@ import userDataContext from "context/userData";
 
 import WebAnnouncement from "components/WebAnnouncement";
 import PlatformFriendlyArea from "components/PlatformFriendlyArea";
-import ReportPage from "views/ReportPage";
 
 import "./index.scss";
 
@@ -90,8 +89,6 @@ export default function MainPage(props: propsType): ReactElement {
             </div>
         }
     </div>
-
-    <ReportPage />
     </div>
     ;
 };
