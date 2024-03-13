@@ -1,0 +1,73 @@
+#postEditor {
+  margin: 0 auto;
+  padding: 55px 0;
+  width: 80rem;
+  border: 1px #a9a9a9 solid;
+  position: relative;
+  .btn {
+    width: auto;
+    color: black;
+    font-size: 35px;
+    padding: 4px;
+    padding-bottom: 0;
+  }
+  .expand-btn {
+    background-color: #a9a9a9;
+    position: absolute;
+    top: 0;
+    right: 43px;
+  }
+  .close-btn {
+    background-color: #cecece;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .bottom-btn {
+    width: auto;
+    background-color: #cecece;
+    color: #474141;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 8px 32px;
+    margin-left: 20px;
+    margin-top: 20px;
+    float: right;
+  }
+  .text-editor {
+    margin: 1rem auto;
+    max-width: 70rem;
+    border-radius: 0.5rem;
+    border: none;
+  
+    .title {
+      height: 2.5rem;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 12px 15px;
+      border: none;
+    }
+    .title:focus {
+      outline: none;
+    }
+    .ql-container {
+      height: 25.5rem;
+      background: #f0f0f0;
+      border-bottom: none;
+      border-right: none;
+      border-left: none;
+    }
+    #toolbar {
+      background: #a9a9a9;
+  
+      .ql-format {
+        margin-right: 0.5rem;
+      }
+    }
+    .ql-editor::before {
+      content: attr(data-placeholder);
+      font-style: normal; 
+    }
+  }  
+}
