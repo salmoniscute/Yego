@@ -37,7 +37,7 @@ export default function MainPage(props: propsType): ReactElement {
     const { getText } = useContext(functionContext)
     const userData = useContext(userDataContext);
 
-    return userData === null ? <Navigate to="/" /> : <div id="mainPage">
+    return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
             <WebAnnouncement webAnnouncementList={webAnnouncementList} />
             <div className="currentCourse">
@@ -88,5 +88,7 @@ export default function MainPage(props: propsType): ReactElement {
                 <PlatformFriendlyArea titleId="teacher_ta_friendly_area" />
             </div>
         }
-    </div>;
+    </div>
+    </div>
+    ;
 };
