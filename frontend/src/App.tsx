@@ -32,8 +32,12 @@ import MainPage from "./views/MainPage";
 import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
 
+// salmon test
 import DiscussionReplyPage from "views/DiscussionReplyPage";
 import CourseForum from "components/CourseForum";
+import DiscussionTopicPage from "views/DiscussionTopicPage";
+
+
 import LandingPage from "views/LandingPage";
 
 import getTextOrigin from "utils/getText";
@@ -107,8 +111,11 @@ export default function App(): ReactElement {
                         <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
-                        <Route path="/salmontest" element={<DiscussionReplyPage />} />
-                        <Route path="/salmontest1" element={<CourseForum courseID=""/>} />
+
+                        <Route path="/discussionReply" element={<DiscussionReplyPage />} />
+                        <Route path="/courseForum" element={<CourseForum courseID=""/>} />
+                        <Route path="/discussionTopic" element={<DiscussionTopicPage/>} />
+
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
