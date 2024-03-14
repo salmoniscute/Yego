@@ -9,6 +9,7 @@ import { LuClipboardCheck } from "react-icons/lu";
 import CourseBulletinPage from "../../views/CourseBulletinPage";
 import CourseMemberPage from "../../views/CourseMemberPage";
 import DiscussionPage from "views/DiscussionPage";
+import CourseGradePage from "views/CourseGradePage";
 
 import "./index.scss";
 
@@ -29,7 +30,7 @@ export default function CourseForum(props: propsType): React.ReactElement {
         {label:'公告' , component : <CourseBulletinPage courseID= {courseID}/>},
         {label:'討論區', component : <DiscussionPage courseID={courseID}/>},
         {label:'課程教材'},
-        {label:'成績'},
+        {label:'成績', component: <CourseGradePage />},
         {label:'成員' , component : <CourseMemberPage/>}
     ];
 

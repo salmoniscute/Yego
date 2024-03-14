@@ -1,0 +1,12 @@
+#courseGradePage{
+    margin: 3em 4em;
+    .courseGradeTab{
+        display: flex;
+        justify-content: space-between;
+        p{
+            font-size: large;
+            width: calc(100% / 5);
+            font-weight: 600;
+        }
+    }
+}
