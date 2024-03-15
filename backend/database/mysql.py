@@ -5,6 +5,7 @@ from sqlalchemy.schema import CreateTable
 
 from models.user import User
 from models.course import Course
+from models.website_bulletin import WebsiteBulletin
 
 
 engine = create_async_engine(
@@ -28,6 +29,7 @@ async def init_db():
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
+            await db.execute(CreateTable(WebsiteBulletin.__table__, if_not_exists=True))
 
 
 async def close_db():
