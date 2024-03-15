@@ -18,6 +18,7 @@ import DiscussionPage from "./DiscussionPage";
 
 import "./index.scss";
 import MaterialPage from "./MaterialPage";
+import GradePage from "./GradePage";
 
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
@@ -25,12 +26,12 @@ export default function CoursePage(): ReactElement {
     const params = useParams();
     const { courseID } = params;
     const tab = params["*"]?.split("/")[0];
-    
+
     const tabs = useMemo(() => courseID ? [
         { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
         { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} /> },
         { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
-        { label: "成績", path: "grade" },
+        { label: "成績", path: "grade", component: <GradePage /> },
         { label: "成員", path: "member", component: <MemberPage /> }
     ] : [], [courseID]);
 

@@ -33,8 +33,11 @@ import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
 
 
-import getTextOrigin from "utils/getText";
 import CoursePage from "views/CoursePage";
+import LandingPage from "views/LandingPage";
+import ReportPage from "views/ReportPage";
+
+import getTextOrigin from "utils/getText";
 
 
 function Logout(): ReactElement {
@@ -95,7 +98,10 @@ export default function App(): ReactElement {
                         currentCourse={currentCourse}
                     />
                     <Routes>
-                        <Route path="/" element={<MainPage
+                        <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
+                        <Route path="/" element={userData === null ? <LandingPage
+                            webAnnouncementList={webAnnouncementList}
+                        /> : <MainPage
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
                             currentCourse={currentCourse}
@@ -105,6 +111,7 @@ export default function App(): ReactElement {
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
+                        <Route path="/reportBug" element={<ReportPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />

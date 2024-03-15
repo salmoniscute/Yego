@@ -1,0 +1,50 @@
+.list {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  color: #474141;
+
+  button {
+    background-color: transparent;
+    color: #474141;
+  }
+
+  .topic {
+    width: 50%;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+  }
+  .topic:active {
+    color: black;
+  }
+
+  .launch {
+    width: 20%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+
+    button {
+      width: auto;
+      color: #949494;
+      font-size: 24px;
+      padding: 5px;
+    }
+  }
+
+  .reply {
+    width:15%;
+    text-align: center;
+  }
+
+  .follow {
+    width: 15%;
+    text-align: center;
+    transition: transform all;
+
+    p {
+      font-size: 18px;
+    }
+  }
+}

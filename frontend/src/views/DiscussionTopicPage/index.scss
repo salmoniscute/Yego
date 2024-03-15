@@ -1,0 +1,46 @@
+#reportPage {
+  margin: auto;
+  max-width: 90vw;
+  padding: 0.95rem max(5vw, calc(50vw - 570px));
+
+  .header {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0;
+
+    button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: auto;
+      padding: 12px 36px;
+      background-color: #d9d9d9;
+      color: black;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 4%;
+
+      span {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .tutorial {
+    height: 115px;
+    background-color: #f0f0f0;
+    padding: 1px 32px;
+    margin: 12px 0;
+
+    h4 {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+
+  .editor {
+    display: none;
+  }
+}

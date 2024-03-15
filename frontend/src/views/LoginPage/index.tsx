@@ -29,7 +29,7 @@ export default function LoginPage(): ReactElement {
       </div>
       <div className="card2">
         <div className="left">
-          <img src={salmon} style={{ maxWidth: '80%', height: '80%' }} />
+          <img alt="loginImage" src={salmon} style={{ maxWidth: '80%', height: '80%' }} />
         </div>
         <div className="right">
           <div>
