@@ -1,3 +1,10 @@
+export interface Discussion {
+    discussion_id: string,
+    course_id: string,
+    title:string,
+    discription: string
+};
+
 export interface DiscussionTopicInfo {
     discussion_topic_id: string,
     discussion_id: string,

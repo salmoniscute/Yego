@@ -1,8 +1,34 @@
 import { 
+    Discussion,
     DiscussionTopicInfo,
     DiscussionTopicContent,
     DiscussionTopicReply
  } from "schemas/discussion";
+
+export async function getDiscussionList(): Promise<Array<Discussion>>{
+    const result = [
+        {
+            discussion_id: "",
+            course_id: "",
+            title:"第一周作業討論",
+            discription: "討論HW1-1、1-2"
+        },
+        {
+            discussion_id: "",
+            course_id: "",
+            title:"第二周作業討論",
+            discription: "討論HW2"
+        },
+        {
+            discussion_id: "",
+            course_id: "",
+            title:"第一次小考討論",
+            discription: "討論2/29課堂小考"
+        },
+    ]
+    return result;
+}
+
 
 export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicInfo>>{
     const result = [
