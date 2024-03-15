@@ -5,6 +5,8 @@ from sqlalchemy.schema import CreateTable
 
 from models.user import User
 from models.course import Course
+from models.website_bulletin import WebsiteBulletin
+from models.website_bulletin_file import WebsiteBulletinFile
 from models.course_bulletin import Course_bulletin
 from models.discussion import Discussion
 from models.discussion_topic import Discussion_topic
@@ -32,6 +34,8 @@ async def init_db():
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
+            await db.execute(CreateTable(WebsiteBulletin.__table__, if_not_exists=True))
+            await db.execute(CreateTable(WebsiteBulletinFile.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course_bulletin.__table__, if_not_exists=True))
             await db.execute(CreateTable(Discussion.__table__, if_not_exists=True))
             await db.execute(CreateTable(Discussion_topic.__table__, if_not_exists=True))
