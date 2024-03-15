@@ -3,10 +3,12 @@ from fastapi import HTTPException
 from crud.user import UserCrudManager
 from crud.course import CourseCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
+from crud.website_bulletin_file import WebsiteBulletinFileCrudManager
 
 UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
+WebsiteBulletinFileCrud = WebsiteBulletinFileCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -33,3 +35,11 @@ async def check_website_bulletin_id(wb_id: str):
         raise HTTPException(status_code=404, detail="Website bulletin does not exist")
     
     return website_bulletin.wb_id
+
+
+async def check_website_bulletin_file_id(file_id: str):
+    file = await WebsiteBulletinFileCrud.get_file_by_file_id(file_id)
+    if not file:
+        raise HTTPException(status_code=404, detail="File does not exist")
+    
+    return file.file_id

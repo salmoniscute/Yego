@@ -63,11 +63,12 @@ async def update_website_bulletin(updateBulletin: WebsiteBulletinSchema.WebsiteB
     await WebsiteBulletinCrud.update_website_bulletin_by_wb_id(wb_id, updateBulletin)
     return 
 
+
 @router.delete(
     "/website_bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course(wb_id: str = Depends(check_website_bulletin_id)):
+async def delete_website_bulletin(wb_id: str = Depends(check_website_bulletin_id)):
     """
     Delete the particular website bulletin.
     """
