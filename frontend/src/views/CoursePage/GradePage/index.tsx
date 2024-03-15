@@ -1,16 +1,15 @@
 import {
-    useEffect,
-    useState
+    ReactElement
 } from "react";
 
 import "./index.scss";
 
-export default function CourseGradePage(): React.ReactElement {   
-    const tab = ["項目","教師評語","狀態","分數","等第"]
+export default function GradePage(): ReactElement {
+    const tab = ["項目", "教師評語", "狀態", "分數", "等第"]
     return (
         <div id="courseGradePage">
             <div className="courseGradeTab">
-                {tab.map((tab,index)=>(
+                {tab.map((tab, index) => (
                     <p key={index} >
                         {tab}
                     </p>

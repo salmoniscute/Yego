@@ -34,7 +34,7 @@ const CustomToolbar: React.FC = () => (
       <button className="ql-italic" />
       <button className="ql-list" value="ordered" />
       <button className="ql-list" value="bullet" />
-      </span>
+    </span>
     <span className="ql-formats">
       <button className="ql-link" />
       <button className="ql-image" />
@@ -55,8 +55,8 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
   }
 
 
-    
-  
+
+
 
   static modules = {
     toolbar: {
@@ -95,23 +95,23 @@ export default function PostEditor(): ReactElement {
   }
   return <>
     <div className={close === false ? 'window' : 'close'}>
-        <div id="postEditor">
-          <button className='btn expand-btn'><CgExpand /></button>
-          <button className='btn close-btn' onClick={Close}><RxCross2 /></button>
-          <div className="text-editor">
-            <input type="text" placeholder='標題｜少於20字' className='title'/>
-            <ReactQuill
-         
-              placeholder='內文｜'
-              modules={Editor.modules}
-              formats={Editor.formats}
-              theme={"snow"} // 设置为 "snow" 使用默认主题
-            />
-            <CustomToolbar />
-            <button className='bottom-btn'>存檔</button>
-            <button className='bottom-btn'>發布</button>
-          </div>
+      <div id="postEditor">
+        <button className='btn expand-btn'><CgExpand /></button>
+        <button className='btn close-btn' onClick={Close}><RxCross2 /></button>
+        <div className="text-editor">
+          <input type="text" placeholder='標題｜少於20字' className='title' />
+          <ReactQuill
+
+            placeholder='內文｜'
+            modules={Editor.modules}
+            formats={Editor.formats}
+            theme={"snow"} // 设置为 "snow" 使用默认主题
+          />
+          <CustomToolbar />
+          <button className='bottom-btn'>存檔</button>
+          <button className='bottom-btn'>發布</button>
         </div>
       </div>
+    </div>
   </>
 }

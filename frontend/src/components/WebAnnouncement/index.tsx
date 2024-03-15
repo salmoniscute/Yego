@@ -25,7 +25,8 @@ export default function WebAnnouncement(props: propsType): ReactElement {
         <h2>{getText("website_announcement")}</h2>
         <div className="content body-bold">
             {
-                webAnnouncementList.map(data => <div
+                webAnnouncementList.map((data, i) => <div
+                    key={i}
                     className="block"
                     title={data.title}
                 >

@@ -1,16 +1,18 @@
-import React from "react";
-import "./index.scss";
+import { ReactElement } from "react";
 
 import { WebAnnouncementInfo } from "schemas/webAnnouncement";
 
 import WebAnnouncement from "components/WebAnnouncement";
 import PlatformFriendlyArea from "components/PlatformFriendlyArea";
 
-type propsType = Readonly<{
-    webAnnouncementList: Array<WebAnnouncementInfo>}>;
+import "./index.scss";
 
-export default function landing(props: propsType): React.ReactElement {
-    const {webAnnouncementList} = props;
+type propsType = Readonly<{
+    webAnnouncementList: Array<WebAnnouncementInfo>
+}>;
+
+export default function landing(props: propsType): ReactElement {
+    const { webAnnouncementList } = props;
     return (
         <div id="landPage">
             <div className="news">
@@ -20,7 +22,7 @@ export default function landing(props: propsType): React.ReactElement {
             </div>
 
             <div className="description">
-                <p>Short description <br/>pppppppp</p>
+                <p>Short description <br />pppppppp</p>
             </div>
             <div className="twoSide">
                 <div className="leftSide">
@@ -58,7 +60,7 @@ export default function landing(props: propsType): React.ReactElement {
                     <PlatformFriendlyArea titleId="platform_friendly_area" />
                 </div>
             </div>
-            
+
         </div>
     )
 }

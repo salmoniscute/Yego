@@ -18,24 +18,24 @@ type propsType = Readonly<{
     courseID: string,
 }>;
 
-export default function DiscussionPage(props: propsType): React.ReactElement {
-    const [discussionList,setDiscussion] = useState<Array<Discussion>>([]);
+export default function DiscussionPage(props: propsType): ReactElement {
+    const [discussionList, setDiscussion] = useState<Array<Discussion>>([]);
     const {
         courseID
 
     } = props;
 
-    useEffect(()=>{
-        getDiscussionList().then(data=>{
+    useEffect(() => {
+        getDiscussionList().then(data => {
             setDiscussion(data);
         })
-    },[])
+    }, [])
 
     return (
-        <div id="discussionPage">
+        <div id="courseDiscussionPage">
             <div className="addDiscussionButton">
                 <div className="buttonInfo">
-                    <FaPen/>
+                    <FaPen />
                     <p>新增討論區</p>
                 </div>
 
@@ -46,17 +46,17 @@ export default function DiscussionPage(props: propsType): React.ReactElement {
                 <p >追蹤更新</p>
             </div>
             {
-                discussionList.map(data=>
+                discussionList.map(data =>
                     <div className="discussionInfo">
                         <p className="discussionTitle">
                             <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
                         </p>
                         <p className="discussionDiscription">{data.discription}</p>
-                        <BiSolidBellRing/>       
+                        <BiSolidBellRing />
                     </div>
                 )
             }
-            
+
         </div>
     );
 }

@@ -40,14 +40,14 @@ export default function SideBar(props: propsType): ReactElement {
                 </div>
                 <div className="caption-bold subTitle">{getText("due_soon")}</div>
                 {
-                    dueAssignment.map(data => <div className="caption">
+                    dueAssignment.map((data, i) => <div key={i} className="caption">
                         <Link to={`/course/${data.course_id}/${data.uid}`}>{data.assignment_name}</Link>
                     </div>)
                 }
                 <div className="caption-bold subTitle">{getText("calendar")}</div>
                 <div className="caption-bold subTitle">{getText("this_semester_courses")}</div>
                 {
-                    currentCourse.map(data => <div className="caption">
+                    currentCourse.map((data, i) => <div key={i} className="caption">
                         <Link to={`/course/${data.uid}`}>{data.name}</Link>
                     </div>)
                 }
