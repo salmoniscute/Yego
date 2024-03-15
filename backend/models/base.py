@@ -1,7 +1,7 @@
-from sqlalchemy import Boolean, String
+from sqlalchemy import String, DateTime, Boolean, String
 from sqlalchemy.orm import DeclarativeBase, mapped_column
 from typing import Annotated, Optional
-
+from datetime import datetime
 
 class Base(DeclarativeBase):
     pass
@@ -20,3 +20,13 @@ class BaseType:
     wb_id = Annotated[str, mapped_column(String(10), primary_key=True)]
     wb_file_id = Annotated[str, mapped_column(String(10), primary_key=True)]
     
+    cb_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    datetime = Annotated[datetime, mapped_column(DateTime)] #jwt problem
+    
+    discussion_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    topic_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    reply_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    file_id = Annotated[str, mapped_column(String(10), primary_key=True)]

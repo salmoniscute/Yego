@@ -7,7 +7,11 @@ from models.user import User
 from models.course import Course
 from models.website_bulletin import WebsiteBulletin
 from models.website_bulletin_file import WebsiteBulletinFile
-
+from models.course_bulletin import Course_bulletin
+from models.discussion import Discussion
+from models.discussion_topic import Discussion_topic
+from models.discussion_reply import Discussion_reply
+from models.discussion_topic_file import Discussion_topic_file
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -32,6 +36,11 @@ async def init_db():
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
             await db.execute(CreateTable(WebsiteBulletin.__table__, if_not_exists=True))
             await db.execute(CreateTable(WebsiteBulletinFile.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Course_bulletin.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Discussion.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Discussion_topic.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Discussion_reply.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Discussion_topic_file.__table__, if_not_exists=True))
 
 
 async def close_db():

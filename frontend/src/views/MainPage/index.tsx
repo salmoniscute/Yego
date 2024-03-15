@@ -37,14 +37,15 @@ export default function MainPage(props: propsType): ReactElement {
     const { getText } = useContext(functionContext)
     const userData = useContext(userDataContext);
 
-    return userData === null ? <Navigate to="/" /> : <div id="mainPage">
+    return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
             <WebAnnouncement webAnnouncementList={webAnnouncementList} />
             <div className="currentCourse">
                 <h2>{getText("this_semester_courses")}</h2>
                 <div className="content body">
                     {
-                        currentCourse.map(data => <div
+                        currentCourse.map((data, i) => <div
+                            key={i}
                             className="block"
                             title={data.name}
                         >
@@ -57,7 +58,8 @@ export default function MainPage(props: propsType): ReactElement {
                 <h2>{getText("past_courses")}</h2>
                 <div className="content body">
                     {
-                        pastCourse.map(data => <div
+                        pastCourse.map((data, i) => <div
+                            key={i}
                             className="block"
                             title={data.name}
                         >
@@ -73,7 +75,8 @@ export default function MainPage(props: propsType): ReactElement {
                     <h2>{getText("assignments_due_soon")}</h2>
                     <div className="content">
                         {
-                            dueAssignment.map(data => <Link
+                            dueAssignment.map((data, i) => <Link
+                                key={i}
                                 to={`/course/${data.course_id}/${data.uid}`}
                                 className="block"
                             >
@@ -88,5 +91,7 @@ export default function MainPage(props: propsType): ReactElement {
                 <PlatformFriendlyArea titleId="teacher_ta_friendly_area" />
             </div>
         }
-    </div>;
+    </div>
+    </div>
+    ;
 };

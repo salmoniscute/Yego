@@ -27,9 +27,23 @@ import { getWebAnnouncementList } from "api/webAnnouncement";
 
 import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
+
 import MainPage from "./views/MainPage";
+import LoginPage from "views/LoginPage";
+import WebAnnouncementPage from "views/WebAnnouncementPage";
+
+
+import CoursePage from "views/CoursePage";
+import LandingPage from "views/LandingPage";
+import ReportPage from "views/ReportPage";
 
 import getTextOrigin from "utils/getText";
+
+
+function Logout(): ReactElement {
+    localStorage.removeItem("access_token")
+    return <Navigate to="/" />
+}
 
 
 export default function App(): ReactElement {
@@ -41,14 +55,14 @@ export default function App(): ReactElement {
 
     const location = useLocation();
 
-    const token = localStorage.getItem("access_token");
     const userData = useMemo(() => {
+        const token = localStorage.getItem("access_token");
         try {
             return token === null ? null : jwtDecode(token) as User;
         }
         catch { }
         return null;
-    }, [token]);
+    }, [location.pathname]);
 
     const getText = useCallback((id: string) => {
         return getTextOrigin(id, language);
@@ -84,12 +98,20 @@ export default function App(): ReactElement {
                         currentCourse={currentCourse}
                     />
                     <Routes>
-                        <Route path="/" element={<MainPage
+                        <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
+                        <Route path="/" element={userData === null ? <LandingPage
+                            webAnnouncementList={webAnnouncementList}
+                        /> : <MainPage
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
                             currentCourse={currentCourse}
                             pastCourse={pastCourse}
                         />} />
+                        <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
+                        <Route path="/logout" element={<Logout />} />
+                        <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
+                        <Route path="/course/:courseID/*" element={<CoursePage />} />
+                        <Route path="/reportBug" element={<ReportPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
