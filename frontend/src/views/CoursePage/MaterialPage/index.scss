@@ -1,0 +1,96 @@
+#courseMaterialPage {
+    display: flex;
+    gap: 1rem;
+    min-height: calc(100vh - 5.5rem - 9.9rem - 15.5rem - 4rem);
+    margin-bottom: 4rem;
+    .side {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        flex: 1;
+        .theme {
+            color: #949494;
+            transition: color 0.3s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .theme[data-select="true"],
+        .theme:hover {
+            color: #000;
+        }
+    }
+    .main {
+        flex: 8;
+        h2 {
+            margin: 0;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .materialBlock {
+            background-color: #f5f5f5;
+            min-height: calc(100% - 7.5rem);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 1rem;
+            overflow: hidden;
+            justify-content: space-between;
+            .materials {
+                min-height: calc(100% - 3.5rem);
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                .material {
+                    position: relative;
+                    margin-left: 2rem;
+                    height: 1.5rem;
+                    line-height: 1.5rem;
+                    width: min-content;
+                    user-select: none;
+                    cursor: pointer;
+                }
+                .material::before,
+                .material::after {
+                    position: absolute;
+                    top: 0;
+                    left: -2rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    line-height: 1.5rem;
+                    text-align: center;
+                    font-family: "Material Symbols Outlined";
+                    font-size: 1.3em;
+                    transition: transform 0.3s;
+                }
+                .material::before {
+                    content: "check_box_outline_blank";
+                    transform: scale(1);
+                }
+                .material::after {
+                    content: "check";
+                    transform: scale(0);
+                }
+                .material[data-select="true"]::before {
+                    transform: scale(0);
+                }
+                .material[data-select="true"]::after {
+                    transform: scale(1);
+                }
+            }
+            button {
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                height: 2.5rem;
+                width: 6rem;
+                border: none;
+                outline: none;
+                user-select: none;
+                cursor: pointer;
+                background-color: #CECECE;
+            }
+        }
+    }
+}

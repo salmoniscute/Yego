@@ -23,7 +23,7 @@ export default function LoginPage(): ReactElement {
   };
 
   return (
-    <div className="container">
+    <div id="loginPage" className="container">
       <div className="card1">
         <h2>成功大學數位學習平台-登入</h2>
       </div>

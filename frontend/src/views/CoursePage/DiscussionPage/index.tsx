@@ -20,7 +20,7 @@ export default function DiscussionPage(props: propsType): React.ReactElement {
 
 
     return (
-        <div id="discussionPage">
+        <div id="courseDiscussionPage">
             <div className="addDiscussionButton">
                 <div className="buttonInfo">
                     <FaPen className="icon"/>

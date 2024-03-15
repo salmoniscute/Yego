@@ -8,7 +8,6 @@ import {
     Navigate,
     Route,
     Routes,
-    useLocation,
     useParams
 } from "react-router-dom";
 
@@ -18,24 +17,24 @@ import MemberPage from "./MemberPage";
 import DiscussionPage from "./DiscussionPage";
 
 import "./index.scss";
+import MaterialPage from "./MaterialPage";
 
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
 
     const params = useParams();
-    const { courseId } = params;
+    const { courseID } = params;
     const tab = params["*"]?.split("/")[0];
-    console.log(tab)
-
-    const tabs = useMemo(() => courseId ? [
-        { label: "公告", path: "announcement", component: <BulletinPage courseID={courseId} /> },
-        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseId} /> },
-        { label: "課程教材", path: "material" },
-        { label: "成績", path: "score" },
+    
+    const tabs = useMemo(() => courseID ? [
+        { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
+        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} /> },
+        { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
+        { label: "成績", path: "grade" },
         { label: "成員", path: "member", component: <MemberPage /> }
-    ] : [], [courseId]);
+    ] : [], [courseID]);
 
-    return courseId ? (
+    return courseID ? (
         <div id="courseForum">
             <div className="titleInfor">
                 <h2>課程名稱</h2>
@@ -56,18 +55,16 @@ export default function CoursePage(): ReactElement {
                         >{data.label}</Link>
                     ))}
             </div>
-            <div>
-                <Routes>
-                    {
-                        tabs.map((data, i) => <Route
-                            key={i}
-                            path={`${data.path}`}
-                            element={data.component}
-                        />)
-                    }
-                    <Route path="*" element={<Navigate to={`./${tabs[0].path}`} />} />
-                </Routes>
-            </div>
+            <Routes>
+                {
+                    tabs.map((data, i) => <Route
+                        key={i}
+                        path={`/${data.path}`}
+                        element={data.component}
+                    />)
+                }
+                <Route path="*" element={<Navigate to={`./${tabs[0].path}`} />} />
+            </Routes>
         </div>
     ) : <Navigate to="/" />;
 }
