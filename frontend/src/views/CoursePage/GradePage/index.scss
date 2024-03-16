@@ -9,4 +9,20 @@
             font-weight: 600;
         }
     }
+
+    .courseGradeContent{
+        cursor: pointer;
+        display: flex;
+        p{
+            font-size: medium;
+            width: calc(100% / 5);
+        }
+        .assignmentName{
+            text-decoration:underline ;
+        }
+
+    }
+    .courseGradeContent:hover{
+        background-color: #f5f5f5;
+    }
 }
