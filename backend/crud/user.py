@@ -1,4 +1,4 @@
-import hashlib
+from auth.passwd import get_password_hash
 from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
@@ -9,6 +9,26 @@ from schemas import user as UserSchema
 
 @crud_class_decorator
 class UserCrudManager:
+    async def get_user_in_db(self, uid: str, db_session: AsyncSession):
+        stmt = select(
+            UserModel.uid, 
+            UserModel.password,
+            UserModel.name,
+            UserModel.role,
+            UserModel.email,
+            UserModel.department,
+            UserModel.country,
+            UserModel.introduction,
+            UserModel.avatar
+        ).where(UserModel.uid == uid)
+        result = await db_session.execute(stmt)
+        user = result.first()
+
+        if user:
+            return user
+        
+        return None
+    
     async def create_user(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
         user = UserModel(
             uid=newUser.uid,
@@ -63,9 +83,8 @@ class UserCrudManager:
     
     async def update_user_password_by_id(self, uid: str, updateUser: UserSchema.UserUpdatePassword, db_session: AsyncSession):
         stmt = update(UserModel).where(UserModel.uid == uid).values(
-            password=hashlib.md5(updateUser.password.encode() + b"secret").hexdigest()
+            password=get_password_hash(updateUser.password)
         )
-
         await db_session.execute(stmt)
         await db_session.commit()
 
