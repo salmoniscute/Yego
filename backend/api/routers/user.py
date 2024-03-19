@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 
 from .depends import check_user_id
+from auth.jwt import verify_access_token
 from auth.passwd import get_password_hash
 from crud.user import UserCrudManager
 from schemas import user as UserSchema
@@ -32,18 +34,11 @@ async def create_user(newUser: UserSchema.UserCreate) -> dict:
     """
     user = await UserCrud.get_user_by_id(newUser.uid)
     if user:
-        raise HTTPException(status_code=409, detail="User already exists")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
     
     newUser.password = get_password_hash(newUser.password)
     user = await UserCrud.create_user(newUser)
     return user
-
-
-@router.get(
-    "/users",
-)
-async def get_users() -> list:
-    return []
 
 
 @router.get(
@@ -58,7 +53,7 @@ async def get_user(uid: str) -> dict:
     if user:
         return user
     
-    raise HTTPException(status_code=404, detail="User does not exist")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
 
     
 @router.put(
@@ -84,11 +79,20 @@ async def update_user(updateUser: UserSchema.UserUpdate, uid: str = Depends(chec
     "/user/{uid}/password",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_user_password(updateUser: UserSchema.UserUpdatePassword, uid: str = Depends(check_user_id)) -> None:
+async def update_user_password(
+    updateUser: UserSchema.UserUpdatePassword, 
+    uid: str = Depends(check_user_id),
+    token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
+) -> None:
     """
     Update the password of the particular user.
     """
+    payload = await verify_access_token(token)
+    if payload.get("uid") != uid:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permission denied")
+    
     await UserCrud.update_user_password_by_id(uid, updateUser)
+
     return 
     
 
