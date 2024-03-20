@@ -3,8 +3,8 @@ from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 from datetime import datetime
 
-class Course_bulletin(Base):
-    __tablename__ = "Course bulletin"
+class CourseBulletin(Base):
+    __tablename__ = "CourseBulletin"
     cb_id : Mapped[BaseType.cb_id]
     publisher: Mapped[BaseType.str_20]
     course_id: Mapped[BaseType.str_20]

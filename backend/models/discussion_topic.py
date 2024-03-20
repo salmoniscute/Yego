@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 
-class Discussion_topic(Base):
+class DiscussionTopic(Base):
     __tablename__ = "DiscussionTopic"
     topic_id : Mapped[BaseType.topic_id]
     discussion_id : Mapped[BaseType.str_20]

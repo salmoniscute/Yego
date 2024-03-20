@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 
-class Discussion_topic_file(Base):
+class DiscussionTopicFile(Base):
     __tablename__ = "DiscussionTopicFile"
     file_id : Mapped[BaseType.file_id]
     topic_id : Mapped[BaseType.str_20]

@@ -2,7 +2,7 @@ from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 
-from models.discussion_topic_file import Discussion_topic_file as DiscussionTopicFileModel
+from models.discussion_topic_file import DiscussionTopicFile as DiscussionTopicFileModel
 from schemas import discussion_topic_file as DiscussionTopicFileSchema
 
 @crud_class_decorator

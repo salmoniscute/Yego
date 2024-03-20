@@ -2,7 +2,7 @@ from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 
-from models.discussion_reply import Discussion_reply as DiscussionReplyModel
+from models.discussion_reply import DiscussionReply as DiscussionReplyModel
 from schemas import discussion_reply as DiscussionReplySchema
 
 @crud_class_decorator

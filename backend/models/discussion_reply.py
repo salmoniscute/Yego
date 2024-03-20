@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 
-class Discussion_reply(Base):
+class DiscussionReply(Base):
     __tablename__ = "DiscussionReply"
     reply_id : Mapped[BaseType.reply_id]
     topic_id : Mapped[BaseType.str_20]
@@ -19,5 +19,5 @@ class Discussion_reply(Base):
         self.content = content
 
     def __repr__(self) -> str:
-        return f"DiscussionTopic(reply_id={self.reply_id}, topic_id={self.topic_id}, publisher={self.publisher}, release_time={self.release_time}, content={self.content})"
+        return f"DiscussionReply(reply_id={self.reply_id}, topic_id={self.topic_id}, publisher={self.publisher}, release_time={self.release_time}, content={self.content})"
 
