@@ -2,9 +2,9 @@ from fastapi import HTTPException
 
 from crud.user import UserCrudManager
 from crud.course import CourseCrudManager
+from crud.selected_course import SelectedCourseCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
 from crud.website_bulletin_file import WebsiteBulletinFileCrudManager
-
 from crud.course_bulletin import CourseBulletinCrudManager
 from crud.discussion import DiscussionCrudManager
 from crud.discussion_topic import DiscussionTopicCrudManager
@@ -13,6 +13,7 @@ from crud.discussion_topic_file import DiscussionTopicFileCrudManager
 
 UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
+SelectedCourseCrud = SelectedCourseCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 WebsiteBulletinFileCrud = WebsiteBulletinFileCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
@@ -37,6 +38,7 @@ async def check_course_id(course_id: str):
         raise HTTPException(status_code=404, detail="Course does not exist")
     
     return course.course_id
+
 
 async def check_website_bulletin_id(wb_id: str):
     website_bulletin = await WebsiteBulletinCrud.get_website_bulletin_by_wb_id(wb_id)

@@ -9,6 +9,7 @@ from .routers import (
     auth_router,
     user_router,
     course_router,
+    selected_course_router,
     website_bulletin_router,
     website_bulletin_file_router,
     course_bulletin_router,
@@ -24,6 +25,7 @@ app.include_router(info_router)
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(course_router)
+app.include_router(selected_course_router)
 app.include_router(website_bulletin_router)
 app.include_router(website_bulletin_file_router)
 app.include_router(course_bulletin_router)
