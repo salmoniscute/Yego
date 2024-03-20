@@ -18,12 +18,13 @@ class WebsiteBulletinCrudManager:
     async def get_all(self, db_session: AsyncSession):
         stmt = select(WebsiteBulletinModel)
         result = await db_session.execute(stmt)
+        result = result.unique()
 
         return [bulletin[0] for bulletin in result.all()]
     
-    async def create(self, newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate, db_session: AsyncSession):
+    async def create(self, publisher: str, newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate, db_session: AsyncSession):
         newBulletin_dict = newBulletin.model_dump()
-        bulletin = WebsiteBulletinModel(**newBulletin_dict)
+        bulletin = WebsiteBulletinModel(publisher=publisher, **newBulletin_dict)
         db_session.add(bulletin)
         await db_session.commit()
         db_session.refresh(bulletin)
