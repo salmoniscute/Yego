@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion_topic_file import DiscussionTopicFileCrudManager
 from schemas import discussion_topic_file as DiscussionTopicFileSchema
 from .depends import check_discussion_topic_file_id
-from auth.jwt import create_jwt
 
 DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
 router = APIRouter(
@@ -36,6 +35,7 @@ async def create_discussion_topic_file(newDiscussionTopicFile: DiscussionTopicFi
 
 @router.get(
     "/discussion_topic_file", 
+    response_model=DiscussionTopicFileSchema.DiscussionTopicFileRead,
     response_description="Get a discussion topic file",  
 )
 async def get_discussion_topic_file(file_id: str = None):
@@ -43,7 +43,7 @@ async def get_discussion_topic_file(file_id: str = None):
     discussion_topic_file = await DiscussionTopicFileCrud.get_discussion_topic_file_by_file_id(file_id)
     
     if discussion_topic_file:
-        return create_jwt(discussion_topic_file)
+        return discussion_topic_file
     raise HTTPException(status_code=404, detail=f"Discussion topic file doesn't exist")
     
 

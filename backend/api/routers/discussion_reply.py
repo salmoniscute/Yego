@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion_reply import DiscussionReplyCrudManager
 from schemas import discussion_reply as DiscussionReplySchema
 from .depends import check_discussion_reply_id
-from auth.jwt import create_jwt
 
 DiscussionReplyCrud = DiscussionReplyCrudManager()
 router = APIRouter(
@@ -38,6 +37,7 @@ async def create_discussion_reply(newDiscussionReply: DiscussionReplySchema.Disc
 
 @router.get(
     "/discussion_reply", 
+    response_model=DiscussionReplySchema.DiscussionReplyRead,
     response_description="Get a discussion reply by reply_id",  
 )
 async def get_discussion_reply(reply_id: str = None):
@@ -45,7 +45,7 @@ async def get_discussion_reply(reply_id: str = None):
     discussion_reply = await DiscussionReplyCrud.get_discussion_reply_by_reply_id(reply_id)
     
     if discussion_reply:
-        return create_jwt(discussion_reply)
+        return discussion_reply
     raise HTTPException(status_code=404, detail=f"Discussion reply doesn't exist")
     
 

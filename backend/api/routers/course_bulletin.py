@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.course_bulletin import CourseBulletinCrudManager
 from schemas import course_bulletin as CourseBulletinSchema
 from .depends import check_course_bulletin_id
-from auth.jwt import create_jwt
 
 CourseBulletinCrud = CourseBulletinCrudManager()
 router = APIRouter(
@@ -39,6 +38,7 @@ async def create_course_bulletin(newCourseBulletin: CourseBulletinSchema.CourseB
 
 @router.get(
     "/course_bulletin", 
+    response_model=CourseBulletinSchema.CourseBulletinRead,
     response_description="Get a couse",  
 )
 async def get_course_bulletin(cb_id: str = None):
@@ -46,7 +46,7 @@ async def get_course_bulletin(cb_id: str = None):
     course_bulletin = await CourseBulletinCrud.get_course_bulletin_by_cb_id(cb_id)
     
     if course_bulletin:
-        return create_jwt(course_bulletin)
+        return course_bulletin
     raise HTTPException(status_code=404, detail=f"Bulletin doesn't exist")
     
 

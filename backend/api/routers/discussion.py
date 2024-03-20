@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion import DiscussionCrudManager
 from schemas import discussion as DiscussionSchema
 from .depends import check_discussion_id
-from auth.jwt import create_jwt
 
 DiscussionCrud = DiscussionCrudManager()
 router = APIRouter(
@@ -37,6 +36,7 @@ async def create_discussion(newDiscussion: DiscussionSchema.DiscussionCreate):
 
 @router.get(
     "/discussion", 
+    response_model=DiscussionSchema.DiscussionRead,
     response_description="Get a discussion",  
 )
 async def get_discussion(discussion_id: str = None):
@@ -44,7 +44,7 @@ async def get_discussion(discussion_id: str = None):
     discussion = await DiscussionCrud.get_discussion_by_id(discussion_id)
     
     if discussion:
-        return create_jwt(discussion)
+        return discussion
     raise HTTPException(status_code=404, detail=f"Discussion doesn't exist")
     
 
