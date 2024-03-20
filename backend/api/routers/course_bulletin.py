@@ -6,7 +6,7 @@ from auth.jwt import create_jwt
 
 CourseBulletinCrud = CourseBulletinCrudManager()
 router = APIRouter(
-    tags=["course_bulletin"],
+    tags=["Course Bulletin"],
     prefix="/api"
 )
 

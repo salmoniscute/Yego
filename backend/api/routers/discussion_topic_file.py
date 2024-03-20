@@ -6,7 +6,7 @@ from auth.jwt import create_jwt
 
 DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
 router = APIRouter(
-    tags=["discussion_topic_file"],
+    tags=["Discussion Topic File"],
     prefix="/api"
 )
 
