@@ -3,6 +3,9 @@ from crud.discussion import DiscussionCrudManager
 from schemas import discussion as DiscussionSchema
 from .depends import check_discussion_id
 
+from schemas import discussion_topic as DiscussionTopicSchema
+from schemas import relation as RelationSchema
+from typing import List
 DiscussionCrud = DiscussionCrudManager()
 router = APIRouter(
     tags=["Discussion"],
@@ -68,3 +71,15 @@ async def delete_discussion(discussion_id: str = Depends(check_discussion_id)):
     await DiscussionCrud.delete_discussion_by_id(discussion_id)
     
     return 
+
+
+@router.get(
+    "/discussion/{discussion_id}", 
+    response_model=RelationSchema.DiscussionRelation,
+    response_description="Get a list",  
+)
+async def get_discussion_topics(discussion_id: str = Depends(check_discussion_id)):
+
+    discussion = await DiscussionCrud.get_discussion_by_id(discussion_id)
+    print(discussion.topics)
+    return discussion

@@ -3,7 +3,6 @@ from pydantic import BaseModel
 
 class DiscussionTopicBase(BaseModel):
     topic_id: str
-    discussion_id: str
 
 class DiscussionTopicCreate(DiscussionTopicBase):
     publisher: str

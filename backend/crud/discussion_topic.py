@@ -7,14 +7,15 @@ from schemas import discussion_topic as DiscussionTopicSchema
 
 @crud_class_decorator
 class DiscussionTopicCrudManager:
-    async def create_discussion_topic(self, newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, db_session: AsyncSession):
+    async def create_discussion_topic(self, newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, discussion_id:str, db_session: AsyncSession):
         discussion_topic = DiscussionTopicModel(
             topic_id=newDiscussionTopic.topic_id,
-            discussion_id=newDiscussionTopic.discussion_id,
+            # discussion_id=newDiscussionTopic.discussion_id,
             publisher=newDiscussionTopic.publisher,
             title=newDiscussionTopic.title,
             release_time=newDiscussionTopic.release_time,
-            content=newDiscussionTopic.content
+            content=newDiscussionTopic.content,
+            discussion_id=discussion_id
         )
         db_session.add(discussion_topic)
         await db_session.commit()

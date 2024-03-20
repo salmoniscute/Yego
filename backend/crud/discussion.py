@@ -29,6 +29,10 @@ class DiscussionCrudManager:
         ).where(DiscussionModel.discussion_id == discussion_id)
         result = await db_session.execute(stmt)
         discussion = result.first()
+        
+        print(DiscussionModel.__mapper__.relationships.items())
+        print(discussion)
+        
         if discussion:
             return discussion
         

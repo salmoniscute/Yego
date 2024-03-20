@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion_topic import DiscussionTopicCrudManager
 from schemas import discussion_topic as DiscussionTopicSchema
-from .depends import check_discussion_topic_id
+from .depends import check_discussion_topic_id, check_discussion_id
 
 DiscussionTopicCrud = DiscussionTopicCrudManager()
 router = APIRouter(
@@ -15,7 +15,7 @@ router = APIRouter(
     status_code=201,
     response_description="The discussion topic has been successfully created."
 )
-async def create_discussion_topic(newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate):
+async def create_discussion_topic(newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, discussion_id: str = Depends(check_discussion_id)):
     """
     Create a discussion topic with the following information:
     - **topic_id**
@@ -32,7 +32,7 @@ async def create_discussion_topic(newDiscussionTopic: DiscussionTopicSchema.Disc
         raise HTTPException(status_code=409, detail=f"Discussion topic already exists")
     
     # create discussion topic
-    discussion_topic = await DiscussionTopicCrud.create_discussion_topic(newDiscussionTopic)
+    discussion_topic = await DiscussionTopicCrud.create_discussion_topic(newDiscussionTopic, discussion_id)
 
     return discussion_topic
 
@@ -70,3 +70,7 @@ async def delete_discussion_topic(topic_id: str = Depends(check_discussion_topic
     await DiscussionTopicCrud.delete_discussion_topic_by_topic_id(topic_id)
     
     return 
+
+
+
+

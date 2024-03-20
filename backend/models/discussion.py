@@ -9,6 +9,7 @@ class Discussion(Base):
     title : Mapped[BaseType.str_100]
     discription : Mapped[BaseType.str_100]
 
+    topics:Mapped[list["DiscussionTopic"]] = relationship("DiscussionTopic", back_populates="discussion", cascade="all, delete, delete-orphan", lazy="select")
 
     def __init__(self,discussion_id:str, course_id:str, title:float, discription:str) -> None:
         self.discussion_id = discussion_id
