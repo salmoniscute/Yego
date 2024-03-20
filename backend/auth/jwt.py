@@ -3,6 +3,7 @@ import sqlalchemy
 from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status
 
+from models.user import User as UserModel
 from schemas import auth as AuthSchema
 
 secret = "secret"
@@ -25,10 +26,11 @@ async def create_jwt(data: sqlalchemy.engine.row.Row):
     return jwt.encode(dict(data._mapping), secret, algorithm)
 
 
-async def create_access_token(data: sqlalchemy.engine.row.Row):
+async def create_access_token(data: UserModel):
     expire = datetime.now(tz=timezone.utc) + timedelta(minutes=10)
-    
-    to_encode = dict(data._mapping)
+
+    to_encode = data.__dict__
+    to_encode.pop("_sa_instance_state")
     to_encode.pop("password")
     to_encode.update({"exp": expire})
 

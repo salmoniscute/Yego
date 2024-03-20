@@ -26,10 +26,6 @@ class WebsiteBulletinCreate(BaseModel):
     }
 
 
-class WebsiteBulletinCreateResponse(BaseModel):
-    wb_id: str
-
-
 class WebsiteBulletinRead(BaseModel):
     wb_id: str
     publisher: str
@@ -40,9 +36,9 @@ class WebsiteBulletinRead(BaseModel):
 
 
 class WebsiteBulletinUpdate(BaseModel):
-    title: str
-    content: str
-    pin_to_top: bool
+    title: Optional[str] = None
+    content: Optional[str] = None
+    pin_to_top: Optional[bool] = None
 
     model_config = {
         "json_schema_extra": {

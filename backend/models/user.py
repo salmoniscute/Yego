@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy.orm import Mapped
 from typing import Optional 
 
 from models.base import Base, BaseType

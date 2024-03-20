@@ -24,7 +24,7 @@ DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
 
 
 async def check_user_id(uid: str):
-    user = await UserCrud.get_user_by_id(uid)
+    user = await UserCrud.get(uid)
     if not user:
         raise HTTPException(status_code=404, detail="User does not exist")
     
@@ -41,7 +41,7 @@ async def check_course_id(course_id: str):
 
 
 async def check_website_bulletin_id(wb_id: str):
-    website_bulletin = await WebsiteBulletinCrud.get_website_bulletin_by_wb_id(wb_id)
+    website_bulletin = await WebsiteBulletinCrud.get(wb_id)
     if not website_bulletin:
         raise HTTPException(status_code=404, detail="Website bulletin does not exist")
     
@@ -49,7 +49,7 @@ async def check_website_bulletin_id(wb_id: str):
 
 
 async def check_website_bulletin_file_id(file_id: str):
-    file = await WebsiteBulletinFileCrud.get_file_by_file_id(file_id)
+    file = await WebsiteBulletinFileCrud.get(file_id)
     if not file:
         raise HTTPException(status_code=404, detail="File does not exist")
     
