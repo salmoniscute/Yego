@@ -20,10 +20,6 @@ class WebsiteBulletinFileCreate(BaseModel):
     }
 
 
-class WebsiteBulletinFileCreateResponse(BaseModel):
-    file_id: str
-
-
 class WebsiteBulletinFileRead(BaseModel):
     file_id: str
     wb_id: str
@@ -31,7 +27,7 @@ class WebsiteBulletinFileRead(BaseModel):
     
 
 class WebsiteBulletinFileUpdate(BaseModel):
-    path: str
+    path: Optional[str] = None
     
     model_config = {
         "json_schema_extra": {

@@ -7,6 +7,21 @@ from auth.passwd import get_password_hash
 from crud.user import UserCrudManager
 from schemas import user as UserSchema
 
+permission_denied = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, 
+    detail="Permission denied"
+)
+
+not_found = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, 
+    detail="User does not exist"
+)
+
+already_exists = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, 
+    detail="User already exists"
+)
+
 UserCrud = UserCrudManager()
 router = APIRouter(
     prefix="/api",
@@ -16,10 +31,10 @@ router = APIRouter(
 
 @router.post(
     "/user",
-    response_model=UserSchema.UserCreateResponse,
+    response_model=UserSchema.UserRead,
     status_code=status.HTTP_201_CREATED
 )
-async def create_user(newUser: UserSchema.UserCreate) -> dict:
+async def create_user(newUser: UserSchema.UserCreate):
     """
     Create a user with the following information:
     - **uid**
@@ -32,37 +47,58 @@ async def create_user(newUser: UserSchema.UserCreate) -> dict:
     - **introduction** (optional)
     - **avatar** (optional)
     """
-    user = await UserCrud.get_user_by_id(newUser.uid)
-    if user:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
+    if await UserCrud.get(newUser.uid):
+        raise already_exists
     
     newUser.password = get_password_hash(newUser.password)
-    user = await UserCrud.create_user(newUser)
+    user = await UserCrud.create(newUser)
+
     return user
+
+    
+@router.get(
+    "/users",
+    response_model=list[UserSchema.UserRead],
+    status_code=status.HTTP_200_OK
+)
+async def get_all_users():
+    """
+    Get all users.
+    """
+    users = await UserCrud.get_all()
+    if users:
+        return users
+    
+    raise not_found
 
 
 @router.get(
     "/user/{uid}",
-    response_model=UserSchema.UserRead
+    response_model=UserSchema.UserRead,
+    status_code=status.HTTP_200_OK
 )
-async def get_user(uid: str) -> dict:
+async def get_user(uid: str):
     """
-    Get the information of the particular user.
+    Get the particular user.
     """
-    user = await UserCrud.get_user_by_id(uid)
+    user = await UserCrud.get(uid)
     if user:
         return user
     
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
+    raise not_found
 
-    
+
 @router.put(
     "/user/{uid}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_user(updateUser: UserSchema.UserUpdate, uid: str = Depends(check_user_id)) -> None:
+async def update_user(
+    updateUser: UserSchema.UserUpdate, 
+    uid: str = Depends(check_user_id),
+    token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
+):
     """
-    Update the information of the particular user with at least one of the following information:
+    Update the user with at least one of the following information:
     - **name**
     - **role**
     - **email**
@@ -71,7 +107,11 @@ async def update_user(updateUser: UserSchema.UserUpdate, uid: str = Depends(chec
     - **introduction**
     - **avatar**
     """
-    await UserCrud.update_user_by_id(uid, updateUser)
+    payload = await verify_access_token(token)
+    if payload.get("uid") != uid:
+        raise permission_denied
+    
+    await UserCrud.update(uid, updateUser)
     return 
     
 
@@ -83,15 +123,15 @@ async def update_user_password(
     updateUser: UserSchema.UserUpdatePassword, 
     uid: str = Depends(check_user_id),
     token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
-) -> None:
+):
     """
     Update the password of the particular user.
     """
     payload = await verify_access_token(token)
     if payload.get("uid") != uid:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permission denied")
+        raise permission_denied
     
-    await UserCrud.update_user_password_by_id(uid, updateUser)
+    await UserCrud.update_password(uid, updateUser)
 
     return 
     
@@ -100,9 +140,9 @@ async def update_user_password(
     "/user/{uid}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_user(uid: str = Depends(check_user_id)) -> None:
+async def delete_user(uid: str = Depends(check_user_id)):
     """
-    Delete the particular user.
+    Delete the user.
     """
-    await UserCrud.delete_user_by_id(uid)
+    await UserCrud.delete(uid)
     return 
