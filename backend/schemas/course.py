@@ -1,6 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 from .course_bulletin import CourseBulletinRead
+from .discussion import DiscussionRead
 
 class CourseCreate(BaseModel):
     course_id: str
@@ -36,6 +37,7 @@ class CourseRead(BaseModel):
     name: str
     outline : str
     bulletins:Optional[list[CourseBulletinRead]] = None
+    discussions:Optional[list[DiscussionRead]] = None
     
 class CourseUpdate(BaseModel):
     teacher : Optional[str]
