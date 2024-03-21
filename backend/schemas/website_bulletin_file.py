@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 class WebsiteBulletinFileCreate(BaseModel):
     file_id: str
-    wb_id: str
     path: str
 
     model_config = {
@@ -12,7 +11,6 @@ class WebsiteBulletinFileCreate(BaseModel):
             "examples": [
                 { 
                     "file_id": "1",
-                    "wb_id": "test",
                     "path": "/path/of/file"
                 }
             ]

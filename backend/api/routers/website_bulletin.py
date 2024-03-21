@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_website_bulletin_id
+from .depends import check_user_id, check_website_bulletin_id
 from crud.website_bulletin import WebsiteBulletinCrudManager
 from schemas import website_bulletin as WebsiteBulletinSchema
 
@@ -23,14 +23,17 @@ router = APIRouter(
 
 @router.post(
     "/website_bulletin", 
-    response_model=WebsiteBulletinSchema.WebsiteBulletinRead,
+    response_model=WebsiteBulletinSchema.WebsiteBulletinCreateResponse,
     status_code=status.HTTP_201_CREATED
 )
-async def create_website_bulletin(newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate):
+async def create_website_bulletin(
+    newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate,
+    publisher: str = Depends(check_user_id)
+):
     """
     Create a website bulletin with the following information:
+    - **publisher** (alias of uid, should be existing)
     - **wb_id**
-    - **publisher**
     - **title**
     - **release_time**
     - **content**
@@ -39,7 +42,7 @@ async def create_website_bulletin(newBulletin: WebsiteBulletinSchema.WebsiteBull
     if await WebsiteBulletinCrud.get(newBulletin.wb_id):
         raise already_exists
     
-    website_bulletin = await WebsiteBulletinCrud.create(newBulletin)
+    website_bulletin = await WebsiteBulletinCrud.create(publisher, newBulletin)
     return website_bulletin
 
 

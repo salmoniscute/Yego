@@ -21,9 +21,9 @@ class WebsiteBulletinFileCrudManager:
 
         return [file[0] for file in result.all()]
     
-    async def create(self, newFile: WebsiteBulletinFileSchema.WebsiteBulletinFileCreate, db_session: AsyncSession):
+    async def create(self, wb_id, newFile: WebsiteBulletinFileSchema.WebsiteBulletinFileCreate, db_session: AsyncSession):
         newFile_dict = newFile.model_dump()
-        file = WebsiteBulletinFileModel(**newFile_dict)
+        file = WebsiteBulletinFileModel(wb_id=wb_id, **newFile_dict)
         db_session.add(file)
         await db_session.commit()
         db_session.refresh(file)

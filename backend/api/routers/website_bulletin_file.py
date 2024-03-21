@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_website_bulletin_file_id
+from .depends import check_website_bulletin_id, check_website_bulletin_file_id
 from crud.website_bulletin_file import WebsiteBulletinFileCrudManager
 from schemas import website_bulletin_file as WebsiteBulletinFileSchema
 
@@ -26,17 +26,20 @@ router = APIRouter(
     response_model=WebsiteBulletinFileSchema.WebsiteBulletinFileRead,
     status_code=status.HTTP_201_CREATED
 )
-async def create_website_bulletin_file(newFile: WebsiteBulletinFileSchema.WebsiteBulletinFileCreate):
+async def create_website_bulletin_file(
+    newFile: WebsiteBulletinFileSchema.WebsiteBulletinFileCreate, 
+    wb_id: str = Depends(check_website_bulletin_id)
+):
     """
     Create a website bulletin file with the following information:
+    - **wb_id** (should be existing)
     - **file_id**
-    - **wb_id**
     - **path**
     """
     if await WebsiteBulletinFileCrud.get(newFile.file_id):
         raise already_exists
     
-    file = await WebsiteBulletinFileCrud.create(newFile)
+    file = await WebsiteBulletinFileCrud.create(wb_id, newFile)
     return file
 
 
