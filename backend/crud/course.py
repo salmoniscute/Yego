@@ -7,55 +7,40 @@ from schemas import course as CourseSchema
 
 @crud_class_decorator
 class CourseCrudManager:
-    async def create_course(self, newCourse: CourseSchema.CourseCreate, db_session: AsyncSession):
-        course = CourseModel(
-            course_id = newCourse.course_id,
-            teacher = newCourse.teacher,
-            course_code = newCourse.course_code,
-            academic_year = newCourse.academic_year,
-            semester = newCourse.semester,
-            name = newCourse.name,
-            outline = newCourse.outline
-        )
+    async def create(self, newCourse: CourseSchema.CourseCreate, db_session: AsyncSession):
+        newCourse_dict = newCourse.model_dump()
+        course = CourseModel(**newCourse_dict)
         db_session.add(course)
         await db_session.commit()
         db_session.refresh(course)
 
         return course
 
-    async def get_course_by_id(self, course_id: str, db_session: AsyncSession):
-        stmt = select(
-            CourseModel.course_id,
-            CourseModel.teacher,
-            CourseModel.course_code,
-            CourseModel.academic_year,
-            CourseModel.semester,
-            CourseModel.name,
-            CourseModel.outline
-        ).where(CourseModel.course_id == course_id)
+    async def get(self, course_id: str, db_session: AsyncSession):
+        stmt = select(CourseModel).where(CourseModel.course_id == course_id)
         result = await db_session.execute(stmt)
         course = result.first()
-        if course:
-            return course
         
-        return None
+        return course[0] if course else None
 
-    async def update_course_by_id(self, course_id: str, updateCourse: CourseSchema.CourseUpdate, db_session: AsyncSession):
-        stmt = update(CourseModel).where(CourseModel.course_id == course_id).values(
-            teacher=updateCourse.teacher,
-            course_code=updateCourse.course_code,
-            academic_year=updateCourse.academic_year,
-            semester=updateCourse.semester,
-            name=updateCourse.name,
-            outline=updateCourse.outline
-        )
-        await db_session.execute(stmt)
-        await db_session.commit()
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(CourseModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [course[0] for course in result.all()]
+    
+    async def update(self, course_id: str, updateCourse: CourseSchema.CourseUpdate, db_session: AsyncSession):
+        updateCourse_dict = updateCourse.model_dump()
+        if updateCourse_dict:
+            stmt = update(CourseModel).where(CourseModel.course_id == course_id).values(**updateCourse_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
 
         return 
     
     
-    async def delete_course_by_id(self, course_id: int, db_session: AsyncSession):
+    async def delete(self, course_id: int, db_session: AsyncSession):
         stmt = delete(CourseModel).where(CourseModel.course_id == course_id)
         await db_session.execute(stmt)
         await db_session.commit()

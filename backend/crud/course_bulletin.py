@@ -7,50 +7,40 @@ from schemas import course_bulletin as CourseBulletinSchema
 
 @crud_class_decorator
 class CourseBulletinCrudManager:
-    async def create_course_bulletin(self, newCourse: CourseBulletinSchema.CourseBulletinCreate, db_session: AsyncSession):
-        course_bulletin = CourseBulletinModel(
-            cb_id = newCourse.cb_id,
-            publisher = newCourse.publisher,
-            course_id = newCourse.course_id,
-            title = newCourse.title,
-            release_time = newCourse.release_time,
-            content = newCourse.content
-        )
+    async def create(self, course_id, newCourse: CourseBulletinSchema.CourseBulletinCreate, db_session: AsyncSession):
+        newCourseBulletin_dict = newCourse.model_dump()
+        course_bulletin = CourseBulletinModel(**newCourseBulletin_dict, course_id=course_id)
         db_session.add(course_bulletin)
         await db_session.commit()
         db_session.refresh(course_bulletin)
 
         return course_bulletin
 
-    async def get_course_bulletin_by_cb_id(self, cb_id: str, db_session: AsyncSession):
-        stmt = select(
-            CourseBulletinModel.cb_id,
-            CourseBulletinModel.publisher,
-            CourseBulletinModel.course_id,
-            CourseBulletinModel.title,
-            CourseBulletinModel.release_time,
-            CourseBulletinModel.content
-        ).where(CourseBulletinModel.cb_id == cb_id)
+    async def get(self, cb_id: str, db_session: AsyncSession):
+        stmt = select(CourseBulletinModel).where(CourseBulletinModel.cb_id == cb_id)
         result = await db_session.execute(stmt)
         course_bulletin = result.first()
-        if course_bulletin:
-            return course_bulletin
-        return None
+        
+        return course_bulletin[0] if course_bulletin else None
 
-    async def update_course_bulletin_by_id(self, course_id: str, updateCourseBulletin: CourseBulletinSchema.CourseBulletinUpdate, db_session: AsyncSession):
-        stmt = update(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id).values(
-            publisher=updateCourseBulletin.publisher,
-            title=updateCourseBulletin.title,
-            release_time=updateCourseBulletin.release_time,
-            content=updateCourseBulletin.content
-        )
-        await db_session.execute(stmt)
-        await db_session.commit()
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(CourseBulletinModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [course_bulletin[0] for course_bulletin in result.all()]
+
+    async def update(self, course_id: str, updateCourseBulletin: CourseBulletinSchema.CourseBulletinUpdate, db_session: AsyncSession):
+        updateCourseBulletin_dict = updateCourseBulletin.model_dump()
+        if updateCourseBulletin_dict:
+            stmt = update(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id).values(**updateCourseBulletin_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
 
         return
     
     
-    async def delete_course_bulletin_by_id(self, course_id: int, db_session: AsyncSession):
+    async def delete(self, course_id: int, db_session: AsyncSession):
         stmt = delete(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id)
         await db_session.execute(stmt)
         await db_session.commit()

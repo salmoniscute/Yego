@@ -31,7 +31,7 @@ async def check_user_id(uid: str):
 
 
 async def check_course_id(course_id: str):
-    course = await CourseCrud.get_course_by_id(course_id)
+    course = await CourseCrud.get(course_id)
     
     if not course:
         raise HTTPException(status_code=404, detail="Course does not exist")
@@ -54,7 +54,7 @@ async def check_website_bulletin_file_id(file_id: str):
     return file.file_id
 
 async def check_course_bulletin_id(cb_id: str):
-    course_bulletin = await CourseBulletinCrud.get_course_bulletin_by_cb_id(cb_id)
+    course_bulletin = await CourseBulletinCrud.get(cb_id)
     
     if not course_bulletin:
         raise HTTPException(status_code=404, detail="Bulletin does not exist")

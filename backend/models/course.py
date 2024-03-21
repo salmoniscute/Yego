@@ -9,8 +9,17 @@ class Course(Base):
     course_code : Mapped[BaseType.str_20]
     academic_year : Mapped[BaseType.str_20]
     semester : Mapped[int]
-    name : Mapped[BaseType.str_20]
-    outline : Mapped[BaseType.str_20]
+    name : Mapped[BaseType.str_100]
+    outline : Mapped[BaseType.str_100]
+    
+    #relationship to CourseBulletin parent to child
+    bulletins : Mapped[list["CourseBulletin"]] = relationship(
+        "CourseBulletin",
+        back_populates="course",
+        cascade="all, delete, delete-orphan",
+        passive_deletes=True,
+        lazy="joined"
+    )
 
 
     def __init__(self,course_id:str, teacher:str, course_code:float, academic_year:int, semester:int, name:str, outline:Optional[str]) -> None:
