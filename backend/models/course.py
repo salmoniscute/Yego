@@ -20,6 +20,15 @@ class Course(Base):
         passive_deletes=True,
         lazy="joined"
     )
+    
+    #relationship to Discussion parent to child
+    discussions : Mapped[list["Discussion"]] = relationship(
+        "Discussion",
+        back_populates="course",
+        cascade="all, delete, delete-orphan",
+        passive_deletes=True,
+        lazy="joined"
+    )
 
 
     def __init__(self,course_id:str, teacher:str, course_code:float, academic_year:int, semester:int, name:str, outline:Optional[str]) -> None:
