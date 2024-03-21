@@ -1,17 +1,16 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class DiscussionTopicBase(BaseModel):
+class DiscussionTopicCreate(BaseModel):
     topic_id: str
-    discussion_id: str
-
-class DiscussionTopicCreate(DiscussionTopicBase):
     publisher: str
     title: str
     release_time: str
     content: str
 
-class DiscussionTopicRead(DiscussionTopicBase):
+class DiscussionTopicRead(BaseModel):
+    topic_id: str
+    discussion_id: str
     publisher: str
     title: str
     release_time: str

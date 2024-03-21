@@ -1,14 +1,13 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class DiscussionTopicFileBase(BaseModel):
+class DiscussionTopicFileCreate(BaseModel):
     file_id: str
-    topic_id: str
-
-class DiscussionTopicFileCreate(DiscussionTopicFileBase):
     path: str
 
-class DiscussionTopicFileRead(DiscussionTopicFileBase):
+class DiscussionTopicFileRead(BaseModel):
+    file_id: str
+    topic_id: str
     path: str
     
 class DiscussionTopicFileUpdate(BaseModel):
