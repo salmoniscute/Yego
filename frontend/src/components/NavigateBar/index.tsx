@@ -51,9 +51,9 @@ export default function NavigateBar(props: propsType): ReactElement {
 
     return (
         <div id="navigateBar">
-            <div className="logo">
+            <Link to="/" className="logo">
                 <h1>YEGO</h1>
-            </div>
+            </Link>
             <label className="dropdownMenu">
                 <input type="checkbox" />
                 <div className="ms">language</div>

@@ -47,7 +47,8 @@ export default function PlatformFriendlyArea(props: propsType): ReactElement {
         <h2>{getText(titleId)}</h2>
         <div className="content">
             {
-                HelpList.map(data => <Link
+                HelpList.map((data, i) => <Link
+                    key={i}
                     to={`/help/${data.id}`}
                     className="block"
                 >

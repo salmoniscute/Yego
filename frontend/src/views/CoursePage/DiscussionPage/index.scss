@@ -1,0 +1,66 @@
+#courseDiscussionPage{
+    position: relative;
+    max-width: calc(1200px);
+
+    padding: 0em 0em 3em 0em;
+
+    .addDiscussionButton{
+        display: flex;
+        justify-content: flex-end;
+        margin: 2em 0em;
+        .buttonInfo{
+            cursor: pointer;
+            background-color: #d9d9d9;
+            display: flex;
+            font-size: large;
+            font-weight: 600;
+            padding: 0.6em 1em;
+            svg{
+                margin-right: 0.5em;
+                margin-top: 0.2em;
+            }
+            p{
+                margin: 0em 0em;
+                font-size: medium;
+            }
+        }
+    }
+
+    .discussionTab{
+        display: flex;
+        .discussionTitle{
+            width: 30%;
+        }
+        .discussionDiscription{
+            width: 60%;
+        }
+        > p{
+            font-size: 22px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+    }
+
+    .discussionInfo{
+        display: flex;
+        align-items: center;
+        
+        .discussionTitle{
+            cursor: pointer;
+            width: 30%;
+            a{
+                text-decoration: none;
+                color: black;
+            }
+        }
+        .discussionDiscription{
+            width: 63%;
+        }
+        > p{
+            font-weight: 600;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+    }
+
+}
