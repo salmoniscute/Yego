@@ -29,14 +29,13 @@ export default function LoginPage(): ReactElement {
       </div>
       <div className="card2">
         <div className="left">
-          <img src={salmon} style={{ maxWidth: '80%', height: '80%' }} />
         </div>
         <div className="right">
           <div>
             <form>
               <input
                 type="text"
-                placeholder="用戶名"
+                placeholder="帳號"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)} />
               <input
@@ -51,7 +50,7 @@ export default function LoginPage(): ReactElement {
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 />
-                <p>記住我</p>
+                <p>記住帳號</p>
 
               </div>
               <button type="button" onClick={handleLogin}>

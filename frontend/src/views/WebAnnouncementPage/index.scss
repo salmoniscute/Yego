@@ -6,14 +6,61 @@
     width: 70rem;
     margin: auto;
 
+    .out{
+      height:50px;
+    }
     .title{
       width: auto;
-      height: 50px;
+      height: 100px;
     }
     
     .announcementtitle{
-        height: 500px;
-        background-color: #e10000;
+        height: 70px;
+        background-color: #7570377c;
+        .announcement{
+          padding-left :30px;
+        }
     }
 
+    .posterinformation{
+      .announcement{
+        display: flex;
+    }
+    img {
+      width: 50px;  
+      height: 50px; 
+      border-radius: 50%; 
+      margin-right: 10px; 
+      margin-top: 10px;
   }
+
+  }
+
+  .date{
+    font-size: small;
+    margin-left: 60px;
+  }
+
+
+  .announcement-list{
+    height: 250px;
+    margin-left: 60px;
+  }
+
+  .switchpages {
+    display: flex;
+    justify-content: center; 
+}
+
+.previouspage, .nextpage {
+    display: flex;
+    align-items: center; 
+}
+
+.previouspage a, .nextpage a {
+    margin: 0 5px; 
+}
+
+
+}
+ 
