@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from crud.course import CourseCrudManager
 from schemas import course as CourseSchema
 from .depends import check_course_id
-from auth.jwt import create_jwt
 
 CourseCrud = CourseCrudManager()
 router = APIRouter(
@@ -29,25 +28,43 @@ async def create_course(newCourse: CourseSchema.CourseCreate):
     """
     
     
-    course = await CourseCrud.get_course_by_id(newCourse.course_id)
+    course = await CourseCrud.get(newCourse.course_id)
     if course:
         raise HTTPException(status_code=409, detail=f"Course already exists")
     
     # create course
-    course = await CourseCrud.create_course(newCourse)
+    course = await CourseCrud.create(newCourse)
 
     return course
 
 @router.get(
+    "/courses",
+    response_model=list[CourseSchema.CourseRead],
+    status_code=200,
+    response_description="Get all courses"
+)
+async def get_all_courses():
+    """ 
+    Get all courses.
+    """
+    courses = await CourseCrud.get_all()
+    if courses:
+        return courses
+    raise HTTPException(status_code=404, detail=f"No courses found")
+
+
+@router.get(
     "/course", 
+    response_model=CourseSchema.CourseRead,
+    status_code=200,
     response_description="Get a couse",  
 )
 async def get_course(course_id: str = None):
 
-    course = await CourseCrud.get_course_by_id(course_id)
+    course = await CourseCrud.get(course_id)
     
     if course:
-        return create_jwt(course)
+        return course
     raise HTTPException(status_code=404, detail=f"Course doesn't exist")
     
 
@@ -55,10 +72,20 @@ async def get_course(course_id: str = None):
     "/course/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_course(newCourse: CourseSchema.CourseUpdate, course_id: str = Depends(check_course_id)):
-    
-    
-    await CourseCrud.update_course_by_id(course_id, newCourse)
+async def update_course(
+    updateCourse: CourseSchema.CourseUpdate,
+    course_id: str = Depends(check_course_id)
+):
+    """ 
+    Update the particular course with at least one of the following information:
+    - **teacher**
+    - **course_code**
+    - **academic_year**
+    - **semester**
+    - **name**
+    - **outline**
+    """
+    await CourseCrud.update(course_id, updateCourse)
 
     return 
 
@@ -67,7 +94,9 @@ async def update_course(newCourse: CourseSchema.CourseUpdate, course_id: str = D
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_course(course_id: str = Depends(check_course_id)):
-
-    await CourseCrud.delete_course_by_id(course_id)
+    """ 
+    Delete the course.
+    """
+    await CourseCrud.delete(course_id)
     
     return 
