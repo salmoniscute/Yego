@@ -7,45 +7,41 @@ from schemas import discussion as DiscussionSchema
 
 @crud_class_decorator
 class DiscussionCrudManager:
-    async def create_discussion(self, newDiscussion: DiscussionSchema.DiscussionCreate, db_session: AsyncSession):
-        discussion = DiscussionModel(
-            discussion_id=newDiscussion.discussion_id,
-            course_id=newDiscussion.course_id,
-            title=newDiscussion.title,
-            discription=newDiscussion.discription
-        )
+    async def create(self, course_id, newDiscussion: DiscussionSchema.DiscussionCreate, db_session: AsyncSession):
+        newDiscussion_dict = newDiscussion.model_dump()
+        discussion = DiscussionModel(**newDiscussion_dict, course_id=course_id)
         db_session.add(discussion)
         await db_session.commit()
         db_session.refresh(discussion)
 
         return discussion
 
-    async def get_discussion_by_id(self, discussion_id: str, db_session: AsyncSession):
-        stmt = select(
-            DiscussionModel.discussion_id,
-            DiscussionModel.course_id,
-            DiscussionModel.title,
-            DiscussionModel.discription
-        ).where(DiscussionModel.discussion_id == discussion_id)
+    async def get(self, discussion_id: str, db_session: AsyncSession):
+        stmt = select(DiscussionModel).where(DiscussionModel.discussion_id == discussion_id)
         result = await db_session.execute(stmt)
         discussion = result.first()
-        if discussion:
-            return discussion
         
-        return None
+    
+        return discussion[0] if discussion else None
 
-    async def update_discussion_by_id(self, discussion_id: str, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
-        stmt = update(DiscussionModel).where(DiscussionModel.discussion_id == discussion_id).values(
-            title=updateDiscussion.title,
-            discription=updateDiscussion.discription
-        )
-        await db_session.execute(stmt)
-        await db_session.commit()
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(DiscussionModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [discussion[0] for discussion in result.all()]
+    
+    async def update(self, discussion_id: str, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
+        updateDiscussion_dict = updateDiscussion.model_dump()
+        if updateDiscussion_dict:
+            stmt = update(DiscussionModel).where(DiscussionModel.discussion_id == discussion_id).values(**updateDiscussion_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
 
         return 
     
     
-    async def delete_discussion_by_id(self, discussion_id: int, db_session: AsyncSession):
+    async def delete(self, discussion_id: int, db_session: AsyncSession):
         stmt = delete(DiscussionModel).where(DiscussionModel.discussion_id == discussion_id)
         await db_session.execute(stmt)
         await db_session.commit()

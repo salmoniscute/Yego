@@ -32,7 +32,7 @@ async def check_user_id(uid: str):
 
 
 async def check_course_id(course_id: str):
-    course = await CourseCrud.get_course_by_id(course_id)
+    course = await CourseCrud.get(course_id)
     
     if not course:
         raise HTTPException(status_code=404, detail="Course does not exist")
@@ -56,7 +56,7 @@ async def check_website_bulletin_file_id(file_id: str):
     return file.file_id
 
 async def check_course_bulletin_id(cb_id: str):
-    course_bulletin = await CourseBulletinCrud.get_course_bulletin_by_cb_id(cb_id)
+    course_bulletin = await CourseBulletinCrud.get(cb_id)
     
     if not course_bulletin:
         raise HTTPException(status_code=404, detail="Bulletin does not exist")
@@ -64,7 +64,7 @@ async def check_course_bulletin_id(cb_id: str):
     return course_bulletin.cb_id
 
 async def check_discussion_id(discussion_id: str):
-    discussion = await DiscussionCrud.get_discussion_by_id(discussion_id)
+    discussion = await DiscussionCrud.get(discussion_id)
     
     if not discussion:
         raise HTTPException(status_code=404, detail="Discussion does not exist")
@@ -72,7 +72,7 @@ async def check_discussion_id(discussion_id: str):
     return discussion.discussion_id
 
 async def check_discussion_topic_id(topic_id: str):
-    discussion_topic = await DiscussionTopicCrud.get_discussion_topic_by_topic_id(topic_id)
+    discussion_topic = await DiscussionTopicCrud.get(topic_id)
     
     if not discussion_topic:
         raise HTTPException(status_code=404, detail="Discussion topic does not exist")
@@ -80,7 +80,7 @@ async def check_discussion_topic_id(topic_id: str):
     return discussion_topic.topic_id
 
 async def check_discussion_reply_id(reply_id: str):
-    discussion_reply = await DiscussionReplyCrud.get_discussion_reply_by_reply_id(reply_id)
+    discussion_reply = await DiscussionReplyCrud.get(reply_id)
     
     if not discussion_reply:
         raise HTTPException(status_code=404, detail="Discussion reply does not exist")
@@ -88,7 +88,7 @@ async def check_discussion_reply_id(reply_id: str):
     return discussion_reply.reply_id
 
 async def check_discussion_topic_file_id(file_id: str):
-    discussion_topic_file = await DiscussionTopicFileCrud.get_discussion_topic_file_by_file_id(file_id)
+    discussion_topic_file = await DiscussionTopicFileCrud.get(file_id)
     
     if not discussion_topic_file:
         raise HTTPException(status_code=404, detail="Discussion topic file does not exist")

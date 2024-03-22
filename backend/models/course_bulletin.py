@@ -1,16 +1,24 @@
 from typing import Optional 
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy import ForeignKey
 from models.base import Base, BaseType
-from datetime import datetime
 
-class Course_bulletin(Base):
-    __tablename__ = "Course bulletin"
+
+class CourseBulletin(Base):
+    __tablename__ = "CourseBulletin"
     cb_id : Mapped[BaseType.cb_id]
     publisher: Mapped[BaseType.str_20]
-    course_id: Mapped[BaseType.str_20]
-    title: Mapped[BaseType.str_20]
-    release_time: Mapped[BaseType.str_20] #Mapped[BaseType.datetime]
-    content: Mapped[BaseType.str_20]
+    # course_id: Mapped[BaseType.str_20]
+    title: Mapped[BaseType.str_100]
+    release_time: Mapped[BaseType.str_100] #Mapped[BaseType.datetime]
+    content: Mapped[BaseType.str_100]
+    
+    #relationship to CourseBulletin child to parent
+    course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
+    course : Mapped["Course"] = relationship(
+        "Course", 
+        back_populates="bulletins"
+    )
 
 
     def __init__(self,cb_id:str, publisher:str, course_id:str, title:str, release_time:str, content:str) -> None:
