@@ -26,6 +26,7 @@ async def create_discussion_reply(
     - **publisher**
     - **release_time**
     - **content**
+    - **parent** (optional)
     """
     
     
