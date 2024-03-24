@@ -15,7 +15,7 @@ class CourseBulletin(Base):
     
     
     #relationship to CourseBulletinFile parent to child
-    files : Mapped["CourseBulletinFile"] = relationship(
+    files : Mapped[list["CourseBulletinFile"]] = relationship(
         "CourseBulletinFile", 
         back_populates="course_bulletin",
         cascade="all, delete, delete-orphan",

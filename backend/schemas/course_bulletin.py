@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
-from datetime import datetime
+from .course_bulletin_file import CourseBulletinFileRead
 
 class CourseBulletinCreate(BaseModel):
     cb_id: str
@@ -34,6 +34,7 @@ class CourseBulletinRead(BaseModel):
     release_time: str #datetime
     content: str
     pin_to_top: bool
+    files: Optional[list[CourseBulletinFileRead]] = None
     
 class CourseBulletinUpdate(BaseModel):
     publisher: Optional[str]
