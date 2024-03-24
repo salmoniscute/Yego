@@ -8,13 +8,22 @@ class CourseBulletin(Base):
     __tablename__ = "CourseBulletin"
     cb_id : Mapped[BaseType.cb_id]
     publisher: Mapped[BaseType.str_20]
-    # course_id: Mapped[BaseType.str_20]
     title: Mapped[BaseType.str_100]
     release_time: Mapped[BaseType.str_100] #Mapped[BaseType.datetime]
     content: Mapped[BaseType.str_100]
     pin_to_top: Mapped[BaseType.boolean]
     
-    #relationship to CourseBulletin child to parent
+    
+    #relationship to CourseBulletinFile parent to child
+    files : Mapped["CourseBulletinFile"] = relationship(
+        "CourseBulletinFile", 
+        back_populates="course_bulletin",
+        cascade="all, delete, delete-orphan",
+        passive_deletes=True,
+        lazy="joined"
+    )
+    
+    #relationship to Course child to parent
     course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
     course : Mapped["Course"] = relationship(
         "Course", 
