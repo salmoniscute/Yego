@@ -27,6 +27,7 @@ async def create_course_bulletin(
     - **title**
     - **release_time**
     - **content**
+    - **pin_to_top**
     """
     
     

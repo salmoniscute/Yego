@@ -12,6 +12,7 @@ class CourseBulletin(Base):
     title: Mapped[BaseType.str_100]
     release_time: Mapped[BaseType.str_100] #Mapped[BaseType.datetime]
     content: Mapped[BaseType.str_100]
+    pin_to_top: Mapped[BaseType.boolean]
     
     #relationship to CourseBulletin child to parent
     course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
@@ -21,15 +22,16 @@ class CourseBulletin(Base):
     )
 
 
-    def __init__(self,cb_id:str, publisher:str, course_id:str, title:str, release_time:str, content:str) -> None:
+    def __init__(self,cb_id:str, publisher:str, course_id:str, title:str, release_time:str, content:str, pin_to_top:bool) -> None:
         self.cb_id = cb_id 
         self.publisher = publisher
         self.course_id = course_id
         self.title = title
         self.release_time = release_time
         self.content = content
+        self.pin_to_top = pin_to_top
         
 
     def __repr__(self) -> str:
-        return f"Course bulletin(cb_id={self.cb_id}, publisher={self.publisher}, course_id={self.course_id}, title={self.title}, release_time={self.release_time}, content={self.content})"
+        return f"Course bulletin(cb_id={self.cb_id}, publisher={self.publisher}, course_id={self.course_id}, title={self.title}, release_time={self.release_time}, content={self.content}, pin_to_top={self.pin_to_top})"
 
