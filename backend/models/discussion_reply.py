@@ -7,7 +7,7 @@ class DiscussionReply(Base):
     __tablename__ = "DiscussionReply"
     reply_id : Mapped[BaseType.reply_id]
     # topic_id : Mapped[BaseType.str_20]
-    publisher : Mapped[BaseType.str_20]
+    # publisher : Mapped[BaseType.str_20]
     release_time : Mapped[BaseType.str_20]
     content : Mapped[BaseType.str_100]
     parent : Mapped[BaseType.str_20]
@@ -16,6 +16,13 @@ class DiscussionReply(Base):
     topic_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.topic_id", ondelete="CASCADE"))
     topic : Mapped["DiscussionTopic"] = relationship(
         "DiscussionTopic", 
+        back_populates="replies"
+    )
+    
+    # relationship to User child to parent
+    publisher : Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    publisher_info : Mapped["User"] = relationship(
+        "User", 
         back_populates="replies"
     )
 

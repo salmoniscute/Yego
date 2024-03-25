@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion_reply import DiscussionReplyCrudManager
 from schemas import discussion_reply as DiscussionReplySchema
-from .depends import check_discussion_reply_id, check_discussion_topic_id
+from .depends import check_discussion_reply_id, check_discussion_topic_id, check_user_id
 
 DiscussionReplyCrud = DiscussionReplyCrudManager()
 router = APIRouter(
@@ -17,7 +17,8 @@ router = APIRouter(
 )
 async def create_discussion_reply(
     newDiscussionReply: DiscussionReplySchema.DiscussionReplyCreate,
-    topic_id: str = Depends(check_discussion_topic_id)
+    topic_id: str = Depends(check_discussion_topic_id),
+    publisher: str = Depends(check_user_id)
 ):
     """
     Create a discussion topic with the following information:
@@ -35,7 +36,7 @@ async def create_discussion_reply(
         raise HTTPException(status_code=409, detail=f"Discussion reply already exists")
     
     # create discussion reply
-    discussion_reply = await DiscussionReplyCrud.create(topic_id, newDiscussionReply)
+    discussion_reply = await DiscussionReplyCrud.create(topic_id, publisher, newDiscussionReply)
 
     return discussion_reply
 

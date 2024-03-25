@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.course import CourseCrudManager
 from schemas import course as CourseSchema
-from .depends import check_course_id
+from .depends import check_course_id, check_user_id
 
 from schemas import course_bulletin as CourseBulletinSchema
 
@@ -17,7 +17,10 @@ router = APIRouter(
     status_code=201,
     response_description="The course has been successfully created."
 )
-async def create_course(newCourse: CourseSchema.CourseCreate):
+async def create_course(
+    newCourse: CourseSchema.CourseCreate,
+    teacher: str = Depends(check_user_id)
+    ):
     """
     Create a user with the following information:
     - **course_id**
@@ -35,7 +38,7 @@ async def create_course(newCourse: CourseSchema.CourseCreate):
         raise HTTPException(status_code=409, detail=f"Course already exists")
     
     # create course
-    course = await CourseCrud.create(newCourse)
+    course = await CourseCrud.create(teacher, newCourse)
 
     return course
 

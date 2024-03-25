@@ -7,9 +7,9 @@ from schemas import course as CourseSchema
 
 @crud_class_decorator
 class CourseCrudManager:
-    async def create(self, newCourse: CourseSchema.CourseCreate, db_session: AsyncSession):
+    async def create(self, teacher, newCourse: CourseSchema.CourseCreate,   db_session: AsyncSession):
         newCourse_dict = newCourse.model_dump()
-        course = CourseModel(**newCourse_dict)
+        course = CourseModel(**newCourse_dict, teacher=teacher)
         db_session.add(course)
         await db_session.commit()
         db_session.refresh(course)
