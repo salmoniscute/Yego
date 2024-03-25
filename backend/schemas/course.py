@@ -5,7 +5,7 @@ from .discussion import DiscussionRead
 
 class CourseCreate(BaseModel):
     course_id: str
-    teacher: str #wait for user
+    # teacher: str #wait for user
     course_code: str
     academic_year: int
     semester: int
@@ -17,7 +17,7 @@ class CourseCreate(BaseModel):
             "examples": [
                 {
                 "course_id": "CSE101",
-                "teacher": "U001",
+                # "teacher": "U001",
                 "course_code": "CSE101",
                 "academic_year": 2021,
                 "semester": 1,

@@ -10,6 +10,7 @@ from crud.discussion import DiscussionCrudManager
 from crud.discussion_topic import DiscussionTopicCrudManager
 from crud.discussion_reply import DiscussionReplyCrudManager
 from crud.discussion_topic_file import DiscussionTopicFileCrudManager
+from crud.course_bulletin_file import CourseBulletinFileCrudManager
 
 UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
@@ -21,6 +22,7 @@ DiscussionCrud = DiscussionCrudManager()
 DiscussionTopicCrud = DiscussionTopicCrudManager()
 DiscussionReplyCrud = DiscussionReplyCrudManager()
 DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
+CourseBulletinFileCrud = CourseBulletinFileCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -62,6 +64,14 @@ async def check_course_bulletin_id(cb_id: str):
         raise HTTPException(status_code=404, detail="Bulletin does not exist")
     
     return course_bulletin.cb_id
+
+async def check_course_bulletin_file_id(file_id: str):
+    course_bulletin_file = await CourseBulletinFileCrud.get(file_id)
+    
+    if not course_bulletin_file:
+        raise HTTPException(status_code=404, detail="Bulletin file does not exist")
+    
+    return course_bulletin_file.file_id
 
 async def check_discussion_id(discussion_id: str):
     discussion = await DiscussionCrud.get(discussion_id)

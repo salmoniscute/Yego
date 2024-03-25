@@ -27,6 +27,7 @@ async def create_course_bulletin(
     - **title**
     - **release_time**
     - **content**
+    - **pin_to_top**
     """
     
     
@@ -75,7 +76,7 @@ async def get_course_bulletin(cb_id: str):
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_course_bulletin(
-    updateBulletinCourse: CourseBulletinSchema.CourseBulletinUpdate,
+    updateCourseBulletin: CourseBulletinSchema.CourseBulletinUpdate,
     cb_id: str = Depends(check_course_bulletin_id)
 ):
     """ 
@@ -84,14 +85,14 @@ async def update_course_bulletin(
     - **release_time**
     - **content**
     """
-    await CourseBulletinCrud.update(cb_id, updateBulletinCourse)
+    await CourseBulletinCrud.update(cb_id, updateCourseBulletin)
     return 
 
 @router.delete(
     "/course_bulletin/{cd_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course(cb_id: str = Depends(check_course_bulletin_id)):
+async def delete_course_bulletin(cb_id: str = Depends(check_course_bulletin_id)):
     """ 
     Delete a course bulletin.
     """

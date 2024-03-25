@@ -7,9 +7,9 @@ from schemas import discussion_topic as DiscussionTopicSchema
 
 @crud_class_decorator
 class DiscussionTopicCrudManager:
-    async def create(self, discussion_id, newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, db_session: AsyncSession):
+    async def create(self, discussion_id, publisher, newDiscussionTopic: DiscussionTopicSchema.DiscussionTopicCreate, db_session: AsyncSession):
         newDiscussionTopic_dict = newDiscussionTopic.model_dump()
-        discussion_topic = DiscussionTopicModel(**newDiscussionTopic_dict, discussion_id=discussion_id)
+        discussion_topic = DiscussionTopicModel(**newDiscussionTopic_dict, discussion_id=discussion_id, publisher=publisher)
         db_session.add(discussion_topic)
         await db_session.commit()
         db_session.refresh(discussion_topic)

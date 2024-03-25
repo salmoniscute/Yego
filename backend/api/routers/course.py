@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.course import CourseCrudManager
 from schemas import course as CourseSchema
-from .depends import check_course_id
+from .depends import check_course_id, check_user_id
+
+from schemas import course_bulletin as CourseBulletinSchema
 
 CourseCrud = CourseCrudManager()
 router = APIRouter(
@@ -15,7 +17,10 @@ router = APIRouter(
     status_code=201,
     response_description="The course has been successfully created."
 )
-async def create_course(newCourse: CourseSchema.CourseCreate):
+async def create_course(
+    newCourse: CourseSchema.CourseCreate,
+    teacher: str = Depends(check_user_id)
+    ):
     """
     Create a user with the following information:
     - **course_id**
@@ -33,7 +38,7 @@ async def create_course(newCourse: CourseSchema.CourseCreate):
         raise HTTPException(status_code=409, detail=f"Course already exists")
     
     # create course
-    course = await CourseCrud.create(newCourse)
+    course = await CourseCrud.create(teacher, newCourse)
 
     return course
 
@@ -54,7 +59,7 @@ async def get_all_courses():
 
 
 @router.get(
-    "/course", 
+    "/course/{course_id}", 
     response_model=CourseSchema.CourseRead,
     status_code=200,
     response_description="Get a couse",  
@@ -67,6 +72,20 @@ async def get_course(course_id: str = None):
         return course
     raise HTTPException(status_code=404, detail=f"Course doesn't exist")
     
+@router.get(
+    "/course/{course_id}/bulletins",
+    response_model=list[CourseBulletinSchema.CourseBulletinRead],
+    status_code=200,
+    response_description="Get a list of bulletins of the course.",  
+)
+async def get_course_bulletins(course_id: str = None):
+    """ 
+    Get a list of bulletins of the course.
+    """
+    course = await CourseCrud.get(course_id)
+    if course:
+        return course.bulletins
+    raise HTTPException(status_code=404, detail=f"Course doesn't exist")
 
 @router.put(
     "/course/{course_id}",

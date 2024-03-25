@@ -13,6 +13,7 @@ from models.discussion import Discussion
 from models.discussion_topic import DiscussionTopic
 from models.discussion_reply import DiscussionReply
 from models.discussion_topic_file import DiscussionTopicFile
+from models.course_bulletin_file import CourseBulletinFile
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -43,6 +44,7 @@ async def init_db():
             await db.execute(CreateTable(DiscussionTopic.__table__, if_not_exists=True))
             await db.execute(CreateTable(DiscussionReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(DiscussionTopicFile.__table__, if_not_exists=True))
+            await db.execute(CreateTable(CourseBulletinFile.__table__, if_not_exists=True))
 
 
 async def close_db():

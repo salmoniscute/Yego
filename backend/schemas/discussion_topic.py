@@ -5,7 +5,6 @@ from .discussion_reply import DiscussionReplyRead
 
 class DiscussionTopicCreate(BaseModel):
     topic_id: str
-    publisher: str
     title: str
     release_time: str
     content: str
@@ -15,7 +14,6 @@ class DiscussionTopicCreate(BaseModel):
             "examples": [
                 {
                 "topic_id": "T001",
-                "publisher": "U001",
                 "title": "Topic 1",
                 "release_time": "2021-09-01T00:00:00",
                 "content": "This is the first topic of the discussion."
@@ -35,7 +33,6 @@ class DiscussionTopicRead(BaseModel):
     replies:Optional[list[DiscussionReplyRead]] = None
     
 class DiscussionTopicUpdate(BaseModel):
-    publisher: Optional[str]
     title: Optional[str]
     release_time: Optional[str]
     content: Optional[str]
