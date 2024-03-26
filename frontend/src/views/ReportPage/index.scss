@@ -2,6 +2,9 @@
   margin: auto;
   max-width: 90vw;
 
+  button {
+    border: none;
+  }
   .header {
     display: flex;
     flex-shrink: 0;
