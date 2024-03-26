@@ -12,6 +12,9 @@ from models.discussion import Discussion
 from models.discussion_topic import Discussion_topic
 from models.discussion_reply import Discussion_reply
 from models.discussion_topic_file import Discussion_topic_file
+from models.report import Report
+from models.report_file import Report_file
+from models.report_reply import Report_reply
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -41,6 +44,9 @@ async def init_db():
             await db.execute(CreateTable(Discussion_topic.__table__, if_not_exists=True))
             await db.execute(CreateTable(Discussion_reply.__table__, if_not_exists=True))
             await db.execute(CreateTable(Discussion_topic_file.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report_file.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report_reply.__table__, if_not_exists=True))
 
 
 async def close_db():

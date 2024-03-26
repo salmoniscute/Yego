@@ -15,7 +15,10 @@ from .routers import (
     discussion_router,
     discussion_topic_router,
     discussion_reply_router,
-    discussion_topic_file_router
+    discussion_topic_file_router,
+    report_router,
+    report_file_router,
+    report_reply_router
 )
 
 app = FastAPI()
@@ -31,6 +34,9 @@ app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
 app.include_router(discussion_reply_router)
 app.include_router(discussion_topic_file_router)
+app.include_router(report_router)
+app.include_router(report_file_router)
+app.include_router(report_reply_router)
 
 
 origins = [

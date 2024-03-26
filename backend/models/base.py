@@ -30,3 +30,5 @@ class BaseType:
     reply_id = Annotated[str, mapped_column(String(10), primary_key=True)]
     
     file_id = Annotated[str, mapped_column(String(10), primary_key=True)]
+    
+    report_id = Annotated[str, mapped_column(String(10), primary_key=True)]

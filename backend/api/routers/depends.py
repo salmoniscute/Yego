@@ -11,6 +11,10 @@ from crud.discussion_topic import DiscussionTopicCrudManager
 from crud.discussion_reply import DiscussionReplyCrudManager
 from crud.discussion_topic_file import DiscussionTopicFileCrudManager
 
+from crud.report import ReportCrudManager
+from crud.report_file import ReportFileCrudManager
+from crud.report_reply import ReportReplyCrudManager
+
 UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
@@ -20,7 +24,9 @@ DiscussionCrud = DiscussionCrudManager()
 DiscussionTopicCrud = DiscussionTopicCrudManager()
 DiscussionReplyCrud = DiscussionReplyCrudManager()
 DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
-
+ReportCrud = ReportCrudManager()
+ReportFileCrud = ReportFileCrudManager()
+ReportReplyCrud = ReportReplyCrudManager()
 
 async def check_user_id(uid: str):
     user = await UserCrud.get_user_by_id(uid)
@@ -92,3 +98,27 @@ async def check_discussion_topic_file_id(file_id: str):
         raise HTTPException(status_code=404, detail="Discussion topic file does not exist")
     
     return discussion_topic_file.file_id
+
+async def check_report_id(report_id: str):
+    report = await ReportCrud.get_report_by_report_id(report_id)
+    
+    if not report:
+        raise HTTPException(status_code=404, detail="Report does not exist")
+    
+    return report.report_id
+
+async def check_report_file_id(file_id: str):
+    report_file = await ReportFileCrud.get_report_file_by_file_id(file_id)
+    
+    if not report_file:
+        raise HTTPException(status_code=404, detail="Report file does not exist")
+    
+    return report_file.file_id
+
+async def check_report_reply_id(reply_id: str):
+    report_reply = await ReportReplyCrud.get_report_reply_by_reply_id(reply_id)
+    
+    if not report_reply:
+        raise HTTPException(status_code=404, detail="Report reply does not exist")
+    
+    return report_reply.reply_id
