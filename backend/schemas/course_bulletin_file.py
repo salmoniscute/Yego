@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class DiscussionTopicFileCreate(BaseModel):
+class CourseBulletinFileCreate(BaseModel):
     file_id: str
     path: str
     
@@ -10,17 +10,19 @@ class DiscussionTopicFileCreate(BaseModel):
             "examples": [
                 {
                 "file_id": "F001",
-                "path": "path/to/file"
+                "path": "https://www.google.com"
                 }
             ]
         }
     }
+        
 
-class DiscussionTopicFileRead(BaseModel):
+class CourseBulletinFileRead(BaseModel):
     file_id: str
-    topic_id: str
     path: str
+    cb_id: str
     
-class DiscussionTopicFileUpdate(BaseModel):
+class CourseBulletinFileUpdate(BaseModel):
     path: Optional[str]
+
     

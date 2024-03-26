@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 class WebsiteBulletinFileCreate(BaseModel):
     file_id: str
-    wb_id: str
     path: str
 
     model_config = {
@@ -12,16 +11,11 @@ class WebsiteBulletinFileCreate(BaseModel):
             "examples": [
                 { 
                     "file_id": "1",
-                    "wb_id": "test",
                     "path": "/path/of/file"
                 }
             ]
         }
     }
-
-
-class WebsiteBulletinFileCreateResponse(BaseModel):
-    file_id: str
 
 
 class WebsiteBulletinFileRead(BaseModel):
@@ -31,7 +25,7 @@ class WebsiteBulletinFileRead(BaseModel):
     
 
 class WebsiteBulletinFileUpdate(BaseModel):
-    path: str
+    path: Optional[str] = None
     
     model_config = {
         "json_schema_extra": {

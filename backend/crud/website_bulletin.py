@@ -8,51 +8,39 @@ from schemas import website_bulletin as WebsiteBulletinSchema
 
 @crud_class_decorator
 class WebsiteBulletinCrudManager:
-    async def create_website_bulletin(self, newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate, db_session: AsyncSession):
-        website_bulletin = WebsiteBulletinModel(
-            wb_id = newBulletin.wb_id,
-            publisher = newBulletin.publisher,
-            title = newBulletin.title,
-            release_time = newBulletin.release_time,
-            content = newBulletin.content,
-            pin_to_top=newBulletin.pin_to_top
-        )
-        db_session.add(website_bulletin)
-        await db_session.commit()
-        db_session.refresh(website_bulletin)
-
-        return website_bulletin
-
-    async def get_website_bulletin_by_wb_id(self, wb_id: str, db_session: AsyncSession):
-        stmt = select(
-            WebsiteBulletinModel.wb_id,
-            WebsiteBulletinModel.publisher,
-            WebsiteBulletinModel.title,
-            WebsiteBulletinModel.release_time,
-            WebsiteBulletinModel.content,
-            WebsiteBulletinModel.pin_to_top
-        ).where(WebsiteBulletinModel.wb_id == wb_id)
+    async def get(self, wb_id: str, db_session: AsyncSession):
+        stmt = select(WebsiteBulletinModel).where(WebsiteBulletinModel.wb_id == wb_id)
         result = await db_session.execute(stmt)
-        website_bulletin = result.first()
+        bulletin = result.first()
 
-        if website_bulletin:
-            return website_bulletin
+        return bulletin[0] if bulletin else None
         
-        return None
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(WebsiteBulletinModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
 
-    async def update_website_bulletin_by_wb_id(self, wb_id: str, newBulletin: WebsiteBulletinSchema.WebsiteBulletinUpdate, db_session: AsyncSession):
-        stmt = update(WebsiteBulletinModel).where(WebsiteBulletinModel.wb_id == wb_id).values(
-            title=newBulletin.title,
-            content=newBulletin.content,
-            pin_to_top=newBulletin.pin_to_top
-        )
-        await db_session.execute(stmt)
+        return [bulletin[0] for bulletin in result.all()]
+    
+    async def create(self, publisher: str, newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate, db_session: AsyncSession):
+        newBulletin_dict = newBulletin.model_dump()
+        bulletin = WebsiteBulletinModel(publisher=publisher, **newBulletin_dict)
+        db_session.add(bulletin)
         await db_session.commit()
+        db_session.refresh(bulletin)
 
-        return
+        return bulletin
     
+    async def update(self, wb_id: str, newBulletin: WebsiteBulletinSchema.WebsiteBulletinUpdate, db_session: AsyncSession):
+        updateBulletin_dict = newBulletin.model_dump(exclude_none=True)
+        if updateBulletin_dict:
+            stmt = update(WebsiteBulletinModel).where(WebsiteBulletinModel.wb_id == wb_id).values(updateBulletin_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
+
+        return 
     
-    async def delete_website_bulletin_by_wb_id(self, wb_id: int, db_session: AsyncSession):
+    async def delete(self, wb_id: int, db_session: AsyncSession):
         stmt = delete(WebsiteBulletinModel).where(WebsiteBulletinModel.wb_id == wb_id)
         await db_session.execute(stmt)
         await db_session.commit()

@@ -1,10 +1,11 @@
 from typing import Optional
 from pydantic import BaseModel
 
+from .website_bulletin_file import WebsiteBulletinFileRead
+
 
 class WebsiteBulletinCreate(BaseModel):
     wb_id: str
-    publisher: str
     title: str
     release_time: str
     content: str
@@ -15,7 +16,6 @@ class WebsiteBulletinCreate(BaseModel):
             "examples": [
                 { 
                     "wb_id": "test",
-                    "publisher": "C14096277",
                     "title": "Hello world",
                     "release_time": "2024-03-14 12:34:56",
                     "content": "Hello world",
@@ -28,6 +28,11 @@ class WebsiteBulletinCreate(BaseModel):
 
 class WebsiteBulletinCreateResponse(BaseModel):
     wb_id: str
+    publisher: str
+    title: str
+    release_time: str
+    content: str
+    pin_to_top: bool   
 
 
 class WebsiteBulletinRead(BaseModel):
@@ -37,12 +42,13 @@ class WebsiteBulletinRead(BaseModel):
     release_time: str
     content: str
     pin_to_top: bool
+    files: Optional[list[WebsiteBulletinFileRead]] = None
 
 
 class WebsiteBulletinUpdate(BaseModel):
-    title: str
-    content: str
-    pin_to_top: bool
+    title: Optional[str] = None
+    content: Optional[str] = None
+    pin_to_top: Optional[bool] = None
 
     model_config = {
         "json_schema_extra": {

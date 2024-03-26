@@ -9,88 +9,46 @@ from schemas import user as UserSchema
 
 @crud_class_decorator
 class UserCrudManager:
-    async def get_user_in_db(self, uid: str, db_session: AsyncSession):
-        stmt = select(
-            UserModel.uid, 
-            UserModel.password,
-            UserModel.name,
-            UserModel.role,
-            UserModel.email,
-            UserModel.department,
-            UserModel.country,
-            UserModel.introduction,
-            UserModel.avatar
-        ).where(UserModel.uid == uid)
+    async def get(self, uid: str, db_session: AsyncSession):
+        stmt = select(UserModel).where(UserModel.uid == uid)
         result = await db_session.execute(stmt)
         user = result.first()
 
-        if user:
-            return user
-        
-        return None
+        return user[0] if user else None
     
-    async def create_user(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
-        user = UserModel(
-            uid=newUser.uid,
-            password=newUser.password,
-            name=newUser.name,
-            role=newUser.role,
-            email=newUser.email, 
-            department=newUser.department,
-            country=newUser.country,
-            introduction=newUser.introduction,
-            avatar=newUser.avatar
-        )
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(UserModel)
+        result = await db_session.execute(stmt)
+
+        return [user[0] for user in result.all()]
+    
+    async def create(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
+        newUser_dict = newUser.model_dump()
+        user = UserModel(**newUser_dict)
         db_session.add(user)
         await db_session.commit()
         db_session.refresh(user)
 
         return user
 
-    async def get_user_by_id(self, uid: str, db_session: AsyncSession):
-        stmt = select(
-            UserModel.uid, 
-            UserModel.name, 
-            UserModel.role,
-            UserModel.email,
-            UserModel.department,
-            UserModel.country,
-            UserModel.introduction,
-            UserModel.avatar
-        ).where(UserModel.uid == uid)
-        result = await db_session.execute(stmt)
-        user = result.first()
-
-        if user:
-            return user
-        
-        return None
-
-    async def update_user_by_id(self, uid: str, updateUser: UserSchema.UserUpdate, db_session: AsyncSession):
-        stmt = update(UserModel).where(UserModel.uid == uid).values(
-            name=updateUser.name, 
-            role=updateUser.role,
-            email=updateUser.email,
-            department=updateUser.department,
-            country=updateUser.country,
-            introduction=updateUser.introduction,
-            avatar=updateUser.avatar
-        )
-        await db_session.execute(stmt)
-        await db_session.commit()
+    async def update(self, uid: str, updateUser: UserSchema.UserUpdate, db_session: AsyncSession):
+        updateUser_dict = updateUser.model_dump(exclude_none=True)
+        if updateUser_dict:
+            stmt = update(UserModel).where(UserModel.uid == uid).values(updateUser_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
 
         return 
     
-    async def update_user_password_by_id(self, uid: str, updateUser: UserSchema.UserUpdatePassword, db_session: AsyncSession):
-        stmt = update(UserModel).where(UserModel.uid == uid).values(
-            password=get_password_hash(updateUser.password)
-        )
+    async def update_password(self, uid: str, updateUser: UserSchema.UserUpdatePassword, db_session: AsyncSession):
+        updateUser_dict = {"password": get_password_hash(updateUser.password)}
+        stmt = update(UserModel).where(UserModel.uid == uid).values(updateUser_dict)
         await db_session.execute(stmt)
         await db_session.commit()
 
         return
     
-    async def delete_user_by_id(self, uid: int, db_session: AsyncSession):
+    async def delete(self, uid: int, db_session: AsyncSession):
         stmt = delete(UserModel).where(UserModel.uid == uid)
         await db_session.execute(stmt)
         await db_session.commit()

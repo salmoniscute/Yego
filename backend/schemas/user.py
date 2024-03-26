@@ -32,10 +32,6 @@ class UserCreate(BaseModel):
     }
 
 
-class UserCreateResponse(BaseModel):
-    uid: str
-
-
 class UserRead(BaseModel):
     uid: str
     name: str

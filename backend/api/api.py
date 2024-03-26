@@ -9,6 +9,7 @@ from .routers import (
     auth_router,
     user_router,
     course_router,
+    selected_course_router,
     website_bulletin_router,
     website_bulletin_file_router,
     course_bulletin_router,
@@ -18,7 +19,8 @@ from .routers import (
     discussion_topic_file_router,
     report_router,
     report_file_router,
-    report_reply_router
+    report_reply_router,
+    course_bulletin_file_router
 )
 
 app = FastAPI()
@@ -27,6 +29,7 @@ app.include_router(info_router)
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(course_router)
+app.include_router(selected_course_router)
 app.include_router(website_bulletin_router)
 app.include_router(website_bulletin_file_router)
 app.include_router(course_bulletin_router)
@@ -37,6 +40,7 @@ app.include_router(discussion_topic_file_router)
 app.include_router(report_router)
 app.include_router(report_file_router)
 app.include_router(report_reply_router)
+app.include_router(course_bulletin_file_router)
 
 
 origins = [
