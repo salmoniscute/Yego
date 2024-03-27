@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
+from .report_reply import ReportReplyRead
 
 class ReportBase(BaseModel):
     report_id: str

@@ -55,7 +55,7 @@ async def get_report_list():
         "report_id": report.report_id,
         "title": report.title,
         "release_time": report.release_time,
-        "reply_number": 1
+        "reply_number": len(report.replies),
         })
       
     return result
