@@ -14,7 +14,7 @@ class CourseBulletin(Base):
     pin_to_top: Mapped[BaseType.boolean]
     
     
-    #relationship to CourseBulletinFile parent to child
+    #relationship to child
     files : Mapped[list["CourseBulletinFile"]] = relationship(
         "CourseBulletinFile", 
         back_populates="course_bulletin",
@@ -23,7 +23,7 @@ class CourseBulletin(Base):
         lazy="joined"
     )
     
-    #relationship to Course child to parent
+    #relationship to parent
     course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
     course : Mapped["Course"] = relationship(
         "Course", 
