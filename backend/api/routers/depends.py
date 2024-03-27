@@ -113,7 +113,7 @@ async def check_discussion_topic_file_id(file_id: str):
     return discussion_topic_file.file_id
 
 async def check_report_id(report_id: str):
-    report = await ReportCrud.get_report_by_report_id(report_id)
+    report = await ReportCrud.get(report_id)
     
     if not report:
         raise HTTPException(status_code=404, detail="Report does not exist")
@@ -121,7 +121,7 @@ async def check_report_id(report_id: str):
     return report.report_id
 
 async def check_report_file_id(file_id: str):
-    report_file = await ReportFileCrud.get_report_file_by_file_id(file_id)
+    report_file = await ReportFileCrud.get(file_id)
     
     if not report_file:
         raise HTTPException(status_code=404, detail="Report file does not exist")
@@ -129,7 +129,18 @@ async def check_report_file_id(file_id: str):
     return report_file.file_id
 
 async def check_report_reply_id(reply_id: str):
-    report_reply = await ReportReplyCrud.get_report_reply_by_reply_id(reply_id)
+    report_reply = await ReportReplyCrud.get(reply_id)
+    
+    if not report_reply:
+        raise HTTPException(status_code=404, detail="Report reply does not exist")
+    
+    return report_reply.reply_id
+
+async def check_parent(parent: str):
+    if parent == None:
+        return -1
+    
+    report_reply = await ReportReplyCrud.get(parent)
     
     if not report_reply:
         raise HTTPException(status_code=404, detail="Report reply does not exist")

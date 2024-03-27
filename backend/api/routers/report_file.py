@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.report_file import ReportFileCrudManager
 from schemas import report_file as ReportFileSchema
-from .depends import check_report_file_id
+from .depends import check_report_file_id, check_report_id
 
 ReportFileCrud = ReportFileCrudManager()
 router = APIRouter(
@@ -15,7 +15,9 @@ router = APIRouter(
     status_code=201,
     response_description="The report file has been successfully created."
 )
-async def create_report_file(newReportFile: ReportFileSchema.ReportFileCreate):
+async def create_report_file(
+    newReportFile: ReportFileSchema.ReportFileCreate,
+    report_id: str = Depends(check_report_id)):
     """
     Create a report file with the following information:
     - **file_id**
@@ -24,12 +26,12 @@ async def create_report_file(newReportFile: ReportFileSchema.ReportFileCreate):
     """
     
     
-    report_file = await ReportFileCrud.get_report_file_by_file_id(newReportFile.file_id)
+    report_file = await ReportFileCrud.get(newReportFile.file_id)
     if report_file:
         raise HTTPException(status_code=409, detail=f"Report file already exists")
     
     # create report file
-    report_file = await ReportFileCrud.create_report_file(newReportFile)
+    report_file = await ReportFileCrud.create(report_id, newReportFile)
 
     return report_file
 
@@ -39,7 +41,11 @@ async def create_report_file(newReportFile: ReportFileSchema.ReportFileCreate):
     response_description="Get a report file",  
 )
 async def get_report_file(file_id: str = None):
-    report_file = await ReportFileCrud.get_report_file_by_file_id(file_id)
+    """ 
+    Get a report file by file_id.
+    """
+    report_file = await ReportFileCrud.get(file_id)
+    
     if report_file:
         return report_file
     raise HTTPException(status_code=404, detail=f"Report file doesn't exist")
@@ -51,8 +57,13 @@ async def get_report_file(file_id: str = None):
 )
 async def update_report_file(newReportFile: ReportFileSchema.ReportFileUpdate, file_id: str = Depends(check_report_file_id)):
     
-    
-    await ReportFileCrud.update_report_file_by_file_id(file_id, newReportFile)
+    """
+    Update a report file with the following information:
+    - **file_id**
+    - **report_id**
+    - **path**
+    """  
+    await ReportFileCrud.update(file_id, newReportFile)
 
     return 
 
@@ -62,6 +73,6 @@ async def update_report_file(newReportFile: ReportFileSchema.ReportFileUpdate, f
 )
 async def delete_report_file(file_id: str = Depends(check_report_file_id)):
 
-    await ReportFileCrud.delete_report_file_by_file_id(file_id)
+    await ReportFileCrud.delete(file_id)
     
     return 

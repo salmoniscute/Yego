@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.report import ReportCrudManager
 from schemas import report as ReportSchema
-from .depends import check_report_id
-from auth.jwt import create_jwt
+from .depends import check_report_id, check_user_id
 
 ReportCrud = ReportCrudManager()
 router = APIRouter(
@@ -16,7 +15,10 @@ router = APIRouter(
     status_code=201,
     response_description="The report has been successfully created."
 )
-async def create_report(newReport: ReportSchema.ReportCreate):
+async def create_report(
+    newReport: ReportSchema.ReportCreate,
+    publisher: str = Depends(check_user_id)
+):
     """
     Create a report with the following information:
     - **report_id**
@@ -27,42 +29,25 @@ async def create_report(newReport: ReportSchema.ReportCreate):
     """
     
     
-    report = await ReportCrud.get_report_by_report_id(newReport.report_id)
+    report = await ReportCrud.get(newReport.report_id)
     if report:
         raise HTTPException(status_code=409, detail=f"Report already exists")
     
     # create report
-    report = await ReportCrud.create_report(newReport)
+    report = await ReportCrud.create(publisher, newReport)
 
     return report
 
-@router.put(
-    "/report/{report_id}",
-    status_code=status.HTTP_204_NO_CONTENT
-)
-async def update_report(newReport: ReportSchema.ReportUpdate, report_id: str = Depends(check_report_id)):
-    
-    
-    await ReportCrud.update_report_by_report_id(report_id, newReport)
-
-    return 
-
-@router.delete(
-    "/report/{report_id}",
-    status_code=status.HTTP_204_NO_CONTENT 
-)
-async def delete_report(report_id: str = Depends(check_report_id)):
-
-    await ReportCrud.delete_report_by_report_id(report_id)
-    
-    return 
-  
 @router.get(
   "/report/list",
-  response_model=list[ReportSchema.ReportRead]
+  response_model=list[ReportSchema.ReportRead],
+  response_description="Get all report",  
 )
 async def get_report_list():
-  
+    """ 
+    Get all report.
+    """
+    
     list = await ReportCrud.get_all()
     result = []
     for report in list:
@@ -74,3 +59,35 @@ async def get_report_list():
         })
       
     return result
+
+@router.put(
+    "/report/{report_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_report(newReport: ReportSchema.ReportUpdate, report_id: str = Depends(check_report_id)):
+    """ 
+    Update a report with the following information:
+    - **report_id**
+    - **publisher**
+    - **title**
+    - **release_time**
+    - **content**
+    """
+    
+    await ReportCrud.update(report_id, newReport)
+
+    return 
+
+@router.delete(
+    "/report/{report_id}",
+    status_code=status.HTTP_204_NO_CONTENT 
+)
+async def delete_report(report_id: str = Depends(check_report_id)):
+    """ 
+    Delete a report.
+    """
+    
+    await ReportCrud.delete(report_id)
+    
+    return 
+  
