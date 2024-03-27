@@ -46,29 +46,32 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     return (
         <div id="discussionReplyPage">
             <div className="mainDiscussionTopic">
+                <h3>1-1第一題題意</h3>
                 <div className="discussionTopicTop">
                     <img src={UserIcon}/>
                     <h3>發布者</h3>
                     <p>2024年02月14日(三) 17:48</p>
                 </div>
-                <h3>1-1第一題題意</h3>
                 <p>新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財</p>
                 <div className="discussionTopicBottom">
                     <p>回覆</p>
                 </div>
-
+            </div>
+            <div className="hi">
                 {
                     discussionTopicReplyList.map(data=>
                         <div className="discussionTopicReply">
-                            <div className="discussionTopicTop">
+                            <div className="discussionTopicReplyTop">
                                 <img src={UserIcon}/>
                                 <h3>發布者</h3>
-                                <p>{data.release_time}</p>
                             </div>
                             <p>{data.content}</p>
-                            <div className="replyButton" onClick={handleToggleReplyArea}> 
-                                <p>回覆</p>
-                                <TiArrowBack/>
+                            <div className="discussionTopicReplyBottom">
+                                <p>{data.release_time}</p>
+                                <div className="replyButton" onClick={handleToggleReplyArea}> 
+                                    <p>回覆</p>
+                                    <TiArrowBack/>
+                                </div>
                             </div>
                         </div> 
                     )

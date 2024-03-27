@@ -3,8 +3,9 @@
     margin: 6em 17em;
 
     .mainDiscussionTopic{
-        background-color: #EEEEEE;
-        padding: 1em 5em;
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
+        padding: 1em 2em;
         .discussionTopicTop{
             display: flex;
             flex-direction: row;
@@ -29,35 +30,58 @@
             justify-content: end;
             p{
                 cursor: pointer;
-                background-color: #DBDBDB;
+                background-color: #FFEA79;
                 padding: 1em 1em;
                 border-radius: 0.3em;
             }
         }
 
-        .discussionTopicReply{
-            > p {
-                padding-left:3.5em;
-                margin: 0em 0em;
+    }
+    div .discussionTopicReply{
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
+        border-top: none;
+        padding: 0.5em 2em;
+        .discussionTopicReplyTop{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            img{
+                width: 2.5em;
+                height: 2.5em;
+                margin-right: 1em;
             }
-            .replyButton{
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                padding-left:3.5em;
-                > p{
-                    margin-right: 0.5em;
-                }
+            h3{
+                margin-right:0.5em;
+                font-size: large;
             }
-            
+        }
+        .discussionTopicReplyBottom{
+            display: flex;
+            flex-direction: row;
+        }
+        > p{
+            margin: 0em 0em;
+        }
+
+        .replyButton{
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+            > p{
+                margin-right: 0.5em;
+            }
         }
     }
     .replyArea {
+        margin-top: 1em;
         position: relative;
         overflow: hidden;
-        padding: 1em 5em;
+        padding: 1em 2em;
         display: flex;
-        background-color: #c7c7c7;
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
         img{
             width: 2.5em;
             height: 2.5em;
@@ -69,15 +93,7 @@
             font-size: large;
             resize:none; 
             outline: none;
-            background-color: #c7c7c7;
         }
-        
-    }
-    
-    .replyArea.visible {
-        
-    }
-    .replyArea.hidden {
         
     }
 

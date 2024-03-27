@@ -1,6 +1,9 @@
 #courseMemberPage{
     margin: 3em 4em;
     .courseMember{
+        background-color: #FFFFFF;
+        border: solid 1px #474141;
+        padding: 0.5em 2em;
         .courseMemberTab{
             display: flex;
             justify-content: space-between;

@@ -38,19 +38,15 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 {
                     courseBulletinList.map(data =>
                         <div className="courseBulletinContent">
-                            <div className="cbPin">
-                                <MdOutlinePushPin />
-                            </div>
+                            
                             <div className="cb">
-                                <p className="cbTitle">{data.title}</p>
                                 <div className="cbContent">
+                                    <div className="cbPin">置頂</div>
                                     <img src={UserIcon} />
-                                    <div>
-                                        <p className="cbAuther">{data.publisher}</p>
-                                        <p className="cbTime">{data.release_time}</p>
-                                        <p className="cbInfor">{data.content}</p>
-                                    </div>
+                                    <p className="cbAuther">{data.publisher}</p>
+                                    <p className="cbTime">{data.release_time}</p>
                                 </div>
+                                <p className="cbInfor">{data.content}</p>
                             </div>
                         </div>)
                 }
