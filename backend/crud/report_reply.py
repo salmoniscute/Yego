@@ -7,9 +7,9 @@ from schemas import report_reply as ReportReplySchema
 
 @crud_class_decorator
 class ReportReplyCrudManager:
-    async def create(self, report_id, publisher, newReportReply: ReportReplySchema.ReportReplyCreate, db_session: AsyncSession):
+    async def create(self, parent, report_id, publisher, newReportReply: ReportReplySchema.ReportReplyCreate, db_session: AsyncSession):
         newReportReply_dict = newReportReply.model_dump()
-        report_reply = ReportReplyModel(**newReportReply_dict, report_id=report_id, publisher=publisher)
+        report_reply = ReportReplyModel(**newReportReply_dict, parent=parent, report_id=report_id, publisher=publisher)
         db_session.add(report_reply)
         await db_session.commit()
         db_session.refresh(report_reply)

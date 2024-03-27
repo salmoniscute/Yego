@@ -17,6 +17,7 @@ router = APIRouter(
 )
 async def create_report_reply(
     newReportReply: ReportReplySchema.ReportReplyCreate,
+    parent: str = None,
     report_id: str = Depends(check_report_id),
     publisher: str = Depends(check_user_id)):
     """
@@ -28,17 +29,17 @@ async def create_report_reply(
     - **release_time**
     - **content**
     """
-    # if parent:
-    #     await ReportReplyCrud.get(parent)    
-    #     if not parent: 
-    #         raise HTTPException(status_code=409, detail=f"parent id do not exisparentt")
+    if parent:
+        await ReportReplyCrud.get(parent)    
+        if not parent: 
+            raise HTTPException(status_code=409, detail=f"parent id do not exisparentt")
     
     report_reply = await ReportReplyCrud.get(newReportReply.reply_id)
     if report_reply:
         raise HTTPException(status_code=409, detail=f"Report reply already exists")
     
     # create report reply
-    report_reply = await ReportReplyCrud.create(report_id, publisher, newReportReply)
+    report_reply = await ReportReplyCrud.create(parent, report_id, publisher, newReportReply)
 
     return report_reply
 

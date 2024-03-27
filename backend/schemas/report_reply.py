@@ -5,11 +5,11 @@ class ReportReplyBase(BaseModel):
     reply_id: str
 
 class ReportReplyCreate(ReportReplyBase):
-    parent: str
     release_time: str
     content: str
 
 class ReportReplyRead(ReportReplyBase):
+    parent: Optional[str]
     release_time: str
     content: str
     

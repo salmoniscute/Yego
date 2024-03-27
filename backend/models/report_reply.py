@@ -5,14 +5,14 @@ from models.base import Base, BaseType
 class ReportReply(Base):
     __tablename__ = "ReportReply"
     reply_id : Mapped[BaseType.reply_id]
-    parent: Mapped[BaseType.str_20]
+    parent: Mapped[Optional[BaseType.str_20]]
     report_id : Mapped[BaseType.str_20]
     publisher : Mapped[BaseType.str_20]
     release_time : Mapped[BaseType.str_20]
     content : Mapped[BaseType.str_100]
 
 
-    def __init__(self, reply_id:str, parent:str, report_id:str, publisher:str, release_time:str, content:str) -> None:
+    def __init__(self, reply_id:str, parent:Optional[str], report_id:str, publisher:str, release_time:str, content:str) -> None:
         self.reply_id = reply_id
         self.parent = parent
         self.report_id = report_id        
