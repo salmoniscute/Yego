@@ -31,3 +31,4 @@ class DiscussionUpdate(BaseModel):
     title: Optional[str]
     discription: Optional[str]
     
+    
