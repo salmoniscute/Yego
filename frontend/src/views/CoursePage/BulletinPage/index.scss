@@ -6,47 +6,46 @@
     }
     .courseBulletin{
         .courseBulletinContent{
-            background-color: #f0f0f0;
+            background-color: #FFFFFF;
+            border:solid 1px #474141;
             display: flex;
             flex-direction: row;
             padding: 1em 1em;
             margin: 2em 0em;
-            .cbPin{
-                margin-right: 1rem;
-                font-size: large;
-            }
             .cb{
                 flex-direction: column;
-                .cbTitle{
-                    font-size: large;
-                    margin-top: 0;
+                .cbPin{
+                    background-color: #FFEA79;
+                    border-radius: 2em;
+                    margin-right: 1em;
+                    padding: 0.5em 1.5em;
+                    font-size: x-small;
                     font-weight: 600;
                 }
                 .cbContent{
                     display: flex;
                     flex-direction: row;
+                    align-items: center;
                     img{
-                        width: 3em;
-                        height: 3em;
-                        margin-right: 1em;
+                        width: 1.5em;
+                        height: 1.5em;
                     }
-                    div {
-                        .cbAuther{
-                            font-size: large;
-                            font-weight: 600;
-                            margin: 0em 0em ;
-                        }
-                        .cbTime {
-                            font-size: 15px;
-                            margin: 0em 0em ;
-                            font-weight: 200;
-                        }   
-                        .cbInfor{
-                            font-size: medium;
-                            font-weight: 400;
-                        }
-                        
+                    .cbAuther{
+                        font-size: medium;
+                        font-weight: 600;
+                        margin: 0em 0.5em ;
                     }
+                    .cbTime {
+                        font-size: 15px;
+                        margin: 0em 0em ;
+                        font-weight: 200;
+                    }   
+                                
+                }
+                .cbInfor{
+                    font-size: large;
+                    font-weight: 400;
+                    margin-bottom: 0em;
                 }
         
             }

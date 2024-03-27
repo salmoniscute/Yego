@@ -39,7 +39,7 @@ import ReportPage from "views/ReportPage";
 
 import getTextOrigin from "utils/getText";
 import DiscussionReplyPage from "views/DiscussionReplyPage";
-
+import DiscussionTopicList from "components/DiscussionTopicList";
 
 function Logout(): ReactElement {
     localStorage.removeItem("access_token")

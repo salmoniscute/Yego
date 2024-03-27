@@ -40,22 +40,24 @@ export default function DiscussionPage(props: propsType): ReactElement {
                 </div>
 
             </div>
-            <div className="discussionTab">
-                <p className="discussionTitle">討論區</p>
-                <p className="discussionDiscription">說明</p>
-                <p >追蹤更新</p>
+            <div className="discussion">
+                <div className="discussionTab">
+                    <p className="discussionTitle">標題</p>
+                    <p className="discussionDiscription">說明</p>
+                    <p >追蹤回覆</p>
+                </div>
+                {
+                    discussionList.map(data =>
+                        <div className="discussionInfo">
+                            <p className="discussionTitle">
+                                <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
+                            </p>
+                            <p className="discussionDiscription">{data.discription}</p>
+                            <BiSolidBellRing />
+                        </div>
+                    )
+                }
             </div>
-            {
-                discussionList.map(data =>
-                    <div className="discussionInfo">
-                        <p className="discussionTitle">
-                            <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
-                        </p>
-                        <p className="discussionDiscription">{data.discription}</p>
-                        <BiSolidBellRing />
-                    </div>
-                )
-            }
 
         </div>
     );

@@ -1,18 +1,23 @@
 import { jwtDecode } from "jwt-decode";
 
+import axios from "axios";
 import { User } from "schemas/user";
 
-const testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIwIiwibmFtZSI6InVzZXIiLCJyb2xlIjoic3R1ZGVudCIsImNvdW50cnkiOiJ0YWl3YW4iLCJkZXBhcnRtZW50IjoiQ1NJRSIsImVtYWlsIjoidXNlckB5ZWdvLmNvbSIsImludHJvZHVjdGlvbiI6ImludHJvZHVjdGlvbiJ9.8NZrmIVMsJC7IkWDLilOAU9Y-_Z_YUrTSIiK6nYF65s";
+let access_token = "";
 
 export async function login(username: string, password: string): Promise<User> {
-    let result = "";
-    if (username === "user" && password === "password") {
-        result = testToken;
+    let url = "http://localhost:8080/api/auth/login?";
+    try {
+        const response = await axios.post(url,"username="+username+"&password="+password);
+        console.log(response.data);
+        access_token = response.data.access_token;
+        localStorage.setItem("access_token", access_token);
+        
     }
-    else {
-        throw Error;
+    catch {  
+        console.log("hi");
+        //return ;
     }
 
-    localStorage.setItem("access_token", result);
-    return jwtDecode(result) as User;
+    return jwtDecode(access_token) as User;
 }
