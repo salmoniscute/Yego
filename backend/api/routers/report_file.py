@@ -35,12 +35,11 @@ async def create_report_file(newReportFile: ReportFileSchema.ReportFileCreate):
 
 @router.get(
     "/report_file/{file_id}", 
+    response_model=ReportFileSchema.ReportFileRead,
     response_description="Get a report file",  
 )
 async def get_report_file(file_id: str = None):
-    print("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII\n")
     report_file = await ReportFileCrud.get_report_file_by_file_id(file_id)
-    print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n")
     if report_file:
         return report_file
     raise HTTPException(status_code=404, detail=f"Report file doesn't exist")

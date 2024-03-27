@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 
-class Report_reply(Base):
+class ReportReply(Base):
     __tablename__ = "ReportReply"
     reply_id : Mapped[BaseType.reply_id]
     parent: Mapped[BaseType.str_20]

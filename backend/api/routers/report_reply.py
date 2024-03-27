@@ -39,14 +39,14 @@ async def create_report_reply(newReportReply: ReportReplySchema.ReportReplyCreat
 
 @router.get(
     "/report_reply/{reply_id}", 
+    response_model=ReportReplySchema.ReportReplyRead,
     response_description="Get a report reply by reply_id",  
 )
 async def get_report_reply(reply_id: str = None):
 
     report_reply = await ReportReplyCrud.get_report_reply_by_reply_id(reply_id)
-    
     if report_reply:
-        return create_jwt(report_reply)
+        return report_reply
     raise HTTPException(status_code=404, detail=f"Report reply doesn't exist")
     
 

@@ -2,7 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Mapped, relationship
 from models.base import Base, BaseType
 
-class Report_file(Base):
+class ReportFile(Base):
     __tablename__ = "ReportFile"
     file_id : Mapped[BaseType.file_id]
     report_id : Mapped[BaseType.str_20]

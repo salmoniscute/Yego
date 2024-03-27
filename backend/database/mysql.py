@@ -13,8 +13,8 @@ from models.discussion_topic import DiscussionTopic
 from models.discussion_reply import DiscussionReply
 from models.discussion_topic_file import DiscussionTopicFile
 from models.report import Report
-from models.report_file import Report_file
-from models.report_reply import Report_reply
+from models.report_file import ReportFile
+from models.report_reply import ReportReply
 from models.course_bulletin_file import CourseBulletinFile
 
 
@@ -47,8 +47,8 @@ async def init_db():
             await db.execute(CreateTable(DiscussionReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(DiscussionTopicFile.__table__, if_not_exists=True))
             await db.execute(CreateTable(Report.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report_file.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report_reply.__table__, if_not_exists=True))
+            await db.execute(CreateTable(ReportFile.__table__, if_not_exists=True))
+            await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(CourseBulletinFile.__table__, if_not_exists=True))
 
 async def close_db():

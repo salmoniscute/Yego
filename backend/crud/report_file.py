@@ -2,7 +2,7 @@ from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 
-from models.report_file import Report_file as ReportFileModel
+from models.report_file import ReportFile as ReportFileModel
 from schemas import report_file as ReportFileSchema
 
 @crud_class_decorator
