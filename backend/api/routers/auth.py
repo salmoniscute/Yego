@@ -29,7 +29,7 @@ async def login(form_data: AuthSchema.login_form_schema):
     - **password**
 
     """
-    user_in_db = await UserCrud.get(form_data.username)
+    user_in_db = await UserCrud.login(form_data.username)
     
     if user_in_db is None:
         raise exception_invalid_login
