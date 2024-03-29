@@ -1,17 +1,45 @@
+
 #courseBulletinPage{
+        
     margin: 3em 8em;
     > p{
         font-size:larger;
         font-weight: 600;
     }
+    textarea{
+        margin-top: 1em;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 18px;
+        outline: none;
+        border: none;
+        padding: 14px 15px;
+        height: 3em;
+        resize: none;
+    }
+    .quill{
+        > .ql-container{
+            background-color: #FFFFFF;
+            border: none;
+            height: 10em;
+            > .ql-editor{
+                font-size: 18px;
+                
+            }
+        }
+    }
+
     .courseBulletin{
+        margin-top: 4em;
         .courseBulletinContent{
+
             background-color: #FFFFFF;
             border:solid 1px #474141;
             display: flex;
             flex-direction: row;
             padding: 1em 1em;
             margin: 2em 0em;
+
             .cb{
                 flex-direction: column;
                 .cbPin{

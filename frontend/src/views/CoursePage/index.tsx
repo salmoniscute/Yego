@@ -1,7 +1,8 @@
 import {
     ReactElement,
     useMemo,
-    useState
+    useState,
+    useContext
 } from "react";
 import {
     Link,
@@ -10,6 +11,7 @@ import {
     Routes,
     useParams
 } from "react-router-dom";
+import userDataContext from "context/userData";
 
 import { LuClipboardCheck } from "react-icons/lu";
 import BulletinPage from "./BulletinPage";
@@ -22,6 +24,7 @@ import GradePage from "./GradePage";
 
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
+    const userData = useContext(userDataContext);
 
     const params = useParams();
     const { courseID } = params;
@@ -39,11 +42,11 @@ export default function CoursePage(): ReactElement {
         <div id="courseForum">
             <div className="titleInfor">
                 <h2>課程名稱</h2>
-                <div className="signIn" onClick={() => { }}>
+                { userData?.role=="student" && <div className="signIn" onClick={() => { }}>
                     簽到
                     <LuClipboardCheck className="cfIcon" />
-                </div>
-                <a href="">課程大綱</a>
+                </div>}
+                { userData?.role=="student" && <a href="">課程大綱</a>}
             </div>
             <div className="forumCategory">
                 {
