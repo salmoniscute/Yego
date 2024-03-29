@@ -44,7 +44,7 @@ export default function DiscussionTopicList(): ReactElement {
     </div>
   );
 
-  return <>
+  return <div id="DiscussionTopicList">
     <div className="list">
       <h3 className="topic">討論主題</h3>
       <h3 className="launch">發布日期<button onClick={Resort}>{arrow === true ? <IoArrowUp /> : <IoArrowDown />}</button></h3>
@@ -52,5 +52,5 @@ export default function DiscussionTopicList(): ReactElement {
       <h3 className="follow">追蹤更新</h3>
     </div>
     {listRender}
-  </>
+  </div>
 }
