@@ -12,11 +12,14 @@ export default function LoginPage(): ReactElement {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const userData = useContext(userDataContext);
+  let userData = useContext(userDataContext);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
       const user = await login(userName, password);
       if (user) {
+          userData = user;
+          navigate("/");
       } else {
           
       }
