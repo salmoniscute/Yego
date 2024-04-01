@@ -35,7 +35,17 @@ class Course(Base):
     teacher : Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     instructor_info : Mapped["User"] = relationship(
         "User",
-        back_populates="courses"
+        back_populates="courses",
+        lazy="joined"
+    )
+
+    # Relationship to child
+    selected_courses: Mapped[list["SelectedCourse"]] = relationship(
+        "SelectedCourse",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True,
+        lazy="joined"
     )
 
 
