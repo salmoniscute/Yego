@@ -18,7 +18,8 @@ router = APIRouter(
 async def create_discussion_reply(
     newDiscussionReply: DiscussionReplySchema.DiscussionReplyCreate,
     topic_id: str = Depends(check_discussion_topic_id),
-    publisher: str = Depends(check_user_id)
+    publisher: str = Depends(check_user_id),
+    parent: str = None
 ):
     """
     Create a discussion topic with the following information:
@@ -30,13 +31,17 @@ async def create_discussion_reply(
     - **parent** (optional)
     """
     
+    if parent:
+        parent_discussion_reply = await DiscussionReplyCrud.get(parent)
+        if not parent_discussion_reply:
+            raise HTTPException(status_code=404, detail=f"Parent discussion reply doesn't exist")
     
     discussion_reply = await DiscussionReplyCrud.get(newDiscussionReply.reply_id)
     if discussion_reply:
         raise HTTPException(status_code=409, detail=f"Discussion reply already exists")
     
     # create discussion reply
-    discussion_reply = await DiscussionReplyCrud.create(topic_id, publisher, newDiscussionReply)
+    discussion_reply = await DiscussionReplyCrud.create(parent, topic_id, publisher, newDiscussionReply)
 
     return discussion_reply
 

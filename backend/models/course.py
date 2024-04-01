@@ -13,7 +13,7 @@ class Course(Base):
     name : Mapped[BaseType.str_100]
     outline : Mapped[BaseType.str_100]
     
-    #relationship to CourseBulletin parent to child
+    #relationship to child
     bulletins : Mapped[list["CourseBulletin"]] = relationship(
         "CourseBulletin",
         back_populates="course",
@@ -22,7 +22,6 @@ class Course(Base):
         lazy="joined"
     )
     
-    #relationship to Discussion parent to child
     discussions : Mapped[list["Discussion"]] = relationship(
         "Discussion",
         back_populates="course",
@@ -31,7 +30,7 @@ class Course(Base):
         lazy="joined"
     )
     
-    #relationship to User child to parent
+    #relationship to parent
     teacher : Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     instructor_info : Mapped["User"] = relationship(
         "User",

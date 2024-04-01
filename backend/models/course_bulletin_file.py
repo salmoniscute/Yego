@@ -9,7 +9,7 @@ class CourseBulletinFile(Base):
     file_id : Mapped[BaseType.file_id]
     path : Mapped[BaseType.str_100]
     
-    #relationship to CourseBulletin child to parent
+    #relationship to parent
     cb_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("CourseBulletin.cb_id", ondelete="CASCADE"))
     course_bulletin : Mapped["CourseBulletin"] = relationship(
         "CourseBulletin", 

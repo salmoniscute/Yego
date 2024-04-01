@@ -37,3 +37,8 @@ class DiscussionTopicUpdate(BaseModel):
     release_time: Optional[str]
     content: Optional[str]
     
+class DiscussionTopicsResponse(BaseModel):
+    topic_id: str
+    title: str
+    release_time: str
+    reply_count: int

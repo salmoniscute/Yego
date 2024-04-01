@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud.discussion import DiscussionCrudManager
 from schemas import discussion as DiscussionSchema
+from schemas import discussion_topic as DiscussionTopicSchema
 from .depends import check_discussion_id, check_course_id
 
 DiscussionCrud = DiscussionCrudManager()
@@ -67,6 +68,29 @@ async def get_discussion(discussion_id: str = None):
         return discussion
     raise HTTPException(status_code=404, detail=f"Discussion doesn't exist")
     
+@router.get(
+    "/discussion/topics/{discussion_id}",
+    response_model = list[DiscussionTopicSchema.DiscussionTopicsResponse],
+    response_description="Get all topics of a discussion",
+)
+async def get_discussion_topics(discussion_id: str = None):
+    """ 
+    Get all topics of a discussion.
+    """
+    results = []
+    discussion = await DiscussionCrud.get(discussion_id)
+    if discussion:
+        for topic in discussion.topics:
+            result = {
+                "topic_id": topic.topic_id,
+                "title": topic.title,
+                "release_time": topic.release_time,
+                "reply_count": len(topic.replies)
+            }
+            results.append(result)
+        return results
+    raise HTTPException(status_code=404, detail=f"No topics found")
+
 
 @router.put(
     "/discussion/{discussion_id}",

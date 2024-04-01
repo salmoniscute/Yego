@@ -26,7 +26,6 @@ class User(Base):
         lazy="joined"
     )
     
-    # Relationship to child
     courses: Mapped[list["Course"]] = relationship(
         "Course",
         back_populates="instructor_info",
@@ -44,7 +43,6 @@ class User(Base):
         lazy="joined"
     )
     
-    # Relationship to child
     topics: Mapped[list["DiscussionTopic"]] = relationship(
         "DiscussionTopic",
         back_populates="publisher_info",
@@ -53,7 +51,6 @@ class User(Base):
         lazy="joined"
     )
     
-    # Relationship to child
     replies: Mapped[list["DiscussionReply"]] = relationship(
         "DiscussionReply",
         back_populates="publisher_info",

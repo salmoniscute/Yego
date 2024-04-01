@@ -7,20 +7,20 @@ from models.base import Base, BaseType
 class Discussion(Base):
     __tablename__ = "Discussion"
     discussion_id : Mapped[BaseType.discussion_id]
-    # course_id : Mapped[BaseType.str_20]
     title : Mapped[BaseType.str_100]
     discription : Mapped[BaseType.str_100]
     
-    # relationship to DiscussionTopic parent to child
+    # relationship to child
     topics : Mapped[list["DiscussionTopic"]] = relationship(
         "DiscussionTopic",
         back_populates="discussion",
         cascade="all, delete, delete-orphan",
         passive_deletes=True,
-        lazy="joined"
+        lazy="joined",
+        order_by="DiscussionTopic.release_time"
     )
     
-    # relationship to Course child to parent
+    # relationship to parent
     course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
     course : Mapped["Course"] = relationship(
         "Course", 
