@@ -36,6 +36,20 @@ async def create_report_file(
     return report_file
 
 @router.get(
+    "/report_files",
+    response_model=list[ReportFileSchema.ReportFileRead],
+    response_description="Get all report files"
+)
+async def get_all_report_files():
+    """ 
+    Get all report files.
+    """
+    report_files = await ReportFileCrud.get_all()
+    if report_files:
+        return report_files
+    raise HTTPException(status_code=404, detail=f"No report files found")
+
+@router.get(
     "/report_file/{file_id}", 
     response_model=ReportFileSchema.ReportFileRead,
     response_description="Get a report file",  

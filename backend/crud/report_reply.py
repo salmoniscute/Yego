@@ -23,6 +23,12 @@ class ReportReplyCrudManager:
         
         return report_reply[0] if report_reply else None
 
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(ReportReplyModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [report_reply[0] for report_reply in result.all()]
 
     async def update(self, reply_id: str, updateReportReply: ReportReplySchema.ReportReplyUpdate, db_session: AsyncSession):
         updateReportReply_dict = updateReportReply.model_dump()

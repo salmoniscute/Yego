@@ -22,6 +22,13 @@ class ReportFileCrudManager:
         report_file = result.first()
         
         return report_file[0] if report_file else None
+    
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(ReportFileModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [report_file[0] for report_file in result.all()]
 
     async def update(self, file_id: str, updateReportFile: ReportFileSchema.ReportFileUpdate, db_session: AsyncSession):
         updateReportFile_dict = updateReportFile.model_dump()

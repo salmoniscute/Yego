@@ -44,6 +44,20 @@ async def create_report_reply(
     return report_reply
 
 @router.get(
+    "/report_replies",
+    response_model=list[ReportReplySchema.ReportReplyRead],
+    response_description="Get all report replies"
+)
+async def get_all_report_replies():
+    """ 
+    Get all report replies.
+    """
+    report_replies = await ReportReplyCrud.get_all()
+    if report_replies:
+        return report_replies
+    raise HTTPException(status_code=404, detail=f"No report replies found")
+
+@router.get(
     "/report_reply/{reply_id}", 
     response_model=ReportReplySchema.ReportReplyRead,
     response_description="Get a report reply by reply_id",  
