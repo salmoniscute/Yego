@@ -49,6 +49,24 @@ class User(Base):
         passive_deletes=True,
         lazy="joined"
     )
+    
+    # Relationship to child
+    reports: Mapped[list["Report"]] = relationship(
+        "Report",
+        back_populates="publisher_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        lazy="joined"
+    )
+    
+    # Relationship to child
+    report_replies: Mapped[list["ReportReply"]] = relationship(
+        "ReportReply",
+        back_populates="publisher_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+        lazy="joined"
+    )
 
     def __init__(self, uid: str, password: str, name: str, role: str, email: str, department: str, country: str, introduction: Optional[str], avatar: Optional[str]) -> None:
         self.uid = uid

@@ -1,67 +1,73 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useState , useContext} from 'react';
 
 import { login } from 'api/login';
-
-import salmon from "./salmon.jpg";
 
 import './index.scss';
 import { useNavigate } from 'react-router-dom';
 
+import userDataContext from "context/userData";
+
 export default function LoginPage(): ReactElement {
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const setNavigate = useNavigate();
+  let userData = useContext(userDataContext);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    login(username, password).then(() => {
-      setNavigate("/");
-    }).catch(() => {
-      alert('登入失敗，請檢查用戶名和密碼');
-    })
+  const handleLogin = async () => {
+      const user = await login(userName, password);
+      if (user) {
+          userData = user;
+          navigate("/");
+      } else {
+          
+      }
   };
 
   return (
-    <div id="loginPage" className="container">
-      <div className="card1">
-        <h2>成功大學數位學習平台-登入</h2>
-      </div>
-      <div className="card2">
-        <div className="left">
-          <img alt="loginImage" src={salmon} style={{ maxWidth: '80%', height: '80%' }} />
-        </div>
-        <div className="right">
-          <div>
-            <form>
-              <input
-                type="text"
-                placeholder="用戶名"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} />
-              <input
-                type="password"
-                placeholder="密碼"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} />
-              <div className="remember-me">
-                <input
-                  type="checkbox"
-                  id="rememberMe"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                <p>記住我</p>
+    <div id="loginPage">
+      <h2>登入YEGO</h2>
+        <div className='rightBlock'>
+          <p>帳號</p>
+          <textarea
+            placeholder="帳號與成功入口相同"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            rows={1}
+          />
+          <p>密碼</p>
+          <textarea
+            placeholder="密碼"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            rows={1}
+          />
 
-              </div>
-              <button type="button" onClick={handleLogin}>
-                登入
-              </button>
-
-            </form>
+          <div className='rightBlockMiddle'>
+            <div>
+              <input type="checkbox"/>
+              <label >記住帳號</label>
+            </div>
+            <div>
+              <p>忘記帳號/密碼</p>
+            </div>
           </div>
+
+          <div className='rightBlockButton' style={{backgroundColor: "#FFEA79",}} onClick={handleLogin}>
+            登入
+          </div>
+          <p style={{textAlign: "center"}}>或</p>
+          <div className='rightBlockButton' style={{backgroundColor: "#949494",color:"#F7F7F7"}}>
+            訪客登入
+          </div>
+          <p style={{textAlign: "end" }}>登入說明</p>
+
         </div>
+        
+
       </div>
-    </div>
+      
+    
   );
 };
