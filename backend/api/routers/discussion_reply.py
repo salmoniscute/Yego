@@ -41,7 +41,7 @@ async def create_discussion_reply(
         raise HTTPException(status_code=409, detail=f"Discussion reply already exists")
     
     # create discussion reply
-    discussion_reply = await DiscussionReplyCrud.create(topic_id, publisher, parent, newDiscussionReply)
+    discussion_reply = await DiscussionReplyCrud.create(parent, topic_id, publisher, newDiscussionReply)
 
     return discussion_reply
 

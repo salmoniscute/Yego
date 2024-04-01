@@ -24,7 +24,7 @@ class DiscussionReply(Base):
     )
 
 
-    def __init__(self, reply_id:str, topic_id:str, publisher:str, release_time:str, content:str, parent: Optional[str]) -> None:
+    def __init__(self, reply_id:str, topic_id:str, publisher:str, release_time:str, content:str, parent: Optional[str] = None) -> None:
         self.reply_id = reply_id
         self.topic_id = topic_id        
         self.publisher = publisher
