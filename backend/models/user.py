@@ -33,6 +33,15 @@ class User(Base):
         passive_deletes=True,
         lazy="joined"
     )
+
+    # Relationship to child
+    selected_courses: Mapped[list["SelectedCourse"]] = relationship(
+        "SelectedCourse",
+        back_populates="student_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True,
+        lazy="joined"
+    )
     
     topics: Mapped[list["DiscussionTopic"]] = relationship(
         "DiscussionTopic",
