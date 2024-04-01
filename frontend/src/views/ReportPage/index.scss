@@ -4,6 +4,9 @@
   max-width: calc(1200px);
   padding: 0.95rem max(5vw, calc(50vw - 630px));
 
+  button {
+    border: none;
+  }
   .header {
     display: flex;
     flex-shrink: 0;

@@ -37,6 +37,8 @@ import CoursePage from "views/CoursePage";
 import LandingPage from "views/LandingPage";
 import ReportPage from "views/ReportPage";
 
+import NotificationPage from "views/NotificationPage";
+
 import getTextOrigin from "utils/getText";
 import DiscussionReplyPage from "views/DiscussionReplyPage";
 import DiscussionTopicList from "components/DiscussionTopicList";
@@ -112,7 +114,8 @@ export default function App(): ReactElement {
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
-                        <Route path="/reportBug" element={<ReportPage />} />
+                        <Route path="/reportBug" element={<ReportPage />} />  
+                        <Route path="/notification" element={<NotificationPage />} />
                         <Route path="/salmontest" element={<DiscussionReplyPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>

@@ -17,6 +17,9 @@ from .routers import (
     discussion_topic_router,
     discussion_reply_router,
     discussion_topic_file_router,
+    report_router,
+    report_file_router,
+    report_reply_router,
     course_bulletin_file_router
 )
 
@@ -34,6 +37,9 @@ app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
 app.include_router(discussion_reply_router)
 app.include_router(discussion_topic_file_router)
+app.include_router(report_router)
+app.include_router(report_file_router)
+app.include_router(report_reply_router)
 app.include_router(course_bulletin_file_router)
 
 
