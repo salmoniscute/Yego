@@ -8,7 +8,7 @@ class DiscussionReply(Base):
     reply_id : Mapped[BaseType.reply_id]
     release_time : Mapped[BaseType.str_20]
     content : Mapped[BaseType.str_100]
-    parent : Mapped[BaseType.str_20]
+    parent : Mapped[Optional[BaseType.str_20]]
     
     # relationship to parent
     topic_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.topic_id", ondelete="CASCADE"))
@@ -24,7 +24,7 @@ class DiscussionReply(Base):
     )
 
 
-    def __init__(self, reply_id:str, topic_id:str, publisher:str, release_time:str, content:str, parent: str) -> None:
+    def __init__(self, reply_id:str, topic_id:str, publisher:str, release_time:str, content:str, parent: Optional[str]) -> None:
         self.reply_id = reply_id
         self.topic_id = topic_id        
         self.publisher = publisher
