@@ -9,6 +9,23 @@ from schemas import user as UserSchema
 
 @crud_class_decorator
 class UserCrudManager:
+    async def login(self, uid: str, db_session: AsyncSession):
+        stmt = select(
+            UserModel.uid, 
+            UserModel.password,
+            UserModel.role,
+            UserModel.name,
+            UserModel.country,
+            UserModel.department,
+            UserModel.email,
+            UserModel.introduction,
+            UserModel.avatar
+        ).where(UserModel.uid == uid)
+        result = await db_session.execute(stmt)
+        user = result.first()
+
+        return user if user else None
+
     async def get(self, uid: str, db_session: AsyncSession):
         stmt = select(UserModel).where(UserModel.uid == uid)
         result = await db_session.execute(stmt)

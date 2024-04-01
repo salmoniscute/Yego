@@ -29,8 +29,7 @@ async def create_jwt(data: sqlalchemy.engine.row.Row):
 async def create_access_token(data: UserModel):
     expire = datetime.now(tz=timezone.utc) + timedelta(minutes=10)
 
-    to_encode = data.__dict__
-    to_encode.pop("_sa_instance_state")
+    to_encode = dict(data._mapping)
     to_encode.pop("password")
     to_encode.update({"exp": expire})
 
@@ -41,7 +40,6 @@ async def create_access_token(data: UserModel):
 
 async def verify_access_token(token: str):
     try:
-        print(token)
         return jwt.decode(token, secret, algorithm)
     
     except jwt.ExpiredSignatureError:
