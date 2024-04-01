@@ -36,6 +36,7 @@ class UserCrudManager:
     async def get_all(self, db_session: AsyncSession):
         stmt = select(UserModel)
         result = await db_session.execute(stmt)
+        result = result.unique()
 
         return [user[0] for user in result.all()]
     
