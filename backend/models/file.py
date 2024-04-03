@@ -7,8 +7,8 @@ from models.base import Base, BaseType
 class File(Base):
     __tablename__ = "File"
     id: Mapped[BaseType.id]
-    owner: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    component_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    owner: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    component_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     path: Mapped[BaseType.str_100]
 
     # Relationship to parent

@@ -5,6 +5,7 @@ from sqlalchemy import ForeignKey
 from models.base import Base, BaseType
 from models.component import Component
 
+
 class Bulletin(Component):
     __tablename__ = "Bulletin"
     id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
@@ -13,7 +14,7 @@ class Bulletin(Component):
 
     __mapper_args__ = {
         "polymorphic_identity": "bulletin",
-        "polymorphic_on": type
+        "polymorphic_on": "type"
     }
 
     # Relationship to parent
@@ -22,8 +23,6 @@ class Bulletin(Component):
         back_populates="bulletins",
         lazy="joined"
     )
-
-    
     
     def __init__(self, id: str, course_id: str, pin_to_top: bool, type: str) -> None:
         self.id = id
@@ -41,7 +40,7 @@ class WebsiteBulletin(Bulletin):
     }
 
 class CourseBulletin(Bulletin):
-    course_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE", nullable=True))
+    course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE", nullable=True))
     
     # Relationship to parent
     course_info: Mapped["Course"] = relationship(

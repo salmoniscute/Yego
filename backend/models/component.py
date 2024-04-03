@@ -6,7 +6,7 @@ from models.base import Base, BaseType
 class Component(Base):
     __tablename__ = "Component"
     id: Mapped[BaseType.id]
-    publisher: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    publisher: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     release_time: Mapped[BaseType.datetime]
     title: Mapped[BaseType.str_100]
     content: Mapped[BaseType.str_100]
