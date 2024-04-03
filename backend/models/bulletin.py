@@ -23,11 +23,11 @@ class Bulletin(Base):
         lazy="joined"
     )
 
-    course_info: Mapped["Course"] = relationship(
-        "Course",
-        back_populates="bulletins",
-        lazy="joined"
-    )
+    # course_info: Mapped["Course"] = relationship(
+    #     "Course",
+    #     back_populates="bulletins",
+    #     lazy="joined"
+    # )
     
     def __init__(self, id: str, course_id: str, pin_to_top: bool, type: str) -> None:
         self.id = id

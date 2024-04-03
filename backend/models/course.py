@@ -31,17 +31,17 @@ class Course(Base):
         lazy="joined"
     )
 
-    bulletins: Mapped[list["Bulletin"]] = relationship(
-        "Bulletin",
-        back_populates="course_info",
-        cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
-    )
+    # bulletins: Mapped[list["Bulletin"]] = relationship(
+    #     "Bulletin",
+    #     back_populates="course_info",
+    #     cascade="all, delete-orphan", 
+    #     passive_deletes=True,
+    #     lazy="joined"
+    # )
 
-    def __init__(self,course_id:str, teacher:str, course_code:float, academic_year:int, semester:int, name:str, outline:Optional[str]) -> None:
-        self.course_id = course_id
-        self.teacher = teacher
+    def __init__(self, id: str, instructor: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
+        self.id = id
+        self.instructor = instructor
         self.course_code = course_code
         self.academic_year = academic_year
         self.semester = semester
@@ -49,5 +49,4 @@ class Course(Base):
         self.outline = outline
 
     def __repr__(self) -> str:
-        return f"Course(course_id={self.course_id}, teacher={self.teacher}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"
-
+        return f"Course(id={self.id}, instructor={self.instructor}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"

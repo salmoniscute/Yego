@@ -23,4 +23,4 @@ async def check_course_id(course_id: str):
     if not course:
         raise HTTPException(status_code=404, detail="Course does not exist")
     
-    return course.course_id
+    return course.id

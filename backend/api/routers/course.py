@@ -91,7 +91,7 @@ async def update_course(
 ):
     """ 
     Update the particular course with at least one of the following information:
-    - **teacher**
+    - **instructor**
     - **course_code**
     - **academic_year**
     - **semester**

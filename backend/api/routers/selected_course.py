@@ -120,13 +120,15 @@ async def get_selected_courses_by_uid(uid: str):
     results= []
 
     selected_courses = await SelectedCourseCrud.get_by_uid(uid)
+    print(selected_courses)
     if selected_courses:
         for selected_course in selected_courses:
             result = {
                 "course_name": selected_course.course_info.name,
                 "instructor_name": selected_course.course_info.instructor_info.name
             }
-        results.append(result)
+            results.append(result)
+            
         return results
     
     raise not_found

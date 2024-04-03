@@ -14,12 +14,12 @@ class CourseCreate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 {
-                "course_id": "CSE101",
-                "course_code": "CSE101",
-                "academic_year": 2021,
-                "semester": 1,
-                "name": "Introduction to Computer Science",
-                "outline": "This course is an introduction to computer science."
+                    "id": "CSE101",
+                    "course_code": "CSE101",
+                    "academic_year": 2021,
+                    "semester": 1,
+                    "name": "Introduction to Computer Science",
+                    "outline": "This course is an introduction to computer science."
                 }
             ]
         }
@@ -37,10 +37,10 @@ class CourseRead(BaseModel):
     
     
 class CourseUpdate(BaseModel):
-    instructor : Optional[str]
-    course_code : Optional[str]
-    academic_year : Optional[int]
-    semester : Optional[int]
-    name : Optional[str]
-    outline : Optional[str]
+    instructor : Optional[str] = None
+    course_code : Optional[str] = None
+    academic_year : Optional[int] = None
+    semester : Optional[int] = None
+    name : Optional[str] = None
+    outline : Optional[str] = None
     
