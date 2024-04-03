@@ -4,8 +4,6 @@ from pydantic import BaseModel
 
 class FileCreate(BaseModel):
     id: str
-    owner: str
-    component_id: str
     path: str
 
     model_config = {
@@ -13,8 +11,6 @@ class FileCreate(BaseModel):
             "examples": [
                 { 
                     "id": "1",
-                    "owner": "1",
-                    "component_id": "1",
                     "path": "/path/of/file"
                 }
             ]
