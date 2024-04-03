@@ -7,7 +7,7 @@ from models.selected_course import SelectedCourse
 
 class User(Base):
     __tablename__ = "User"
-    id: Mapped[BaseType.id]
+    uid: Mapped[BaseType.id]
     password: Mapped[BaseType.hashed_password]
     name: Mapped[BaseType.str_20]
     role: Mapped[BaseType.str_20]

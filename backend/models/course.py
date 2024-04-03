@@ -7,7 +7,7 @@ from models.base import Base, BaseType
 
 class Course(Base):
     __tablename__ = "Course"
-    course_id: Mapped[BaseType.id]
+    id: Mapped[BaseType.id]
     instructor: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     course_code: Mapped[BaseType.str_20]
     academic_year: Mapped[BaseType.str_20]

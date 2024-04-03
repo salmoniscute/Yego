@@ -29,12 +29,13 @@ async def get_db():
 async def init_db():
     async with SessionLocal() as db:
         async with db.begin():
-            await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
+            await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Component.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
             await db.execute(CreateTable(File.__table__, if_not_exists=True))
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
-            await db.execute(CreateTable(User.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
+            
             
 async def close_db():
     await engine.dispose()
