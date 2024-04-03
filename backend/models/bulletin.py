@@ -11,10 +11,10 @@ class Bulletin(Base):
     type: Mapped[BaseType.str_100]
     pin_to_top: Mapped[BaseType.boolean]
 
-    __mapper_args__ = {
-        "polymorphic_identity": "bulletin",
-        "polymorphic_on": type
-    }
+    # __mapper_args__ = {
+    #     "polymorphic_identity": "bulletin",
+    #     "polymorphic_on": type
+    # }
 
     # Relationship to parent
     info: Mapped["Component"] = relationship(
@@ -39,13 +39,13 @@ class Bulletin(Base):
         return f"Bulletin(id={self.id}, course_id={self.course_id}, type={self.type}),  pin_to_top={self.pin_to_top}"
 
 
-class WebsiteBulletin(Bulletin):
-    __mapper_args__ = {
-        "polymorphic_identity": "website_bulletin",
-    }
+# class WebsiteBulletin(Bulletin):
+#     __mapper_args__ = {
+#         "polymorphic_identity": "website_bulletin",
+#     }
 
-class CourseBulletin(Bulletin):
-    course_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
-    __mapper_args__ = {
-        "polymorphic_identity": "course_bulletin",
-    }
+# class CourseBulletin(Bulletin):
+#     course_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
+#     __mapper_args__ = {
+#         "polymorphic_identity": "course_bulletin",
+#     }
