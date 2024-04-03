@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 
 from models.file import File as FileModel
-from backend.schemas import file as FileSchema
+from schemas import file as FileSchema
 
 
 @crud_class_decorator

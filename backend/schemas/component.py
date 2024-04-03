@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 class ComponentCreate(BaseModel):
     id: str
-    publisher: str
     release_time: str
     title: str
     content: str
@@ -14,7 +13,6 @@ class ComponentCreate(BaseModel):
             "examples": [
                 { 
                     "id": "1",
-                    "publisher": "1",
                     "release_time": "2024-04-02 16:00:00",
                     "title": "This is a title",
                     "content": "This is a content"
