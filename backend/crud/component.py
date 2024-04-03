@@ -18,6 +18,7 @@ class ComponentCrudManager:
     async def get_all(self, db_session: AsyncSession):
         stmt = select(ComponentModel)
         result = await db_session.execute(stmt)
+        result = result.unique()
 
         return [component[0] for component in result.all()]
     
