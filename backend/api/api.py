@@ -10,7 +10,8 @@ from .routers import (
     user_router,
     course_router,
     selected_course_router,
-    component_router
+    component_router,
+    file_router
 )
 
 app = FastAPI()
@@ -21,6 +22,7 @@ app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(course_router)
 app.include_router(selected_course_router)
+app.include_router(file_router)
 
 
 origins = [
