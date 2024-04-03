@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
 from models.base import Base, BaseType
 
+
 class Component(Base):
     __tablename__ = "Component"
     id: Mapped[BaseType.id]
@@ -19,13 +20,21 @@ class Component(Base):
     )
 
     # Relationship to child
-    bulletins: Mapped[list["Bulletin"]] = relationship(
-        "Bulletin",
-        back_populates="info",
-        cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
-    )
+    # course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
+    #     "CourseBulletin",
+    #     back_populates="info",
+    #     cascade="all, delete-orphan", 
+    #     passive_deletes=True,
+    #     lazy="joined"
+    # )
+
+    # website_bulletins: Mapped[list["WebsiteBulletin"]] = relationship(
+    #     "WebsiteBulletin",
+    #     back_populates="info",
+    #     cascade="all, delete-orphan", 
+    #     passive_deletes=True,
+    #     lazy="joined"
+    # )
 
     files: Mapped[list["File"]] = relationship(
         "File",

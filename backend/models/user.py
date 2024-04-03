@@ -2,7 +2,6 @@ from sqlalchemy.orm import Mapped, relationship
 from typing import Optional 
 
 from models.base import Base, BaseType
-from models.selected_course import SelectedCourse
 
 
 class User(Base):
