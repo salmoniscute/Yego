@@ -2,8 +2,8 @@ from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 
-from models.course_bulletin import CourseBulletin as CourseBulletinModel
-from schemas import course_bulletin as CourseBulletinSchema
+from backend.models.bulletin import CourseBulletin as CourseBulletinModel
+from backend.schemas import bulletin as CourseBulletinSchema
 
 @crud_class_decorator
 class CourseBulletinCrudManager:

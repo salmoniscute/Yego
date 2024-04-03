@@ -1,11 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel
-from .course_bulletin import CourseBulletinRead
-from .discussion import DiscussionRead
+
 
 class CourseCreate(BaseModel):
-    course_id: str
-    # teacher: str #wait for user
+    id: str
     course_code: str
     academic_year: int
     semester: int
@@ -17,7 +15,6 @@ class CourseCreate(BaseModel):
             "examples": [
                 {
                 "course_id": "CSE101",
-                # "teacher": "U001",
                 "course_code": "CSE101",
                 "academic_year": 2021,
                 "semester": 1,
@@ -28,19 +25,19 @@ class CourseCreate(BaseModel):
         }
     }
 
+
 class CourseRead(BaseModel):
-    course_id: str
-    teacher: str
+    id: str
+    instructor: str
     course_code: str
     academic_year: int
     semester: int
     name: str
     outline : str
-    bulletins:Optional[list[CourseBulletinRead]] = None
-    discussions:Optional[list[DiscussionRead]] = None
+    
     
 class CourseUpdate(BaseModel):
-    teacher : Optional[str]
+    instructor : Optional[str]
     course_code : Optional[str]
     academic_year : Optional[int]
     semester : Optional[int]

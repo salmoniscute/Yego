@@ -7,17 +7,17 @@ from models.base import Base, BaseType
 
 class SelectedCourse(Base):
     __tablename__ = "SelectedCourse"
+    uid: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    course_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
     group: Mapped[BaseType.optional_str_200]
 
-    # relationship to parent
-    uid: Mapped[BaseType.uid] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    student_info: Mapped["User"] = relationship(
+    # Relationship to parent
+    user_info: Mapped["User"] = relationship(
         "User",
         back_populates="selected_courses",
         lazy="joined"
     )
-
-    course_id: Mapped[BaseType.course_id] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
+    
     course_info: Mapped["Course"] = relationship(
         "Course",
         back_populates="selected_courses",

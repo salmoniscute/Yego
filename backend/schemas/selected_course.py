@@ -16,21 +16,15 @@ class SelectedCourseCreate(BaseModel):
     }
 
 
-class SelectedCourseCreateResponse(BaseModel):
+class SelectedCourseRead(BaseModel):
     uid: str
     course_id: str
     group: Optional[str] = None
 
 
-class SelectedCourseRead(BaseModel):
-    uid: str
-    course_id: str
-    group: str
-
-
 class SelectedCourseByUidRead(BaseModel):
     course_name: str
-    teacher_name: str
+    instructor_name: str
 
 
 class SelectedCourseByCourseIdRead(BaseModel):
@@ -42,5 +36,5 @@ class SelectedCourseByCourseIdRead(BaseModel):
 
 
 class SelectedCourseUpdate(BaseModel):
-    group: str
+    group: Optional[str] = None
     

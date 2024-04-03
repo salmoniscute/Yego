@@ -1,7 +1,7 @@
 from auth.passwd import get_password_hash
 from database.mysql import crud_class_decorator
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.user import User as UserModel
 from schemas import user as UserSchema

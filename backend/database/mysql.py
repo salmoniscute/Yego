@@ -1,21 +1,13 @@
 from contextlib import asynccontextmanager
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.schema import CreateTable
 
-from models.user import User
+from models.bulletin import Bulletin
+from models.component import Component
 from models.course import Course
-from models.website_bulletin import WebsiteBulletin
-from models.website_bulletin_file import WebsiteBulletinFile
-from models.course_bulletin import CourseBulletin
-from models.discussion import Discussion
-from models.discussion_topic import DiscussionTopic
-from models.discussion_reply import DiscussionReply
-from models.discussion_topic_file import DiscussionTopicFile
-from models.report import Report
-from models.report_file import ReportFile
-from models.report_reply import ReportReply
-from models.course_bulletin_file import CourseBulletinFile
+from models.file import File
+from models.selected_course import SelectedCourse
+from models.user import User
 
 
 engine = create_async_engine(
@@ -37,20 +29,13 @@ async def get_db():
 async def init_db():
     async with SessionLocal() as db:
         async with db.begin():
-            await db.execute(CreateTable(User.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Component.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
-            await db.execute(CreateTable(WebsiteBulletin.__table__, if_not_exists=True))
-            await db.execute(CreateTable(WebsiteBulletinFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(CourseBulletin.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Discussion.__table__, if_not_exists=True))
-            await db.execute(CreateTable(DiscussionTopic.__table__, if_not_exists=True))
-            await db.execute(CreateTable(DiscussionReply.__table__, if_not_exists=True))
-            await db.execute(CreateTable(DiscussionTopicFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
-            await db.execute(CreateTable(ReportFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
-            await db.execute(CreateTable(CourseBulletinFile.__table__, if_not_exists=True))
-
+            await db.execute(CreateTable(File.__table__, if_not_exists=True))
+            await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
+            await db.execute(CreateTable(User.__table__, if_not_exists=True))
+            
 async def close_db():
     await engine.dispose()
 
