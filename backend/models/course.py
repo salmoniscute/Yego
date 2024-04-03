@@ -31,13 +31,13 @@ class Course(Base):
         lazy="joined"
     )
 
-    # bulletins: Mapped[list["Bulletin"]] = relationship(
-    #     "Bulletin",
-    #     back_populates="course_info",
-    #     cascade="all, delete-orphan", 
-    #     passive_deletes=True,
-    #     lazy="joined"
-    # )
+    bulletins: Mapped[list["Bulletin"]] = relationship(
+        "Bulletin",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True,
+        lazy="joined"
+    )
 
     def __init__(self, id: str, instructor: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
         self.id = id

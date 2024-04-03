@@ -17,8 +17,8 @@ class BulletinCreate(ComponentRead):
                     "release_time": "2021-09-01T00:00:00",
                     "title": "Assignment 1",
                     "content": "This is the first assignment of the course.",
-                    "course_id": "1",
-                    "type": "WebsiteBulletin",
+                    "course_id": "CSE101",
+                    "type": "CourseBulletin",
                     "pin_to_top": "false"
                 }
             ]
@@ -33,7 +33,7 @@ class BulletinRead(ComponentRead):
     
 
 class BulletinUpdate(ComponentRead):
-    course_id: Optional[str]
-    type: Optional[str]
-    pin_to_top: Optional[bool]
+    course_id: Optional[str] = None
+    type: Optional[str] = None
+    pin_to_top: Optional[bool] = None
     
