@@ -14,7 +14,6 @@ class CourseBulletinCrudManager:
         bulletin = CourseBulletinModel(**newBulletin_dict, uid=uid, course_id=course_id)
         db_session.add(bulletin)
         await db_session.commit()
-        db_session.refresh(bulletin)
 
         return bulletin
 

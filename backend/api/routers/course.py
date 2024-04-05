@@ -29,12 +29,12 @@ router = APIRouter(
 )
 async def create_course(
     newCourse: CourseSchema.CourseCreate,
-    instructor: str = Depends(check_user_id)
+    uid: str = Depends(check_user_id)
 ):
     """
     Create a user with the following information:
     - **course_id**
-    - **instructor**
+    - **uid**
     - **course_code**
     - **academic_year**
     - **semester**
@@ -46,7 +46,7 @@ async def create_course(
         raise already_exists
     
     # create course
-    course = await CourseCrud.create(instructor, newCourse)
+    course = await CourseCrud.create(uid, newCourse)
 
     return course
 

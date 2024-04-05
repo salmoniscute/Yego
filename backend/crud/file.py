@@ -8,6 +8,14 @@ from schemas import file as FileSchema
 
 @crud_class_decorator
 class FileCrudManager:
+    async def create(self, component_id, newFile: FileSchema.FileCreate, db_session: AsyncSession):
+        newFile_dict = newFile.model_dump()
+        file = FileModel(component_id=component_id, **newFile_dict)
+        db_session.add(file)
+        await db_session.commit()
+
+        return file
+     
     async def get(self, file_id: str, db_session: AsyncSession):
         stmt = select(FileModel).where(FileModel.id == file_id)
         result = await db_session.execute(stmt)
@@ -21,15 +29,6 @@ class FileCrudManager:
         result = result.unique()
 
         return [file[0] for file in result.all()]
-    
-    async def create(self, owner, component_id, newFile: FileSchema.FileCreate, db_session: AsyncSession):
-        newFile_dict = newFile.model_dump()
-        file = FileModel(owner=owner, component_id=component_id, **newFile_dict)
-        db_session.add(file)
-        await db_session.commit()
-        db_session.refresh(file)
-
-        return file
     
     async def update(self, file_id: str, updateFile: FileSchema.FileUpdate, db_session: AsyncSession):
         updateFile_dict = updateFile.model_dump(exclude_none=True)

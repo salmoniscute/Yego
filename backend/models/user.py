@@ -21,32 +21,21 @@ class User(Base):
         "Course",
         back_populates="instructor_info",
         cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
     selected_courses: Mapped[list["SelectedCourse"]] = relationship(
         "SelectedCourse",
         back_populates="user_info",
         cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
     publications: Mapped[list["Component"]] = relationship(
         "Component",
         back_populates="publisher_info",
         cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-
-    files: Mapped[list["File"]] = relationship(
-        "File",
-        back_populates="owner_info",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
     def __init__(self, uid: str, password: str, name: str, role: str, email: str, department: str, country: str, introduction: Optional[str], avatar: Optional[str]) -> None:

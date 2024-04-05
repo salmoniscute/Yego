@@ -29,12 +29,12 @@ router = APIRouter(
 )
 async def create_component(
     newComponent: ComponentSchema.ComponentCreate,
-    publisher: str = Depends(check_user_id)
+    uid: str = Depends(check_user_id)
 ):
     """
     Create a component with the following information:
     - **id**
-    - **publisher**
+    - **uid**
     - **release_time**
     - **title**
     - **content**
@@ -44,7 +44,7 @@ async def create_component(
         raise already_exists
     
     # create component
-    component = await ComponentCrud.create(publisher=publisher, newComponent=newComponent)
+    component = await ComponentCrud.create(uid=uid, newComponent=newComponent)
 
     return component
 

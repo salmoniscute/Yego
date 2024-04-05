@@ -23,6 +23,7 @@ class SelectedCourseRead(BaseModel):
 
 
 class SelectedCourseByUidRead(BaseModel):
+    course_id: str
     course_name: str
     instructor_name: str
 

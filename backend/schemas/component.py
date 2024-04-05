@@ -1,6 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
+from schemas import file as FileSchema
 
 class ComponentCreate(BaseModel):
     id: str
@@ -24,11 +25,12 @@ class ComponentCreate(BaseModel):
 
 class ComponentRead(BaseModel):
     id: str
-    publisher: str
+    uid: str
     release_time: str
     title: str
     content: str
-    
+    files: list[FileSchema.FileRead]
+       
 
 class ComponentUpdate(BaseModel):
     title: Optional[str]

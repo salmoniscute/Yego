@@ -124,6 +124,7 @@ async def get_selected_courses_by_uid(uid: str):
     if selected_courses:
         for selected_course in selected_courses:
             result = {
+                "course_id": selected_course.course_info.id,
                 "course_name": selected_course.course_info.name,
                 "instructor_name": selected_course.course_info.instructor_info.name
             }

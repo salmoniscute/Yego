@@ -8,7 +8,7 @@ from models.base import Base, BaseType
 class Course(Base):
     __tablename__ = "Course"
     id: Mapped[BaseType.id]
-    instructor: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     course_code: Mapped[BaseType.str_20]
     academic_year: Mapped[BaseType.str_20]
     semester: Mapped[int]
@@ -27,21 +27,19 @@ class Course(Base):
         "SelectedCourse",
         back_populates="course_info",
         cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
-    # course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
-    #     "CourseBulletin",
-    #     back_populates="course_info",
-    #     cascade="all, delete-orphan", 
-    #     passive_deletes=True,
-    #     lazy="joined"
-    # )
+    course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
+        "CourseBulletin",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
 
-    def __init__(self, id: str, instructor: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
+    def __init__(self, id: str, uid: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
         self.id = id
-        self.instructor = instructor
+        self.uid = uid
         self.course_code = course_code
         self.academic_year = academic_year
         self.semester = semester
@@ -49,4 +47,4 @@ class Course(Base):
         self.outline = outline
 
     def __repr__(self) -> str:
-        return f"Course(id={self.id}, instructor={self.instructor}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"
+        return f"Course(id={self.id}, uid={self.uid}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"

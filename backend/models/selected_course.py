@@ -24,7 +24,7 @@ class SelectedCourse(Base):
         lazy="joined"
     )
 
-    def __init__(self, uid: str, course_id: str, group: Optional[str]) -> None:
+    def __init__(self, uid: str, course_id: str, group: Optional[str] = None) -> None:
         self.uid = uid
         self.course_id = course_id
         self.group = group

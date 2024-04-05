@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_user_id
+from .depends import check_component_id
 from crud.file import FileCrudManager
 from schemas import file as FileSchema
 
@@ -20,6 +20,7 @@ router = APIRouter(
     prefix="/api"
 )
 
+
 @router.post(
     "/file", 
     response_model=FileSchema.FileCreate,
@@ -28,13 +29,11 @@ router = APIRouter(
 )
 async def create_file(
     newFile: FileSchema.FileCreate,
-    owner: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
     """
     Create a file with the following information:
     - **id**
-    - **owner**
     - **component_id**
     - **path**
     """
@@ -43,10 +42,11 @@ async def create_file(
         raise already_exists
     
     # create file
-    file = await FileCrud.create(owner=owner, component_id=component_id, newFile=newFile)
+    file = await FileCrud.create(component_id=component_id, newFile=newFile)
 
     return file
     
+
 @router.get(
     "/files",
     response_model=list[FileSchema.FileRead],
@@ -62,6 +62,7 @@ async def get_all_files():
         raise not_found
     
     return files
+
 
 @router.get(
     "/file/{file_id}",
@@ -79,6 +80,7 @@ async def get_file(file_id: str):
     
     return file
 
+
 @router.put(
     "/file/{file_id}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -94,6 +96,7 @@ async def update_file(
     await FileCrud.update(file_id, updateFile)
 
     return
+
 
 @router.delete(
     "/file/{file_id}",

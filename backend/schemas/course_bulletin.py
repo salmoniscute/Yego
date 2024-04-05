@@ -1,9 +1,9 @@
 from typing import Optional
 
-from schemas.component import ComponentRead
+from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
 
-class CourseBulletinCreate(ComponentRead):
+class CourseBulletinCreate(ComponentCreate):
     pin_to_top: bool
     
     model_config = {
@@ -27,7 +27,7 @@ class CourseBulletinRead(ComponentRead):
     pin_to_top: bool
     
 
-class CourseBulletinUpdate(ComponentRead):
+class CourseBulletinUpdate(ComponentUpdate):
     course_id: Optional[str] = None
     pin_to_top: Optional[bool] = None
     

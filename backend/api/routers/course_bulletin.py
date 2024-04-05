@@ -28,7 +28,7 @@ router = APIRouter(
 )
 async def create_course_bulletin(
     newBulletin: CourseBulletinSchema.CourseBulletinCreate,
-    publisher: str = Depends(check_user_id),
+    uid: str = Depends(check_user_id),
     course_id: str = Depends(check_course_id)
 ):
     """
@@ -42,7 +42,7 @@ async def create_course_bulletin(
     if await CourseBulletinCrud.get(newBulletin.id):
         raise already_exists
     
-    bulletin = await CourseBulletinCrud.create(publisher, course_id, newBulletin)
+    bulletin = await CourseBulletinCrud.create(uid, course_id, newBulletin)
     return bulletin
 
 

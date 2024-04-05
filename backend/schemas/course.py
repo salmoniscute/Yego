@@ -28,7 +28,7 @@ class CourseCreate(BaseModel):
 
 class CourseRead(BaseModel):
     id: str
-    instructor: str
+    uid: str
     course_code: str
     academic_year: int
     semester: int
@@ -37,7 +37,7 @@ class CourseRead(BaseModel):
     
     
 class CourseUpdate(BaseModel):
-    instructor : Optional[str] = None
+    uid : Optional[str] = None
     course_code : Optional[str] = None
     academic_year : Optional[int] = None
     semester : Optional[int] = None

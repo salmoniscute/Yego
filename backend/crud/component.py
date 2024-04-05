@@ -8,6 +8,14 @@ from schemas import component as ComponentSchema
 
 @crud_class_decorator
 class ComponentCrudManager:
+    async def create(self, uid: str, newComponent: ComponentSchema.ComponentCreate, db_session: AsyncSession):
+        newComponent_dict = newComponent.model_dump()
+        component = ComponentModel(uid=uid, **newComponent_dict)
+        db_session.add(component)
+        await db_session.commit()
+
+        return component
+    
     async def get(self, component_id: str, db_session: AsyncSession):
         stmt = select(ComponentModel).where(ComponentModel.id == component_id)
         result = await db_session.execute(stmt)
@@ -21,15 +29,6 @@ class ComponentCrudManager:
         result = result.unique()
 
         return [component[0] for component in result.all()]
-    
-    async def create(self, publisher, newComponent: ComponentSchema.ComponentCreate, db_session: AsyncSession):
-        newComponent_dict = newComponent.model_dump()
-        component = ComponentModel(publisher=publisher, **newComponent_dict)
-        db_session.add(component)
-        await db_session.commit()
-        db_session.refresh(component)
-
-        return component
     
     async def update(self, component_id: str, updateComponent: ComponentSchema.ComponentUpdate, db_session: AsyncSession):
         updateComponent_dict = updateComponent.model_dump(exclude_none=True)

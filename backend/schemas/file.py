@@ -20,7 +20,6 @@ class FileCreate(BaseModel):
 
 class FileRead(BaseModel):
     id: str
-    owner: str
     component_id: str
     path: str
     
