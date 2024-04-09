@@ -2,12 +2,11 @@ from sqlalchemy.orm import Mapped, relationship
 from typing import Optional 
 
 from models.base import Base, BaseType
-from models.website_bulletin import WebsiteBulletin
 
 
 class User(Base):
     __tablename__ = "User"
-    uid: Mapped[BaseType.uid]
+    uid: Mapped[BaseType.id]
     password: Mapped[BaseType.hashed_password]
     name: Mapped[BaseType.str_20]
     role: Mapped[BaseType.str_20]
@@ -18,63 +17,25 @@ class User(Base):
     avatar: Mapped[BaseType.optional_str_200]
 
     # Relationship to child
-    website_bulletins: Mapped[list["WebsiteBulletin"]] = relationship(
-        "WebsiteBulletin",
-        back_populates="publisher_info",
-        cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
     courses: Mapped[list["Course"]] = relationship(
         "Course",
         back_populates="instructor_info",
         cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
-    # Relationship to child
     selected_courses: Mapped[list["SelectedCourse"]] = relationship(
         "SelectedCourse",
-        back_populates="student_info",
+        back_populates="user_info",
         cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
-    
-    topics: Mapped[list["DiscussionTopic"]] = relationship(
-        "DiscussionTopic",
+
+    publications: Mapped[list["Component"]] = relationship(
+        "Component",
         back_populates="publisher_info",
         cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    replies: Mapped[list["DiscussionReply"]] = relationship(
-        "DiscussionReply",
-        back_populates="publisher_info",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    # Relationship to child
-    reports: Mapped[list["Report"]] = relationship(
-        "Report",
-        back_populates="publisher_info",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    # Relationship to child
-    report_replies: Mapped[list["ReportReply"]] = relationship(
-        "ReportReply",
-        back_populates="publisher_info",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
     def __init__(self, uid: str, password: str, name: str, role: str, email: str, department: str, country: str, introduction: Optional[str], avatar: Optional[str]) -> None:

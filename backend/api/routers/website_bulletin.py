@@ -1,54 +1,53 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_user_id, check_website_bulletin_id
-from crud.website_bulletin import WebsiteBulletinCrudManager
-from schemas import website_bulletin as WebsiteBulletinSchema
-
-already_exists = HTTPException(
-    status_code=409, 
-    detail="Website bulletin already exists"
-)
+from .depends import check_user_id, check_course_id, check_website_bulletin_id
+from crud.bulletin import WebsiteBulletinCrudManager
+from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
-    status_code=404, 
+    status_code=status.HTTP_404_NOT_FOUND, 
     detail="Website bulletin does not exist"
+)
+
+already_exists = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, 
+    detail="Website bulletin already exists"
 )
 
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 router = APIRouter(
-    prefix="/api",
+    prefix="/api/website",
     tags=["Website Bulletin"]
 )
 
 
 @router.post(
-    "/website_bulletin", 
-    response_model=WebsiteBulletinSchema.WebsiteBulletinCreateResponse,
+    "/bulletin", 
+    response_model=BulletinSchema.WebsiteBulletinRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_website_bulletin(
-    newBulletin: WebsiteBulletinSchema.WebsiteBulletinCreate,
-    publisher: str = Depends(check_user_id)
+    newBulletin: BulletinSchema.BulletinCreate,
+    uid: str = Depends(check_user_id)
 ):
     """
-    Create a website bulletin with the following information:
-    - **publisher** (alias of uid, should be existing)
-    - **wb_id**
-    - **title**
+    Create a bulletin with the following information:
+    - **id**
     - **release_time**
+    - **title**
     - **content**
     - **pin_to_top**
     """
-    if await WebsiteBulletinCrud.get(newBulletin.wb_id):
+    if await WebsiteBulletinCrud.get(newBulletin.id):
         raise already_exists
     
-    website_bulletin = await WebsiteBulletinCrud.create(publisher, newBulletin)
-    return website_bulletin
+    bulletin = await WebsiteBulletinCrud.create(uid, newBulletin)
+    return bulletin
 
 
 @router.get(
-    "/website_bulletins", 
-    response_model=list[WebsiteBulletinSchema.WebsiteBulletinRead],
+    "/bulletins", 
+    response_model=list[BulletinSchema.WebsiteBulletinRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():
@@ -63,13 +62,13 @@ async def get_all_website_bulletins():
 
 
 @router.get(
-    "/website_bulletin/{wb_id}", 
-    response_model=WebsiteBulletinSchema.WebsiteBulletinRead,
+    "/bulletin/{wb_id}", 
+    response_model=BulletinSchema.WebsiteBulletinRead,
     status_code=status.HTTP_200_OK
 )
 async def get_website_bulletin(wb_id: str):
     """
-    Get the particular website bulletin.
+    Get the website bulletin.
     """
     bulletin = await WebsiteBulletinCrud.get(wb_id)
     if bulletin:
@@ -79,11 +78,11 @@ async def get_website_bulletin(wb_id: str):
    
 
 @router.put(
-    "/website_bulletin/{wb_id}",
+    "/bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_website_bulletin(
-    updateBulletin: WebsiteBulletinSchema.WebsiteBulletinUpdate, 
+    updateBulletin: BulletinSchema.BulletinUpdate, 
     wb_id: str = Depends(check_website_bulletin_id)
 ):
     """
@@ -97,7 +96,7 @@ async def update_website_bulletin(
 
 
 @router.delete(
-    "/website_bulletin/{wb_id}",
+    "/bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_website_bulletin(wb_id: str = Depends(check_website_bulletin_id)):

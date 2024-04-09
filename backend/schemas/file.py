@@ -2,15 +2,15 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class WebsiteBulletinFileCreate(BaseModel):
-    file_id: str
+class FileCreate(BaseModel):
+    id: str
     path: str
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
-                    "file_id": "1",
+                    "id": "1",
                     "path": "/path/of/file"
                 }
             ]
@@ -18,14 +18,14 @@ class WebsiteBulletinFileCreate(BaseModel):
     }
 
 
-class WebsiteBulletinFileRead(BaseModel):
-    file_id: str
-    wb_id: str
+class FileRead(BaseModel):
+    id: str
+    component_id: str
     path: str
     
 
-class WebsiteBulletinFileUpdate(BaseModel):
-    path: Optional[str] = None
+class FileUpdate(BaseModel):
+    path:  Optional[str]
     
     model_config = {
         "json_schema_extra": {
