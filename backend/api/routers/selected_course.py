@@ -4,14 +4,14 @@ from .depends import check_user_id, check_course_id
 from crud.selected_course import SelectedCourseCrudManager
 from schemas import selected_course as SelectedCourseSchema
 
-already_exists = HTTPException(
-    status_code=409, 
-    detail="Selected course already exists"
+not_found = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, 
+    detail="Selected course does not exist"
 )
 
-not_found = HTTPException(
-    status_code=404, 
-    detail="Selected course does not exist"
+already_exists = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, 
+    detail="Selected course already exists"
 )
 
 SelectedCourseCrud = SelectedCourseCrudManager()
@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/selected_course", 
-    response_model=SelectedCourseSchema.SelectedCourseCreateResponse,
+    response_model=SelectedCourseSchema.SelectedCourseRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_selected_course(
@@ -120,13 +120,16 @@ async def get_selected_courses_by_uid(uid: str):
     results= []
 
     selected_courses = await SelectedCourseCrud.get_by_uid(uid)
+    print(selected_courses)
     if selected_courses:
         for selected_course in selected_courses:
             result = {
+                "course_id": selected_course.course_info.id,
                 "course_name": selected_course.course_info.name,
-                "teacher_name": selected_course.course_info.instructor_info.name
+                "instructor_name": selected_course.course_info.instructor_info.name
             }
-        results.append(result)
+            results.append(result)
+            
         return results
     
     raise not_found
@@ -147,10 +150,10 @@ async def get_selected_courses_by_course_id(course_id: str):
     if selected_courses:
         for selected_course in selected_courses:
             result = {
-                "name": selected_course.student_info.name,
-                "uid": selected_course.student_info.uid,
-                "department": selected_course.student_info.department,
-                "role": selected_course.student_info.role,
+                "name": selected_course.user_info.name,
+                "uid": selected_course.user_info.uid,
+                "department": selected_course.user_info.department,
+                "role": selected_course.user_info.role,
                 "group": selected_course.group
             }
             results.append(result)

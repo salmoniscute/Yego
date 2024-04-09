@@ -1,35 +1,17 @@
 from fastapi import HTTPException
 
-from crud.user import UserCrudManager
 from crud.course import CourseCrudManager
 from crud.selected_course import SelectedCourseCrudManager
-from crud.website_bulletin import WebsiteBulletinCrudManager
-from crud.website_bulletin_file import WebsiteBulletinFileCrudManager
-from crud.course_bulletin import CourseBulletinCrudManager
-from crud.discussion import DiscussionCrudManager
-from crud.discussion_topic import DiscussionTopicCrudManager
-from crud.discussion_reply import DiscussionReplyCrudManager
-from crud.discussion_topic_file import DiscussionTopicFileCrudManager
-from crud.course_bulletin_file import CourseBulletinFileCrudManager
+from crud.user import UserCrudManager
+from crud.component import ComponentCrudManager
+from crud.bulletin import CourseBulletinCrudManager, WebsiteBulletinCrudManager
 
-from crud.report import ReportCrudManager
-from crud.report_file import ReportFileCrudManager
-from crud.report_reply import ReportReplyCrudManager
-
-UserCrud = UserCrudManager()
 CourseCrud = CourseCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
-WebsiteBulletinCrud = WebsiteBulletinCrudManager()
-WebsiteBulletinFileCrud = WebsiteBulletinFileCrudManager()
+UserCrud = UserCrudManager()
+ComponentCrud = ComponentCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
-DiscussionCrud = DiscussionCrudManager()
-DiscussionTopicCrud = DiscussionTopicCrudManager()
-DiscussionReplyCrud = DiscussionReplyCrudManager()
-DiscussionTopicFileCrud = DiscussionTopicFileCrudManager()
-ReportCrud = ReportCrudManager()
-ReportFileCrud = ReportFileCrudManager()
-ReportReplyCrud = ReportReplyCrudManager()
-CourseBulletinFileCrud = CourseBulletinFileCrudManager()
+WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -46,103 +28,31 @@ async def check_course_id(course_id: str):
     if not course:
         raise HTTPException(status_code=404, detail="Course does not exist")
     
-    return course.course_id
+    return course.id
 
 
-async def check_website_bulletin_id(wb_id: str):
-    website_bulletin = await WebsiteBulletinCrud.get(wb_id)
-    if not website_bulletin:
+async def check_component_id(component_id: str):
+    component = await ComponentCrud.get(component_id)
+    
+    if not component:
+        raise HTTPException(status_code=404, detail="Component does not exist")
+    
+    return component.id
+
+
+async def check_course_bulletin_id(bulletin_id: str):
+    bulletin = await CourseBulletinCrud.get(bulletin_id)
+    
+    if not bulletin:
+        raise HTTPException(status_code=404, detail="Course bulletin does not exist")
+    
+    return bulletin.id
+
+
+async def check_website_bulletin_id(bulletin_id: str):
+    bulletin = await WebsiteBulletinCrud.get(bulletin_id)
+    
+    if not bulletin:
         raise HTTPException(status_code=404, detail="Website bulletin does not exist")
     
-    return website_bulletin.wb_id
-
-
-async def check_website_bulletin_file_id(file_id: str):
-    file = await WebsiteBulletinFileCrud.get(file_id)
-    if not file:
-        raise HTTPException(status_code=404, detail="File does not exist")
-    
-    return file.file_id
-
-async def check_course_bulletin_id(cb_id: str):
-    course_bulletin = await CourseBulletinCrud.get(cb_id)
-    
-    if not course_bulletin:
-        raise HTTPException(status_code=404, detail="Bulletin does not exist")
-    
-    return course_bulletin.cb_id
-
-async def check_course_bulletin_file_id(file_id: str):
-    course_bulletin_file = await CourseBulletinFileCrud.get(file_id)
-    
-    if not course_bulletin_file:
-        raise HTTPException(status_code=404, detail="Bulletin file does not exist")
-    
-    return course_bulletin_file.file_id
-
-async def check_discussion_id(discussion_id: str):
-    discussion = await DiscussionCrud.get(discussion_id)
-    
-    if not discussion:
-        raise HTTPException(status_code=404, detail="Discussion does not exist")
-    
-    return discussion.discussion_id
-
-async def check_discussion_topic_id(topic_id: str):
-    discussion_topic = await DiscussionTopicCrud.get(topic_id)
-    
-    if not discussion_topic:
-        raise HTTPException(status_code=404, detail="Discussion topic does not exist")
-    
-    return discussion_topic.topic_id
-
-async def check_discussion_reply_id(reply_id: str):
-    discussion_reply = await DiscussionReplyCrud.get(reply_id)
-    
-    if not discussion_reply:
-        raise HTTPException(status_code=404, detail="Discussion reply does not exist")
-    
-    return discussion_reply.reply_id
-
-async def check_discussion_topic_file_id(file_id: str):
-    discussion_topic_file = await DiscussionTopicFileCrud.get(file_id)
-    
-    if not discussion_topic_file:
-        raise HTTPException(status_code=404, detail="Discussion topic file does not exist")
-    
-    return discussion_topic_file.file_id
-
-async def check_report_id(report_id: str):
-    report = await ReportCrud.get(report_id)
-    
-    if not report:
-        raise HTTPException(status_code=404, detail="Report does not exist")
-    
-    return report.report_id
-
-async def check_report_file_id(file_id: str):
-    report_file = await ReportFileCrud.get(file_id)
-    
-    if not report_file:
-        raise HTTPException(status_code=404, detail="Report file does not exist")
-    
-    return report_file.file_id
-
-async def check_report_reply_id(reply_id: str):
-    report_reply = await ReportReplyCrud.get(reply_id)
-    
-    if not report_reply:
-        raise HTTPException(status_code=404, detail="Report reply does not exist")
-    
-    return report_reply.reply_id
-
-async def check_parent(parent: str):
-    if parent == None:
-        return -1
-    
-    report_reply = await ReportReplyCrud.get(parent)
-    
-    if not report_reply:
-        raise HTTPException(status_code=404, detail="Report reply does not exist")
-    
-    return report_reply.reply_id
+    return bulletin.id
