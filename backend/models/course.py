@@ -37,6 +37,13 @@ class Course(Base):
         passive_deletes=True
     )
 
+    discussions: Mapped[list["Discussion"]] = relationship(
+        "Discussion",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
     def __init__(self, id: str, uid: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
         self.id = id
         self.uid = uid

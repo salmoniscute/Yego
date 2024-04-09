@@ -34,6 +34,13 @@ class Component(Base):
         passive_deletes=True
     )
 
+    discussions: Mapped[list["Discussion"]] = relationship(
+        "Discussion",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
     files: Mapped[list["File"]] = relationship(
         "File",
         back_populates="component_info",

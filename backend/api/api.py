@@ -7,12 +7,13 @@ from config import HOST, PORT
 from .routers import (
     info_router,
     auth_router,
-    user_router,
-    course_router,
-    selected_course_router,
     component_router,
-    file_router,
+    course_router,
     course_bulletin_router,
+    discussion_router,
+    file_router,
+    selected_course_router,
+    user_router,
     website_bulletin_router
 )
 
@@ -27,6 +28,7 @@ app.include_router(selected_course_router)
 app.include_router(file_router)
 app.include_router(course_bulletin_router)
 app.include_router(website_bulletin_router)
+app.include_router(discussion_router)
 
 
 origins = [
