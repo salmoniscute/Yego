@@ -30,7 +30,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList("CSE101").then(data => {
             setCourseBulletin(data);
         });
     }, []);
