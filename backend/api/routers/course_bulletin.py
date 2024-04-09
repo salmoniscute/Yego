@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinRead,
+    response_model=BulletinSchema.CourseBulletinCreateResponse,
     status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
@@ -47,7 +47,7 @@ async def create_course_bulletin(
 
 
 @router.get(
-    "/bulletins", 
+    "/bulletin/all", 
     response_model=list[BulletinSchema.CourseBulletinRead],
     status_code=status.HTTP_200_OK
 )

@@ -29,12 +29,20 @@ class ComponentRead(BaseModel):
     release_time: str
     title: str
     content: str
+
+
+class ComponentReadWithFile(BaseModel):
+    id: str
+    uid: str
+    release_time: str
+    title: str
+    content: str
     files: Optional[list[FileSchema.FileRead]] = None
        
 
 class ComponentUpdate(BaseModel):
-    title: Optional[str]
-    content: Optional[str]
+    title: Optional[str] = None
+    content: Optional[str] = None
     
     model_config = {
         "json_schema_extra": {
