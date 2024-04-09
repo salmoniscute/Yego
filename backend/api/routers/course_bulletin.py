@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_user_id, check_course_id, check_course_bulletin_id
+from .depends import check_component_id, check_course_id, check_user_id
 from crud.bulletin import CourseBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinRead,
+    response_model=BulletinSchema.CourseBulletinCreateResponse,
     status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
@@ -47,7 +47,7 @@ async def create_course_bulletin(
 
 
 @router.get(
-    "/bulletins", 
+    "/bulletin/all", 
     response_model=list[BulletinSchema.CourseBulletinRead],
     status_code=status.HTTP_200_OK
 )
@@ -84,7 +84,7 @@ async def get_course_bulletin(cb_id: str):
 )
 async def update_course_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    cb_id: str = Depends(check_course_bulletin_id)
+    cb_id: str = Depends(check_component_id)
 ):
     """
     Update the particular course bulletin with at least one of the following information:
@@ -100,7 +100,7 @@ async def update_course_bulletin(
     "/bulletin/{cb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course_bulletin(cb_id: str = Depends(check_course_bulletin_id)):
+async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
     """
     Delete the course bulletin.
     """
