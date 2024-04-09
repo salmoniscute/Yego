@@ -40,29 +40,3 @@ async def check_component_id(component_id: str):
         raise HTTPException(status_code=404, detail="Component does not exist")
     
     return component.id
-
-
-async def check_course_bulletin_id(bulletin_id: str):
-    bulletin = await CourseBulletinCrud.get(bulletin_id)
-    
-    if not bulletin:
-        raise HTTPException(status_code=404, detail="Course bulletin does not exist")
-    
-    return bulletin.id
-
-
-async def check_website_bulletin_id(bulletin_id: str):
-    bulletin = await WebsiteBulletinCrud.get(bulletin_id)
-    
-    if not bulletin:
-        raise HTTPException(status_code=404, detail="Website bulletin does not exist")
-    
-    return bulletin.id
-
-async def check_discussion_id(discussion_id: str):
-    discussion = await DiscussionCrud.get(discussion_id)
-    
-    if not discussion:
-        raise HTTPException(status_code=404, detail="Discussion does not exist")
-    
-    return discussion.id

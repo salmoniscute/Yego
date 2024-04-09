@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_user_id, check_course_id, check_website_bulletin_id
+from .depends import check_component_id, check_user_id
 from crud.bulletin import WebsiteBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
@@ -83,7 +83,7 @@ async def get_website_bulletin(wb_id: str):
 )
 async def update_website_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    wb_id: str = Depends(check_website_bulletin_id)
+    wb_id: str = Depends(check_component_id)
 ):
     """
     Update the particular website bulletin with at least one of the following information:
@@ -99,7 +99,7 @@ async def update_website_bulletin(
     "/bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_website_bulletin(wb_id: str = Depends(check_website_bulletin_id)):
+async def delete_website_bulletin(wb_id: str = Depends(check_component_id)):
     """
     Delete the website bulletin.
     """

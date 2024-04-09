@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_course_id, check_discussion_id, check_user_id
+from .depends import check_component_id, check_course_id, check_user_id
 from crud.discussion import DiscussionCrudManager
 from schemas import discussion as DiscussionSchema
 
@@ -82,7 +82,7 @@ async def get_discussion(discussion_id: str):
 )
 async def update_discussion(
     updateDiscussion: DiscussionSchema.DiscussionUpdate,
-    discussion_id: str = Depends(check_discussion_id)
+    discussion_id: str = Depends(check_component_id)
 ):
     """ 
     Update a discussion with the following information:
@@ -98,7 +98,7 @@ async def update_discussion(
     "/discussion/{discussion_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_discussion(discussion_id: str = Depends(check_discussion_id)):
+async def delete_discussion(discussion_id: str = Depends(check_component_id)):
     """ 
     Delete a discussion.
     """

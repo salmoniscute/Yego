@@ -11,6 +11,7 @@ from .routers import (
     course_router,
     course_bulletin_router,
     discussion_router,
+    discussion_topic_router,
     file_router,
     selected_course_router,
     user_router,
@@ -29,6 +30,7 @@ app.include_router(file_router)
 app.include_router(course_bulletin_router)
 app.include_router(website_bulletin_router)
 app.include_router(discussion_router)
+app.include_router(discussion_topic_router)
 
 
 origins = [

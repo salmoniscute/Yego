@@ -21,7 +21,20 @@ class DiscussionCreate(ComponentCreate):
 class DiscussionRead(ComponentRead):
     pass
     # topics: Optional[list[DiscussionTopicRead]] = None
-    
+
+
+class DiscussionTopicRead(ComponentRead):
+    type: str
+    discussion_id: str
+
+
+class DiscussionTopicReplyRead(ComponentRead):
+    type: str
+    discussion_id: str
+    parent_id: str
+    root_id: str
+
 
 class DiscussionUpdate(ComponentUpdate):
     pass
+
