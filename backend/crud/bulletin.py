@@ -32,16 +32,26 @@ class CourseBulletinCrudManager:
         return [bulletin[0] for bulletin in result.all()]
 
     async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
-        updateBulletin_dict = updateBulletin.model_dump(exclude_none=True)
-        if updateBulletin_dict:
-            stmt = update(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id).values(**updateBulletin_dict)
+        update_bulletin = {}
+        update_component = updateBulletin.model_dump(exclude_none=True)
+        tmp = update_component.pop("pin_to_top", None)
+        if tmp is not None:
+            update_bulletin["pin_to_top"] = tmp
+
+        if update_component:
+            stmt = update(ComponentModel).where(ComponentModel.id == bulletin_id).values(**update_component)
+            await db_session.execute(stmt)
+            await db_session.commit()
+
+        if update_bulletin:
+            stmt = update(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id).values(**update_bulletin)
             await db_session.execute(stmt)
             await db_session.commit()
 
         return
     
     async def delete(self, bulletin_id: int, db_session: AsyncSession):
-        stmt = delete(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id)
+        stmt = delete(ComponentModel).where(ComponentModel.id == bulletin_id)
         await db_session.execute(stmt)
         await db_session.commit()
 
@@ -73,16 +83,26 @@ class WebsiteBulletinCrudManager:
         return [bulletin[0] for bulletin in result.all()]
 
     async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
-        updateBulletin_dict = updateBulletin.model_dump(exclude_none=True)
-        if updateBulletin_dict:
-            stmt = update(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id).values(**updateBulletin_dict)
+        update_bulletin = {}
+        update_component = updateBulletin.model_dump(exclude_none=True)
+        tmp = update_component.pop("pin_to_top", None)
+        if tmp is not None:
+            update_bulletin["pin_to_top"] = tmp
+
+        if update_component:
+            stmt = update(ComponentModel).where(ComponentModel.id == bulletin_id).values(**update_component)
+            await db_session.execute(stmt)
+            await db_session.commit()
+
+        if update_bulletin:
+            stmt = update(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id).values(**update_bulletin)
             await db_session.execute(stmt)
             await db_session.commit()
 
         return
     
     async def delete(self, bulletin_id: int, db_session: AsyncSession):
-        stmt = delete(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id)
+        stmt = delete(ComponentModel).where(ComponentModel.id == bulletin_id)
         await db_session.execute(stmt)
         await db_session.commit()
 

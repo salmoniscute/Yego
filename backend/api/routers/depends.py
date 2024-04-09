@@ -1,16 +1,18 @@
 from fastapi import HTTPException
 
+from crud.bulletin import CourseBulletinCrudManager, WebsiteBulletinCrudManager
+from crud.component import ComponentCrudManager
 from crud.course import CourseCrudManager
+from crud.discussion import DiscussionCrudManager
 from crud.selected_course import SelectedCourseCrudManager
 from crud.user import UserCrudManager
-from crud.component import ComponentCrudManager
-from crud.bulletin import CourseBulletinCrudManager, WebsiteBulletinCrudManager
 
+ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
+CourseBulletinCrud = CourseBulletinCrudManager()
+DiscussionCrud = DiscussionCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 UserCrud = UserCrudManager()
-ComponentCrud = ComponentCrudManager()
-CourseBulletinCrud = CourseBulletinCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 
 
@@ -38,21 +40,3 @@ async def check_component_id(component_id: str):
         raise HTTPException(status_code=404, detail="Component does not exist")
     
     return component.id
-
-
-async def check_course_bulletin_id(bulletin_id: str):
-    bulletin = await CourseBulletinCrud.get(bulletin_id)
-    
-    if not bulletin:
-        raise HTTPException(status_code=404, detail="Course bulletin does not exist")
-    
-    return bulletin.id
-
-
-async def check_website_bulletin_id(bulletin_id: str):
-    bulletin = await WebsiteBulletinCrud.get(bulletin_id)
-    
-    if not bulletin:
-        raise HTTPException(status_code=404, detail="Website bulletin does not exist")
-    
-    return bulletin.id

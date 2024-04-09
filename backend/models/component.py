@@ -1,6 +1,7 @@
 from typing import Optional 
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
+
 from models.base import Base, BaseType
 
 
@@ -29,6 +30,20 @@ class Component(Base):
 
     website_bulletins: Mapped[list["WebsiteBulletin"]] = relationship(
         "WebsiteBulletin",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
+    discussions: Mapped[list["Discussion"]] = relationship(
+        "Discussion",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
+    topics: Mapped[list["DiscussionTopic"]] = relationship(
+        "DiscussionTopic",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
