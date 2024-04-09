@@ -3,45 +3,24 @@ import {
     CourseBulletinInfo
 } from "../schemas/courseBulletin";
 
-export async function getCourseBulletinList() :Promise<Array<CourseBulletinInfo>>{
-    const result = [
-        {
-            uid: "0",
-            course_id : "0",
-            title: "老師今天身體不適，所以今天不上課。",
-            release_time: 1703390840,
-            pin_to_top: false,
-            content: "hello",
-            publisher: "張老師",
-
-        },
-        {
-            uid: "0",
-            course_id : "0",
-            title: "老師今天身體不適，所以今天不上課。",
-            release_time: 1703390840,
-            pin_to_top: false,
-            content: "hello",
-            publisher: "張老師",
-
-        },
-        {
-            uid: "0",
-            course_id : "0",
-            title: "老師今天身體不適，所以今天不上課。",
-            release_time: 1703390840,
-            pin_to_top: false,
-            content: "hello",
-            publisher: "張老師",
-
-        }
-    ];
-    const pinedResult = result.filter(data => data.pin_to_top);
-    const notPinedResult = result.filter(data => !data.pin_to_top);
-    pinedResult.sort((d1, d2) => d2.release_time - d1.release_time);
-    notPinedResult.sort((d1, d2) => d2.release_time - d1.release_time);
-    return pinedResult.concat(notPinedResult);
+export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletinInfo>>{
+    let url = "http://localhost:8080/api/course_bulletin?course_id="+course_id;
+    try {
+        const response = await axios.get(url,{
+          });
+        const result = response.data;
+        const pinedResult = result.filter((data: CourseBulletinInfo) => data.pin_to_top);
+        const notPinedResult = result.filter((data: CourseBulletinInfo) => !data.pin_to_top);
+        pinedResult.sort((d1: CourseBulletinInfo, d2: CourseBulletinInfo) => d2.release_time - d1.release_time);
+        notPinedResult.sort((d1: CourseBulletinInfo, d2: CourseBulletinInfo) => d2.release_time - d1.release_time);
+        return pinedResult.concat(notPinedResult);
+    }
+    catch(error) {  
+        //return ;
+        throw error;
+    }
 }
+
 export async function postCourseBulletin(publisher:string,course_id:string,title:string,release_time:number,content:string,pin_to_top:boolean) :Promise<CourseBulletinInfo>{
     let url = "http://localhost:8080/api/course_bulletin?course_id="+course_id;
     let courseBulletin ;
