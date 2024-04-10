@@ -25,6 +25,6 @@ export default function ReportPage(): ReactElement {
       <h4>操作教學說明</h4>
     </div>
     <DiscussionList />
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close}/></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="report"/></div>
   </div>
 }

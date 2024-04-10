@@ -1,7 +1,7 @@
-import React, { Component, ReactElement, useState } from 'react';
+import React, { Component, ReactElement, useState , useContext } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import userDataContext from "context/userData";
 import "./index.scss";
 
 import { RxCross2 } from "react-icons/rx";
@@ -54,10 +54,6 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
     this.setState({ editorHtml: html });
   }
 
-
-
-
-
   static modules = {
     toolbar: {
       container: "#toolbar",
@@ -86,36 +82,73 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
     "image",
     "color"
   ];
+
 }
 
 type propsType = Readonly<{
   onClose : Function,
+  type : string
 }>;
 
 export default function PostEditor(props: propsType): ReactElement {
+  const userData = useContext(userDataContext);
   const {
-    onClose
+    onClose,
+    type
   } = props;
   const Close = () => {
     onClose();
   }
+  // text editor
+  const [content, setContent] = useState('');
+  const [title , setTitle] = useState("");
+
+  const handleContentChange = (value:any, delta:any) => {
+    setContent(value);
+  };
+
+  const onSubmit = async () =>{
+    const nowTime = new Date().getTime();
+    const uid = userData?.uid;
+    if (uid) {
+      if (type === "discussion"){
+
+      }
+      else if ( type === "report"){
+  
+      }
+      else if ( type === "discussionTopic"){
+        
+      }
+      
+    }
+    else {}
+    setContent("");
+    setTitle("");
+  } 
+
+  
   return <>
     <div className='window'>
       <div id="postEditor">
         <button className='btn expand-btn'><CgExpand /></button>
         <button className='btn close-btn' onClick={Close}><RxCross2 /></button>
         <div className="text-editor">
-          <input type="text" placeholder='標題｜少於20字' className='title' />
+          <input type="text" placeholder='標題｜少於20字' className='title' value={title}
+                onChange={(e) => setTitle(e.target.value)} />
           <ReactQuill
-
             placeholder='內文｜'
             modules={Editor.modules}
             formats={Editor.formats}
+            value={content}
+            onChange={handleContentChange}
             theme={"snow"} // 设置为 "snow" 使用默认主题
           />
           <CustomToolbar />
-          <button className='bottom-btn'>存檔</button>
-          <button className='bottom-btn'>發布</button>
+          <div className='bottom'>
+            <button className='save'>存檔</button>
+            <button className='post'>發布</button>
+          </div>
         </div>
       </div>
     </div>

@@ -19,31 +19,44 @@
       font-size: 35px;
       padding: 4px;
       padding-bottom: 0;
+      border: none;
     }
     .expand-btn {
-      background-color: #a9a9a9;
+      background-color: white;
       position: absolute;
       top: 0;
       right: 43px;
     }
     .close-btn {
-      background-color: #cecece;
+      background-color: white;
       position: absolute;
       right: 0;
       top: 0;
     }
-    .bottom-btn {
-      width: auto;
-      background-color: #cecece;
-      color: #474141;
-      font-weight: bold;
-      font-size: 18px;
-      border-radius: 5px;
-      padding: 8px 32px;
-      margin-left: 20px;
-      margin-top: 20px;
-      float: right;
+
+    .bottom{
+      margin-top: 2em;
+      display: flex;
+      justify-content: end;
+      > button{
+        border: none;
+        padding: 8px 32px;
+        font-weight: bold;
+        font-size: 18px;
+        border-radius: 0.2em;
+        width: auto;
+      }
+      .save {
+        background-color: #474141;
+        color: #ffffff;
+      }
+      .post {
+        background-color: #FFEA79;
+        color: #474141;
+        margin-left: 1em;
+      }
     }
+
     .text-editor {
       margin: 1rem auto;
       max-width: 70rem;
@@ -58,6 +71,7 @@
         margin: 0;
         padding: 12px 15px;
         border: none;
+        font-size: larger;
       }
       .title:focus {
         outline: none;
@@ -67,6 +81,7 @@
         background: #f0f0f0;
         border-bottom: none;
         border-right: none;
+        font-size: larger;
         border-left: none;
       }
       #toolbar {
