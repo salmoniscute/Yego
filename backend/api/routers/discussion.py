@@ -32,12 +32,10 @@ async def create_discussion(
 ):
     """
     Create a discussion with the following information:
-    - **id**
     - **release_time**
     - **title**
     - **content**
     """
-    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
 
     return discussion

@@ -17,6 +17,7 @@ class SelectedCourseCreate(BaseModel):
 
 
 class SelectedCourseRead(BaseModel):
+    id: int
     uid: str
     course_id: str
     group: Optional[str] = None

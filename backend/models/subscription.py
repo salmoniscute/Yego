@@ -6,7 +6,8 @@ from models.base import Base, BaseType
 
 class Subscription(Base):
     __tablename__ = "Subscription"
-    uid: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id]
+    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_20]
     
@@ -27,5 +28,5 @@ class Subscription(Base):
         self.type = type
         
     def __repr__(self) -> str:
-        return f"Subscription(uid={self.uid}, component_id={self.component_id}), type={self.type}"
+        return f"Subscription(id={self.id}, uid={self.uid}, component_id={self.component_id}), type={self.type}"
     

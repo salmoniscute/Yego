@@ -20,8 +20,9 @@ class NotificationCreate(BaseModel):
 
 
 class NotificationRead(BaseModel):
+    id: int
     uid: str
-    component_id: str
+    component_id: int
     have_read: bool
     release_time: str
     type: str
