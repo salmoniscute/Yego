@@ -52,7 +52,8 @@ class Component(Base):
         "File",
         back_populates="component_info",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
 
     subscriptions: Mapped[list["Subscription"]] = relationship(

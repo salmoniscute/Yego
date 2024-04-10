@@ -57,6 +57,13 @@ class CourseBulletinCrudManager:
 
         return
     
+    async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
+        stmt = select(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [bulletin[0] for bulletin in result.all()]
+    
 
 @crud_class_decorator
 class WebsiteBulletinCrudManager:

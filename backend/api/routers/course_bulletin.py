@@ -104,3 +104,19 @@ async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
     """
     await CourseBulletinCrud.delete(cb_id)
     return 
+
+
+@router.get(
+    "/bulletin/particular_course/{course_id}", 
+    response_model=list[BulletinSchema.CourseBulletinRead],
+    status_code=status.HTTP_200_OK
+)
+async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
+    """
+    Get all course bulletins in particular course.
+    """
+    bulletins = await CourseBulletinCrud.get_by_course_id(course_id)
+    if bulletins:
+        return bulletins
+    
+    raise not_found
