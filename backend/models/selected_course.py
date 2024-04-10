@@ -31,5 +31,5 @@ class SelectedCourse(Base):
         self.group = group
 
     def __repr__(self) -> str:
-        return f"User(id={self.id}, uid={self.uid}, course_id={self.course_id}, group={self.group})"
+        return f"SelectedCourse(id={self.id}, uid={self.uid}, course_id={self.course_id}, group={self.group})"
     

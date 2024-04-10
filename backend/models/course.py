@@ -54,4 +54,4 @@ class Course(Base):
         self.outline = outline
 
     def __repr__(self) -> str:
-        return f"Course(id={self.id}, uid={self.uid}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"
+        return f"Course(id={self.id}, uid={self.uid}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}, name={self.name}, outline={self.outline})"
