@@ -38,6 +38,13 @@ class User(Base):
         passive_deletes=True
     )
 
+    subscriptions: Mapped[list["Subscription"]] = relationship(
+        "Subscription",
+        back_populates="user_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
     def __init__(self, uid: str, password: str, name: str, role: str, email: str, department: str, country: str, introduction: Optional[str], avatar: Optional[str]) -> None:
         self.uid = uid
         self.password = password

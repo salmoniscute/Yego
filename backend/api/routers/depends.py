@@ -5,6 +5,7 @@ from crud.component import ComponentCrudManager
 from crud.course import CourseCrudManager
 from crud.discussion import DiscussionCrudManager
 from crud.selected_course import SelectedCourseCrudManager
+from crud.subscription import SubscriptionCrudManager
 from crud.user import UserCrudManager
 
 ComponentCrud = ComponentCrudManager()
@@ -12,6 +13,7 @@ CourseCrud = CourseCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
 DiscussionCrud = DiscussionCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
+SubscriptionCrud = SubscriptionCrudManager()
 UserCrud = UserCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 
@@ -40,3 +42,11 @@ async def check_component_id(component_id: str):
         raise HTTPException(status_code=404, detail="Component does not exist")
     
     return component.id
+
+async def check_subscription_id(subscription_id: str):
+    subscription = await SubscriptionCrud.get(subscription_id)
+    
+    if not subscription:
+        raise HTTPException(status_code=404, detail="Subscription does not exist")
+    
+    return subscription.id

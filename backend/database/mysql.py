@@ -8,6 +8,7 @@ from models.course import Course
 from models.discussion import Discussion, DiscussionTopic
 from models.file import File
 from models.selected_course import SelectedCourse
+from models.subscription import Subscription
 from models.user import User
 
 
@@ -37,6 +38,7 @@ async def init_db():
             await db.execute(CreateTable(DiscussionTopic.__table__, if_not_exists=True))
             await db.execute(CreateTable(File.__table__, if_not_exists=True))
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
             
             
