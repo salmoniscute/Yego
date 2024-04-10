@@ -7,7 +7,7 @@ from models.base import Base, BaseType
 class Notification(Base):
     __tablename__ = "Notification"
     uid: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    component_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     have_read: Mapped[BaseType.boolean]
     release_time: Mapped[BaseType.datetime]
     type: Mapped[BaseType.str_20]

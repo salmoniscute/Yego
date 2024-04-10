@@ -7,7 +7,7 @@ from models.component import Component
 
 class Discussion(Component):
     __tablename__ = "Discussion"
-    id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
 
     # Relationship to parent
@@ -29,8 +29,7 @@ class Discussion(Component):
     #     passive_deletes=True
     # )
 
-    def __init__(self, id: str, uid: str, course_id: str, release_time: str, title: str, content: str) -> None:
-        self.id = id
+    def __init__(self, uid: str, course_id: str, release_time: str, title: str, content: str) -> None:
         self.uid = uid
         self.course_id = course_id
         self.release_time = release_time
@@ -43,7 +42,7 @@ class Discussion(Component):
 
 class DiscussionTopic(Component):
     __tablename__ = "DiscussionTopic"
-    id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     # discussion_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Discussion.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_100]
 
@@ -63,8 +62,7 @@ class DiscussionTopic(Component):
         "polymorphic_on": "type"
     }
 
-    def __init__(self, id: str, uid: str, discussion_id: str, release_time: str, title: str, content: str) -> None:
-        self.id = id
+    def __init__(self, uid: str, discussion_id: str, release_time: str, title: str, content: str) -> None:
         self.uid = uid
         self.discussion_id = discussion_id
         self.release_time = release_time

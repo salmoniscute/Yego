@@ -7,7 +7,7 @@ from models.base import Base, BaseType
 class Subscription(Base):
     __tablename__ = "Subscription"
     uid: Mapped[BaseType.id] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    component_id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_20]
     
     # Relationship to parent

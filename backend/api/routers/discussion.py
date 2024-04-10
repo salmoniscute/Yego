@@ -37,9 +37,6 @@ async def create_discussion(
     - **title**
     - **content**
     """
-    discussion = await DiscussionCrud.get(newDiscussion.id)
-    if discussion:
-        raise already_exists
     
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
 

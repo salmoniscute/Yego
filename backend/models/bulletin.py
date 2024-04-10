@@ -7,7 +7,7 @@ from models.component import Component
 
 class Bulletin(Component):
     __tablename__ = "Bulletin"
-    id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_100]
     pin_to_top: Mapped[BaseType.boolean]
 
@@ -29,8 +29,7 @@ class WebsiteBulletin(Bulletin):
         "polymorphic_identity": "website_bulletin",
     }
 
-    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str, pin_to_top: bool) -> None:
-        self.id = id
+    def __init__(self, uid: str, release_time: str, title: str, content: str, pin_to_top: bool) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title
@@ -60,8 +59,7 @@ class CourseBulletin(Bulletin):
         "polymorphic_identity": "course_bulletin",
     }
 
-    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str, course_id: str, pin_to_top: bool) -> None:
-        self.id = id
+    def __init__(self, uid: str, release_time: str, title: str, content: str, course_id: str, pin_to_top: bool) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title

@@ -39,8 +39,6 @@ async def create_course_bulletin(
     - **content**
     - **pin_to_top**
     """
-    if await CourseBulletinCrud.get(newBulletin.id):
-        raise already_exists
     
     bulletin = await CourseBulletinCrud.create(uid, course_id, newBulletin)
     return bulletin

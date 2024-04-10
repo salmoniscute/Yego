@@ -7,7 +7,7 @@ from models.base import Base, BaseType
 class File(Base):
     __tablename__ = "File"
     id: Mapped[BaseType.int_id]
-    component_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     path: Mapped[BaseType.str_100]
 
     # Relationship to parent
