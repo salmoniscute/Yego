@@ -88,13 +88,19 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
   ];
 }
 
-export default function PostEditor(): ReactElement {
-  const [close, setClose] = useState(false);
+type propsType = Readonly<{
+  onClose : Function,
+}>;
+
+export default function PostEditor(props: propsType): ReactElement {
+  const {
+    onClose
+  } = props;
   const Close = () => {
-    setClose(true);
+    onClose();
   }
   return <>
-    <div className={close === false ? 'window' : 'close'}>
+    <div className='window'>
       <div id="postEditor">
         <button className='btn expand-btn'><CgExpand /></button>
         <button className='btn close-btn' onClick={Close}><RxCross2 /></button>
