@@ -39,9 +39,9 @@ async def create_component(
     - **title**
     - **content**
     """
-    component = await ComponentCrud.get(newComponent.id)
-    if component:
-        raise already_exists
+    # component = await ComponentCrud.get(newComponent.id)
+    # if component:
+    #     raise already_exists
     
     # create component
     component = await ComponentCrud.create(uid=uid, newComponent=newComponent)

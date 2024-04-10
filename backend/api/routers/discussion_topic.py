@@ -37,9 +37,6 @@ async def create_discussion_topic(
     - **title**
     - **content**
     """
-    topic = await TopicCrud.get(newTopic.id)
-    if topic:
-        raise already_exists
     
     topic = await TopicCrud.create(uid, discussion_id, newTopic)
 
