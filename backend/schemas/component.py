@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 from typing import Optional
-
+from datetime import datetime
 from schemas import file as FileSchema
 
 
 class ComponentCreate(BaseModel):
-    release_time: str
+    release_time: datetime
     title: str
     content: str
 
@@ -25,7 +25,7 @@ class ComponentCreate(BaseModel):
 class ComponentRead(BaseModel):
     id: int
     uid: str
-    release_time: str
+    release_time: datetime
     title: str
     content: str
 
@@ -33,7 +33,7 @@ class ComponentRead(BaseModel):
 class ComponentReadWithFile(BaseModel):
     id: int
     uid: str
-    release_time: str
+    release_time: datetime
     title: str
     content: str
     files: Optional[list[FileSchema.FileRead]] = None
