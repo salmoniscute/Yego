@@ -6,7 +6,7 @@ from models.component import Component
 
 class Report(Component):
     __tablename__ = "Report"
-    id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
 
     # Relationship to parent
     info: Mapped["Component"] = relationship(
