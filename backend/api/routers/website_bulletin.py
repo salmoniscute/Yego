@@ -38,10 +38,8 @@ async def create_website_bulletin(
     - **content**
     - **pin_to_top**
     """
-    if await WebsiteBulletinCrud.get(newBulletin.id):
-        raise already_exists
-    
     bulletin = await WebsiteBulletinCrud.create(uid, newBulletin)
+    
     return bulletin
 
 

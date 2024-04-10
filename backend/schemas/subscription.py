@@ -15,6 +15,7 @@ class SubscriptionCreate(BaseModel):
     }
 
 class SubscriptionRead(BaseModel):
+    id: int
     uid: str
-    component_id: str
+    component_id: int
     type: str
