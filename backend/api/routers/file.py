@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/file", 
-    response_model=FileSchema.FileCreate,
+    response_model=FileSchema.FileRead,
     status_code=status.HTTP_201_CREATED,
     response_description="The file has been successfully created."
 )
@@ -33,15 +33,8 @@ async def create_file(
 ):
     """
     Create a file with the following information:
-    - **id**
-    - **component_id**
     - **path**
     """
-    file = await FileCrud.get(newFile.id)
-    if file:
-        raise already_exists
-    
-    # create file
     file = await FileCrud.create(component_id=component_id, newFile=newFile)
 
     return file
