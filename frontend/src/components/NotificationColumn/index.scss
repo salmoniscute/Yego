@@ -1,0 +1,26 @@
+#notificationColumn {
+  background-color: white;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgb(198, 189, 189);
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+
+    button {
+      background-color: transparent;
+      border: none;
+      font-weight: bold;
+      font-size: 20px;
+      color: #F25C1C;
+      cursor: pointer;
+    }
+    .seeall {
+      font-weight: normal;
+      color: #949494;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
