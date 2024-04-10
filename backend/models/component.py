@@ -63,6 +63,13 @@ class Component(Base):
         passive_deletes=True
     )
 
+    notifications: Mapped[list["Notification"]] = relationship(
+        "Notification",
+        back_populates="component_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
     def __init__(self, id: str, uid: str, release_time: str, title: str, content: str) -> None:
         self.id = id
         self.uid = uid

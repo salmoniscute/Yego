@@ -6,6 +6,7 @@ from .course_bulletin import router as course_bulletin_router
 from .discussion import router as discussion_router
 from .discussion_topic import router as discussion_topic_router
 from .file import router as file_router
+from .notification import router as notification_router
 from .selected_course import router as selected_course_router
 from .subscription import router as subscription_router
 from .user import router as user_router
