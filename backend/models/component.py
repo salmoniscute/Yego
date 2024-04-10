@@ -68,6 +68,13 @@ class Component(Base):
         cascade="all, delete-orphan",
         passive_deletes=True
     )
+    
+    reports: Mapped[list["Report"]] = relationship(
+        "Report",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
 
     def __init__(self, id: str, uid: str, release_time: str, title: str, content: str) -> None:
         self.id = id

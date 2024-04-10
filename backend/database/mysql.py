@@ -11,6 +11,7 @@ from models.notification import Notification
 from models.selected_course import SelectedCourse
 from models.subscription import Subscription
 from models.user import User
+from models.report import Report
 
 
 engine = create_async_engine(
@@ -42,6 +43,7 @@ async def init_db():
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
             
             
 async def close_db():
