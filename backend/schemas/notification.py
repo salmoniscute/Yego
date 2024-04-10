@@ -4,13 +4,15 @@ from pydantic import BaseModel
 class NotificationCreate(BaseModel):
     have_read: bool
     release_time: str
+    type: str
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
                     "have_read": False,
-                    "release_time": "2021-09-01 00:00:00"
+                    "release_time": "2021-09-01 00:00:00",
+                    "type": "website_bulletin"
                 }
             ]
         }
@@ -22,6 +24,7 @@ class NotificationRead(BaseModel):
     component_id: str
     have_read: bool
     release_time: str
+    type: str
     
 
 class NotificationUpdate(BaseModel):
