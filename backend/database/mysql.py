@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from sqlalchemy.schema import CreateTable, DropTable
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
 
+from database.init_db import FakeDB
 from models.bulletin import Bulletin
 from models.component import Component
 from models.course import Course
@@ -14,14 +14,11 @@ from models.subscription import Subscription
 from models.user import User
 from models.report import Report
 
-Base = declarative_base()
-
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
     echo=True,
     pool_pre_ping=True
 )
-
 SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False, autocommit=False)
 
 
@@ -30,7 +27,6 @@ async def get_db():
     async with SessionLocal() as db:
         async with db.begin():
             yield db
-
 
 
 async def init_db():
@@ -46,9 +42,9 @@ async def init_db():
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            # await db.execute(CreateTable(Report.__table__, if_not_exists=True))
             
-            
+            await FakeDB().create_entity_list(db)
             
 async def close_db():
     async with SessionLocal() as db:

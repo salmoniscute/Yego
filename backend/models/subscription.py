@@ -28,5 +28,5 @@ class Subscription(Base):
         self.type = type
         
     def __repr__(self) -> str:
-        return f"Subscription(id={self.id}, uid={self.uid}, component_id={self.component_id}), type={self.type}"
+        return f"Subscription(id={self.id}, uid={self.uid}, component_id={self.component_id}), type={self.type})"
     

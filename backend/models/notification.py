@@ -32,5 +32,5 @@ class Notification(Base):
         self.type = type
         
     def __repr__(self) -> str:
-        return f"Notification(id={self.id}, uid={self.uid}, component_id={self.component_id}, have_read={self.have_read}, release_time={self.release_time}), type={self.type}"
+        return f"Notification(id={self.id}, uid={self.uid}, component_id={self.component_id}, have_read={self.have_read}, release_time={self.release_time}), type={self.type})"
     

@@ -37,7 +37,7 @@ class WebsiteBulletin(Bulletin):
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"WebsiteBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, pin_to_top={self.pin_to_top}"
+        return f"WebsiteBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, pin_to_top={self.pin_to_top})"
 
 
 class CourseBulletin(Bulletin):
@@ -68,4 +68,4 @@ class CourseBulletin(Bulletin):
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"CourseBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, course_id={self.course_id}, pin_to_top={self.pin_to_top}"
+        return f"CourseBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, course_id={self.course_id}, pin_to_top={self.pin_to_top})"

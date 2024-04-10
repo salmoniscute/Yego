@@ -21,4 +21,4 @@ class File(Base):
         self.path = path
         
     def __repr__(self) -> str:
-        return f"File(id={self.id}, component_id={self.component_id}), path={self.path}"
+        return f"File(id={self.id}, component_id={self.component_id}, path={self.path})"

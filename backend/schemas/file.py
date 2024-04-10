@@ -17,7 +17,7 @@ class FileCreate(BaseModel):
 
 class FileRead(BaseModel):
     id: int
-    component_id: str
+    component_id: int
     path: str
     
 
