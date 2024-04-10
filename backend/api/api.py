@@ -13,7 +13,9 @@ from .routers import (
     discussion_router,
     discussion_topic_router,
     file_router,
+    notification_router,
     selected_course_router,
+    subscription_router,
     user_router,
     website_bulletin_router
 )
@@ -31,6 +33,8 @@ app.include_router(course_bulletin_router)
 app.include_router(website_bulletin_router)
 app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
+app.include_router(subscription_router)
+app.include_router(notification_router)
 
 
 origins = [

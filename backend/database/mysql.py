@@ -1,13 +1,15 @@
 from contextlib import asynccontextmanager
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.schema import CreateTable
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from models.bulletin import Bulletin
 from models.component import Component
 from models.course import Course
 from models.discussion import Discussion, DiscussionTopic
 from models.file import File
+from models.notification import Notification
 from models.selected_course import SelectedCourse
+from models.subscription import Subscription
 from models.user import User
 
 
@@ -36,7 +38,9 @@ async def init_db():
             await db.execute(CreateTable(Discussion.__table__, if_not_exists=True))
             await db.execute(CreateTable(DiscussionTopic.__table__, if_not_exists=True))
             await db.execute(CreateTable(File.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Notification.__table__, if_not_exists=True))
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
             
             

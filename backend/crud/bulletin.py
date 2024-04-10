@@ -1,7 +1,7 @@
-from database.mysql import crud_class_decorator
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from database.mysql import crud_class_decorator
 from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBulletin as WebsiteBulletinModel
 from models.component import Component as ComponentModel
 from schemas import bulletin as BulletinSchema

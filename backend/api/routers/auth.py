@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
-from auth.passwd import verify_password
 from auth.jwt import create_access_token
+from auth.passwd import verify_password
 from crud.user import UserCrudManager
 from schemas import auth as AuthSchema
 

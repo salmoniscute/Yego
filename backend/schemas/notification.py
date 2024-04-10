@@ -1,37 +1,40 @@
 from pydantic import BaseModel
-from typing import Optional
 
 
-class FileCreate(BaseModel):
+class NotificationCreate(BaseModel):
     id: str
-    path: str
+    have_read: bool
+    release_time: str
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
                     "id": "1",
-                    "path": "/path/of/file"
+                    "have_read": False,
+                    "release_time": "2021-09-01 00:00:00"
                 }
             ]
         }
     }
 
 
-class FileRead(BaseModel):
+class NotificationRead(BaseModel):
     id: str
+    uid: str
     component_id: str
-    path: str
+    have_read: bool
+    release_time: str
     
 
-class FileUpdate(BaseModel):
-    path:  Optional[str]
+class NotificationUpdate(BaseModel):
+    have_read: bool
     
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
-                    "path": "/change/the/path/of/file"
+                    "have_read": True
                 }
             ]
         }

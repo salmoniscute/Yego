@@ -1,6 +1,5 @@
-from typing import Optional 
-from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.base import Base, BaseType
 
@@ -55,6 +54,20 @@ class Component(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
         lazy="selectin"
+    )
+
+    subscriptions: Mapped[list["Subscription"]] = relationship(
+        "Subscription",
+        back_populates="component_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
+    notifications: Mapped[list["Notification"]] = relationship(
+        "Notification",
+        back_populates="component_info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
     )
 
     def __init__(self, id: str, uid: str, release_time: str, title: str, content: str) -> None:

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_user_id, check_course_id
+from .depends import check_course_id, check_user_id
 from crud.selected_course import SelectedCourseCrudManager
 from schemas import selected_course as SelectedCourseSchema
 
