@@ -12,6 +12,9 @@ export default function ReportPage(): ReactElement {
   const Open = () => {
     setopenEditor(true);
   }
+  const Close = () => {
+    setopenEditor(false);
+  }
 
   return <div id="reportPage">
     <div className="header">
@@ -22,6 +25,6 @@ export default function ReportPage(): ReactElement {
       <h4>操作教學說明</h4>
     </div>
     <DiscussionList />
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor /></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close}/></div>
   </div>
 }

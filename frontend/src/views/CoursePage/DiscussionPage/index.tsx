@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import userDataContext from "context/userData";
+import PostEditor from "components/PostEditor";
 
 import "./index.scss";
 import { FaPen } from "react-icons/fa";
@@ -22,6 +23,9 @@ type propsType = Readonly<{
 
 export default function DiscussionPage(props: propsType): ReactElement {
     const [discussionList, setDiscussion] = useState<Array<Discussion>>([]);
+    const [openEditor, setopenEditor] = useState(false);
+    const Open = () => { setopenEditor(true); }
+    const Close = () => { setopenEditor(false); }
     const {
         courseID
 
@@ -37,11 +41,8 @@ export default function DiscussionPage(props: propsType): ReactElement {
 
     return (
         <div id="courseDiscussionPage">
-            {userData?.role == "teacher" && <div className="addDiscussionButton">
-                <div className="buttonInfo">
-                    <FaPen />
-                    <p>新增討論區</p>
-                </div>
+            {userData?.role === "teacher" && <div className="addDiscussionButton">
+            <button onClick={Open}><FaPen /><span>新增討論區</span></button>
 
             </div> }
             <div className="discussion">
@@ -62,6 +63,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     )
                 }
             </div>
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close}/></div>
 
         </div>
     );

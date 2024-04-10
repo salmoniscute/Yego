@@ -20,6 +20,8 @@ type propsType = Readonly<{
 }>;
 
 export default function BulletinPage(props: propsType): React.ReactElement {
+
+
     const {
         courseID
     } = props;
@@ -30,9 +32,9 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList("CSE101").then(data => {
-            setCourseBulletin(data);
-        });
+        // getCourseBulletinList("CSE101").then(data => {
+        //     setCourseBulletin(data);
+        // });
     }, []);
 
     const handleContentChange = (value:string, delta:any) => {
@@ -41,11 +43,13 @@ export default function BulletinPage(props: propsType): React.ReactElement {
 
     const onSubmit = async () =>{
         const nowTime = new Date().getTime();
-        const courseBulletin = await postCourseBulletin("salmon","CSE101",title,nowTime,content,false);
-        if (courseBulletin){
-            console.log(courseBulletin);
+        const uid = userData?.uid;
+        if (uid) {
+            const courseBulletin = await postCourseBulletin(uid, "CSE101", title, nowTime, content, false);
         }
-
+        else {}
+        setContent("");
+        setTitle("");
     }
 
     return (
@@ -72,7 +76,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 {
                     courseBulletinList.map(data =>
                         <div className="courseBulletinContent">
-                            
+
                             <div className="cb">
                                 <div className="cbContent">
                                     <div className="cbPin">置頂</div>
