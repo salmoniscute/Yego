@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_subscription_id, check_user_id
+from .depends import check_component_id, check_user_id
 from crud.subscription import SubscriptionCrudManager
 from schemas import subscription as SubscriptionSchema
 
@@ -27,19 +27,16 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED,
 )
 async def create_subscription(
-    newSubscription: SubscriptionSchema.SubscriptionCreate,
     uid: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
     """
-    Create a subscription with the following information:
-    - **id**
+    Create a subscription.
     """
-    subscription = await SubscriptionCrud.get(newSubscription.id)
-    if subscription:
+    if await SubscriptionCrud.get(uid, component_id):
         raise already_exists
     
-    subscription = await SubscriptionCrud.create(uid=uid, component_id=component_id, newSubscription=newSubscription)
+    subscription = await SubscriptionCrud.create(uid, component_id)
 
     return subscription
     
@@ -61,15 +58,15 @@ async def get_all_subscriptions():
 
 
 @router.get(
-    "/subscription/{subscription_id}",
+    "/subscription/{uid}/{component_id}",
     response_model=SubscriptionSchema.SubscriptionRead,
     status_code=status.HTTP_200_OK
 )
-async def get_subscription(subscription_id: str):
+async def get_subscription(uid: str, component_id):
     """
     Get a subscription.
     """
-    subscription = await SubscriptionCrud.get(subscription_id)
+    subscription = await SubscriptionCrud.get(uid, component_id)
     if not subscription:
         raise not_found
     
@@ -77,13 +74,13 @@ async def get_subscription(subscription_id: str):
 
 
 @router.delete(
-    "/subscription/{subscription_id}",
+    "/subscription/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_subscription(subscription_id: str = Depends(check_subscription_id)):
+async def delete_subscription(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
     """
     Delete a subscription.
     """
-    await SubscriptionCrud.delete(subscription_id)
+    await SubscriptionCrud.delete(uid, component_id)
 
     return

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_notification_id, check_user_id
+from .depends import check_component_id, check_user_id
 from crud.notification import NotificationCrudManager
 from schemas import notification as NotificationSchema
 
@@ -33,15 +33,13 @@ async def create_notification(
 ):
     """
     Create a notification with the following information:
-    - **id**
     - **have_read**
     - **release_time**
     """
-    notification = await NotificationCrud.get(newNotification.id)
-    if notification:
+    if await NotificationCrud.get(uid, component_id):
         raise already_exists
     
-    notification = await NotificationCrud.create(uid=uid, component_id=component_id, newNotification=newNotification)
+    notification = await NotificationCrud.create(uid, component_id, newNotification)
 
     return notification
     
@@ -63,15 +61,15 @@ async def get_all_notifications():
 
 
 @router.get(
-    "/notification/{notification_id}",
+    "/notification/{uid}/{component_id}",
     response_model=NotificationSchema.NotificationRead,
     status_code=status.HTTP_200_OK
 )
-async def get_notification(notification_id: str):
+async def get_notification(uid: str, component_id: str):
     """
     Get a notification.
     """
-    notification = await NotificationCrud.get(notification_id)
+    notification = await NotificationCrud.get(uid, component_id)
     if not notification:
         raise not_found
     
@@ -79,29 +77,30 @@ async def get_notification(notification_id: str):
 
 
 @router.put(
-    "/notification/{notification_id}",
+    "/notification/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_notification(
     updateNotification: NotificationSchema.NotificationUpdate,
-    notification_id: str = Depends(check_notification_id)
+    uid: str = Depends(check_user_id),
+    component_id: str = Depends(check_component_id)
 ):
     """
     Update a notification.
     """
-    await NotificationCrud.update(notification_id, updateNotification)
+    await NotificationCrud.update(uid, component_id, updateNotification)
 
     return
 
 
 @router.delete(
-    "/notification/{notification_id}",
+    "/notification/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_notification(notification_id: str = Depends(check_notification_id)):
+async def delete_notification(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
     """
     Delete a notification.
     """
-    await NotificationCrud.delete(notification_id)
+    await NotificationCrud.delete(uid, check_component_id)
 
     return

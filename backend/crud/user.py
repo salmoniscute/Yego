@@ -21,7 +21,7 @@ class UserCrudManager:
         stmt = select(UserModel).where(UserModel.uid == uid)
         result = await db_session.execute(stmt)
         user = result.first()
-
+        
         return user[0] if user else None
         
     
