@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Boolean, String
+from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import DeclarativeBase, mapped_column
 from typing import Annotated, Optional
 
@@ -9,7 +9,8 @@ class Base(DeclarativeBase):
 
 
 class BaseType:
-    id = Annotated[int, mapped_column(String(10), primary_key=True)]
+    id = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
+    int_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     hashed_password = Annotated[str, mapped_column(String(60))]
     boolean = Annotated[bool, mapped_column(Boolean)]
     datetime = Annotated[datetime, mapped_column(String(60))]

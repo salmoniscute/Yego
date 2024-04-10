@@ -4,18 +4,14 @@ from crud.bulletin import CourseBulletinCrudManager, WebsiteBulletinCrudManager
 from crud.component import ComponentCrudManager
 from crud.course import CourseCrudManager
 from crud.discussion import DiscussionCrudManager
-from crud.notification import NotificationCrudManager
 from crud.selected_course import SelectedCourseCrudManager
-from crud.subscription import SubscriptionCrudManager
 from crud.user import UserCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
 DiscussionCrud = DiscussionCrudManager()
-NotificationCrud = NotificationCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
-SubscriptionCrud = SubscriptionCrudManager()
 UserCrud = UserCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 
@@ -44,19 +40,3 @@ async def check_component_id(component_id: str):
         raise HTTPException(status_code=404, detail="Component does not exist")
     
     return component.id
-
-async def check_subscription_id(subscription_id: str):
-    subscription = await SubscriptionCrud.get(subscription_id)
-    
-    if not subscription:
-        raise HTTPException(status_code=404, detail="Subscription does not exist")
-    
-    return subscription.id
-
-async def check_notification_id(notification_id: str):
-    notification = await NotificationCrud.get(notification_id)
-    
-    if not notification:
-        raise HTTPException(status_code=404, detail="Notification does not exist")
-    
-    return notification.id
