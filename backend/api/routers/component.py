@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_course_id, check_user_id
+from .depends import check_user_id
 from crud.component import ComponentCrudManager
 from schemas import component as ComponentSchema
 

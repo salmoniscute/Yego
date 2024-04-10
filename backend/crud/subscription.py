@@ -1,7 +1,7 @@
-from database.mysql import crud_class_decorator
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from database.mysql import crud_class_decorator
 from models.subscription import Subscription as SubscriptionModel
 from schemas import subscription as SubscriptionSchema
 

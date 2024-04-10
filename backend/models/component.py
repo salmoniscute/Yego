@@ -1,6 +1,5 @@
-from typing import Optional 
-from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.base import Base, BaseType
 

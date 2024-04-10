@@ -1,7 +1,8 @@
-from typing import Optional
 from pydantic import BaseModel
+from typing import Optional
 
 from schemas import file as FileSchema
+
 
 class ComponentCreate(BaseModel):
     id: str

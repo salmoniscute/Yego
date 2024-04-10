@@ -1,7 +1,7 @@
 from sqlalchemy import select, update, delete
-from database.mysql import crud_class_decorator
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from database.mysql import crud_class_decorator
 from models.course import Course as CourseModel
 from schemas import course as CourseSchema
 

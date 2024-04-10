@@ -1,5 +1,3 @@
-from typing import Optional
-
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
 
