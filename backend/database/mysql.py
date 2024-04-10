@@ -31,11 +31,6 @@ async def get_db():
             yield db
 
 
-async def clear_db():
-    async with SessionLocal() as db:
-        async with db.begin():
-            for table in reversed(Base.metadata.sorted_tables):
-                await db.execute(DropTable(table, if_exists=True))
 
 async def init_db():
     async with SessionLocal() as db:
