@@ -4,6 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import "./index.scss";
 
+import { postDiscussion } from 'api/discussion';
+
 import { RxCross2 } from "react-icons/rx";
 import { CgExpand } from "react-icons/cg";
 
@@ -44,15 +46,15 @@ const CustomToolbar: React.FC = () => (
 );
 
 class Editor extends Component<{ placeholder?: string }, { editorHtml: string }> {
-  constructor(props: { placeholder?: string }) {
-    super(props);
-    this.state = { editorHtml: "" };
-    this.handleChange = this.handleChange.bind(this);
-  }
+  // constructor(props: { placeholder?: string }) {
+  //   super(props);
+  //   this.state = { editorHtml: "" };
+  //   this.handleChange = this.handleChange.bind(this);
+  // }
 
-  handleChange(html: string) {
-    this.setState({ editorHtml: html });
-  }
+  // handleChange(html: string) {
+  //   this.setState({ editorHtml: html });
+  // }
 
   static modules = {
     toolbar: {
@@ -92,16 +94,23 @@ type propsType = Readonly<{
 
 export default function PostEditor(props: propsType): ReactElement {
   const userData = useContext(userDataContext);
+  // text editor
+  const [content, setContent] = useState('');
+  const [title , setTitle] = useState("");
+  const [save , setSave] = useState(false);
+
   const {
     onClose,
     type
   } = props;
+
   const Close = () => {
     onClose();
+    if (save === false){
+      setContent("");
+      setTitle("");
+    }
   }
-  // text editor
-  const [content, setContent] = useState('');
-  const [title , setTitle] = useState("");
 
   const handleContentChange = (value:any, delta:any) => {
     setContent(value);
@@ -112,7 +121,8 @@ export default function PostEditor(props: propsType): ReactElement {
     const uid = userData?.uid;
     if (uid) {
       if (type === "discussion"){
-
+        const discussion = await postDiscussion(uid, "CSE101", title, content);
+        console.log(discussion);
       }
       else if ( type === "report"){
   
@@ -123,10 +133,15 @@ export default function PostEditor(props: propsType): ReactElement {
       
     }
     else {}
+    Close();
     setContent("");
     setTitle("");
   } 
 
+  const Save = async () => {
+    setSave(true);
+  }
+ 
   
   return <>
     <div className='window'>
@@ -146,8 +161,8 @@ export default function PostEditor(props: propsType): ReactElement {
           />
           <CustomToolbar />
           <div className='bottom'>
-            <button className='save'>存檔</button>
-            <button className='post'>發布</button>
+            <button className='save' onClick={Save}>存檔</button>
+            <button className='post' onClick={onSubmit}>發布</button>
           </div>
         </div>
       </div>
