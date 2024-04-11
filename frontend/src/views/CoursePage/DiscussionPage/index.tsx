@@ -5,7 +5,7 @@ import {
     useEffect,
     useContext
 } from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate,Route,Routes } from "react-router-dom";
 import userDataContext from "context/userData";
 import PostEditor from "components/PostEditor";
 
@@ -16,6 +16,8 @@ import { TbBellRinging } from "react-icons/tb";
 
 import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
+
+import DiscussionTopicPage from "views/DiscussionTopicPage";
 
 type propsType = Readonly<{
     courseID: string,
@@ -39,11 +41,11 @@ export default function DiscussionPage(props: propsType): ReactElement {
         })
     }, [])
 
+
     return (
         <div id="courseDiscussionPage">
             {userData?.role === "teacher" && <div className="addDiscussionButton">
             <button onClick={Open}><FaPen /><span>新增討論區</span></button>
-
             </div> }
             <div className="discussion">
                 <div className="discussionTab">
@@ -52,19 +54,20 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     <p >追蹤回覆</p>
                 </div>
                 {
-                    discussionList.map(data =>
-                        <div className="discussionInfo">
+                    discussionList.map((data,i) =>
+                        <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
+                                <Link to={`./discussionTopic/${data.discussion_id}`}>{data.title}</Link>
                             </p>
                             <p className="discussionDiscription">{data.discription}</p>
                             <BiSolidBellRing />
                         </div>
                     )
                 }
+                
             </div>
             <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion"/></div>
-
+            
         </div>
     );
 }

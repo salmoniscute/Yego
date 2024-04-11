@@ -51,6 +51,7 @@
         .discussionInfo{
             display: flex;
             align-items: center;
+            cursor: pointer;
             
             .discussionTitle{
                 cursor: pointer;
@@ -67,6 +68,9 @@
                 font-size: 18px;
                 white-space: nowrap;
             }
+        }
+        .discussionInfo:hover {
+            background-color: #f5f5f5;
         }
 
     }

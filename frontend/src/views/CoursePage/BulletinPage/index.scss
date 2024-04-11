@@ -36,24 +36,26 @@
             background-color: #FFFFFF;
             border:solid 1px #474141;
             display: flex;
-            flex-direction: row;
             padding: 1em 1em;
             margin: 2em 0em;
+            flex-direction: column;
 
-            .cb{
-                flex-direction: column;
-                .cbPin{
-                    background-color: #FFEA79;
-                    border-radius: 2em;
-                    margin-right: 1em;
-                    padding: 0.5em 1.5em;
-                    font-size: x-small;
-                    font-weight: 600;
-                }
-                .cbContent{
+            .cbContent{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                div{
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    .cbPin{
+                        background-color: #FFEA79;
+                        border-radius: 2em;
+                        margin-right: 1em;
+                        padding: 0.5em 1.5em;
+                        font-size: x-small;
+                        font-weight: 600;
+                    }
                     img{
                         width: 1.5em;
                         height: 1.5em;
@@ -67,16 +69,18 @@
                         font-size: 15px;
                         margin: 0em 0em ;
                         font-weight: 200;
-                    }   
+                    }  
+                }
+                    
                                 
-                }
-                .cbInfor{
-                    font-size: large;
-                    font-weight: 400;
-                    margin-bottom: 0em;
-                }
-        
             }
+            .cbInfor{
+                font-size: large;
+                font-weight: 400;
+                margin-bottom: 0em;
+            }
+        
+            
             
         }
 
