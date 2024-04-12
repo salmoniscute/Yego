@@ -7,7 +7,7 @@ from models.component import Component
 
 class Bulletin(Component):
     __tablename__ = "Bulletin"
-    id: Mapped[BaseType.id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_100]
     pin_to_top: Mapped[BaseType.boolean]
 
@@ -29,8 +29,7 @@ class WebsiteBulletin(Bulletin):
         "polymorphic_identity": "website_bulletin",
     }
 
-    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str, pin_to_top: bool) -> None:
-        self.id = id
+    def __init__(self, uid: str, release_time: str, title: str, content: str, pin_to_top: bool) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title
@@ -38,7 +37,7 @@ class WebsiteBulletin(Bulletin):
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"WebsiteBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, pin_to_top={self.pin_to_top}"
+        return f"WebsiteBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, pin_to_top={self.pin_to_top})"
 
 
 class CourseBulletin(Bulletin):
@@ -60,8 +59,7 @@ class CourseBulletin(Bulletin):
         "polymorphic_identity": "course_bulletin",
     }
 
-    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str, course_id: str, pin_to_top: bool) -> None:
-        self.id = id
+    def __init__(self, uid: str, release_time: str, title: str, content: str, course_id: str, pin_to_top: bool) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title
@@ -70,4 +68,4 @@ class CourseBulletin(Bulletin):
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"CourseBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, course_id={self.course_id}, pin_to_top={self.pin_to_top}"
+        return f"CourseBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, course_id={self.course_id}, pin_to_top={self.pin_to_top})"

@@ -41,7 +41,7 @@ import NotificationPage from "views/NotificationPage";
 
 import getTextOrigin from "utils/getText";
 import DiscussionReplyPage from "views/DiscussionReplyPage";
-import DiscussionTopicList from "components/DiscussionTopicList";
+import DiscussionTopicPage from "views/DiscussionTopicPage";
 
 function Logout(): ReactElement {
     localStorage.removeItem("access_token")
@@ -116,7 +116,6 @@ export default function App(): ReactElement {
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
                         <Route path="/reportBug" element={<ReportPage />} />  
                         <Route path="/notification" element={<NotificationPage />} />
-                        <Route path="/salmontest" element={<DiscussionReplyPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />

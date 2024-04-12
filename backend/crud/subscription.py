@@ -8,8 +8,9 @@ from schemas import subscription as SubscriptionSchema
 
 @crud_class_decorator
 class SubscriptionCrudManager:
-    async def create(self, uid, component_id, db_session: AsyncSession):
-        subscription = SubscriptionModel(uid=uid, component_id=component_id)
+    async def create(self, uid, component_id, newSubscription: SubscriptionSchema.SubscriptionCreate, db_session: AsyncSession):
+        newSubscription_dict = newSubscription.model_dump()
+        subscription = SubscriptionModel(uid=uid, component_id=component_id, **newSubscription_dict)
         db_session.add(subscription)
         await db_session.commit()
 

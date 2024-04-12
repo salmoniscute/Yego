@@ -15,16 +15,19 @@ export default function DiscussionTopicPage(): ReactElement {
   const Open = () => {
     setopenEditor(true);
   }
+  const Close = () => {
+    setopenEditor(false);
+  }
 
-  return <div id="reportPage">
+  return <div id="discussionTopicPage">
     <div className="header">
-      <h1></h1>
+      <h1>hihi</h1>
       <button onClick={Open}><FaPen /><span>新增討論主題</span></button>
     </div>
     <div className="tutorial">
       <h4>操作教學說明</h4>
     </div>
     <DiscussionList />
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor /></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic"/></div>
   </div>
 }

@@ -6,7 +6,7 @@ from models.base import Base, BaseType
 
 class Component(Base):
     __tablename__ = "Component"
-    id: Mapped[BaseType.id]
+    id: Mapped[BaseType.int_id]
     uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     release_time: Mapped[BaseType.datetime]
     title: Mapped[BaseType.str_100]
@@ -52,7 +52,8 @@ class Component(Base):
         "File",
         back_populates="component_info",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
 
     subscriptions: Mapped[list["Subscription"]] = relationship(
@@ -76,8 +77,8 @@ class Component(Base):
         passive_deletes=True
     )
 
-    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str) -> None:
-        self.id = id
+    def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:
+        # self.id = self.id
         self.uid = uid
         self.release_time = release_time
         self.title = title

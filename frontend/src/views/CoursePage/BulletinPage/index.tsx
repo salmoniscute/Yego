@@ -9,6 +9,7 @@ import 'react-quill/dist/quill.snow.css';
 import CourseBulletinEditor , {modules,formats} from "components/CourseBulletinEditor";
 import userDataContext from "context/userData";
 import "./index.scss";
+import { SlOptions } from "react-icons/sl";
 
 import { CourseBulletinInfo } from "schemas/courseBulletin";
 import { getCourseBulletinList,postCourseBulletin } from "api/courseBulletin";
@@ -30,8 +31,14 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList("CSE101").then(data => {
+        getCourseBulletinList().then(data => {
             setCourseBulletin(data);
+        }).catch( error =>{
+            if (error.response && error.response.status === 404) {
+                
+            } else {
+                
+            }
         });
     }, []);
 
@@ -41,11 +48,16 @@ export default function BulletinPage(props: propsType): React.ReactElement {
 
     const onSubmit = async () =>{
         const nowTime = new Date().getTime();
-        const courseBulletin = await postCourseBulletin("salmon","CSE101",title,nowTime,content,false);
-        if (courseBulletin){
-            console.log(courseBulletin);
+        const uid = userData?.uid;
+        if (uid) {
+            const courseBulletin = await postCourseBulletin(uid, "CSE101", title, nowTime, content, false);
         }
-
+        else {}
+        setContent("");
+        setTitle("");
+        getCourseBulletinList().then(data => {
+            setCourseBulletin(data);
+        });
     }
 
     return (
@@ -68,20 +80,24 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 formats={formats}
             />
             <CourseBulletinEditor submitBulletin={onSubmit}/>
+            { courseBulletinList.length == 0 && <p>尚無公告</p>}
             <div className="courseBulletin">
                 {
-                    courseBulletinList.map(data =>
-                        <div className="courseBulletinContent">
-                            
-                            <div className="cb">
-                                <div className="cbContent">
-                                    <div className="cbPin">置頂</div>
+                    courseBulletinList.map((data , i) =>
+                        <div className="courseBulletinContent" key={i}>
+                            <div className="cbContent">
+                                <div>
+                                    { data.pin_to_top === true && <div className="cbPin">置頂</div>}
                                     <img src={UserIcon} />
                                     <p className="cbAuther">{data.publisher}</p>
                                     <p className="cbTime">{data.release_time}</p>
                                 </div>
-                                <p className="cbInfor">{data.content}</p>
+                                { data.uid === userData?.uid && <SlOptions/> }                          
                             </div>
+                            <div
+                                className="cbInfor"
+                                dangerouslySetInnerHTML={{ __html: data.content }}
+                            />        
                         </div>)
                 }
             </div>

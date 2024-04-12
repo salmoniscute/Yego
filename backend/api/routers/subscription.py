@@ -27,6 +27,7 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED,
 )
 async def create_subscription(
+    newSubscription: SubscriptionSchema.SubscriptionCreate,
     uid: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
@@ -36,7 +37,7 @@ async def create_subscription(
     if await SubscriptionCrud.get(uid, component_id):
         raise already_exists
     
-    subscription = await SubscriptionCrud.create(uid, component_id)
+    subscription = await SubscriptionCrud.create(uid, component_id, newSubscription)
 
     return subscription
     

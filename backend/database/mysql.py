@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
-from sqlalchemy.schema import CreateTable
+from sqlalchemy.schema import CreateTable, DropTable
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
+from database.init_db import FakeDB
 from models.bulletin import Bulletin
 from models.component import Component
 from models.course import Course
@@ -13,13 +14,11 @@ from models.subscription import Subscription
 from models.user import User
 from models.report import Report
 
-
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
     echo=True,
     pool_pre_ping=True
 )
-
 SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False, autocommit=False)
 
 
@@ -43,10 +42,23 @@ async def init_db():
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            # await db.execute(CreateTable(Report.__table__, if_not_exists=True))
             
+            await FakeDB().create_entity_list(db)
             
 async def close_db():
+    async with SessionLocal() as db:
+        async with db.begin():
+            await db.execute(DropTable(Bulletin.__table__))
+            await db.execute(DropTable(Subscription.__table__))
+            await db.execute(DropTable(SelectedCourse.__table__))
+            await db.execute(DropTable(Notification.__table__))
+            await db.execute(DropTable(File.__table__))
+            await db.execute(DropTable(DiscussionTopic.__table__))
+            await db.execute(DropTable(Discussion.__table__))
+            await db.execute(DropTable(Course.__table__))
+            await db.execute(DropTable(Component.__table__))
+            await db.execute(DropTable(User.__table__))
     await engine.dispose()
 
 

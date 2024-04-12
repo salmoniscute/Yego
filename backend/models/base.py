@@ -18,4 +18,5 @@ class BaseType:
     str_50 = Annotated[str, mapped_column(String(50))]
     str_100 = Annotated[str, mapped_column(String(100))]
     optional_str_200 = Annotated[Optional[str], mapped_column(String(200), nullable=True)]
+    int_type = Annotated[int, mapped_column(Integer)]
     

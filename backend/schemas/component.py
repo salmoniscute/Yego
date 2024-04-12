@@ -1,12 +1,11 @@
 from pydantic import BaseModel
 from typing import Optional
-
+from datetime import datetime
 from schemas import file as FileSchema
 
 
 class ComponentCreate(BaseModel):
-    id: str
-    release_time: str
+    release_time: datetime
     title: str
     content: str
 
@@ -14,7 +13,6 @@ class ComponentCreate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 { 
-                    "id": "1",
                     "release_time": "2024-04-02 16:00:00",
                     "title": "This is a title",
                     "content": "This is a content"
@@ -25,17 +23,17 @@ class ComponentCreate(BaseModel):
 
 
 class ComponentRead(BaseModel):
-    id: str
+    id: int
     uid: str
-    release_time: str
+    release_time: datetime
     title: str
     content: str
 
 
 class ComponentReadWithFile(BaseModel):
-    id: str
+    id: int
     uid: str
-    release_time: str
+    release_time: datetime
     title: str
     content: str
     files: Optional[list[FileSchema.FileRead]] = None

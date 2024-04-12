@@ -1,16 +1,13 @@
 from pydantic import BaseModel
-from typing import Optional
 
 
 class FileCreate(BaseModel):
-    id: str
     path: str
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
-                    "id": "1",
                     "path": "/path/of/file"
                 }
             ]
@@ -19,13 +16,13 @@ class FileCreate(BaseModel):
 
 
 class FileRead(BaseModel):
-    id: str
-    component_id: str
+    id: int
+    component_id: int
     path: str
     
 
 class FileUpdate(BaseModel):
-    path:  Optional[str]
+    path:  str
     
     model_config = {
         "json_schema_extra": {
