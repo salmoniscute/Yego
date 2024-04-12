@@ -21,6 +21,7 @@ import DiscussionPage from "./DiscussionPage";
 import "./index.scss";
 import MaterialPage from "./MaterialPage";
 import GradePage from "./GradePage";
+import DiscussionTopicPage from "views/DiscussionTopicPage";
 
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
@@ -32,7 +33,12 @@ export default function CoursePage(): ReactElement {
 
     const tabs = useMemo(() => courseID ? [
         { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
-        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} /> },
+        {
+            label: "討論區", path: "discussion", component: <Routes>
+                <Route path="/" element={<DiscussionPage courseID={courseID} />} />
+                <Route path="/:discussionId" element={<DiscussionTopicPage />} />
+            </Routes>
+        },
         { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
         { label: "成績", path: "grade", component: <GradePage /> },
         { label: "成員", path: "member", component: <MemberPage /> }
@@ -42,11 +48,11 @@ export default function CoursePage(): ReactElement {
         <div id="courseForum">
             <div className="titleInfor">
                 <h2>課程名稱</h2>
-                { userData?.role=="student" && <div className="signIn" onClick={() => { }}>
+                {userData?.role == "student" && <div className="signIn" onClick={() => { }}>
                     簽到
                     <LuClipboardCheck className="cfIcon" />
                 </div>}
-                { userData?.role=="student" && <a href="">課程大綱</a>}
+                {userData?.role == "student" && <a href="">課程大綱</a>}
             </div>
             <div className="forumCategory">
                 {
@@ -63,7 +69,7 @@ export default function CoursePage(): ReactElement {
                 {
                     tabs.map((data, i) => <Route
                         key={i}
-                        path={`/${data.path}`}
+                        path={`/${data.path}/*`}
                         element={data.component}
                     />)
                 }

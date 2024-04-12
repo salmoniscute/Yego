@@ -25,11 +25,9 @@ export async function postCourseBulletin(uid:string,course_id:string,title:strin
     let url = "http://localhost:8080/api/course/bulletin?uid="+uid+"&course_id="+course_id;
     let courseBulletin ;
 
-    // 目前先自己設定id
     try {
         const response = await axios.post(url,{
             "title": title,
-            "id":"3",
             "release_time": "2021-09-01T00:00:00",
             "content": content,
             "pin_to_top": pin_to_top
