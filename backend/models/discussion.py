@@ -1,13 +1,31 @@
 from typing import Optional 
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy import ForeignKey
 from models.base import Base, BaseType
+
 
 class Discussion(Base):
     __tablename__ = "Discussion"
     discussion_id : Mapped[BaseType.discussion_id]
-    course_id : Mapped[BaseType.str_20]
     title : Mapped[BaseType.str_100]
     discription : Mapped[BaseType.str_100]
+    
+    # relationship to child
+    topics : Mapped[list["DiscussionTopic"]] = relationship(
+        "DiscussionTopic",
+        back_populates="discussion",
+        cascade="all, delete, delete-orphan",
+        passive_deletes=True,
+        lazy="joined",
+        order_by="DiscussionTopic.release_time"
+    )
+    
+    # relationship to parent
+    course_id : Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.course_id", ondelete="CASCADE"))
+    course : Mapped["Course"] = relationship(
+        "Course", 
+        back_populates="discussions"
+    )
 
 
     def __init__(self,discussion_id:str, course_id:str, title:float, discription:str) -> None:

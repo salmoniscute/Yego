@@ -1,50 +1,69 @@
-.list {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  color: #474141;
 
-  button {
-    background-color: transparent;
-    color: #474141;
-  }
+#DiscussionTopicList{
+  margin: 3em 0em;
+  background-color: #FFFFFF;
+  border: solid 1px #474141;
+  border-radius: 0.7em;
+  padding: 0.5em 2em;
 
-  .topic {
-    width: 50%;
-    text-align: left;
-    color: black;
-    text-decoration: none;
-  }
-  .topic:active {
-    color: black;
-  }
-
-  .launch {
-    width: 20%;
+  .list {
     display: flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: space-between;
+    font-size: 18px;
+    color: #474141;
 
+    > h3 {
+      margin-bottom: 0em;
+    }
+  
     button {
-      width: auto;
-      color: #949494;
-      font-size: 24px;
-      padding: 5px;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      color: #474141;
+    }
+  
+    .topic {
+      width: 50%;
+      text-align: left;
+      color: black;
+      text-decoration: none;
+    }
+    .topic:active {
+      color: black;
+    }
+  
+    .launch {
+      width: 20%;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+  
+      button {
+        cursor: pointer;
+        border: none;
+        width: auto;
+        color: #949494;
+        font-size: 24px;
+        padding: 5px;
+      }
+    }
+  
+    .reply {
+      width:15%;
+      text-align: center;
+    }
+  
+    .follow {
+      width: 15%;
+      text-align: center;
+      transition: transform all;
+  
+      p {
+        font-size: 18px;
+      }
     }
   }
+  
 
-  .reply {
-    width:15%;
-    text-align: center;
-  }
-
-  .follow {
-    width: 15%;
-    text-align: center;
-    transition: transform all;
-
-    p {
-      font-size: 18px;
-    }
-  }
 }

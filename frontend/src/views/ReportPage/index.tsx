@@ -16,7 +16,7 @@ export default function ReportPage(): ReactElement {
   return <div id="reportPage">
     <div className="header">
       <h1>問題回報區</h1>
-      <button onClick={Open}><FaPen /><span>回報問題</span></button>
+      <div className="reportButton" onClick={Open}><FaPen /><span>回報問題</span></div>
     </div>
     <div className="tutorial">
       <h4>操作教學說明</h4>

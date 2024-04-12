@@ -2,9 +2,11 @@ import React from "react";
 import {
     ReactElement,
     useState,
-    useEffect
+    useEffect,
+    useContext
 } from "react";
 import { Link } from "react-router-dom";
+import userDataContext from "context/userData";
 
 import "./index.scss";
 import { FaPen } from "react-icons/fa";
@@ -25,6 +27,8 @@ export default function DiscussionPage(props: propsType): ReactElement {
 
     } = props;
 
+    const userData = useContext(userDataContext);
+
     useEffect(() => {
         getDiscussionList().then(data => {
             setDiscussion(data);
@@ -33,29 +37,31 @@ export default function DiscussionPage(props: propsType): ReactElement {
 
     return (
         <div id="courseDiscussionPage">
-            <div className="addDiscussionButton">
+            {userData?.role == "teacher" && <div className="addDiscussionButton">
                 <div className="buttonInfo">
                     <FaPen />
                     <p>新增討論區</p>
                 </div>
 
+            </div> }
+            <div className="discussion">
+                <div className="discussionTab">
+                    <p className="discussionTitle">標題</p>
+                    <p className="discussionDiscription">說明</p>
+                    <p >追蹤回覆</p>
+                </div>
+                {
+                    discussionList.map(data =>
+                        <div className="discussionInfo">
+                            <p className="discussionTitle">
+                                <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
+                            </p>
+                            <p className="discussionDiscription">{data.discription}</p>
+                            <BiSolidBellRing />
+                        </div>
+                    )
+                }
             </div>
-            <div className="discussionTab">
-                <p className="discussionTitle">討論區</p>
-                <p className="discussionDiscription">說明</p>
-                <p >追蹤更新</p>
-            </div>
-            {
-                discussionList.map(data =>
-                    <div className="discussionInfo">
-                        <p className="discussionTitle">
-                            <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
-                        </p>
-                        <p className="discussionDiscription">{data.discription}</p>
-                        <BiSolidBellRing />
-                    </div>
-                )
-            }
 
         </div>
     );

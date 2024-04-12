@@ -18,6 +18,7 @@ export default function MemberPage(): ReactElement {
     const tab = ["成員名稱", "學號", "系所", "身份", "組別"]
 
     const [courseMemberList, setCourseMember] = useState<Array<OtherUser>>([]);
+    const [showMember, setShowMember] = useState<boolean>(false);
 
     useEffect(() => {
         getCourseMemberList().then(data => {
@@ -34,14 +35,44 @@ export default function MemberPage(): ReactElement {
                         </p>
                     ))}
                 </div>
-                {courseMemberList.map(data =>
+                {courseMemberList.map((data, index) =>
                     <div className="courseMemberContent">
-                        <p>{data.name}</p>
+                        <p key={index} onClick={() => {setShowMember(true);}}>
+                            {data.name}
+                        </p>
                         <p>{data.uid}</p>
                         <p>{data.department}</p>
                         <p>{data.role}</p>
-                    </div>
+                        <div className="memberWindow" data-show={showMember}>
+                            <div className="closeWindow" onClick={() => {setShowMember(false);}} >
+                                <span className="material-symbols-outlined">
+                                    close
+                                </span>
+                            </div>
+                            <br/><br/>
+                            <div className="windowSet">
+                                <div className="leftWindow">
+                                    <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
+                                    <br/>
+                                    <div className="memberName">{data.name}</div>
+                                    <div className="memberMail">Email</div>
+                                    <br/>
+                                    <div className="memberIntro">自我介紹:</div>
+                                </div>
+                                <div className="rightWindow">
+                                    <br/>
+                                    <div>國家 &nbsp;&nbsp;&nbsp; {data.department}</div>
+                                    <br/>
+                                    <div>科系 &nbsp;&nbsp;&nbsp; {data.department}</div>
+                                    <br/>
+                                    <div>學號 &nbsp;&nbsp;&nbsp; {data.department}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
                 )}
+                
+                                                                 
             </div>
 
         </div>
