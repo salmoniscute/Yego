@@ -1,34 +1,37 @@
-from typing import Optional
-from pydantic import BaseModel
-from .discussion_topic import DiscussionTopicRead
+from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
-class DiscussionCreate(BaseModel):
-    discussion_id: str
-    title: str
-    discription: str
-    
-    
+
+class DiscussionCreate(ComponentCreate):    
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                "discussion_id": "D001",
-                "title": "Discussion 1",
-                "discription": "This is the first discussion of the course."
+                    "release_time": "2021-09-01T00:00:00",
+                    "title": "Discussion 1",
+                    "content": "This is the first discussion of the course."
                 }
             ]
         }
     }
 
-class DiscussionRead(BaseModel):
+
+class DiscussionRead(ComponentRead):
+    pass
+    # topics: Optional[list[DiscussionTopicRead]] = None
+
+
+class DiscussionTopicRead(ComponentRead):
+    type: str
     discussion_id: str
-    course_id: str
-    title: str
-    discription: str
-    topics:Optional[list[DiscussionTopicRead]] = None
-    
-class DiscussionUpdate(BaseModel):
-    title: Optional[str]
-    discription: Optional[str]
-    
-    
+
+
+class DiscussionTopicReplyRead(ComponentRead):
+    type: str
+    discussion_id: str
+    parent_id: str
+    root_id: str
+
+
+class DiscussionUpdate(ComponentUpdate):
+    pass
+

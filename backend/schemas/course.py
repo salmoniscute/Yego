@@ -1,11 +1,9 @@
-from typing import Optional
 from pydantic import BaseModel
-from .course_bulletin import CourseBulletinRead
-from .discussion import DiscussionRead
+from typing import Optional
+
 
 class CourseCreate(BaseModel):
-    course_id: str
-    # teacher: str #wait for user
+    id: str
     course_code: str
     academic_year: int
     semester: int
@@ -16,34 +14,33 @@ class CourseCreate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 {
-                "course_id": "CSE101",
-                # "teacher": "U001",
-                "course_code": "CSE101",
-                "academic_year": 2021,
-                "semester": 1,
-                "name": "Introduction to Computer Science",
-                "outline": "This course is an introduction to computer science."
+                    "id": "CSE101",
+                    "course_code": "CSE101",
+                    "academic_year": 2021,
+                    "semester": 1,
+                    "name": "Introduction to Computer Science",
+                    "outline": "This course is an introduction to computer science."
                 }
             ]
         }
     }
 
+
 class CourseRead(BaseModel):
-    course_id: str
-    teacher: str
+    id: str
+    uid: str
     course_code: str
     academic_year: int
     semester: int
     name: str
     outline : str
-    bulletins:Optional[list[CourseBulletinRead]] = None
-    discussions:Optional[list[DiscussionRead]] = None
+    
     
 class CourseUpdate(BaseModel):
-    teacher : Optional[str]
-    course_code : Optional[str]
-    academic_year : Optional[int]
-    semester : Optional[int]
-    name : Optional[str]
-    outline : Optional[str]
+    uid : Optional[str] = None
+    course_code : Optional[str] = None
+    academic_year : Optional[int] = None
+    semester : Optional[int] = None
+    name : Optional[str] = None
+    outline : Optional[str] = None
     

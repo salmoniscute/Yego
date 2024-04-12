@@ -21,9 +21,9 @@ export async function getCourseMemberList() : Promise<Array<OtherUser>>{
         },
         {
             uid: "F74106050",
-            name: "張老師",
-            role: "教授",
-            department: "歷史系",
+            name: "Franziska",
+            role: "學生",
+            department: "不分系學位學程",
 
         }
     ]

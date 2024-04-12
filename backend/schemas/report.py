@@ -1,35 +1,24 @@
-from typing import Optional
-from pydantic import BaseModel
-from .report_reply import ReportReplyRead
+from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
-class ReportBase(BaseModel):
-    report_id: str
-    
+
+class ReportCreate(ComponentCreate):    
     model_config = {
         "json_schema_extra": {
             "examples": [
-                { 
-                    "report_id": "1",
-                    "title": "website login error",
-                    "release_time": "2024-03-20",
-                    "content": "I can not login the website though posting this report needs to login haha.",
+                {
+                    "id": "1",
+                    "release_time": "2021-09-01T00:00:00",
+                    "title": "Report 1",
+                    "content": "This is the first report."
                 }
             ]
         }
     }
 
-class ReportCreate(ReportBase):
-    title: str
-    release_time: str
-    content: str
 
-class ReportRead(ReportBase):
-    title: str
-    release_time: str
-    reply_number: int
-    
-class ReportUpdate(BaseModel):
-    title: Optional[str]
-    release_time: Optional[str]
-    content: Optional[str]
-    
+class ReportRead(ComponentRead):
+    pass
+
+class ReportUpdate(ComponentUpdate):
+    pass
+

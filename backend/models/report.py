@@ -1,48 +1,27 @@
-from typing import Optional 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from models.base import Base, BaseType
+from models.component import Component
 
-class Report(Base):
+class Report(Component):
     __tablename__ = "Report"
-    report_id : Mapped[BaseType.report_id]
-    publisher : Mapped[BaseType.str_20]
-    title : Mapped[BaseType.str_100]
-    release_time : Mapped[BaseType.str_20]
-    content : Mapped[BaseType.str_100]
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
 
-    # relationship to ReportFile parent to child
-    files : Mapped[list["ReportFile"]] = relationship(
-        "ReportFile",
-        back_populates="report",
-        cascade="all, delete, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    # relationship to report_reply parent to child
-    replies : Mapped[list["ReportReply"]] = relationship(
-        "ReportReply",
-        back_populates="report",
-        cascade="all, delete, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    # relationship to User child to parent
-    publisher : Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    publisher_info : Mapped["User"] = relationship(
-        "User", 
+    # Relationship to parent
+    info: Mapped["Component"] = relationship(
+        "Component",
         back_populates="reports"
     )
-    
-    def __init__(self, report_id:str, publisher:str, title:str, release_time:str, content:str) -> None:
-        self.report_id = report_id
-        self.publisher = publisher
-        self.title = title
+
+    def __init__(self, id: str, uid: str, release_time: str, title: str, content: str) -> None:
+        self.id = id
+        self.uid = uid
         self.release_time = release_time
+        self.title = title
         self.content = content
 
     def __repr__(self) -> str:
-        return f"Report(report_id={self.report_id}, publisher={self.publisher}, title={self.title}, release_time={self.release_time}, content={self.content})"
+        return f"Report(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content})"
+
 

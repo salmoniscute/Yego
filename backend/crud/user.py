@@ -1,37 +1,29 @@
+from sqlalchemy import select, update, delete
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from auth.passwd import get_password_hash
 from database.mysql import crud_class_decorator
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, delete
-
 from models.user import User as UserModel
 from schemas import user as UserSchema
 
 
 @crud_class_decorator
 class UserCrudManager:
-    async def login(self, uid: str, db_session: AsyncSession):
-        stmt = select(
-            UserModel.uid, 
-            UserModel.password,
-            UserModel.role,
-            UserModel.name,
-            UserModel.country,
-            UserModel.department,
-            UserModel.email,
-            UserModel.introduction,
-            UserModel.avatar
-        ).where(UserModel.uid == uid)
-        result = await db_session.execute(stmt)
-        user = result.first()
+    async def create(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
+        newUser_dict = newUser.model_dump()
+        user = UserModel(**newUser_dict)
+        db_session.add(user)
+        await db_session.commit()
 
-        return user if user else None
+        return user
 
     async def get(self, uid: str, db_session: AsyncSession):
         stmt = select(UserModel).where(UserModel.uid == uid)
         result = await db_session.execute(stmt)
         user = result.first()
-
+        
         return user[0] if user else None
+        
     
     async def get_all(self, db_session: AsyncSession):
         stmt = select(UserModel)
@@ -39,15 +31,6 @@ class UserCrudManager:
         result = result.unique()
 
         return [user[0] for user in result.all()]
-    
-    async def create(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
-        newUser_dict = newUser.model_dump()
-        user = UserModel(**newUser_dict)
-        db_session.add(user)
-        await db_session.commit()
-        db_session.refresh(user)
-
-        return user
 
     async def update(self, uid: str, updateUser: UserSchema.UserUpdate, db_session: AsyncSession):
         updateUser_dict = updateUser.model_dump(exclude_none=True)
@@ -72,4 +55,21 @@ class UserCrudManager:
         await db_session.commit()
 
         return
+    
+    async def login(self, uid: str, db_session: AsyncSession):
+        stmt = select(
+            UserModel.uid, 
+            UserModel.password,
+            UserModel.role,
+            UserModel.name,
+            UserModel.country,
+            UserModel.department,
+            UserModel.email,
+            UserModel.introduction,
+            UserModel.avatar
+        ).where(UserModel.uid == uid)
+        result = await db_session.execute(stmt)
+        user = result.first()
+
+        return user if user else None
     

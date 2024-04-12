@@ -36,24 +36,26 @@
             background-color: #FFFFFF;
             border:solid 1px #474141;
             display: flex;
-            flex-direction: row;
             padding: 1em 1em;
             margin: 2em 0em;
+            flex-direction: column;
 
-            .cb{
-                flex-direction: column;
-                .cbPin{
-                    background-color: #FFEA79;
-                    border-radius: 2em;
-                    margin-right: 1em;
-                    padding: 0.5em 1.5em;
-                    font-size: x-small;
-                    font-weight: 600;
-                }
-                .cbContent{
+            .cbContent{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                div{
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    .cbPin{
+                        background-color: #FFEA79;
+                        border-radius: 2em;
+                        margin-right: 1em;
+                        padding: 0.5em 1.5em;
+                        font-size: x-small;
+                        font-weight: 600;
+                    }
                     img{
                         width: 1.5em;
                         height: 1.5em;
@@ -67,16 +69,76 @@
                         font-size: 15px;
                         margin: 0em 0em ;
                         font-weight: 200;
-                    }   
+                    }  
+                }
+
+                label.dropdownMenu {
+                    position: relative;
+                    display: flex;
+                    gap: 0.5rem;
+                    line-height: 2rem;
+                    background-color:#FFFFFF;
+                    text-align: center;
+                    > * {
+                        cursor: pointer;
+                    }
+                    input {
+                        display: none;
+                    }
+                    .mask {
+                        position: absolute;
+                        top: 100%;
+                        left: 0%;
+                        width: 3em;
+                        background-color: #FFFFFF;
+                        overflow: hidden;
+                        transition: height 0.3s;
+                        cursor: default;
+                        .content {
+                            display: flex;
+                            flex-direction: column;
+                            > div {
+                                transition: background-color 0.3s;
+                                p {
+                                    font-size: 16px;
+                                    margin: 0 auto;
+                                    width: 3em;
+                                    color: #949494;
+                                    cursor: pointer;
+                                    transition: color 0.3s;
+                                }
+                            }
+                            > div:has(p:hover) {
+                                background-color: #cecece;
+                                p {
+                                    color: #000;
+                                }
+                            }
+                        }
+                    }
+                }
+                label.dropdownMenu:has(input:not(:checked)) {
+                    .mask {
+                        height: 0;
+                        border: none;
+                    }
+                }
+                label.dropdownMenu:has(input:checked) {
+                    .mask {
+                        height: calc(2rem* var(--length));
+                        border: 1px solid #474141;
+                    }
+                }
+                    
                                 
-                }
-                .cbInfor{
-                    font-size: large;
-                    font-weight: 400;
-                    margin-bottom: 0em;
-                }
-        
             }
+            .cbInfor{
+                font-size: large;
+                font-weight: 400;
+                margin-bottom: 0em;
+            }
+        
+            
             
         }
 

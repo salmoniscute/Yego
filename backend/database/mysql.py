@@ -1,29 +1,24 @@
 from contextlib import asynccontextmanager
+from sqlalchemy.schema import CreateTable, DropTable
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.schema import CreateTable
 
-from models.user import User
+from database.init_db import FakeDB
+from models.bulletin import Bulletin
+from models.component import Component
 from models.course import Course
-from models.website_bulletin import WebsiteBulletin
-from models.website_bulletin_file import WebsiteBulletinFile
-from models.course_bulletin import CourseBulletin
-from models.discussion import Discussion
-from models.discussion_topic import DiscussionTopic
-from models.discussion_reply import DiscussionReply
-from models.discussion_topic_file import DiscussionTopicFile
+from models.discussion import Discussion, DiscussionTopic
+from models.file import File
+from models.notification import Notification
+from models.selected_course import SelectedCourse
+from models.subscription import Subscription
+from models.user import User
 from models.report import Report
-from models.report_file import ReportFile
-from models.report_reply import ReportReply
-from models.course_bulletin_file import CourseBulletinFile
-
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
     echo=True,
     pool_pre_ping=True
 )
-
 SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False, autocommit=False)
 
 
@@ -38,20 +33,32 @@ async def init_db():
     async with SessionLocal() as db:
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Component.__table__, if_not_exists=True))
             await db.execute(CreateTable(Course.__table__, if_not_exists=True))
-            await db.execute(CreateTable(WebsiteBulletin.__table__, if_not_exists=True))
-            await db.execute(CreateTable(WebsiteBulletinFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(CourseBulletin.__table__, if_not_exists=True))
             await db.execute(CreateTable(Discussion.__table__, if_not_exists=True))
             await db.execute(CreateTable(DiscussionTopic.__table__, if_not_exists=True))
-            await db.execute(CreateTable(DiscussionReply.__table__, if_not_exists=True))
-            await db.execute(CreateTable(DiscussionTopicFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
-            await db.execute(CreateTable(ReportFile.__table__, if_not_exists=True))
-            await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
-            await db.execute(CreateTable(CourseBulletinFile.__table__, if_not_exists=True))
-
+            await db.execute(CreateTable(File.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Notification.__table__, if_not_exists=True))
+            await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
+            # await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            
+            await FakeDB().create_entity_list(db)
+            
 async def close_db():
+    async with SessionLocal() as db:
+        async with db.begin():
+            await db.execute(DropTable(Bulletin.__table__))
+            await db.execute(DropTable(Subscription.__table__))
+            await db.execute(DropTable(SelectedCourse.__table__))
+            await db.execute(DropTable(Notification.__table__))
+            await db.execute(DropTable(File.__table__))
+            await db.execute(DropTable(DiscussionTopic.__table__))
+            await db.execute(DropTable(Discussion.__table__))
+            await db.execute(DropTable(Course.__table__))
+            await db.execute(DropTable(Component.__table__))
+            await db.execute(DropTable(User.__table__))
     await engine.dispose()
 
 

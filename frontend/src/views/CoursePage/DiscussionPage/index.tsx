@@ -5,8 +5,9 @@ import {
     useEffect,
     useContext
 } from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate,Route,Routes } from "react-router-dom";
 import userDataContext from "context/userData";
+import PostEditor from "components/PostEditor";
 
 import "./index.scss";
 import { FaPen } from "react-icons/fa";
@@ -16,12 +17,17 @@ import { TbBellRinging } from "react-icons/tb";
 import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
 
+import DiscussionTopicPage from "views/DiscussionTopicPage";
+
 type propsType = Readonly<{
     courseID: string,
 }>;
 
 export default function DiscussionPage(props: propsType): ReactElement {
     const [discussionList, setDiscussion] = useState<Array<Discussion>>([]);
+    const [openEditor, setopenEditor] = useState(false);
+    const Open = () => { setopenEditor(true); }
+    const Close = () => { setopenEditor(false); }
     const {
         courseID
 
@@ -35,14 +41,11 @@ export default function DiscussionPage(props: propsType): ReactElement {
         })
     }, [])
 
+
     return (
         <div id="courseDiscussionPage">
-            {userData?.role == "teacher" && <div className="addDiscussionButton">
-                <div className="buttonInfo">
-                    <FaPen />
-                    <p>新增討論區</p>
-                </div>
-
+            {userData?.role === "teacher" && <div className="addDiscussionButton">
+            <button onClick={Open}><FaPen /><span>新增討論區</span></button>
             </div> }
             <div className="discussion">
                 <div className="discussionTab">
@@ -51,18 +54,20 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     <p >追蹤回覆</p>
                 </div>
                 {
-                    discussionList.map(data =>
-                        <div className="discussionInfo">
+                    discussionList.map((data,i) =>
+                        <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`/discussionTopic/${data.discussion_id}`}>{data.title}</Link>
+                                <Link to={`./${data.discussion_id}`}>{data.title}</Link>
                             </p>
                             <p className="discussionDiscription">{data.discription}</p>
                             <BiSolidBellRing />
                         </div>
                     )
                 }
+                
             </div>
-
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion"/></div>
+            
         </div>
     );
 }

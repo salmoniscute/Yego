@@ -5,6 +5,7 @@ import {
     SetStateAction,
     useContext,
     useMemo,
+    useState
 } from "react";
 import { Link } from "react-router-dom";
 
@@ -19,6 +20,7 @@ import SideBar from "components/SideBar";
 import getTextOrigin, { localMap } from "utils/getText";
 
 import "./index.scss";
+import NotificationColumn from "components/NotificationColumn";
 
 type propsType = Readonly<{
     setLanguage: Dispatch<SetStateAction<string>>,
@@ -48,7 +50,11 @@ export default function NavigateBar(props: propsType): ReactElement {
             key => () => setLanguage(key)
         ), [setLanguage]
     );
-
+    
+    const [display, setDisplay] = useState(false);
+    const DisplayNotification = () => {
+        setDisplay(!display);
+    }
     return (
         <div id="navigateBar">
             <Link to="/" className="logo">
@@ -76,7 +82,8 @@ export default function NavigateBar(props: propsType): ReactElement {
                     to={"/login"} >
                     {getText("login")}
                 </Link> : <div className="notification">
-                    <p className="ms">notifications</p>
+                    <p className="ms" onClick={DisplayNotification}>notifications</p>
+                    <div className="notificationBlock">{display === true ? <NotificationColumn seeAllBtn={true} /> : <></>}</div>
                 </div>
             }
             {

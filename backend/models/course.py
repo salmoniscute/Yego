@@ -1,38 +1,22 @@
-from typing import Optional 
-from sqlalchemy.orm import Mapped, relationship, mapped_column
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Optional 
+
 from models.base import Base, BaseType
+
 
 class Course(Base):
     __tablename__ = "Course"
-    course_id : Mapped[BaseType.course_id]
-    # teacher : Mapped[BaseType.str_20]
-    course_code : Mapped[BaseType.str_20]
-    academic_year : Mapped[BaseType.str_20]
-    semester : Mapped[int]
-    name : Mapped[BaseType.str_100]
-    outline : Mapped[BaseType.str_100]
-    
-    #relationship to child
-    bulletins : Mapped[list["CourseBulletin"]] = relationship(
-        "CourseBulletin",
-        back_populates="course",
-        cascade="all, delete, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    discussions : Mapped[list["Discussion"]] = relationship(
-        "Discussion",
-        back_populates="course",
-        cascade="all, delete, delete-orphan",
-        passive_deletes=True,
-        lazy="joined"
-    )
-    
-    #relationship to parent
-    teacher : Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    instructor_info : Mapped["User"] = relationship(
+    id: Mapped[BaseType.id]
+    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    course_code: Mapped[BaseType.str_20]
+    academic_year: Mapped[BaseType.str_20]
+    semester: Mapped[int]
+    name: Mapped[BaseType.str_100]
+    outline: Mapped[BaseType.str_100]
+
+    # Relationship to parent
+    instructor_info: Mapped["User"] = relationship(
         "User",
         back_populates="courses",
         lazy="joined"
@@ -43,14 +27,26 @@ class Course(Base):
         "SelectedCourse",
         back_populates="course_info",
         cascade="all, delete-orphan", 
-        passive_deletes=True,
-        lazy="joined"
+        passive_deletes=True
     )
 
+    course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
+        "CourseBulletin",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
 
-    def __init__(self,course_id:str, teacher:str, course_code:float, academic_year:int, semester:int, name:str, outline:Optional[str]) -> None:
-        self.course_id = course_id
-        self.teacher = teacher
+    discussions: Mapped[list["Discussion"]] = relationship(
+        "Discussion",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
+    def __init__(self, id: str, uid: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
+        self.id = id
+        self.uid = uid
         self.course_code = course_code
         self.academic_year = academic_year
         self.semester = semester
@@ -58,5 +54,4 @@ class Course(Base):
         self.outline = outline
 
     def __repr__(self) -> str:
-        return f"Course(course_id={self.course_id}, teacher={self.teacher}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}), name={self.name}, outline={self.outline})"
-
+        return f"Course(id={self.id}, uid={self.uid}, course_code={self.course_code}, academic_year={self.academic_year}, semester={self.semester}, name={self.name}, outline={self.outline})"
