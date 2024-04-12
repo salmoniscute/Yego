@@ -1,5 +1,6 @@
 import json
 
+from auth.passwd import get_password_hash
 from models.user import User as UserModel
 from models.course import Course as CourseModel
 from models.selected_course import SelectedCourse as SelectedCourseModel
@@ -28,6 +29,9 @@ class FakeDB:
     async def create_entity_list(self, db_session):
         for table, entity_list in self.data.items():
             for entity in entity_list:
+                if entity.get("password"):
+                    entity["password"] = get_password_hash(entity["password"])
+                
                 row = model[table](**entity)
                 db_session.add(row)
                 
