@@ -1,19 +1,114 @@
-.container {
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    max-width: min(90vw, 1200px);
-    width: 70rem;
-    margin: auto;
+.web-announcement-container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: min(90vw, 1200px);
+  width: 70rem;
+  margin: auto;
 
-    .title{
-      width: auto;
-      height: 50px;
+  .breadcrumbs {
+    font-size: 1.0rem;
+    margin-bottom: 10px;
+  }
+
+  .web-announcement-header {
+    background-color: #fff;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #333;
     }
+  }
+
+  .announcement-detail {
+    width: 1115px;
+    height: 528px;
+    background-color: #ffffff;
+    border-color: #333;
+    border: 2px solid; 
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    .announcement-title {
+      display: flex;
+      color: black;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 2px; 
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+
+      p{
+        width: 70px;
+        height: 30px;
+        font-size: small;
+        background-color: #FFEA79;
+        border-radius: 200px;
+        align-items: center;
+        justify-content: center; 
+        flex-wrap: wrap;
+        display: flex;
+        margin-right: 20px;
+      }
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .announcement-content {
+      padding-top: 15px;
+      color: #333;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .announcement-documents {
+      display: flex;
+      justify-content: flex-start;
+      .document-link {
+        background-color: #FFEA79; 
+        width: 250px;
+        color: #333;
+        text-decoration: none;
+        padding: 30px 30px;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        transition: background-color 0.3s; 
+
+        &:hover {
+          background-color: darken(#ffc107, 10%);
+        }
+      }
+    }
+  }
+
+  .announcement-navigation {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px; 
+    margin: 0 5px;
+    margin-top: 40px;
+  
+    .previous-title{
+      margin-right: 10px;
+    }
+    .next-title {
+      margin-left: 10px;
     
-    .announcementtitle{
-        height: 500px;
-        background-color: #e10000;
     }
 
   }
+}
