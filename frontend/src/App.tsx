@@ -33,7 +33,6 @@ import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
 import PersonalPage from "views/PersonalPage";
 
-
 import CoursePage from "views/CoursePage";
 import LandingPage from "views/LandingPage";
 import ReportPage from "views/ReportPage";
@@ -41,8 +40,6 @@ import ReportPage from "views/ReportPage";
 import NotificationPage from "views/NotificationPage";
 
 import getTextOrigin from "utils/getText";
-import DiscussionReplyPage from "views/DiscussionReplyPage";
-import DiscussionTopicPage from "views/DiscussionTopicPage";
 
 function Logout(): ReactElement {
     localStorage.removeItem("access_token")
