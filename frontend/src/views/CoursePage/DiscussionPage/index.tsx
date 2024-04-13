@@ -30,7 +30,6 @@ export default function DiscussionPage(props: propsType): ReactElement {
     const Close = () => { setopenEditor(false); }
     const {
         courseID
-
     } = props;
 
     const userData = useContext(userDataContext);
