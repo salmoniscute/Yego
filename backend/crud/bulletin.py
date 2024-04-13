@@ -41,12 +41,12 @@ class CourseBulletinCrudManager:
         if update_component:
             stmt = update(ComponentModel).where(ComponentModel.id == bulletin_id).values(**update_component)
             await db_session.execute(stmt)
-            await db_session.commit()
 
         if update_bulletin:
             stmt = update(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id).values(**update_bulletin)
             await db_session.execute(stmt)
-            await db_session.commit()
+        
+        await db_session.commit()
 
         return
     
@@ -99,12 +99,12 @@ class WebsiteBulletinCrudManager:
         if update_component:
             stmt = update(ComponentModel).where(ComponentModel.id == bulletin_id).values(**update_component)
             await db_session.execute(stmt)
-            await db_session.commit()
 
         if update_bulletin:
             stmt = update(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id).values(**update_bulletin)
             await db_session.execute(stmt)
-            await db_session.commit()
+        
+        await db_session.commit()
 
         return
     
