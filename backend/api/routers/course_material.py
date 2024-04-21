@@ -69,17 +69,14 @@ async def get_course_material(course_material_id: str):
 
 @router.put(
     "/course_material/{course_material_id}",
-    response_model=CourseMaterialSchema.CourseMaterialUpdate
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_course_material(
     course_material_id: str,
     updateCourseMaterial: CourseMaterialSchema.CourseMaterialUpdate
 ):
-    course_material = await CourseMaterialCrud.update(course_material_id, updateCourseMaterial)
-    if course_material:
-        return course_material
-    
-    raise not_found
+    await CourseMaterialCrud.update(course_material_id, updateCourseMaterial)
+    return 
 
 @router.delete(
     "/course_material/{course_material_id}",

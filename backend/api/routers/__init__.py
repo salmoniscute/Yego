@@ -12,3 +12,4 @@ from .subscription import router as subscription_router
 from .user import router as user_router
 from .website_bulletin import router as website_bulletin_router
 from .report import router as report_router
+from .course_material import router as course_material_router
