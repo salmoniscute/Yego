@@ -8,8 +8,8 @@
          "email":"C14096277@gs.ncku.edu.tw",
          "department":"Mathematics",
          "country":"Taiwan",
-         "introduction":"hello world",
-         "avatar":"/path/of/avatar"
+         "introduction":null,
+         "avatar":null
       },
       {
          "uid":"F74102048",
@@ -19,8 +19,8 @@
          "email":"F74102048@gs.ncku.edu.tw",
          "department":"Computer Science",
          "country":"Taiwan",
-         "introduction":"hello bro",
-         "avatar":"/path/of/avatar"
+         "introduction":null,
+         "avatar":null
       }
    ],
    "courses":[
@@ -65,12 +65,12 @@
          "course_id":"CSE101"
       },
       {
-      "uid":"C14096277",
-      "release_time":"2024-04-12 12:01:37",
-      "title":"代數(二) 第一次期中考將於 4/16(二) 進行",
-      "content":"教授這裡風好大我好害怕",
-      "pin_to_top":true,
-      "course_id":"CSE101"
+         "uid":"C14096277",
+         "release_time":"2024-04-12 12:01:37",
+         "title":"代數(二) 第一次期中考將於 4/16(二) 進行",
+         "content":"教授這裡風好大我好害怕",
+         "pin_to_top":true,
+         "course_id":"CSE101"
       },
       {
          "uid":"C14096277",
