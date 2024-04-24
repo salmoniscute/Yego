@@ -43,7 +43,8 @@ async def create_discussion(
 
 @router.get(
     "/discussions",
-    response_model=list[DiscussionSchema.DiscussionRead]
+    response_model=list[DiscussionSchema.DiscussionRead],
+    deprecated=True
 )
 async def get_all_discussions():
     """ 
@@ -99,4 +100,9 @@ async def delete_discussion(discussion_id: str = Depends(check_component_id)):
     """
     await DiscussionCrud.delete(discussion_id)
     
+    return 
+
+
+@router.get("/discussions/particular_course/{course_id}")
+async def get_discussions_in_particular_course(course_id: str):
     return 

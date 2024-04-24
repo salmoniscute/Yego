@@ -17,7 +17,8 @@ already_exists = HTTPException(
 ComponentCrud = ComponentCrudManager()
 router = APIRouter(
     tags=["Component"],
-    prefix="/api"
+    prefix="/api",
+    deprecated=True
 )
 
 
@@ -45,7 +46,7 @@ async def create_component(
 
 @router.get(
     "/components",
-    response_model=list[ComponentSchema.ComponentRead],
+    response_model=list[ComponentSchema.ComponentReadWithFile],
     status_code=status.HTTP_200_OK,
     response_description="Get all components"
 )
@@ -61,7 +62,7 @@ async def get_all_components():
 
 @router.get(
     "/component/{component_id}", 
-    response_model=ComponentSchema.ComponentRead,
+    response_model=ComponentSchema.ComponentReadWithFile,
     status_code=status.HTTP_200_OK,
     response_description="Get a component",  
 )
