@@ -45,7 +45,7 @@ async def create_notification(
     
 
 @router.get(
-    "/notifications",
+    "/notification/all",
     response_model=list[NotificationSchema.NotificationRead],
     status_code=status.HTTP_200_OK
 )
@@ -61,7 +61,7 @@ async def get_all_notifications():
 
 
 @router.get(
-    "/notification/{uid}/{component_id}",
+    "/notification/particular/{uid}/{component_id}",
     response_model=NotificationSchema.NotificationRead,
     status_code=status.HTTP_200_OK
 )
@@ -77,7 +77,7 @@ async def get_notification(uid: str, component_id: str):
 
 
 @router.put(
-    "/notification/{uid}/{component_id}",
+    "/notification/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_notification(
@@ -94,7 +94,7 @@ async def update_notification(
 
 
 @router.delete(
-    "/notification/{uid}/{component_id}",
+    "/notification/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_notification(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
@@ -104,3 +104,61 @@ async def delete_notification(uid: str = Depends(check_user_id), component_id: s
     await NotificationCrud.delete(uid, check_component_id)
 
     return
+
+
+@router.get(
+    "/notification/user/{uid}",
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
+)
+async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
+    """
+    Get all notifications for a user.
+    """
+    results= []
+
+    notifications = await NotificationCrud.get_by_uid(uid)
+    if notifications:
+        for notification in notifications:
+            results.append({
+                "id": notification.id,
+                "publisher": notification.user_info.name,
+                # "course_name": notification.component_info.course_name,
+                "course_name": "(TODO)",
+                "release_time": notification.release_time,
+                "title": notification.component_info.title,
+                "content": notification.component_info.content,
+                "have_read": notification.have_read,
+                "icon_type": notification.type
+            })
+        return results
+
+    raise not_found
+
+
+@router.put(
+    "/notification/user/{uid}/read",
+    response_model=list[NotificationSchema.NotificationReadByUid]
+)
+async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
+    """
+    Read all notifications for one user.
+    """
+    results = []
+    notifications = await NotificationCrud.read_all(uid)
+    if notifications:
+        for notification in notifications:
+            results.append({
+                "id": notification.id,
+                "publisher": notification.user_info.name,
+                # "course_name": notification.component_info.course_name,
+                "course_name": "(TODO)",
+                "release_time": notification.release_time,
+                "title": notification.component_info.title,
+                "content": notification.component_info.content,
+                "have_read": notification.have_read,
+                "icon_type": notification.type
+            })
+        return results
+
+    raise not_found

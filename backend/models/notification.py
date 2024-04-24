@@ -16,12 +16,14 @@ class Notification(Base):
     # Relationship to parent
     user_info: Mapped["User"] = relationship(
         "User",
-        back_populates="notifications"
+        back_populates="notifications",
+        lazy="joined"
     )
 
     component_info: Mapped["Component"] = relationship(
         "Component",
-        back_populates="notifications"
+        back_populates="notifications",
+        lazy="joined"
     )
 
     def __init__(self, uid: str, component_id: str, have_read: bool, release_time: str, type: str) -> None:
