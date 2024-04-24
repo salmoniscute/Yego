@@ -23,7 +23,6 @@ class UserCreate(BaseModel):
                     "email": "C14096277@gs.ncku.edu.tw",
                     "department": "Mathematics",
                     "country": "Taiwan"
-                    
                 }
             ]
         }

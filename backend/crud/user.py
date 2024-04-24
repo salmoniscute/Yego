@@ -23,7 +23,6 @@ class UserCrudManager:
         user = result.first()
         
         return user[0] if user else None
-        
     
     async def get_all(self, db_session: AsyncSession):
         stmt = select(UserModel)
