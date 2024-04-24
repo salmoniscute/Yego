@@ -8,6 +8,7 @@ from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBullet
 from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
+from models.course_material import CourseMaterial as CourseMaterialModel
 
 model = {
     "users": UserModel,
@@ -17,7 +18,8 @@ model = {
     "website_bulletins": WebsiteBulletinModel,
     "files": FileModel,
     "subscriptions": SubscriptionModel,
-    "notifications": NotificationModel
+    "notifications": NotificationModel,
+    "course_materials": CourseMaterialModel,
 }
 
 
