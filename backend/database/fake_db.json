@@ -146,23 +146,5 @@
          "release_time":"2021-09-01 00:00:00",
          "type":"course_bulletin"
       }
-   ],
-   "files":[
-      {
-         "component_id":1,
-         "path":"/path/of/file"
-      },
-      {
-         "component_id":1,
-         "path":"/path/of/picture"
-      },
-      {
-         "component_id":2,
-         "path":"/path/of/file"
-      },
-      {
-         "component_id":2,
-         "path":"/path/of/picture"
-      }
    ]
 }
