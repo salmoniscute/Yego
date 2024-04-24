@@ -14,7 +14,7 @@ exception_invalid_login = HTTPException(
 UserCrud = UserCrudManager()
 router = APIRouter(
     prefix="/api/auth",
-    tags=["Auth"]
+    tags=["Users"]
 )
 
 
