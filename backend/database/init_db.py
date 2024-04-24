@@ -25,7 +25,7 @@ model = {
 
 class FakeDB:
     def __init__(self):
-        with open("./database/fake_db.json") as file:
+        with open("./database/fake_db.json", encoding="utf8") as file:
             self.data = json.load(file)
 
     async def create_entity_list(self, db_session):

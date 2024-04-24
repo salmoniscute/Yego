@@ -24,7 +24,8 @@ class Component(Base):
         "CourseBulletin",
         back_populates="info",
         cascade="all, delete-orphan", 
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="joined"
     )
 
     website_bulletins: Mapped[list["WebsiteBulletin"]] = relationship(
