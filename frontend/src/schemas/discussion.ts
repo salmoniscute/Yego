@@ -1,9 +1,9 @@
 export interface Discussion {
-    discussion_id: string,
+    id: string,
     uid:string,
     course_id: string,
     title:string,
-    discription: string
+    content: string
 };
 
 export interface DiscussionTopicInfo {

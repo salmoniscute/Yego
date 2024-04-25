@@ -31,7 +31,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         }).catch( error =>{
             if (error.response && error.response.status === 404) {
@@ -56,7 +56,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         else {}
         setContent("");
         setTitle("");
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         });
     }
