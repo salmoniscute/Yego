@@ -35,7 +35,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
     const userData = useContext(userDataContext);
 
     useEffect(() => {
-        getDiscussionList().then(data => {
+        getDiscussionList(courseID).then(data => {
             setDiscussion(data);
         })
     }, [])
@@ -56,9 +56,9 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     discussionList.map((data,i) =>
                         <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`./${data.discussion_id}`}>{data.title}</Link>
+                                <Link to={`./${data.id}`}>{data.title}</Link>
                             </p>
-                            <p className="discussionDiscription">{data.discription}</p>
+                            <p className="discussionDiscription">{data.content}</p>
                             <BiSolidBellRing />
                         </div>
                     )
