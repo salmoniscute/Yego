@@ -42,17 +42,21 @@ export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicIn
     const result = [
         {
             uid:"F74106050",
-            discussion_topic_id: "",
             discussion_id: "",
             release_time: 1703390840,
             title:"1-1第一題題意",
+            id:"",
+            follow:false,
+            reply:1,
         },
         {
             uid:"F74106050",
-            discussion_topic_id: "",
             discussion_id: "",
             release_time: 1703390840,
             title:"救我啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+            id:"",
+            follow:false,
+            reply:1,
         },
 
     ]
@@ -70,14 +74,14 @@ export async function getDiscussionTopicContent(data: DiscussionTopicInfo): Prom
 export async function getDiscussionTopicReplyList() : Promise<Array<DiscussionTopicReply>>{
     const result = [
         {
-            discussion_topic_reply_id:"",
+            id:"",
             uid:"F74106050",
             publisher:"林志芸",
             release_time: 1703390840,
             content:"新年快樂恭喜發財",
         },
         {
-            discussion_topic_reply_id:"",
+            id:"",
             uid:"F74106050",
             publisher:"林志芸",
             release_time: 1703390840,

@@ -17,29 +17,41 @@ import { TbBellRinging } from "react-icons/tb";
 import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
 
-import DiscussionTopicPage from "views/DiscussionTopicPage";
 
 type propsType = Readonly<{
     courseID: string,
+    setDiscussionContent: (content: string) => void; 
+    setDiscussionTitle: (content: string) => void; 
 }>;
 
 export default function DiscussionPage(props: propsType): ReactElement {
+    const {
+        courseID,
+        setDiscussionContent,
+        setDiscussionTitle,
+    } = props;
+
     const [discussionList, setDiscussion] = useState<Array<Discussion>>([]);
     const [openEditor, setopenEditor] = useState(false);
     const Open = () => { setopenEditor(true); }
     const Close = () => { setopenEditor(false); }
-    const {
-        courseID
-    } = props;
-
     const userData = useContext(userDataContext);
 
     useEffect(() => {
-        getDiscussionList(courseID).then(data => {
-            setDiscussion(data);
-        })
+        handleDiscussionList();
     }, [])
 
+    const handleDiscussionList = () => {
+        getDiscussionList(courseID).then(data => {
+            setDiscussion(data);
+        });
+    }
+
+
+    const handleDiscussionClick = (title: string, content: string) => {
+        setDiscussionTitle(title);
+        setDiscussionContent(content);
+    };
 
     return (
         <div id="courseDiscussionPage">
@@ -56,16 +68,19 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     discussionList.map((data,i) =>
                         <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`./${data.id}`}>{data.title}</Link>
+                                <Link to={`./${data.id}`} onClick={() => handleDiscussionClick(data.title,data.content) }>{data.title}</Link>
                             </p>
-                            <p className="discussionDiscription">{data.content}</p>
+                            <div
+                                className="discussionDiscription"
+                                dangerouslySetInnerHTML={{ __html: data.content }}
+                            />       
                             <BiSolidBellRing />
                         </div>
                     )
                 }
                 
             </div>
-            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion"/></div>
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion" updatePost={handleDiscussionList}/></div>
             
         </div>
     );
