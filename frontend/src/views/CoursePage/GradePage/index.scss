@@ -1,5 +1,9 @@
 #courseGradePage{
-    margin: 3em 4em;
+    //margin: 3em 4em;
+    padding: 1em 2em;
+    background-color: #FFFFFF;
+    border: solid 1px #474141;
+    border-radius: 0.5em;
     .courseGradeTab{
         display: flex;
         justify-content: space-between;
