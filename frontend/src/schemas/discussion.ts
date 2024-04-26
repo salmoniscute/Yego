@@ -4,14 +4,17 @@ export interface Discussion {
     course_id: string,
     title:string,
     content: string
+    follow:boolean
 };
 
 export interface DiscussionTopicInfo {
-    discussion_topic_id: string,
+    id: string,
     uid : string,
     discussion_id: string,
     release_time: number,
     title:string,
+    reply:number,
+    follow:boolean,
 };
 
 export interface DiscussionTopicContent extends DiscussionTopicInfo {
@@ -22,7 +25,7 @@ export interface DiscussionTopicContent extends DiscussionTopicInfo {
 };
 
 export interface DiscussionTopicReply{
-    discussion_topic_reply_id:string,
+    id:string,
     uid:string,
     publisher:string,
     release_time: number,

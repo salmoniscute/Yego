@@ -27,13 +27,16 @@ export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
     const userData = useContext(userDataContext);
 
+    const [discussionContent, setDiscussionContent] = useState<string>("");
+    const [discussionTitle, setDiscussionTitle] = useState<string>(""); 
+
     const params = useParams();
     const { courseID } = params;
     const tab = params["*"]?.split("/")[0];
 
     const tabs = useMemo(() => courseID ? [
         { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
-        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} /> },
+        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} setDiscussionContent={setDiscussionContent} setDiscussionTitle={setDiscussionTitle}/> },
         { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
         { label: "成績", path: "grade", component: <GradePage /> },
         { label: "成員", path: "member", component: <MemberPage /> }
@@ -77,7 +80,7 @@ export default function CoursePage(): ReactElement {
         
         <Routes>
             <Route path="*" element={courseForum}/>
-            <Route path="/discussion/:discussionId" element={<DiscussionTopicPage />}/>
+            <Route path="/discussion/:discussionId" element={<DiscussionTopicPage discussionContent={discussionContent} discussionTitle={discussionTitle}/>}/>
         </Routes>
     ) : <Navigate to="/" />;
 }
