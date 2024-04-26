@@ -1,9 +1,9 @@
 import { ReactElement, useState , useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link ,useParams} from "react-router-dom";
 import PostEditor from "components/PostEditor";
 
-import { DiscussionTopicInfo } from "schemas/discussion";
-import { getDiscussionTopicList } from "api/discussion";
+import { DiscussionTopicInfo, Discussion } from "schemas/discussion";
+import { getDiscussionTopicList , getDiscussion } from "api/discussion";
 
 import { BiSolidBellRing } from "react-icons/bi";
 import { TbBellRinging } from "react-icons/tb";
@@ -14,18 +14,17 @@ import { FaPen } from "react-icons/fa";
 import './index.scss';
 
 type propsType = Readonly<{
-  discussionTitle:string,
-  discussionContent:string
 }>;
 
 export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   const {
-    discussionTitle,
-    discussionContent
   } = props;
 
+  const params = useParams();
+
   const [discussionTopicList, setDiscussionTopic] = useState<Array<DiscussionTopicInfo>>([]);
+  const [discussion , setDiscussion] = useState<Discussion>();
   const [openEditor, setopenEditor] = useState(false);
   const Open = () => {
     setopenEditor(true);
@@ -36,6 +35,9 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   useEffect(() => {
     handleDiscussionTopicList();
+    getDiscussion(params.discussionId || "").then( data=>{
+      setDiscussion(data);
+    })
   }, [])
 
   const handleDiscussionTopicList = () =>{
@@ -58,11 +60,11 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   return <div id="discussionTopicPage">
     <div className="header">
-      <h1>{discussionTitle}</h1>
+      <h1>{discussion?.title}</h1>
       <button onClick={Open}><FaPen /><span>新增討論主題</span></button>
     </div>
     <div className="tutorial">
-      <h4 dangerouslySetInnerHTML={{ __html: discussionContent }}/>
+      <h4 dangerouslySetInnerHTML={{ __html: discussion?.content || '' }}/>
     </div>
 
     <div className="discussionTopic">
@@ -76,7 +78,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
         discussionTopicList.map((data,i) => 
           <div key={i} className="discussionTopicList">
             <p className="title">
-                <Link to={`./${data.id}`}>{data.title}</Link>
+                <Link to={`./discussionTopic/${data.id}`}>{data.title}</Link>
             </p>
             <p className="launch">{data.release_time}</p>
             <p className="reply">{data.reply}</p>

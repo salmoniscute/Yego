@@ -20,15 +20,11 @@ import { getDiscussionList } from "api/discussion";
 
 type propsType = Readonly<{
     courseID: string,
-    setDiscussionContent: (content: string) => void; 
-    setDiscussionTitle: (content: string) => void; 
 }>;
 
 export default function DiscussionPage(props: propsType): ReactElement {
     const {
         courseID,
-        setDiscussionContent,
-        setDiscussionTitle,
     } = props;
 
     const [discussionList, setDiscussion] = useState<Array<Discussion>>([]);
@@ -47,12 +43,6 @@ export default function DiscussionPage(props: propsType): ReactElement {
         });
     }
 
-
-    const handleDiscussionClick = (title: string, content: string) => {
-        setDiscussionTitle(title);
-        setDiscussionContent(content);
-    };
-
     return (
         <div id="courseDiscussionPage">
             {userData?.role === "teacher" && <div className="addDiscussionButton">
@@ -68,7 +58,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     discussionList.map((data,i) =>
                         <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`./${data.id}`} onClick={() => handleDiscussionClick(data.title,data.content) }>{data.title}</Link>
+                                <Link to={`./${data.id}`} >{data.title}</Link>
                             </p>
                             <div
                                 className="discussionDiscription"
