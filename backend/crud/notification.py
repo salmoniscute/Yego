@@ -59,3 +59,27 @@ class NotificationCrudManager:
 
         return
     
+    async def get_by_uid(self, uid: str, db_session: AsyncSession):
+        stmt = select(NotificationModel).where(NotificationModel.uid == uid)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+
+        return [notification[0] for notification in result.all()]
+    
+    async def read_all(self, uid: str, db_session: AsyncSession):
+        updateNotification_dict = {"have_read": True}
+        stmt1 = (
+            update(NotificationModel)
+            .where(NotificationModel.uid == uid)
+            .values(updateNotification_dict)
+        )
+        await db_session.execute(stmt1)
+        
+        stmt2 = select(NotificationModel).where(NotificationModel.uid == uid)
+        result = await db_session.execute(stmt2)
+        result = result.unique()
+        
+        await db_session.commit()
+
+        return [notification[0] for notification in result.all()]
+    

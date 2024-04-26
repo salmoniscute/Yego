@@ -1,4 +1,5 @@
 export interface CourseBulletinInfo {
+    id:string,
     uid: string,
     course_id:string,
     title: string,

@@ -88,8 +88,9 @@ class Editor extends Component<{ placeholder?: string }, { editorHtml: string }>
 }
 
 type propsType = Readonly<{
-  onClose : Function,
+  onClose : () => void,
   type : string
+  updatePost:() => void,
 }>;
 
 export default function PostEditor(props: propsType): ReactElement {
@@ -101,7 +102,8 @@ export default function PostEditor(props: propsType): ReactElement {
 
   const {
     onClose,
-    type
+    type,
+    updatePost
   } = props;
 
   const Close = () => {
@@ -122,7 +124,7 @@ export default function PostEditor(props: propsType): ReactElement {
     if (uid) {
       if (type === "discussion"){
         const discussion = await postDiscussion(uid, "CSE101", title, content);
-        console.log(discussion);
+        updatePost();
       }
       else if ( type === "report"){
   

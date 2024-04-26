@@ -1,26 +1,33 @@
 export interface Discussion {
-    discussion_id: string,
+    id: string,
+    uid:string,
     course_id: string,
     title:string,
-    discription: string
+    content: string
+    follow:boolean
 };
 
 export interface DiscussionTopicInfo {
-    discussion_topic_id: string,
+    id: string,
+    uid : string,
     discussion_id: string,
     release_time: number,
     title:string,
+    reply:number,
+    follow:boolean,
 };
 
 export interface DiscussionTopicContent extends DiscussionTopicInfo {
-    publisher_id: string,
+    uid: string,
+    publisher:string,
     content:string,
     files?: Array<string>,
 };
 
 export interface DiscussionTopicReply{
-    discussion_topic_reply_id:string,
-    publisher_id:string,
+    id:string,
+    uid:string,
+    publisher:string,
     release_time: number,
     content:string,
 }

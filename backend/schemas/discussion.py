@@ -1,6 +1,5 @@
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
-
 class DiscussionCreate(ComponentCreate):    
     model_config = {
         "json_schema_extra": {

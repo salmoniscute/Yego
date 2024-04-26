@@ -3,9 +3,9 @@ import {
     CourseBulletinInfo
 } from "../schemas/courseBulletin";
 
-export async function getCourseBulletinList() :Promise<Array<CourseBulletinInfo>>{
-    //let url = "http://localhost:8080/api/course/bulletin?course_id="+course_id;
-    let url = "http://localhost:8080/api/course/bulletin/all";
+export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletinInfo>>{
+    let url = "http://localhost:8080/api/course/bulletin/particular_course/"+course_id;
+    //let url = "http://localhost:8080/api/course/bulletin/all";
     try {
         const response = await axios.get(url,{
           });
@@ -25,11 +25,9 @@ export async function postCourseBulletin(uid:string,course_id:string,title:strin
     let url = "http://localhost:8080/api/course/bulletin?uid="+uid+"&course_id="+course_id;
     let courseBulletin ;
 
-    // 目前先自己設定id
     try {
         const response = await axios.post(url,{
             "title": title,
-            "id":"3",
             "release_time": "2021-09-01T00:00:00",
             "content": content,
             "pin_to_top": pin_to_top
@@ -43,3 +41,4 @@ export async function postCourseBulletin(uid:string,course_id:string,title:strin
     return courseBulletin;
 
 }
+

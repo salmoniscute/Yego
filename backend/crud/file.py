@@ -8,9 +8,8 @@ from schemas import file as FileSchema
 
 @crud_class_decorator
 class FileCrudManager:
-    async def create(self, component_id, newFile: FileSchema.FileCreate, db_session: AsyncSession):
-        newFile_dict = newFile.model_dump()
-        file = FileModel(component_id=component_id, **newFile_dict)
+    async def create(self, component_id, path, db_session: AsyncSession):
+        file = FileModel(component_id=component_id, path=path)
         db_session.add(file)
         await db_session.commit()
 
@@ -28,16 +27,7 @@ class FileCrudManager:
         result = await db_session.execute(stmt)
         result = result.unique()
 
-        return [file[0] for file in result.all()]
-    
-    async def update(self, file_id: str, updateFile: FileSchema.FileUpdate, db_session: AsyncSession):
-        updateFile_dict = updateFile.model_dump(exclude_none=True)
-        if updateFile_dict:
-            stmt = update(FileModel).where(FileModel.id == file_id).values(updateFile_dict)
-            await db_session.execute(stmt)
-            await db_session.commit()
-
-        return 
+        return [file[0] for file in result.all()] 
     
     async def delete(self, file_id: int, db_session: AsyncSession):
         stmt = delete(FileModel).where(FileModel.id == file_id)

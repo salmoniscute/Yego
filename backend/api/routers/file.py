@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 
 from .depends import check_component_id
 from crud.file import FileCrudManager
 from schemas import file as FileSchema
-
+import os
 not_found = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
     detail="Component does not exist"
@@ -23,28 +23,34 @@ router = APIRouter(
 
 @router.post(
     "/file", 
-    response_model=FileSchema.FileRead,
     status_code=status.HTTP_201_CREATED,
     response_description="The file has been successfully created."
 )
-async def create_file(
-    newFile: FileSchema.FileCreate,
+async def create_files(
+    files: list[UploadFile],
     component_id: str = Depends(check_component_id)
 ):
-    """
-    Create a file with the following information:
-    - **path**
-    """
-    file = await FileCrud.create(component_id=component_id, newFile=newFile)
+    out_file_paths = []
+    out_file_path = f"upload/component/{component_id}/"
+    if not os.path.isdir(out_file_path):
+            os.makedirs(out_file_path)
+    for file in files:
+        with open(out_file_path + file.filename, 'wb') as out_file:
+            file_path = "backend/" + out_file_path + file.filename
+            out_file_paths.append("backend/" + out_file_path + file.filename)
+            content = await file.read()  
+            out_file.write(content) 
+            file = await FileCrud.create(component_id=component_id, path=file_path)
 
-    return file
+    return
     
 
 @router.get(
     "/files",
     response_model=list[FileSchema.FileRead],
     status_code=status.HTTP_200_OK,
-    response_description="Get all files"
+    response_description="Get all files",
+    deprecated=True
 )
 async def get_all_files():
     """ 
@@ -61,7 +67,8 @@ async def get_all_files():
     "/file/{file_id}",
     response_model=FileSchema.FileRead,
     status_code=status.HTTP_200_OK,
-    response_description="Get a file"
+    response_description="Get a file",
+    deprecated=True
 )
 async def get_file(file_id: str):
     """
@@ -73,22 +80,6 @@ async def get_file(file_id: str):
     
     return file
 
-
-@router.put(
-    "/file/{file_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-    response_description="The file has been successfully updated."
-)
-async def update_file(
-    file_id: str,
-    updateFile: FileSchema.FileUpdate
-):
-    """
-    Update a file.
-    """
-    await FileCrud.update(file_id, updateFile)
-
-    return
 
 
 @router.delete(
@@ -107,3 +98,6 @@ async def delete_file(file_id: str):
     await FileCrud.delete(file_id)
 
     return
+
+
+

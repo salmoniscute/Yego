@@ -1,8 +1,8 @@
 import {
     useEffect,
     useState,
-    useMemo,
     useContext,
+    CSSProperties,
 } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -31,7 +31,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         }).catch( error =>{
             if (error.response && error.response.status === 404) {
@@ -50,15 +50,35 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         const nowTime = new Date().getTime();
         const uid = userData?.uid;
         if (uid) {
-            const courseBulletin = await postCourseBulletin(uid, "CSE101", title, nowTime, content, false);
+            const courseBulletin = await postCourseBulletin(uid, courseID, title, nowTime, content, false);
+            console.log(courseBulletin);
         }
         else {}
         setContent("");
         setTitle("");
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         });
     }
+
+    const deleteBulletin = async(id:string) =>{
+        console.log("hihi"+id);
+    }
+
+    const pinBulletin = async(id:string) =>{
+        console.log("hi"+id);
+    }
+
+    type Option = {
+        label: string;
+        action: (() => void) | undefined;
+    };
+    
+    const editOptions = (id: string): Option[] => [
+        { label: "編輯" ,action:() => deleteBulletin(id)},
+        { label: "刪除", action: () => deleteBulletin(id) },
+        { label: "置頂", action: () => pinBulletin(id) }
+    ];
 
     return (
         <div id="courseBulletinPage">
@@ -92,7 +112,21 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     <p className="cbAuther">{data.publisher}</p>
                                     <p className="cbTime">{data.release_time}</p>
                                 </div>
-                                { data.uid === userData?.uid && <SlOptions/> }                          
+                                { data.uid === userData?.uid && <label className="dropdownMenu">
+                                    <SlOptions/>
+                                    <input type="checkbox" />
+                                    <div className="mask" style={{ "--length": 3 } as CSSProperties}>
+                                        <div className="content body-bold">
+                                            {
+                                                editOptions(data.id).map((option, i) => <div
+                                                    key={i}
+                                                    onClick={option.action}
+                                                ><p>{option.label}</p></div>)
+                                            }
+                                        </div>
+                                    </div>
+                                </label>}
+                                      
                             </div>
                             <div
                                 className="cbInfor"
