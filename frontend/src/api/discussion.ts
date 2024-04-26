@@ -7,6 +7,7 @@ import {
 import axios from "axios";
 
 export async function getDiscussionList(course_id:string): Promise<Array<Discussion>>{
+    //let url = "http://localhost:8080/api/discussions/particular_course/"+course_id;
     let url = "http://localhost:8080/api/discussions";
     try {
         const response = await axios.get(url,{
@@ -19,6 +20,18 @@ export async function getDiscussionList(course_id:string): Promise<Array<Discuss
     }
 }
 
+export async function getDiscussion(id:string) : Promise <Discussion>{
+    let url = "http://localhost:8080/api/discussion/"+id;
+    let discussion;
+    try {
+        const response = await axios.get(url,{
+          });
+        discussion = response.data;
+    }
+    catch(error){
+    }
+    return discussion;
+}
 export async function postDiscussion(uid:string , course_id:string , title:string , content:string): Promise<Discussion>{
     let url = "http://localhost:8080/api/discussion?uid="+uid+"&course_id="+course_id;
     let discussion ;
@@ -45,7 +58,7 @@ export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicIn
             discussion_id: "",
             release_time: 1703390840,
             title:"1-1第一題題意",
-            id:"",
+            id:"15",
             follow:false,
             reply:1,
         },
@@ -54,7 +67,7 @@ export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicIn
             discussion_id: "",
             release_time: 1703390840,
             title:"救我啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-            id:"",
+            id:"16",
             follow:false,
             reply:1,
         },

@@ -50,7 +50,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         const nowTime = new Date().getTime();
         const uid = userData?.uid;
         if (uid) {
-            const courseBulletin = await postCourseBulletin(uid, "CSE101", title, nowTime, content, false);
+            const courseBulletin = await postCourseBulletin(uid, courseID, title, nowTime, content, false);
             console.log(courseBulletin);
         }
         else {}
