@@ -47,7 +47,8 @@ async def create_selected_course(
 @router.get(
     "/selected_courses", 
     response_model=list[SelectedCourseSchema.SelectedCourseRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_selected_courses():
     """
@@ -63,7 +64,8 @@ async def get_all_selected_courses():
 @router.get(
     "/selected_course/particular/{uid}/{course_id}", 
     response_model=SelectedCourseSchema.SelectedCourseRead,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_selected_courses(uid: str, course_id: str):
     """

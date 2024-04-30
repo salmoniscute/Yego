@@ -24,8 +24,7 @@ router = APIRouter(
 @router.post(
     "/file", 
     status_code=status.HTTP_201_CREATED,
-    response_description="The file has been successfully created.",
-    tags=["Completed"]
+    response_description="The file has been successfully created."
 )
 async def create_files(
     files: list[UploadFile],
@@ -48,7 +47,8 @@ async def create_files(
     "/files",
     response_model=list[FileSchema.FileRead],
     status_code=status.HTTP_200_OK,
-    response_description="Get all files"
+    response_description="Get all files",
+    deprecated=True
 )
 async def get_all_files():
     """ 
@@ -65,7 +65,8 @@ async def get_all_files():
     "/file/{file_id}",
     response_model=FileSchema.FileRead,
     status_code=status.HTTP_200_OK,
-    response_description="Get a file"
+    response_description="Get a file",
+    deprecated=True
 )
 async def get_file(file_id: str):
     """

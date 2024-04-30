@@ -22,6 +22,7 @@ import "./index.scss";
 import MaterialPage from "./MaterialPage";
 import GradePage from "./GradePage";
 import DiscussionTopicPage from "views/DiscussionTopicPage";
+import DiscussionReplyPage from "views/DiscussionReplyPage";
 
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
@@ -33,7 +34,7 @@ export default function CoursePage(): ReactElement {
 
     const tabs = useMemo(() => courseID ? [
         { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
-        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID} /> },
+        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID}/> },
         { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
         { label: "成績", path: "grade", component: <GradePage /> },
         { label: "成員", path: "member", component: <MemberPage /> }
@@ -77,7 +78,8 @@ export default function CoursePage(): ReactElement {
         
         <Routes>
             <Route path="*" element={courseForum}/>
-            <Route path="/discussion/:discussionId" element={<DiscussionTopicPage />}/>
+            <Route path="/discussion/:discussionId"  element={<DiscussionTopicPage/>}/>
+            <Route path="/discussion/:discussionId/discussionTopic/:discussionTopicId"  element={<DiscussionReplyPage/>}/>
         </Routes>
     ) : <Navigate to="/" />;
 }

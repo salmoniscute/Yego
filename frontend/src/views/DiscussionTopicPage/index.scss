@@ -44,6 +44,76 @@
     }
   }
 
+  .discussionTopic{
+    background-color: #FFFFFF;
+    border: solid 1px #474141;
+    border-radius: 0.5em;
+    padding: 1em 2em;
+    margin: 3em 0em; 
+    .discussionTopicTab{
+        display: flex;
+        flex-direction: row;
+        .title{
+          width: 60%;
+        }
+        .launch{
+          width: 20%;
+          > button {
+            cursor: pointer;
+            background-color: #FFFFFF;
+            border: none;
+            color: #949494;
+            font-size: 20px;
+          }
+        }
+        .reply{
+          width: 10%;
+        }
+        .follow{
+          width: 10%;
+        }
+        > p{
+          margin: 0.5em 0em;
+          font-size: 20px;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+    }
+    .discussionTopicList{
+      display: flex;
+      align-items: center;
+      .title{
+        cursor: pointer;
+        width: 60%;
+        a{
+          text-decoration: none;
+          color: black;
+        }
+        a:hover{
+          text-decoration: underline;
+        }
+
+      }
+      .launch{
+        width: 20%;
+      }
+      .reply{
+        width: 10%;
+      }
+      .follow{
+        width: 10%;
+        cursor: pointer;
+        background-color: #FFFFFF;
+        border: none;
+        font-size: 20px;
+      }
+      > p{
+          font-size: 18px;
+          white-space: nowrap;
+      }
+    }
+  }
+
   .editor {
     display: none;
   }

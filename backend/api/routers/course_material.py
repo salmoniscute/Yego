@@ -43,7 +43,8 @@ async def create_course_material(
 
 @router.get(
     "/course_materials",
-    response_model=list[CourseMaterialSchema.CourseMaterialRead]
+    response_model=list[CourseMaterialSchema.CourseMaterialRead],
+    deprecated=True
 )
 async def get_all_course_materials():
     """ 

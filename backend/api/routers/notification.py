@@ -24,7 +24,8 @@ router = APIRouter(
 @router.post(
     "/notification", 
     response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
+    deprecated=True
 )
 async def create_notification(
     newNotification: NotificationSchema.NotificationCreate,
@@ -47,7 +48,8 @@ async def create_notification(
 @router.get(
     "/notification/all",
     response_model=list[NotificationSchema.NotificationRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_notifications():
     """ 
@@ -63,7 +65,8 @@ async def get_all_notifications():
 @router.get(
     "/notification/particular/{uid}/{component_id}",
     response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_notification(uid: str, component_id: str):
     """

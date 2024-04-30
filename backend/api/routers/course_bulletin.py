@@ -46,7 +46,8 @@ async def create_course_bulletin(
 @router.get(
     "/bulletin/all", 
     response_model=list[BulletinSchema.CourseBulletinRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_course_bulletins():
     """
