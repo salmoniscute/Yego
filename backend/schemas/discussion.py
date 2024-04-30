@@ -21,7 +21,7 @@ class DiscussionRead(ComponentRead):
 
 class DiscussionTopicRead(ComponentRead):
     type: str
-    discussion_id: str
+    discussion_id: int
 
 
 class DiscussionTopicReplyRead(ComponentRead):
