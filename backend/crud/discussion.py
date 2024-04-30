@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.mysql import crud_class_decorator
 from models.component import Component as ComponentModel
-from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
+from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel, DiscussionTopicReply as DiscussionTopicReplyModel
 from schemas import discussion as DiscussionSchema
 
 
@@ -83,6 +83,46 @@ class DiscussionTopicCrudManager:
     
     async def delete(self, topic_id: int, db_session: AsyncSession):
         stmt = delete(ComponentModel).where(ComponentModel.id == topic_id)
+        await db_session.execute(stmt)
+        await db_session.commit()
+
+        return
+
+@crud_class_decorator
+class DiscussionTopicReplyCrudManager:
+    async def create(self, uid: str, root_id: int, newReply: DiscussionSchema.DiscussionTopicReplyCreate, db_session: AsyncSession):
+        newReply_dict = newReply.model_dump()
+        reply = DiscussionTopicReplyModel(**newReply_dict, uid=uid, root_id=root_id)
+        db_session.add(reply)
+        await db_session.commit()
+
+        return reply
+
+    async def get(self, reply_id: int, db_session: AsyncSession):
+        stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.id == reply_id)
+        result = await db_session.execute(stmt)
+        reply = result.first()
+        
+        return reply[0] if reply else None
+
+    async def get_all(self, db_session: AsyncSession):
+        stmt = select(DiscussionTopicReplyModel)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        
+        return [reply[0] for reply in result.all()]
+
+    async def update(self, reply_id: int, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
+        updateDiscussion_dict = updateDiscussion.model_dump(exclude_none=True)
+        if updateDiscussion_dict:
+            stmt = update(ComponentModel).where(ComponentModel.id == reply_id).values(**updateDiscussion_dict)
+            await db_session.execute(stmt)
+            await db_session.commit()
+
+        return
+    
+    async def delete(self, reply_id: int, db_session: AsyncSession):
+        stmt = delete(ComponentModel).where(ComponentModel.id == reply_id)
         await db_session.execute(stmt)
         await db_session.commit()
 

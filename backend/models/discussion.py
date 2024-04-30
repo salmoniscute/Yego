@@ -73,10 +73,23 @@ class DiscussionTopic(Component):
         return f"DiscussionTopic(id={self.id}, uid={self.uid}, discussion_id={self.discussion_id}, release_time={self.release_time}, title={self.title}, content={self.content})"
 
 
-class DiscussionTopicReply(DiscussionTopic):
-    # parent_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"), nullable=True)
-    # root_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"), nullable=True)
+class DiscussionTopicReply(Component):
+    __tablename__ = "DiscussionTopicReply"
+    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    root_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"))
+    parent_id: Mapped[BaseType.int_type]
 
     __mapper_args__ = {
         "polymorphic_identity": "reply",
     }
+    
+    def __init__(self, uid: str, root_id: int, parent_id: int, release_time: str, title: str, content: str) -> None:
+        self.uid = uid
+        self.root_id = root_id
+        self.parent_id = parent_id
+        self.release_time = release_time
+        self.title = title
+        self.content = content
+        
+    def __repr__(self) -> str:
+        return f"DiscussionTopicReply(id={self.id}, uid={self.uid}, root_id={self.root_id}, parent={self.parent_id}, release_time={self.release_time}, title={self.title}, content={self.content})"
