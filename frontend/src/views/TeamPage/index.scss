@@ -87,9 +87,19 @@
         background-color: #FFF;
         transition: opacity 0.5s;
         display: flex;
-        padding: 2em 4em;
+        padding: 3em 4em;
         box-sizing: border-box;
         .manual{
+            h3{
+                margin-top: 0em;
+            }
+            width: 100%;
+            position: relative;
+        }
+        .auto{
+            h3{
+                margin-top: 0em;
+            }
             width: 100%;
             position: relative;
         }

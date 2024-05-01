@@ -1,6 +1,14 @@
 #manualTeam{
     display: flex;
     flex-direction: column;
+
+    .closeCross{
+        position: absolute;
+        font-size: 25px;
+        cursor: pointer;
+        top: 0em;
+        right: 0em;
+    }
     .upper{
         display: flex;
         p{
