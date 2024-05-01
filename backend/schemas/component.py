@@ -21,6 +21,9 @@ class ComponentCreate(BaseModel):
         }
     }
 
+class ComponentReadID(BaseModel):
+    id: int
+    
 
 class ComponentRead(BaseModel):
     id: int

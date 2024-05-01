@@ -2,7 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel
 from typing import Optional
 
-from schemas.component import ComponentCreate, ComponentRead, ComponentReadWithFile, ComponentUpdate
+from schemas.component import ComponentCreate, ComponentReadID, ComponentReadWithFile, ComponentUpdate
 from schemas import file as FileSchema
 
 
@@ -23,27 +23,14 @@ class BulletinCreate(ComponentCreate):
     }
 
 
-class BulletinListRead(BaseModel):
-    id: int
+class BulletinListRead(ComponentReadID):
     publisher: str
     release_time: datetime
     title: str
     pin_to_top: bool
 
 
-class BulletinRead(BaseModel):
-    id: int
-    uid: str
-    release_time: datetime
-    title: str
-    content: str
-    pin_to_top: bool
-    type: str
-    pin_to_top: bool
-
-
-class BulletinReadByID(BaseModel):
-    id: int
+class BulletinReadByID(ComponentReadID):
     publisher: str
     publisher_avatar: Optional[str] = None
     release_time: datetime
@@ -68,10 +55,3 @@ class BulletinUpdate(ComponentUpdate):
         }
     }
     
-
-class CourseBulletinRead(BulletinRead):
-    course_id: str
-
-
-class WebsiteBulletinRead(BulletinRead):
-    pass

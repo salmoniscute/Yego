@@ -3,14 +3,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.mysql import crud_class_decorator
 from models.component import Component as ComponentModel
-from schemas import component as ComponentSchema
 
 
 @crud_class_decorator
 class ComponentCrudManager:
-    async def create(self, uid: str, newComponent: ComponentSchema.ComponentCreate, db_session: AsyncSession):
-        newComponent_dict = newComponent.model_dump()
-        component = ComponentModel(uid=uid, **newComponent_dict)
+    async def create(self, uid: str, newComponent: dict, db_session: AsyncSession):
+        component = ComponentModel(uid=uid, **newComponent)
         db_session.add(component)
         await db_session.commit()
 
@@ -30,10 +28,9 @@ class ComponentCrudManager:
 
         return [component[0] for component in result.all()]
     
-    async def update(self, component_id: str, updateComponent: ComponentSchema.ComponentUpdate, db_session: AsyncSession):
-        updateComponent_dict = updateComponent.model_dump(exclude_none=True)
-        if updateComponent_dict:
-            stmt = update(ComponentModel).where(ComponentModel.id == component_id).values(updateComponent_dict)
+    async def update(self, component_id: str, updateComponent: dict, db_session: AsyncSession):
+        if updateComponent:
+            stmt = update(ComponentModel).where(ComponentModel.id == component_id).values(updateComponent)
             await db_session.execute(stmt)
             await db_session.commit()
 

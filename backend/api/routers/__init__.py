@@ -1,6 +1,5 @@
 from .auth import router as auth_router
 from .info import router as info_router
-from .component import router as component_router
 from .course import router as course_router
 from .course_bulletin import router as course_bulletin_router
 from .discussion import router as discussion_router
