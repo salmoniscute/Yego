@@ -43,7 +43,7 @@ async def init_db():
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
-            # await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
             await db.execute(CreateTable(CourseMaterial.__table__, if_not_exists=True))
             
             await FakeDB().create_entity_list(db)

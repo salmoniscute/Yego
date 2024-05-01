@@ -19,6 +19,12 @@ class ReportCreate(ComponentCreate):
 class ReportRead(ComponentRead):
     pass
 
+class ReportReplyRead(ComponentRead):
+    type: str
+    report_id: str
+    parent_id: str
+    root_id: str
+
 class ReportUpdate(ComponentUpdate):
     pass
 

@@ -24,4 +24,11 @@ class Report(Component):
     def __repr__(self) -> str:
         return f"Report(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content})"
 
+class ReportReply(Report):
+    # parent_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"), nullable=True)
+    # root_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"), nullable=True)
+
+    __mapper_args__ = {
+        "polymorphic_identity": "reply",
+    }
 

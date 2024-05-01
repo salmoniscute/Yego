@@ -6,8 +6,10 @@
 
   .detail-panel {
     width: 55%;
-    background-color: #e5e5e5;
     padding: 2rem;
+    border: 1px #474141 solid;
+    border-radius: 5px;
+    background-color: white;
     
     h2 {
       margin: 0;
@@ -18,6 +20,9 @@
     }
     p {
       font-size: 18px;
+      padding: 20px 10px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
     }
   }
 }
