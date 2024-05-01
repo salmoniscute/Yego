@@ -1,11 +1,12 @@
 from fastapi import HTTPException
 
-from crud.bulletin import CourseBulletinCrudManager, WebsiteBulletinCrudManager
 from crud.component import ComponentCrudManager
 from crud.course import CourseCrudManager
+from crud.course_bulletin import CourseBulletinCrudManager
 from crud.discussion import DiscussionCrudManager
 from crud.selected_course import SelectedCourseCrudManager
 from crud.user import UserCrudManager
+from crud.website_bulletin import WebsiteBulletinCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()

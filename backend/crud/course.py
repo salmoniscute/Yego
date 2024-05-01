@@ -5,6 +5,7 @@ from database.mysql import crud_class_decorator
 from models.course import Course as CourseModel
 from schemas import course as CourseSchema
 
+
 @crud_class_decorator
 class CourseCrudManager:
     async def create(self, uid: str, newCourse: CourseSchema.CourseCreate, db_session: AsyncSession):

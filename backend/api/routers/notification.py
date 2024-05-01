@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/notification", 
-    response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT,
     deprecated=True
 )
 async def create_notification(

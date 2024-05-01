@@ -1,6 +1,7 @@
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 from pydantic import BaseModel
 
+
 class ReportCreate(ComponentCreate):    
     model_config = {
         "json_schema_extra": {
@@ -21,9 +22,11 @@ class ReportRead(BaseModel):
     title: str
     reply_count: int
 
+      
 class ReportUpdate(ComponentUpdate):
     pass
 
+  
 class ReportReplyCreate(ComponentCreate):
     parent_id: int
     model_config = {
@@ -39,7 +42,7 @@ class ReportReplyCreate(ComponentCreate):
         }
     }
 
+    
 class ReportReplyRead(ComponentRead):
     parent_id: int
     root_id: int
-

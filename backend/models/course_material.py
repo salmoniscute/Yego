@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.base import Base, BaseType
+from models.base import BaseType
 from models.component import Component
 
 class CourseMaterial(Component):
@@ -10,15 +10,8 @@ class CourseMaterial(Component):
     course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
 
     # Relationship to parent
-    info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="course_materials"
-    )
-
-    course_info: Mapped["Course"] = relationship(
-        "Course",
-        back_populates="course_materials"
-    )
+    info: Mapped["Component"] = relationship("Component", back_populates="course_materials")
+    course_info: Mapped["Course"] = relationship("Course", back_populates="course_materials")
 
     def __init__(self, uid: str, course_id: str, release_time: str, title: str, content: str) -> None:
         self.uid = uid

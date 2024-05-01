@@ -32,8 +32,7 @@ router = APIRouter(
 
 @router.post(
     "/user",
-    response_model=UserSchema.UserRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_user(newUser: UserSchema.UserCreate):
     """
