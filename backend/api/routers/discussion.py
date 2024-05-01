@@ -35,7 +35,7 @@ async def create_discussion(
     - **release_time**
     - **title**
     - **content**
-    """
+    """    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
 
     return discussion
