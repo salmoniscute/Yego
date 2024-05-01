@@ -146,5 +146,23 @@
          "release_time":"2021-09-01 00:00:00",
          "type":"course_bulletin"
       }
+   ],
+   "discussions":[
+      {
+         "uid":"C14096277",
+         "release_time":"2024-03-09 16:10:05",
+         "title":"教室更動通知",
+         "content":"記得換教室喔",
+         "course_id":"CSE101"
+      }
+   ],
+   "discussion_topics":[
+      {
+         "uid":"C14096277",
+         "release_time":"2024-03-09 16:10:05",
+         "title":"教室更動通知",
+         "content":"記得換教室喔",
+         "discussion_id":6
+      }
    ]
 }

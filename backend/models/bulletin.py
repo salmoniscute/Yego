@@ -46,8 +46,7 @@ class CourseBulletin(Bulletin):
     # Relationship to parent
     info: Mapped["Component"] = relationship(
         "Component",
-        back_populates="course_bulletins",
-        lazy="joined"
+        back_populates="course_bulletins"
     )
 
     course_info: Mapped["Course"] = relationship(

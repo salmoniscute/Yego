@@ -9,6 +9,7 @@ from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel
+from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
 
 model = {
     "users": UserModel,
@@ -20,6 +21,8 @@ model = {
     "subscriptions": SubscriptionModel,
     "notifications": NotificationModel,
     "course_materials": CourseMaterialModel,
+    "discussions": DiscussionModel,
+    "discussion_topics": DiscussionTopicModel,
 }
 
 
