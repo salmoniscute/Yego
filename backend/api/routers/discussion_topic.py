@@ -43,7 +43,8 @@ async def create_discussion_topic(
 
 @router.get(
     "/discussion_topics",
-    response_model=list[DiscussionSchema.DiscussionTopicRead]
+    response_model=list[DiscussionSchema.DiscussionTopicRead],
+    deprecated=True
 )
 async def get_all_discussion_topics():
     """ 

@@ -42,7 +42,8 @@ async def create_discussion_topic_reply(
 
 @router.get(
     "/discussion_topic_replies",
-    response_model=list[DiscussionSchema.DiscussionTopicReplyRead]
+    response_model=list[DiscussionSchema.DiscussionTopicReplyRead],
+    deprecated=True
 )
 async def get_all_discussion_topic_replies():
     """ 
@@ -50,7 +51,7 @@ async def get_all_discussion_topic_replies():
     """
     replies = await TopicReplyCrud.get_all()
     if replies:
-        return replies
+        return replies  
     
     raise not_found
 

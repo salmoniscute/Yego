@@ -37,7 +37,8 @@ class Course(Base):
         "Discussion",
         back_populates="course_info",
         cascade="all, delete-orphan", 
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
     
     course_materials: Mapped[list["CourseMaterial"]] = relationship(

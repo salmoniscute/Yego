@@ -35,7 +35,7 @@ async def create_discussion(
     - **release_time**
     - **title**
     - **content**
-    """
+    """    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
 
     return discussion
@@ -107,8 +107,20 @@ async def delete_discussion(
     return 
 
 
-@router.get("/discussions/particular_course/{course_id}")
-async def get_discussions_in_particular_course(course_id: str):
-    return 
+@router.get(
+    "/discussions/{course_id}",
+    response_model=list[DiscussionSchema.DiscussionOfCourses]
+)
+async def get_course_discussions_by_course_id(
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Get all discussions for a course.
+    """
+    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
+    if discussions:
+        return discussions
+    
+    raise not_found
 
 
