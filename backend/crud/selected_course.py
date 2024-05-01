@@ -65,9 +65,16 @@ class SelectedCourseCrudManager:
             .where(SelectedCourseModel.uid == uid)
         )
         result = await db_session.execute(stmt)
-        result = result.unique()
 
-        return [selected_course[0] for selected_course in result.all()]
+        _list = []
+        for selected_course in result:
+            _list.append({
+                "course_id": selected_course[0].course_info.id,
+                "course_name": selected_course[0].course_info.name,
+                "instructor_name": selected_course[0].course_info.instructor_info.name
+            })
+
+        return _list
     
     async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
         stmt = (
@@ -75,7 +82,16 @@ class SelectedCourseCrudManager:
             .where(SelectedCourseModel.course_id == course_id)
         )
         result = await db_session.execute(stmt)
-        result = result.unique()
+        
+        _list = []
+        for selected_course in result:
+            _list.append({
+                "name": selected_course[0].user_info.name,
+                "uid": selected_course[0].user_info.uid,
+                "department": selected_course[0].user_info.department,
+                "role": selected_course[0].user_info.role,
+                "group": selected_course[0].group
+            })
 
-        return [selected_course[0] for selected_course in result.all()]
+        return _list
     

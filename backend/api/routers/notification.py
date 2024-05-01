@@ -118,32 +118,9 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     Get all notifications for a user.
     """
-    type_mapping = {
-        "course_bulletin": "announcement",
-        "report": "announcement",
-        "course_material": "assignment",
-        "course_assignment": "assignment",
-        "discussion": "discussion",
-        "discussion_topic": "discussion"
-    }
-
-    results= []
-    
     notifications = await NotificationCrud.get_by_uid(uid)
     if notifications:
-        for notification in notifications:
-            results.append({
-                "id": notification.id,
-                "publisher": notification.user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
-                "release_time": notification.release_time,
-                "title": notification.component_info.title,
-                "content": notification.component_info.content,
-                "have_read": notification.have_read,
-                "icon_type": type_mapping[notification.type]
-            })
-        return results
+        return notifications
 
     raise not_found
 
@@ -156,21 +133,8 @@ async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     Read all notifications for one user.
     """
-    results = []
     notifications = await NotificationCrud.read_all(uid)
     if notifications:
-        for notification in notifications:
-            results.append({
-                "id": notification.id,
-                "publisher": notification.user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
-                "release_time": notification.release_time,
-                "title": notification.component_info.title,
-                "content": notification.component_info.content,
-                "have_read": notification.have_read,
-                "icon_type": notification.type
-            })
-        return results
+        return notifications
 
     raise not_found

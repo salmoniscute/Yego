@@ -71,18 +71,7 @@ async def get_course_bulletin(cb_id: str):
     """
     bulletin = await CourseBulletinCrud.get(cb_id)
     if bulletin:
-        result = {
-            "id": bulletin.id,
-            "publisher": bulletin.publisher_info.name,
-            "publisher_avatar": bulletin.publisher_info.avatar,
-            "release_time": bulletin.release_time,
-            "title": bulletin.title,
-            "content": bulletin.content,
-            "pin_to_top": bulletin.pin_to_top,
-            "files": bulletin.files
-        }
-
-        return result
+        return bulletin
 
     raise not_found
    
@@ -126,18 +115,8 @@ async def get_all_course_bulletins_in_particular_course(course_id: str = Depends
     """
     Get all course bulletins in particular course.
     """
-    results = []
     bulletins = await CourseBulletinCrud.get_by_course_id(course_id)
     if bulletins:
-        for bulletin in bulletins:
-            results.append({
-                "id": bulletin.id,
-                "publisher": bulletin.publisher_info.name,
-                "release_time": bulletin.release_time,
-                "title": bulletin.title,
-                "pin_to_top": bulletin.pin_to_top
-            })
-
-        return results
+        return bulletins
     
     raise not_found
