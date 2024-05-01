@@ -27,8 +27,19 @@ class ReportCrudManager:
         stmt = select(ReportModel)
         result = await db_session.execute(stmt)
         result = result.unique()
-        
-        return [report[0] for report in result.all()]
+        output = []
+        for report in result.all():
+            stmt = select(ReportReplyModel).where(ReportReplyModel.root_id == report[0].id)
+            record = await db_session.execute(stmt)
+            replies = len(record.all())
+            r = {
+                "id": report[0].id,
+                "title": report[0].title,
+                "release_time": report[0].release_time,
+                "reply_count": replies
+            }
+            output.append(r)
+        return output
 
     async def update(self, report_id: str, updateReport: ReportSchema.ReportUpdate, db_session: AsyncSession):
         updateReport_dict = updateReport.model_dump(exclude_none=True)

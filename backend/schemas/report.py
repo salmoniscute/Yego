@@ -1,5 +1,5 @@
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
-
+from pydantic import BaseModel
 
 class ReportCreate(ComponentCreate):    
     model_config = {
@@ -15,8 +15,11 @@ class ReportCreate(ComponentCreate):
     }
 
 
-class ReportRead(ComponentRead):
-    pass
+class ReportRead(BaseModel):
+    id: int
+    release_time: str
+    title: str
+    reply_count: int
 
 class ReportUpdate(ComponentUpdate):
     pass
