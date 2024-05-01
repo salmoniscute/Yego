@@ -1,6 +1,5 @@
 #footer {
     width: calc(100% - max(10vw, 100vw - 1200px));
-    position: relative;
     max-width: calc(1200px);
     margin: 0;
     height: 8rem;
@@ -9,7 +8,6 @@
     background-color: #FFEA79;
 
     padding: 0.95rem max(5vw, calc(50vw - 600px));
-
 
     .leftFooter {
         margin: 0.5em 0px;
