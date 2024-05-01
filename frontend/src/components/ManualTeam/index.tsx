@@ -5,7 +5,15 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import "./index.scss";
 
-export default function ManaulTeam(): React.ReactElement {
+type propsType = Readonly<{
+    close:()=>void
+}>;
+
+export default function ManaulTeam(props:propsType): React.ReactElement {
+
+    const {
+        close
+    } = props;
 
     const [teamTitle , setTeamTitle] = useState("");
 
@@ -34,6 +42,7 @@ export default function ManaulTeam(): React.ReactElement {
     
     return (
         <div id="manualTeam">
+            <RxCross2 className="closeCross" onClick={close}/>
             <div className="upper">
                 <p>群組名稱</p>
                 <textarea 
@@ -59,7 +68,7 @@ export default function ManaulTeam(): React.ReactElement {
             </div>
 
             <div className="buttons">
-                <button className="cancel">取消</button>
+                <button className="cancel" onClick={close}>取消</button>
                 <button className="confirm">確認</button>
             </div>
 

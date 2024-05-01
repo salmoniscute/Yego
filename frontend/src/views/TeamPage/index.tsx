@@ -9,6 +9,7 @@ import {
 import userDataContext from "context/userData";
 
 import ManaulTeam from "components/ManualTeam";
+import AutoTeam from "components/AutoTeam";
 
 import "./index.scss";
 
@@ -17,6 +18,10 @@ export default function TeamPage(): ReactElement {
 
   const [selectMethod, setSelectMethod] = useState("");
   const [showWork, setShowWork] = useState<boolean>(false);
+
+  const closeWindow = () =>{
+    setShowWork(false);
+  }
 
   type Option = {
     label: string;
@@ -52,9 +57,11 @@ export default function TeamPage(): ReactElement {
         <div className="selectedWork" data-show={showWork} >
             { selectMethod === "手動建立新群組" && <div className="manual">
               <h3>{selectMethod} - 設定</h3>
-              <ManaulTeam/>
+              <ManaulTeam close={closeWindow}/>
             </div>}
             { selectMethod === "自動分組" && <div className="auto">
+              <h3>{selectMethod} - 設定</h3>
+              <AutoTeam close={closeWindow}/>
             </div>}
             { selectMethod === "學生自行分組" && <div className="byStudent" >
             </div>}
