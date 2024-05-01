@@ -1,7 +1,7 @@
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate, ComponentReadWithFile
 from typing import Optional
 
-class DiscussionCreate(ComponentCreate):    
+class DiscussionCreate(ComponentCreate):
     model_config = {
         "json_schema_extra": {
             "examples": [
@@ -18,6 +18,9 @@ class DiscussionCreate(ComponentCreate):
 class DiscussionRead(ComponentRead):
     pass
     # topics: Optional[list[DiscussionTopicRead]] = None
+    
+class DiscussionOfCourses(ComponentRead):
+    subscription: bool
 
 
 class DiscussionTopicRead(ComponentRead):

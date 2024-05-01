@@ -21,6 +21,7 @@ from .routers import (
     website_bulletin_router,
     report_router,
     course_material_router,
+    report_reply_router
 )
 
 app = FastAPI()
@@ -41,6 +42,7 @@ app.include_router(subscription_router)
 app.include_router(notification_router)
 app.include_router(report_router)
 app.include_router(course_material_router)
+app.include_router(report_reply_router)
 
 
 
