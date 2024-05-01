@@ -1,10 +1,9 @@
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useState, useEffect, useContext } from "react";
 
 import { NotificationRead } from "schemas/notification";
-
+import NotiContext from "../../views/NotificationPage/context";
 import './index.scss';
 import { FaCircle } from "react-icons/fa";
-
 type propsType = Readonly<{
   notification: NotificationRead
 }>;
@@ -13,6 +12,7 @@ export default function Notification(props: propsType): ReactElement{
   const {
     notification
   } = props;
+  const ctx = useContext(NotiContext);
 
   const [timeDifference, settimeDifference] = useState<number>(0);
   const [seconds, setseconds] = useState<number>(0);
@@ -33,15 +33,17 @@ export default function Notification(props: propsType): ReactElement{
     getTimeDifference(props.notification.release_time);
   }); 
 
-  return <div id="notification">
-    <div className="left">
-      {props.notification.icon_type === ""}<img></img>
-      <div className="detail">
-        <h2>{props.notification.course_name}</h2>
-        <h1>{props.notification.title}</h1>
-        <p>{days}天{hours}小時{minutes}分鐘{seconds}秒前</p> 
+  return <div>
+    <button onClick={() => ctx.set_curr_noti(props.notification)} id="notification">
+      <div className="left">
+        <img src={`./${props.notification.icon_type}-icon.svg`} alt={props.notification.icon_type}></img>
+        <div className="detail">
+          <h2>{props.notification.course_name}</h2>
+          <h1>{props.notification.title}</h1>
+          <p>{days}天{hours}小時{minutes}分鐘{seconds}秒前</p> 
+        </div>
       </div>
-    </div>
-    <FaCircle className="circle-sign"/>
+      {notification.have_read === false ? <FaCircle className="circle-sign"/> : <></>}
+    </button>
   </div>
 }

@@ -18,7 +18,7 @@ export interface NotificationRead {
   release_time: string,
   title: string,
   content: string,
-  have_read: string,
+  have_read: Boolean,
   icon_type: string,
 }  
 

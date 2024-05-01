@@ -1,12 +1,10 @@
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { get_all_notification } from "api/notification";
-
 import './index.scss';
-
+import NotiContext from "../../views/NotificationPage/context";
 import Notification from "components/Notification";
-import { NotificationRead } from "schemas/notification";
+
 
 type propsType = Readonly<{
 
@@ -18,22 +16,24 @@ export default function NotificationColumn(props: propsType): ReactElement {
   const {
     seeAllBtn
   } = props;
-
-  const [notifications, setnotifications] = useState<Array<NotificationRead>>([]);
+  const ctx = useContext(NotiContext);
 
   useEffect(() => {
-    get_all_notification("C14096277").then(data => {
-      setnotifications(data);
-    });
+    ctx.get_list();
   }, [])
-  const listRender = notifications.map((item) =>
-    <Notification notification={item} />
+  const listRender = ctx.notifications.map((item) =>
+      {if(item.have_read === false) return <Notification notification={item} key={item.id}/>;
+      return null;}
+  );
+  const haveReadListRender = ctx.notifications.map((item) =>
+      {if(item.have_read === true) return <Notification notification={item} key={item.id}/>;
+      return null;}
   );
 
   return <div id="notificationColumn">
     <div className="header">
       <p>新通知</p>
-      <button>全部標示為已讀</button>
+      <button onClick={ctx.read_all}>全部標示為已讀</button>
       {props.seeAllBtn === true ? <Link to="/notification" className="seeall">查看全部</Link> : <></>}
     </div>
     <div>
@@ -41,7 +41,7 @@ export default function NotificationColumn(props: propsType): ReactElement {
     </div>
     <p className="header">過去的通知</p>
     <div>
-      {listRender}
+      {haveReadListRender}
     </div>
   </div>
 }
