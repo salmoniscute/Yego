@@ -60,7 +60,8 @@ class Component(Base):
         "Subscription",
         back_populates="component_info",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
 
     notifications: Mapped[list["Notification"]] = relationship(
