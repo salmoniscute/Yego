@@ -92,10 +92,42 @@
    "website_bulletins":[
       {
          "uid":"F74102048",
-         "release_time":"2021-09-01 00:00:00",
-         "title":"Bulletin 2",
-         "content":"This is another bulletin.",
+         "release_time":"2024-04-10 16:10:05",
+         "title":"網站公告一",
+         "content":"這是第一個公告。",
+         "pin_to_top":false
+      },
+      {
+         "uid":"F74102048",
+         "release_time":"2024-04-19 10:53:12",
+         "title":"網站公告二",
+         "content":"這是第二個公告。",
          "pin_to_top":true
+      },
+      {
+         "uid":"F74102048",
+         "release_time":"2024-04-22 09:30:57",
+         "title":"網站公告三",
+         "content":"那這就是第三個公告。",
+         "pin_to_top":false
+      }
+   ],
+   "discussions":[
+      {
+         "uid":"C14096277",
+         "release_time":"2024-03-09 16:10:05",
+         "title":"討論區一",
+         "content":"No content",
+         "course_id":"CSE101"
+      }
+   ],
+   "discussion_topics":[
+      {
+         "uid":"C14096277",
+         "release_time":"2024-03-10 16:10:05",
+         "title":"討論主題一",
+         "content":"No content",
+         "discussion_id":8
       }
    ],
    "subscriptions":[
@@ -145,24 +177,6 @@
          "have_read":false,
          "release_time":"2021-09-01 00:00:00",
          "type":"course_bulletin"
-      }
-   ],
-   "discussions":[
-      {
-         "uid":"C14096277",
-         "release_time":"2024-03-09 16:10:05",
-         "title":"教室更動通知",
-         "content":"記得換教室喔",
-         "course_id":"CSE101"
-      }
-   ],
-   "discussion_topics":[
-      {
-         "uid":"C14096277",
-         "release_time":"2024-03-09 16:10:05",
-         "title":"教室更動通知",
-         "content":"記得換教室喔",
-         "discussion_id":6
       }
    ]
 }

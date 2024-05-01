@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.WebsiteBulletinCreateResponse,
+    response_model=BulletinSchema.WebsiteBulletinRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_website_bulletin(
@@ -44,24 +44,34 @@ async def create_website_bulletin(
 
 
 @router.get(
-    "/bulletin/all", 
-    response_model=list[BulletinSchema.WebsiteBulletinRead],
+    "/bulletins", 
+    response_model=list[BulletinSchema.BulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():
     """
     Get all website bulletins.
     """
+    results = []
     bulletins = await WebsiteBulletinCrud.get_all()
     if bulletins:
-        return bulletins
+        for bulletin in bulletins:
+            results.append({
+                "id": bulletin.id,
+                "publisher": bulletin.publisher_info.name,
+                "release_time": bulletin.release_time,
+                "title": bulletin.title,
+                "pin_to_top": bulletin.pin_to_top
+            })
+
+        return results
     
     raise not_found
 
 
 @router.get(
     "/bulletin/{wb_id}", 
-    response_model=BulletinSchema.WebsiteBulletinRead,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
 async def get_website_bulletin(wb_id: str):
@@ -70,8 +80,19 @@ async def get_website_bulletin(wb_id: str):
     """
     bulletin = await WebsiteBulletinCrud.get(wb_id)
     if bulletin:
-        return bulletin
-    
+        result = {
+            "id": bulletin.id,
+            "publisher": bulletin.publisher_info.name,
+            "publisher_avatar": bulletin.publisher_info.avatar,
+            "release_time": bulletin.release_time,
+            "title": bulletin.title,
+            "content": bulletin.content,
+            "pin_to_top": bulletin.pin_to_top,
+            "files": bulletin.files
+        }
+
+        return result
+
     raise not_found
    
 
