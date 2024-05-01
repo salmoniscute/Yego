@@ -33,7 +33,7 @@ async def check_course_id(course_id: str):
     return course.id
 
 
-async def check_component_id(component_id: str):
+async def check_component_id(component_id: int):
     component = await ComponentCrud.get(component_id)
     
     if not component:

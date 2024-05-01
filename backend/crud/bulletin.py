@@ -21,8 +21,21 @@ class CourseBulletinCrudManager:
         stmt = select(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id)
         result = await db_session.execute(stmt)
         bulletin = result.first()
+
+        obj = {}
+        if bulletin:
+            obj = {
+                "id": bulletin[0].id,
+                "publisher": bulletin[0].publisher_info.name,
+                "publisher_avatar": bulletin[0].publisher_info.avatar,
+                "release_time": bulletin[0].release_time,
+                "title": bulletin[0].title,
+                "content": bulletin[0].content,
+                "pin_to_top": bulletin[0].pin_to_top,
+                "files": bulletin[0].files
+            }
         
-        return bulletin[0] if bulletin else None
+        return obj
 
     async def get_all(self, db_session: AsyncSession):
         stmt = select(CourseBulletinModel)
@@ -60,9 +73,18 @@ class CourseBulletinCrudManager:
     async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
         stmt = select(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id)
         result = await db_session.execute(stmt)
-        result = result.unique()
         
-        return [bulletin[0] for bulletin in result.all()]
+        _list = []
+        for bulletin in result:
+            _list.append({
+                "id": bulletin[0].id,
+                "publisher": bulletin[0].publisher_info.name,
+                "release_time": bulletin[0].release_time,
+                "title": bulletin[0].title,
+                "pin_to_top": bulletin[0].pin_to_top
+            })
+        
+        return _list
     
 
 @crud_class_decorator
@@ -79,15 +101,37 @@ class WebsiteBulletinCrudManager:
         stmt = select(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id)
         result = await db_session.execute(stmt)
         bulletin = result.first()
+
+        obj = {}
+        if bulletin:
+            obj = {
+                "id": bulletin[0].id,
+                "publisher": bulletin[0].publisher_info.name,
+                "publisher_avatar": bulletin[0].publisher_info.avatar,
+                "release_time": bulletin[0].release_time,
+                "title": bulletin[0].title,
+                "content": bulletin[0].content,
+                "pin_to_top": bulletin[0].pin_to_top,
+                "files": bulletin[0].files
+            }
         
-        return bulletin[0] if bulletin else None
+        return obj
 
     async def get_all(self, db_session: AsyncSession):
         stmt = select(WebsiteBulletinModel)
         result = await db_session.execute(stmt)
-        result = result.unique()
         
-        return [bulletin[0] for bulletin in result.all()]
+        _list = []
+        for bulletin in result:
+            _list.append({
+                "id": bulletin[0].id,
+                "publisher": bulletin[0].publisher_info.name,
+                "release_time": bulletin[0].release_time,
+                "title": bulletin[0].title,
+                "pin_to_top": bulletin[0].pin_to_top
+            })
+        
+        return _list
 
     async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
         update_bulletin = {}

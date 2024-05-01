@@ -20,7 +20,7 @@ class Component(Base):
     )
 
     # Relationship to child
-    course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
+    course_bulletins: Mapped["CourseBulletin"] = relationship(
         "CourseBulletin",
         back_populates="info",
         cascade="all, delete-orphan", 
@@ -60,7 +60,8 @@ class Component(Base):
         "Subscription",
         back_populates="component_info",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
 
     notifications: Mapped[list["Notification"]] = relationship(

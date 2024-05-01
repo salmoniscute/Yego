@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinCreateResponse,
+    response_model=BulletinSchema.CourseBulletinRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
@@ -62,7 +62,7 @@ async def get_all_course_bulletins():
 
 @router.get(
     "/bulletin/{cb_id}", 
-    response_model=BulletinSchema.CourseBulletinRead,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
 async def get_course_bulletin(cb_id: str):
@@ -72,7 +72,7 @@ async def get_course_bulletin(cb_id: str):
     bulletin = await CourseBulletinCrud.get(cb_id)
     if bulletin:
         return bulletin
-    
+
     raise not_found
    
 
@@ -108,7 +108,7 @@ async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
 
 @router.get(
     "/bulletin/particular_course/{course_id}", 
-    response_model=list[BulletinSchema.CourseBulletinRead],
+    response_model=list[BulletinSchema.BulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_course_id, check_user_id
+from .depends import check_component_id, check_user_id
 from crud.discussion import DiscussionTopicCrudManager
 from schemas import discussion as DiscussionSchema
 
@@ -28,7 +28,7 @@ router = APIRouter(
 async def create_discussion_topic(
     newTopic: DiscussionSchema.DiscussionCreate,
     uid: str = Depends(check_user_id),
-    discussion_id: str = Depends(check_course_id)
+    discussion_id: int = Depends(check_component_id)
 ):
     """
     Create a discussion topic with the following information:
@@ -58,9 +58,11 @@ async def get_all_discussion_topics():
 
 @router.get(
     "/discussion_topic/{topic_id}", 
-    response_model=DiscussionSchema.DiscussionRead
+    response_model=DiscussionSchema.DiscussionTopicRead
 )
-async def get_discussion_topic(topic_id: str):
+async def get_discussion_topic(
+    topic_id: int=Depends(check_component_id)
+):
     """ 
     Get a discussion topic.
     """
@@ -77,7 +79,7 @@ async def get_discussion_topic(topic_id: str):
 )
 async def update_discussion_topic(
     updateDiscussion: DiscussionSchema.DiscussionUpdate,
-    topic_id: str = Depends(check_component_id)
+    topic_id: int = Depends(check_component_id)
 ):
     """ 
     Update a discussion topic with the following information:
@@ -93,10 +95,28 @@ async def update_discussion_topic(
     "/discussion_topic/{topic_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_discussion_topic(topic_id: str = Depends(check_component_id)):
+async def delete_discussion_topic(
+    topic_id: int = Depends(check_component_id)
+):
     """ 
     Delete a discussion topic.
     """
     await TopicCrud.delete(topic_id)
     
     return 
+
+@router.get(
+    "/discussion_topics/{discussion_id}",
+    response_model=list[DiscussionSchema.DiscussionOfTopics]
+)
+async def get_discussion_topics_by_discussion_id(
+    discussion_id: int = Depends(check_component_id)
+):
+    """
+    Get all discussion topics by discussion id.
+    """
+    topics = await TopicCrud.get_topics_by_discussion_id(discussion_id)
+    if topics:
+        return topics
+    
+    raise not_found

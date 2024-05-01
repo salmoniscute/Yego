@@ -5,6 +5,15 @@ from database.mysql import crud_class_decorator
 from models.notification import Notification as NotificationModel
 from schemas import notification as NotificationSchema
 
+type_mapping = {
+        "course_bulletin": "announcement",
+        "report": "announcement",
+        "course_material": "assignment",
+        "course_assignment": "assignment",
+        "discussion": "discussion",
+        "discussion_topic": "discussion"
+    }
+
 
 @crud_class_decorator
 class NotificationCrudManager:
@@ -62,9 +71,22 @@ class NotificationCrudManager:
     async def get_by_uid(self, uid: str, db_session: AsyncSession):
         stmt = select(NotificationModel).where(NotificationModel.uid == uid)
         result = await db_session.execute(stmt)
-        result = result.unique()
 
-        return [notification[0] for notification in result.all()]
+        _list = []
+        for notification in result:
+            _list.append({
+                "id": notification[0].id,
+                "publisher": notification[0].user_info.name,
+                # "course_name": notification.component_info.course_name,
+                "course_name": "(TODO)",
+                "release_time": notification[0].release_time,
+                "title": notification[0].component_info.title,
+                "content": notification[0].component_info.content,
+                "have_read": notification[0].have_read,
+                "icon_type": type_mapping[notification[0].type]
+            })
+
+        return _list
     
     async def read_all(self, uid: str, db_session: AsyncSession):
         updateNotification_dict = {"have_read": True}
@@ -77,9 +99,21 @@ class NotificationCrudManager:
         
         stmt2 = select(NotificationModel).where(NotificationModel.uid == uid)
         result = await db_session.execute(stmt2)
-        result = result.unique()
-        
         await db_session.commit()
 
-        return [notification[0] for notification in result.all()]
+        _list = []
+        for notification in result:
+            _list.append({
+                "id": notification[0].id,
+                "publisher": notification[0].user_info.name,
+                # "course_name": notification.component_info.course_name,
+                "course_name": "(TODO)",
+                "release_time": notification[0].release_time,
+                "title": notification[0].component_info.title,
+                "content": notification[0].component_info.content,
+                "have_read": notification[0].have_read,
+                "icon_type": type_mapping[notification[0].type]
+            })
+
+        return _list
     
