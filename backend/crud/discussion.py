@@ -30,7 +30,7 @@ class DiscussionCrudManager:
         result = result.unique()
         
         return [discussion[0] for discussion in result.all()]
-
+    
     async def update(self, discussion_id: int, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
         updateDiscussion_dict = updateDiscussion.model_dump(exclude_none=True)
         if updateDiscussion_dict:
@@ -71,6 +71,31 @@ class DiscussionTopicCrudManager:
         result = result.unique()
         
         return [topic[0] for topic in result.all()]
+    
+    async def get_topics_by_discussion_id(self, discussion_id: int, db_session: AsyncSession):
+        stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.discussion_id == discussion_id)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        output = []
+        for topic in result.all():
+            stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id) 
+            record = await db_session.execute(stmt)
+            replies = len(record.all())
+            t = {
+                "id": topic[0].id,
+                "uid": topic[0].uid,
+                "release_time": topic[0].release_time,
+                "title": topic[0].title,
+                "content": topic[0].content,
+                "reply_count": replies,
+                "publisher": topic[0].info.publisher_info.name,
+                "avatar": topic[0].info.publisher_info.avatar,
+                "files": [file for file in topic[0].info.files],
+                "subscription": True if topic[0].info.subscriptions else False
+            }
+            output.append(t)
+        return output
+            
 
     async def update(self, topic_id: int, updateDiscussion: DiscussionSchema.DiscussionUpdate, db_session: AsyncSession):
         updateDiscussion_dict = updateDiscussion.model_dump(exclude_none=True)

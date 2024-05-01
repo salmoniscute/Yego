@@ -26,7 +26,8 @@ class Discussion(Component):
     #     "DiscussionTopic",
     #     back_populates="discussion_info",
     #     cascade="all, delete-orphan",
-    #     passive_deletes=True
+    #     passive_deletes=True,
+    #     lazy="selectin"
     # )
 
     def __init__(self, uid: str, course_id: str, release_time: str, title: str, content: str) -> None:
@@ -55,6 +56,7 @@ class DiscussionTopic(Component):
     # discussion_info: Mapped["Discussion"] = relationship(
     #     "Discussion",
     #     back_populates="topics",
+    #     lazy="selectin"
     # )
 
     __mapper_args__ = {
@@ -78,7 +80,7 @@ class DiscussionTopicReply(Component):
     id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     root_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"))
     parent_id: Mapped[BaseType.int_type]
-
+    
     __mapper_args__ = {
         "polymorphic_identity": "reply",
     }

@@ -1,4 +1,5 @@
-from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
+from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate, ComponentReadWithFile
+from typing import Optional
 
 class DiscussionCreate(ComponentCreate):    
     model_config = {
@@ -22,6 +23,13 @@ class DiscussionRead(ComponentRead):
 class DiscussionTopicRead(ComponentRead):
     type: str
     discussion_id: int
+
+class DiscussionOfTopics(ComponentReadWithFile):
+    reply_count: int
+    publisher:str
+    avatar: Optional[str] = None
+    subscription: bool
+    
 
 class DiscussionTopicReplyCreate(DiscussionCreate):
     parent_id: int

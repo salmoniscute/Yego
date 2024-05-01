@@ -104,3 +104,19 @@ async def delete_discussion_topic(
     await TopicCrud.delete(topic_id)
     
     return 
+
+@router.get(
+    "/discussion_topics/{discussion_id}",
+    response_model=list[DiscussionSchema.DiscussionOfTopics]
+)
+async def get_discussion_topics_by_discussion_id(
+    discussion_id: int = Depends(check_component_id)
+):
+    """
+    Get all discussion topics by discussion id.
+    """
+    topics = await TopicCrud.get_topics_by_discussion_id(discussion_id)
+    if topics:
+        return topics
+    
+    raise not_found
