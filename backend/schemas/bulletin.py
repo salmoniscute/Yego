@@ -1,6 +1,9 @@
+from datetime import datetime
+from pydantic import BaseModel
 from typing import Optional
 
 from schemas.component import ComponentCreate, ComponentRead, ComponentReadWithFile, ComponentUpdate
+from schemas import file as FileSchema
 
 
 class BulletinCreate(ComponentCreate):
@@ -19,27 +22,6 @@ class BulletinCreate(ComponentCreate):
         }
     }
 
-class CourseBulletinCreateResponse(ComponentRead):
-    course_id: str
-    type: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinCreateResponse(ComponentRead):
-    type: str
-    pin_to_top: bool
-
-
-class CourseBulletinRead(ComponentReadWithFile):
-    course_id: str
-    type: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinRead(ComponentReadWithFile):
-    type: str
-    pin_to_top: bool
-    
 
 class BulletinUpdate(ComponentUpdate):
     pin_to_top: Optional[bool] = None
@@ -55,4 +37,40 @@ class BulletinUpdate(ComponentUpdate):
             ]
         }
     }
+    
+
+class CourseBulletinCreateResponse(ComponentRead):
+    course_id: str
+    type: str
+    pin_to_top: bool
+
+
+class CourseBulletinRead(ComponentReadWithFile):
+    course_id: str
+    type: str
+    pin_to_top: bool
+
+
+class WebsiteBulletinCreateResponse(ComponentRead):
+    type: str
+    pin_to_top: bool
+
+
+class WebsiteBulletinListRead(BaseModel):
+    id: int
+    publisher: str
+    release_time: datetime
+    title: str
+    pin_to_top: bool
+
+
+class WebsiteBulletinReadByID(BaseModel):
+    id: int
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
+    pin_to_top: bool
+    files: Optional[list[FileSchema.FileRead]] = None
     
