@@ -22,8 +22,7 @@ router = APIRouter(
 
 @router.post(
     "/report", 
-    response_model=ReportSchema.ReportCreate,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_report(
     newReport: ReportSchema.ReportCreate,

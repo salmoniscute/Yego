@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.component import ComponentCrudManager
 from database.mysql import crud_class_decorator
-from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBulletin as WebsiteBulletinModel
+from models.bulletin import WebsiteBulletin as WebsiteBulletinModel
 from models.component import Component as ComponentModel
 from schemas import bulletin as BulletinSchema
 

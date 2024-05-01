@@ -13,17 +13,8 @@ class SelectedCourse(Base):
     group: Mapped[BaseType.optional_str_200]
 
     # Relationship to parent
-    user_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="selected_courses",
-        lazy="joined"
-    )
-    
-    course_info: Mapped["Course"] = relationship(
-        "Course",
-        back_populates="selected_courses",
-        lazy="joined"
-    )
+    user_info: Mapped["User"] = relationship("User", back_populates="selected_courses", lazy="joined")
+    course_info: Mapped["Course"] = relationship("Course", back_populates="selected_courses", lazy="joined")
 
     def __init__(self, uid: str, course_id: str, group: Optional[str] = None) -> None:
         self.uid = uid

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_course_id, check_user_id
+from .depends import check_course_id, check_user_id
 from crud.course_material import CourseMaterialCrudManager
 from schemas import course_material as CourseMaterialSchema
 
@@ -22,8 +22,7 @@ router = APIRouter(
 
 @router.post(
     "/course_material", 
-    response_model=CourseMaterialSchema.CourseMaterialCreate,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_course_material(
     newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate,

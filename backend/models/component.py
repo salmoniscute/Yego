@@ -13,11 +13,7 @@ class Component(Base):
     content: Mapped[BaseType.str_100]
 
     # Relationship to parent
-    publisher_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="publications",
-        lazy="joined"
-    )
+    publisher_info: Mapped["User"] = relationship("User", back_populates="publications", lazy="joined")
 
     # Relationship to child
     course_bulletin: Mapped["CourseBulletin"] = relationship(

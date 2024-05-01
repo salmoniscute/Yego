@@ -6,6 +6,7 @@ from models.component import Component as ComponentModel
 from models.report import Report as ReportModel
 from schemas import report as ReportSchema
 
+
 @crud_class_decorator
 class ReportCrudManager:
     async def create(self, uid: str, newReport: ReportSchema.ReportCreate, db_session: AsyncSession):

@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/selected_course", 
-    response_model=SelectedCourseSchema.SelectedCourseRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_selected_course(
     newRow: SelectedCourseSchema.SelectedCourseCreate,

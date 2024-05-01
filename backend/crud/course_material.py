@@ -46,3 +46,4 @@ class CourseMaterialCrudManager:
         await db_session.commit()
 
         return
+    

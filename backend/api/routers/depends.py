@@ -8,7 +8,6 @@ from crud.selected_course import SelectedCourseCrudManager
 from crud.user import UserCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
 
-
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()

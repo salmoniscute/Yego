@@ -1,5 +1,4 @@
 from datetime import datetime
-from pydantic import BaseModel
 from typing import Optional
 
 from schemas.component import ComponentCreate, ComponentReadID, ComponentReadWithFile, ComponentUpdate

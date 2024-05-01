@@ -11,10 +11,7 @@ class File(Base):
     path: Mapped[BaseType.str_100]
 
     # Relationship to parent
-    component_info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="files"
-    )
+    component_info: Mapped["Component"] = relationship("Component", back_populates="files")
 
     def __init__(self, component_id: str, path: str) -> None:
         self.component_id = component_id

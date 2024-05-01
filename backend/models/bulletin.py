@@ -2,7 +2,6 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from models.base import Base, BaseType
-from models.component import Component
 
 
 class Bulletin(Base):

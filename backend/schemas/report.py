@@ -21,4 +21,3 @@ class ReportRead(ComponentRead):
 
 class ReportUpdate(ComponentUpdate):
     pass
-
