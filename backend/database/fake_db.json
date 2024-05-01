@@ -55,6 +55,29 @@
          "group":"B"
       }
    ],
+   "website_bulletins":[
+      {
+         "uid":"F74102048",
+         "release_time":"2024-04-10 16:10:05",
+         "title":"網站公告一",
+         "content":"這是第一個公告。",
+         "pin_to_top":false
+      },
+      {
+         "uid":"F74102048",
+         "release_time":"2024-04-19 10:53:12",
+         "title":"網站公告二",
+         "content":"這是第二個公告。",
+         "pin_to_top":true
+      },
+      {
+         "uid":"F74102048",
+         "release_time":"2024-04-22 09:30:57",
+         "title":"網站公告三",
+         "content":"那這就是第三個公告。",
+         "pin_to_top":false
+      }
+   ],
    "course_bulletins":[
       {
          "uid":"C14096277",
@@ -83,33 +106,10 @@
       {
          "uid":"F74102048",
          "release_time":"2021-09-01 00:00:00",
-         "title":"Bulletin 2",
+         "title":"course bulletin",
          "content":"This is another bulletin.",
          "pin_to_top":true,
          "course_id":"CSE102"
-      }
-   ],
-   "website_bulletins":[
-      {
-         "uid":"F74102048",
-         "release_time":"2024-04-10 16:10:05",
-         "title":"網站公告一",
-         "content":"這是第一個公告。",
-         "pin_to_top":false
-      },
-      {
-         "uid":"F74102048",
-         "release_time":"2024-04-19 10:53:12",
-         "title":"網站公告二",
-         "content":"這是第二個公告。",
-         "pin_to_top":true
-      },
-      {
-         "uid":"F74102048",
-         "release_time":"2024-04-22 09:30:57",
-         "title":"網站公告三",
-         "content":"那這就是第三個公告。",
-         "pin_to_top":false
       }
    ],
    "discussions":[
@@ -133,47 +133,47 @@
    "subscriptions":[
       {
          "uid":"C14096277",
-         "component_id":1,
-         "type":"course"
+         "component_id":8,
+         "type":"discussion"
       },
       {
          "uid":"F74102048",
-         "component_id":2,
-         "type":"course"
+         "component_id":8,
+         "type":"discussion"
       }
    ],
    "notifications":[
       {
          "uid":"C14096277",
-         "component_id":1,
+         "component_id":5,
          "have_read":true,
          "release_time":"2024-03-09 16:10:05",
          "type":"course_bulletin"
       },
       {
          "uid":"C14096277",
-         "component_id":2,
+         "component_id":6,
          "have_read":false,
          "release_time":"2024-04-12 16:24:05",
          "type":"course_bulletin"
       },
       {
          "uid":"C14096277",
-         "component_id":3,
+         "component_id":8,
          "have_read":false,
          "release_time":"2024-04-14 10:30:12",
-         "type":"course_bulletin"
+         "type":"discussion"
       },
       {
          "uid":"F74102048",
-         "component_id":2,
+         "component_id":5,
          "have_read":false,
          "release_time":"2021-09-01 00:00:00",
          "type":"course_bulletin"
       },
       {
          "uid":"F74102048",
-         "component_id":1,
+         "component_id":6,
          "have_read":false,
          "release_time":"2021-09-01 00:00:00",
          "type":"course_bulletin"

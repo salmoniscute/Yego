@@ -118,8 +118,17 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     Get all notifications for a user.
     """
-    results= []
+    type_mapping = {
+        "course_bulletin": "announcement",
+        "report": "announcement",
+        "course_material": "assignment",
+        "course_assignment": "assignment",
+        "discussion": "discussion",
+        "discussion_topic": "discussion"
+    }
 
+    results= []
+    
     notifications = await NotificationCrud.get_by_uid(uid)
     if notifications:
         for notification in notifications:
@@ -132,7 +141,7 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
                 "title": notification.component_info.title,
                 "content": notification.component_info.content,
                 "have_read": notification.have_read,
-                "icon_type": notification.type
+                "icon_type": type_mapping[notification.type]
             })
         return results
 
