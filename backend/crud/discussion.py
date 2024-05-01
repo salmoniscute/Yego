@@ -14,7 +14,6 @@ class DiscussionCrudManager:
         discussion = DiscussionModel(**newDiscussion_dict, uid=uid, course_id=course_id)
         db_session.add(discussion)
         await db_session.commit()
-
         return discussion
 
     async def get(self, discussion_id: int, db_session: AsyncSession):
@@ -46,6 +45,23 @@ class DiscussionCrudManager:
         await db_session.commit()
 
         return
+    
+    async def get_discussions_by_course_id(self, course_id: str, db_session: AsyncSession):
+        stmt = select(DiscussionModel).where(DiscussionModel.course_id == course_id)
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        output = []
+        for discussion in result.all():
+            
+            d = {
+                "id": discussion[0].id,
+                "uid": discussion[0].uid,
+                "title": discussion[0].title,
+                "content": discussion[0].content,
+                "subscription": True if discussion[0].subscriptions else False
+            }
+            output.append(d)
+        return output
 
 
 @crud_class_decorator

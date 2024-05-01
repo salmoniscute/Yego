@@ -25,7 +25,6 @@ class ComponentCreate(BaseModel):
 class ComponentRead(BaseModel):
     id: int
     uid: str
-    release_time: datetime
     title: str
     content: str
 
