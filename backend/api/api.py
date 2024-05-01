@@ -12,13 +12,15 @@ from .routers import (
     course_bulletin_router,
     discussion_router,
     discussion_topic_router,
+    discussion_topic_reply_router,
     file_router,
     notification_router,
     selected_course_router,
     subscription_router,
     user_router,
     website_bulletin_router,
-    report_router
+    report_router,
+    course_material_router,
 )
 
 app = FastAPI()
@@ -34,9 +36,12 @@ app.include_router(course_bulletin_router)
 app.include_router(website_bulletin_router)
 app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
+app.include_router(discussion_topic_reply_router)
 app.include_router(subscription_router)
 app.include_router(notification_router)
 app.include_router(report_router)
+app.include_router(course_material_router)
+
 
 
 origins = [

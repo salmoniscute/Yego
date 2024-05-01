@@ -3,9 +3,9 @@ import {
     CourseBulletinInfo
 } from "../schemas/courseBulletin";
 
-export async function getCourseBulletinList() :Promise<Array<CourseBulletinInfo>>{
-    //let url = "http://localhost:8080/api/course/bulletin?course_id="+course_id;
-    let url = "http://localhost:8080/api/course/bulletin/all";
+export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletinInfo>>{
+    let url = "http://localhost:8080/api/course/bulletin/particular_course/"+course_id;
+    //let url = "http://localhost:8080/api/course/bulletin/all";
     try {
         const response = await axios.get(url,{
           });
@@ -41,3 +41,4 @@ export async function postCourseBulletin(uid:string,course_id:string,title:strin
     return courseBulletin;
 
 }
+

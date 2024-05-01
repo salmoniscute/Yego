@@ -43,7 +43,8 @@ async def create_discussion(
 
 @router.get(
     "/discussions",
-    response_model=list[DiscussionSchema.DiscussionRead]
+    response_model=list[DiscussionSchema.DiscussionRead],
+    deprecated=True
 )
 async def get_all_discussions():
     """ 
@@ -60,7 +61,9 @@ async def get_all_discussions():
     "/discussion/{discussion_id}", 
     response_model=DiscussionSchema.DiscussionRead
 )
-async def get_discussion(discussion_id: str):
+async def get_discussion(
+    discussion_id: int=Depends(check_component_id)
+):
     """ 
     Get a discussion.
     """
@@ -77,7 +80,7 @@ async def get_discussion(discussion_id: str):
 )
 async def update_discussion(
     updateDiscussion: DiscussionSchema.DiscussionUpdate,
-    discussion_id: str = Depends(check_component_id)
+    discussion_id: int = Depends(check_component_id)
 ):
     """ 
     Update a discussion with the following information:
@@ -93,10 +96,17 @@ async def update_discussion(
     "/discussion/{discussion_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_discussion(discussion_id: str = Depends(check_component_id)):
+async def delete_discussion(
+    discussion_id: int = Depends(check_component_id)
+):
     """ 
     Delete a discussion.
     """
     await DiscussionCrud.delete(discussion_id)
     
+    return 
+
+
+@router.get("/discussions/particular_course/{course_id}")
+async def get_discussions_in_particular_course(course_id: str):
     return 

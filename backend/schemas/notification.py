@@ -26,6 +26,17 @@ class NotificationRead(BaseModel):
     have_read: bool
     release_time: datetime
     type: str
+
+
+class NotificationReadByUid(BaseModel):
+    id: int
+    publisher: str
+    course_name: str
+    release_time: datetime
+    title: str
+    content: str
+    have_read: bool
+    icon_type: str
     
 
 class NotificationUpdate(BaseModel):

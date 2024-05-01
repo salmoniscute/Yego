@@ -71,7 +71,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                     <TiArrowBack/>
                                 </div>
                             </div>
-                            { showReplyArea === true &&  <DiscussionReplyArea parentID={data.discussion_topic_reply_id}/>}
+                            { showReplyArea === true &&  <DiscussionReplyArea parentID={data.id}/>}
                         </div> 
                     )
                 }

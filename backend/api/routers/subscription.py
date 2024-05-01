@@ -45,7 +45,8 @@ async def create_subscription(
 @router.get(
     "/subscriptions",
     response_model=list[SubscriptionSchema.SubscriptionRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_subscriptions():
     """ 
