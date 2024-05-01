@@ -52,19 +52,9 @@ async def get_all_website_bulletins():
     """
     Get all website bulletins.
     """
-    results = []
     bulletins = await WebsiteBulletinCrud.get_all()
     if bulletins:
-        for bulletin in bulletins:
-            results.append({
-                "id": bulletin.id,
-                "publisher": bulletin.publisher_info.name,
-                "release_time": bulletin.release_time,
-                "title": bulletin.title,
-                "pin_to_top": bulletin.pin_to_top
-            })
-
-        return results
+        return bulletins
     
     raise not_found
 
@@ -80,18 +70,7 @@ async def get_website_bulletin(wb_id: str):
     """
     bulletin = await WebsiteBulletinCrud.get(wb_id)
     if bulletin:
-        result = {
-            "id": bulletin.id,
-            "publisher": bulletin.publisher_info.name,
-            "publisher_avatar": bulletin.publisher_info.avatar,
-            "release_time": bulletin.release_time,
-            "title": bulletin.title,
-            "content": bulletin.content,
-            "pin_to_top": bulletin.pin_to_top,
-            "files": bulletin.files
-        }
-
-        return result
+        return bulletin
 
     raise not_found
    
