@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.WebsiteBulletinCreateResponse,
+    response_model=BulletinSchema.WebsiteBulletinRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_website_bulletin(
@@ -45,7 +45,7 @@ async def create_website_bulletin(
 
 @router.get(
     "/bulletins", 
-    response_model=list[BulletinSchema.WebsiteBulletinListRead],
+    response_model=list[BulletinSchema.BulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():
@@ -71,7 +71,7 @@ async def get_all_website_bulletins():
 
 @router.get(
     "/bulletin/{wb_id}", 
-    response_model=BulletinSchema.WebsiteBulletinReadByID,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
 async def get_website_bulletin(wb_id: str):

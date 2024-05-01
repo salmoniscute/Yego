@@ -23,6 +23,36 @@ class BulletinCreate(ComponentCreate):
     }
 
 
+class BulletinListRead(BaseModel):
+    id: int
+    publisher: str
+    release_time: datetime
+    title: str
+    pin_to_top: bool
+
+
+class BulletinRead(BaseModel):
+    id: int
+    uid: str
+    release_time: datetime
+    title: str
+    content: str
+    pin_to_top: bool
+    type: str
+    pin_to_top: bool
+
+
+class BulletinReadByID(BaseModel):
+    id: int
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
+    pin_to_top: bool
+    files: Optional[list[FileSchema.FileRead]] = None
+
+
 class BulletinUpdate(ComponentUpdate):
     pin_to_top: Optional[bool] = None
 
@@ -39,38 +69,9 @@ class BulletinUpdate(ComponentUpdate):
     }
     
 
-class CourseBulletinCreateResponse(ComponentRead):
+class CourseBulletinRead(BulletinRead):
     course_id: str
-    type: str
-    pin_to_top: bool
 
 
-class CourseBulletinRead(ComponentReadWithFile):
-    course_id: str
-    type: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinCreateResponse(ComponentRead):
-    type: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinListRead(BaseModel):
-    id: int
-    publisher: str
-    release_time: datetime
-    title: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinReadByID(BaseModel):
-    id: int
-    publisher: str
-    publisher_avatar: Optional[str] = None
-    release_time: datetime
-    title: str
-    content: str
-    pin_to_top: bool
-    files: Optional[list[FileSchema.FileRead]] = None
-    
+class WebsiteBulletinRead(BulletinRead):
+    pass

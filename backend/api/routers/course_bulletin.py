@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinCreateResponse,
+    response_model=BulletinSchema.CourseBulletinRead,
     status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
@@ -62,7 +62,7 @@ async def get_all_course_bulletins():
 
 @router.get(
     "/bulletin/{cb_id}", 
-    response_model=BulletinSchema.CourseBulletinRead,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
 async def get_course_bulletin(cb_id: str):
@@ -71,8 +71,19 @@ async def get_course_bulletin(cb_id: str):
     """
     bulletin = await CourseBulletinCrud.get(cb_id)
     if bulletin:
-        return bulletin
-    
+        result = {
+            "id": bulletin.id,
+            "publisher": bulletin.publisher_info.name,
+            "publisher_avatar": bulletin.publisher_info.avatar,
+            "release_time": bulletin.release_time,
+            "title": bulletin.title,
+            "content": bulletin.content,
+            "pin_to_top": bulletin.pin_to_top,
+            "files": bulletin.files
+        }
+
+        return result
+
     raise not_found
    
 
@@ -108,15 +119,25 @@ async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
 
 @router.get(
     "/bulletin/particular_course/{course_id}", 
-    response_model=list[BulletinSchema.CourseBulletinRead],
+    response_model=list[BulletinSchema.BulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
     """
     Get all course bulletins in particular course.
     """
+    results = []
     bulletins = await CourseBulletinCrud.get_by_course_id(course_id)
     if bulletins:
-        return bulletins
+        for bulletin in bulletins:
+            results.append({
+                "id": bulletin.id,
+                "publisher": bulletin.publisher_info.name,
+                "release_time": bulletin.release_time,
+                "title": bulletin.title,
+                "pin_to_top": bulletin.pin_to_top
+            })
+
+        return results
     
     raise not_found
