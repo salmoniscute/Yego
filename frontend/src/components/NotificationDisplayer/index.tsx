@@ -18,19 +18,14 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
     const dateConvert = moment(ctx.currNoti.release_time);
     setformattedDate(dateConvert.format("YYYY-MM-DD hh:mm"));
   }, [ctx.currNoti]);
+
   useEffect(() => {
-    if (ctx.notifications?.length > 0) { 
-      console.log(ctx.notifications[props.id - 1]);
-      ctx.set_curr_noti(ctx.notifications[props.id - 1
-      ]);
+    if (ctx.notifications.length) { 
+      for(let i = 0; i < ctx.notifications.length; i++){
+        if(ctx.notifications[i].id === props.id) ctx.set_curr_noti(ctx.notifications[i]);
+      }
     }
-  }, []); 
-  useEffect(() => {
-    if (ctx.notifications?.length > 0) { 
-      console.log(ctx.notifications[props.id - 1]);
-      ctx.set_curr_noti(ctx.notifications[props.id - 1]);
-    }
-  }, [props.id]); 
+  }, [props.id, ctx.notifications]); 
 
   return (
     <div id="notificationDisplayer">

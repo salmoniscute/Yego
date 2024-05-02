@@ -51,8 +51,7 @@ export const NotiContextProvider = (props: propsType) => {
 
   const get_list = () => {
     get_all_notifications("C14096277").then(data => {
-      setnotifications(data);
-      if(currNoti.id === 0) setcurrNoti(data[0]);
+      if(data !== notifications) setnotifications(data);
     });
   }
 
@@ -60,9 +59,7 @@ export const NotiContextProvider = (props: propsType) => {
     setcurrNoti(curr);
     if(curr.have_read === false) {
       try {
-        const haveRead = await read_notification(curr.uid, curr.component_id);
-        console.log(haveRead);
-        get_list();
+        await read_notification(curr.uid, curr.component_id);
       } catch (error) {
         console.error(error);
       }
@@ -74,6 +71,7 @@ export const NotiContextProvider = (props: propsType) => {
       setnotifications(data);
     });
   }
+
 
   return (
     <NotiContext.Provider

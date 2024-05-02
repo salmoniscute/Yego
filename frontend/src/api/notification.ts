@@ -7,7 +7,7 @@ export async function get_all_notifications(uid: String) {
     try {
         const response = await axios.get(url);
         notifications = response.data;
-        console.log(notifications);
+        //console.log(notifications);
     }
     catch {  
         console.log("hi");
