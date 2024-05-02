@@ -60,6 +60,7 @@ export const NotiContextProvider = (props: propsType) => {
     if(curr.have_read === false) {
       try {
         await read_notification(curr.uid, curr.component_id);
+        get_list();
       } catch (error) {
         console.error(error);
       }
