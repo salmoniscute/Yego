@@ -37,7 +37,7 @@ class CourseBulletin(Bulletin):
 
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component", back_populates="course_bulletin")
-    course_info: Mapped["Course"] = relationship("Course", back_populates="course_bulletins")
+    course_info: Mapped["Course"] = relationship("Course", back_populates="course_bulletins", lazy="joined")
 
     __mapper_args__ = {
         "polymorphic_identity": "course_bulletin",

@@ -83,14 +83,13 @@ async def get_notification(uid: str, component_id: str):
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_notification(
-    updateNotification: NotificationSchema.NotificationUpdate,
     uid: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
     """
     Update a notification.
     """
-    await NotificationCrud.update(uid, component_id, updateNotification)
+    await NotificationCrud.update(uid, component_id)
 
     return
 

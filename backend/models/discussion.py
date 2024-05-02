@@ -13,12 +13,13 @@ class Discussion(Component):
     # Relationship to parent
     info: Mapped["Component"] = relationship(
         "Component",
-        back_populates="discussions"
+        back_populates="discussion"
     )
 
     course_info: Mapped["Course"] = relationship(
         "Course",
-        back_populates="discussions"
+        back_populates="discussions",
+        lazy="joined"
     )
 
     # Relationship to child
@@ -50,7 +51,7 @@ class DiscussionTopic(Component):
     # Relationship to parent
     info: Mapped["Component"] = relationship(
         "Component",
-        back_populates="topics"
+        back_populates="topic"
     )
 
     # discussion_info: Mapped["Discussion"] = relationship(
