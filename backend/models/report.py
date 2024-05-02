@@ -10,7 +10,7 @@ class Report(Component):
     id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
 
     # Relationship to parent
-    info: Mapped["Component"] = relationship("Component", back_populates="reports")
+    info: Mapped["Component"] = relationship("Component", back_populates="report")
 
 
     def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:

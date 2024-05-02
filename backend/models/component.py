@@ -30,14 +30,14 @@ class Component(Base):
         passive_deletes=True
     )
 
-    discussions: Mapped[list["Discussion"]] = relationship(
+    discussion: Mapped["Discussion"] = relationship(
         "Discussion",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
 
-    topics: Mapped[list["DiscussionTopic"]] = relationship(
+    topic: Mapped["DiscussionTopic"] = relationship(
         "DiscussionTopic",
         back_populates="info",
         cascade="all, delete-orphan", 
@@ -67,7 +67,7 @@ class Component(Base):
         passive_deletes=True
     )
     
-    reports: Mapped[list["Report"]] = relationship(
+    report: Mapped["Report"] = relationship(
         "Report",
         back_populates="info",
         cascade="all, delete-orphan", 
