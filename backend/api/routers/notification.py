@@ -80,7 +80,8 @@ async def get_notification(uid: str, component_id: str):
 
 @router.put(
     "/notification/particular/{uid}/{component_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
 )
 async def update_notification(
     uid: str = Depends(check_user_id),
@@ -89,10 +90,11 @@ async def update_notification(
     """
     Update a notification.
     """
-    await NotificationCrud.update(uid, component_id)
+    notifications = await NotificationCrud.update(uid, component_id)
+    if notifications:
+        return notifications
 
-    return
-
+    raise not_found
 
 @router.delete(
     "/notification/particular/{uid}/{component_id}",
