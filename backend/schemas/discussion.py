@@ -19,6 +19,7 @@ class DiscussionRead(ComponentRead):
     pass
     # topics: Optional[list[DiscussionTopicRead]] = None
     
+
 class DiscussionOfCourses(ComponentRead):
     subscription: bool
 

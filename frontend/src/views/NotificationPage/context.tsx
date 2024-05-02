@@ -1,6 +1,8 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useContext, ReactNode } from "react";
 import { get_all_notifications, read_all_notifications, read_notification } from "api/notification";
 import { NotificationRead } from "schemas/notification";
+
+import userDataContext from "context/userData";
 
 type propsType = Readonly<{
   children: ReactNode
@@ -35,6 +37,7 @@ const NotiContext = React.createContext<ContextType>({
 });
 
 export const NotiContextProvider = (props: propsType) => {
+  const userData = useContext(userDataContext);
   const [notifications, setnotifications] = useState<Array<NotificationRead>>([]);
   const [currNoti, setcurrNoti] = useState<NotificationRead>({
     id: 0,
@@ -50,7 +53,7 @@ export const NotiContextProvider = (props: propsType) => {
   });
 
   const get_list = () => {
-    get_all_notifications("C14096277").then(data => {
+    if(userData?.uid) get_all_notifications(userData.uid).then(data => {
       if(data !== notifications) setnotifications(data);
     });
   }
@@ -68,7 +71,7 @@ export const NotiContextProvider = (props: propsType) => {
   }
 
   const read_all = () => {
-    read_all_notifications("C14096277").then(data => {
+    if(userData?.uid) read_all_notifications(userData.uid).then(data => {
       setnotifications(data);
     });
   }

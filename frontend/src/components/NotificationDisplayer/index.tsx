@@ -15,8 +15,10 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
   const [formattedDate, setformattedDate] = useState<String>("");
 
   useEffect(() => {
-    const dateConvert = moment(ctx.currNoti.release_time);
-    setformattedDate(dateConvert.format("YYYY-MM-DD hh:mm"));
+    if(ctx.currNoti.release_time != ""){
+      const dateConvert = moment(ctx.currNoti.release_time);
+      setformattedDate(dateConvert.format("YYYY-MM-DD hh:mm"));
+    }
   }, [ctx.currNoti]);
 
   useEffect(() => {
@@ -31,8 +33,8 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
     <div id="notificationDisplayer">
       <div>
         <h2>{ctx.currNoti.course_name}</h2>
-        <h1>{ctx.currNoti.title}</h1>
-        <h2>{ctx.currNoti.publisher} 發佈於 {formattedDate}</h2>
+        <h1>{ctx.currNoti.title ? ctx.currNoti.title : "尚無通知"}</h1>
+        <h2>{ctx.currNoti.publisher} {formattedDate ? "發佈於" : ""} {formattedDate ? formattedDate : ""}</h2>
         <div className="content"><p>{ctx.currNoti.content}</p></div>
       </div>
     </div>
