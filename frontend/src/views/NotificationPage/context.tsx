@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactNode } from "react";
-import { get_all_notifications, read_all_notifications } from "api/notification";
+import { get_all_notifications, read_all_notifications, read_notification } from "api/notification";
 import { NotificationRead } from "schemas/notification";
 
 type propsType = Readonly<{
@@ -48,12 +48,26 @@ export const NotiContextProvider = (props: propsType) => {
   const get_list = () => {
     get_all_notifications("C14096277").then(data => {
       setnotifications(data);
-      setcurrNoti(data[0])
+      if(currNoti.id === 0) setcurrNoti(data[0]);
     });
   }
 
-  const set_curr_noti = (curr: NotificationRead) => {
+  const set_curr_noti = async (curr: NotificationRead) => {
     setcurrNoti(curr);
+    if(curr.have_read === false) {
+      try {
+        const haveRead = await read_notification("C14096277", curr.id);
+        console.log(haveRead);
+        setcurrNoti(prevState => ({
+            ...prevState,
+            have_read: haveRead
+        }));
+        console.log(currNoti);
+        get_list();
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 
   const read_all = () => {

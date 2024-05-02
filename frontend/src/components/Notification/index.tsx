@@ -1,5 +1,5 @@
 import { ReactElement, useState, useEffect, useContext } from "react";
-
+import { Link } from "react-router-dom";
 import { NotificationRead } from "schemas/notification";
 import NotiContext from "../../views/NotificationPage/context";
 import './index.scss';
@@ -36,6 +36,7 @@ export default function Notification(props: propsType): ReactElement{
 
   return <div>
     <button onClick={() => ctx.set_curr_noti(props.notification)} id="notification">
+      <Link to={`/notification/${props.notification.id}`}>
       <div className="left">
         <img src={`/assets/${props.notification.icon_type}-icon.svg`} alt={props.notification.icon_type}></img>
         <div className="detail">
@@ -45,6 +46,7 @@ export default function Notification(props: propsType): ReactElement{
         </div>
       </div>
       {notification.have_read === false ? <FaCircle className="circle-sign"/> : <></>}
+      </Link>
     </button>
   </div>
 }
