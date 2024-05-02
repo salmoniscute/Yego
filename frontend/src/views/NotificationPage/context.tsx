@@ -18,6 +18,8 @@ const NotiContext = React.createContext<ContextType>({
   notifications: [],
   currNoti: {
     id: 0,
+    uid: "",
+    component_id: 0,
     publisher: "",
     course_name: "",
     release_time: "",
@@ -36,6 +38,8 @@ export const NotiContextProvider = (props: propsType) => {
   const [notifications, setnotifications] = useState<Array<NotificationRead>>([]);
   const [currNoti, setcurrNoti] = useState<NotificationRead>({
     id: 0,
+    uid: "",
+    component_id: 0,
     publisher: "",
     course_name: "",
     release_time: "",
@@ -56,13 +60,8 @@ export const NotiContextProvider = (props: propsType) => {
     setcurrNoti(curr);
     if(curr.have_read === false) {
       try {
-        const haveRead = await read_notification("C14096277", curr.id);
+        const haveRead = await read_notification(curr.uid, curr.component_id);
         console.log(haveRead);
-        setcurrNoti(prevState => ({
-            ...prevState,
-            have_read: haveRead
-        }));
-        console.log(currNoti);
         get_list();
       } catch (error) {
         console.error(error);

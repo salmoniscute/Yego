@@ -35,18 +35,18 @@ export default function Notification(props: propsType): ReactElement{
   }); 
 
   return <div>
-    <button onClick={() => ctx.set_curr_noti(props.notification)} id="notification">
-      <Link to={`/notification/${props.notification.id}`}>
-      <div className="left">
-        <img src={`/assets/${props.notification.icon_type}-icon.svg`} alt={props.notification.icon_type}></img>
-        <div className="detail">
-          <h2>{props.notification.course_name}</h2>
-          <h1>{props.notification.title}</h1>
-          <p>{days}天{hours}小時{minutes}分鐘{seconds}秒前</p> 
+    <Link to={`/notification/${props.notification.id}`} id="notification">
+      <button onClick={() => ctx.set_curr_noti(props.notification)}>
+        <div className="left">
+          <img src={`/assets/${props.notification.icon_type}-icon.svg`} alt={props.notification.icon_type}></img>
+          <div className="detail">
+            <h2>{props.notification.course_name}</h2>
+            <h1>{props.notification.title}</h1>
+            <p>{days}天{hours}小時{minutes}分鐘{seconds}秒前</p> 
+          </div>
         </div>
-      </div>
-      {notification.have_read === false ? <FaCircle className="circle-sign"/> : <></>}
-      </Link>
-    </button>
+        {notification.have_read === false ? <FaCircle className="circle-sign"/> : <></>}
+      </button>
+    </Link>
   </div>
 }

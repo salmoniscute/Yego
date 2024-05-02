@@ -13,6 +13,8 @@ export interface NotificationCreate {
 
 export interface NotificationRead {
   id: number,
+  uid: string,
+  component_id: number,
   publisher: string,
   course_name: string,
   release_time: string,

@@ -38,7 +38,7 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
         <h2>{ctx.currNoti.course_name}</h2>
         <h1>{ctx.currNoti.title}</h1>
         <h2>{ctx.currNoti.publisher} 發佈於 {formattedDate}</h2>
-        <p>{ctx.currNoti.content}</p>
+        <div className="content"><p>{ctx.currNoti.content}</p></div>
       </div>
     </div>
   );
