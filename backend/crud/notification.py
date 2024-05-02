@@ -5,14 +5,29 @@ from database.mysql import crud_class_decorator
 from models.notification import Notification as NotificationModel
 from schemas import notification as NotificationSchema
 
-type_mapping = {
-        "course_bulletin": "announcement",
-        "report": "announcement",
-        "course_material": "assignment",
-        "course_assignment": "assignment",
-        "discussion": "discussion",
-        "discussion_topic": "discussion"
+icon_type = {
+    "course_bulletin": "announcement",
+    "report": "announcement",
+    "course_material": "assignment",
+    "course_assignment": "assignment",
+    "discussion": "discussion",
+    "discussion_topic": "discussion"
+}
+
+type_actions = {
+    "course_bulletin": {
+        "refresh": ["course_bulletin"],
+        "course_name": lambda n: f"公告 - {n.component_info.course_bulletin.course_info.name}"
+    },
+    "report": {
+        "refresh": ["report"],
+        "course_name": lambda n: "問題回報區"
+    },
+    "discussion": {
+        "refresh": ["discussion"],
+        "course_name": lambda n: f"討論區 - {n.component_info.discussion.course_info.name}"
     }
+}
 
 
 @crud_class_decorator
@@ -43,19 +58,39 @@ class NotificationCrudManager:
 
         return [notification[0] for notification in result.all()]
     
-    async def update(self, uid: str, component_id: str, updateNotification: NotificationSchema.NotificationUpdate, db_session: AsyncSession):
-        updateNotification_dict = updateNotification.model_dump(exclude_none=True)
-        if updateNotification_dict:
-            stmt = (
-                update(NotificationModel)
-                .where(NotificationModel.uid == uid)
-                .where(NotificationModel.component_id == component_id)
-                .values(updateNotification_dict)
-            )
-            await db_session.execute(stmt)
-            await db_session.commit()
+    async def update(self, uid: str, component_id: str, db_session: AsyncSession):
+        stmt1 = (
+            update(NotificationModel)
+            .where(NotificationModel.uid == uid)
+            .where(NotificationModel.component_id == component_id)
+            .values({"have_read": True})
+        )
+        await db_session.execute(stmt1)
 
-        return 
+        stmt2 = select(NotificationModel).where(NotificationModel.uid == uid)
+        result = await db_session.execute(stmt2)
+
+        _list = []
+        for notification in result:
+            action = type_actions[notification[0].type]
+            await db_session.refresh(notification[0].component_info, action["refresh"])
+            
+            _list.append({
+                "id": notification[0].id,
+                "uid": notification[0].uid,
+                "component_id": notification[0].component_id,
+                "publisher": notification[0].user_info.name,
+                "course_name": action["course_name"](notification[0]),
+                "release_time": notification[0].release_time,
+                "title": notification[0].component_info.title,
+                "content": notification[0].component_info.content,
+                "have_read": notification[0].have_read,
+                "icon_type": icon_type[notification[0].type]
+            })
+
+        await db_session.commit() 
+
+        return _list
     
     async def delete(self, uid: str, component_id: str, db_session: AsyncSession):
         stmt = (
@@ -74,16 +109,20 @@ class NotificationCrudManager:
 
         _list = []
         for notification in result:
+            action = type_actions[notification[0].type]
+            await db_session.refresh(notification[0].component_info, action["refresh"])
+            
             _list.append({
                 "id": notification[0].id,
+                "uid": notification[0].uid,
+                "component_id": notification[0].component_id,
                 "publisher": notification[0].user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
+                "course_name": action["course_name"](notification[0]),
                 "release_time": notification[0].release_time,
                 "title": notification[0].component_info.title,
                 "content": notification[0].component_info.content,
                 "have_read": notification[0].have_read,
-                "icon_type": type_mapping[notification[0].type]
+                "icon_type": icon_type[notification[0].type]
             })
 
         return _list
@@ -99,21 +138,26 @@ class NotificationCrudManager:
         
         stmt2 = select(NotificationModel).where(NotificationModel.uid == uid)
         result = await db_session.execute(stmt2)
-        await db_session.commit()
 
         _list = []
         for notification in result:
+            action = type_actions[notification[0].type]
+            await db_session.refresh(notification[0].component_info, action["refresh"])
+
             _list.append({
                 "id": notification[0].id,
+                "uid": notification[0].uid,
+                "component_id": notification[0].component_id,
                 "publisher": notification[0].user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
+                "course_name": action["course_name"](notification[0]),
                 "release_time": notification[0].release_time,
                 "title": notification[0].component_info.title,
                 "content": notification[0].component_info.content,
                 "have_read": notification[0].have_read,
-                "icon_type": type_mapping[notification[0].type]
+                "icon_type": icon_type[notification[0].type]
             })
+
+        await db_session.commit()
 
         return _list
     

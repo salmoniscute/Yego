@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/notification", 
-    response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT,
     deprecated=True
 )
 async def create_notification(
@@ -81,20 +80,21 @@ async def get_notification(uid: str, component_id: str):
 
 @router.put(
     "/notification/particular/{uid}/{component_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
 )
 async def update_notification(
-    updateNotification: NotificationSchema.NotificationUpdate,
     uid: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
     """
     Update a notification.
     """
-    await NotificationCrud.update(uid, component_id, updateNotification)
+    notifications = await NotificationCrud.update(uid, component_id)
+    if notifications:
+        return notifications
 
-    return
-
+    raise not_found
 
 @router.delete(
     "/notification/particular/{uid}/{component_id}",

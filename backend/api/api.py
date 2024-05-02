@@ -7,7 +7,6 @@ from config import HOST, PORT
 from .routers import (
     info_router,
     auth_router,
-    component_router,
     course_router,
     course_bulletin_router,
     discussion_router,
@@ -21,6 +20,7 @@ from .routers import (
     website_bulletin_router,
     report_router,
     course_material_router,
+    report_reply_router
 )
 
 app = FastAPI()
@@ -29,7 +29,6 @@ app.include_router(info_router)
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(course_router)
-app.include_router(component_router)
 app.include_router(selected_course_router)
 app.include_router(file_router)
 app.include_router(course_bulletin_router)
@@ -41,6 +40,7 @@ app.include_router(subscription_router)
 app.include_router(notification_router)
 app.include_router(report_router)
 app.include_router(course_material_router)
+app.include_router(report_reply_router)
 
 
 

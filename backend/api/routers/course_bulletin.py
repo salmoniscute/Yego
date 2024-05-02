@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from .depends import check_component_id, check_course_id, check_user_id
-from crud.bulletin import CourseBulletinCrudManager
+from crud.course_bulletin import CourseBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -45,7 +44,6 @@ async def create_course_bulletin(
 
 @router.get(
     "/bulletin/all", 
-    response_model=list[BulletinSchema.CourseBulletinRead],
     status_code=status.HTTP_200_OK,
     deprecated=True
 )

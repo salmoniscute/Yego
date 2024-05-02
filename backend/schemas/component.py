@@ -21,11 +21,13 @@ class ComponentCreate(BaseModel):
         }
     }
 
+class ComponentReadID(BaseModel):
+    id: int
+    
 
 class ComponentRead(BaseModel):
     id: int
     uid: str
-    release_time: datetime
     title: str
     content: str
 

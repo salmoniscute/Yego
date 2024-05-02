@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from .depends import check_component_id, check_user_id
-from crud.bulletin import WebsiteBulletinCrudManager
+from crud.website_bulletin import WebsiteBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.WebsiteBulletinRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_website_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -38,9 +37,8 @@ async def create_website_bulletin(
     - **content**
     - **pin_to_top**
     """
-    bulletin = await WebsiteBulletinCrud.create(uid, newBulletin)
-    
-    return bulletin
+    await WebsiteBulletinCrud.create(uid, newBulletin)
+    return
 
 
 @router.get(

@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/course", 
-    response_model=CourseSchema.CourseCreate,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT,
     response_description="The course has been successfully created."
 )
 async def create_course(

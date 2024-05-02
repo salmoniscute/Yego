@@ -1,9 +1,10 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 
 from .depends import check_component_id
 from crud.file import FileCrudManager
 from schemas import file as FileSchema
-import os
+
 not_found = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
     detail="Component does not exist"
@@ -23,7 +24,7 @@ router = APIRouter(
 
 @router.post(
     "/file", 
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT,
     response_description="The file has been successfully created."
 )
 async def create_files(
@@ -32,7 +33,7 @@ async def create_files(
 ):
     out_file_path = f"upload/component/{component_id}/"
     if not os.path.isdir(out_file_path):
-            os.makedirs(out_file_path)
+        os.makedirs(out_file_path)
     for file in files:
         with open(out_file_path + file.filename, 'wb') as out_file:
             file_path = "backend/" + out_file_path + file.filename
@@ -79,7 +80,6 @@ async def get_file(file_id: str):
     return file
 
 
-
 @router.delete(
     "/file/{file_id}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -96,6 +96,3 @@ async def delete_file(file_id: str):
     await FileCrud.delete(file_id)
 
     return
-
-
-

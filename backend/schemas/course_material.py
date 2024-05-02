@@ -1,5 +1,6 @@
 from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
 
+
 class CourseMaterialCreate(ComponentCreate):
     model_config = {
         "json_schema_extra": {
@@ -13,8 +14,10 @@ class CourseMaterialCreate(ComponentCreate):
         }
     }
     
+
 class CourseMaterialRead(ComponentRead):
     pass
+
 
 class CourseMaterialUpdate(ComponentUpdate):
     pass

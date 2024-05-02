@@ -37,6 +37,8 @@ import CoursePage from "views/CoursePage";
 import LandingPage from "views/LandingPage";
 import ReportPage from "views/ReportPage";
 
+import TeamPage from "views/TeamPage";
+
 import NotificationPage from "views/NotificationPage";
 
 import getTextOrigin from "utils/getText";
@@ -115,6 +117,7 @@ export default function App(): ReactElement {
                         <Route path="/personal" element={<PersonalPage/>} />
                         <Route path="/reportBug" element={<ReportPage />} />  
                         <Route path="/notification/:id" element={<NotificationPage />} />
+                        <Route path="/salmontest" element={<TeamPage/>} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />

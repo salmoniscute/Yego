@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class NotificationCreate(BaseModel):
     have_read: bool
     release_time: datetime
@@ -30,6 +31,8 @@ class NotificationRead(BaseModel):
 
 class NotificationReadByUid(BaseModel):
     id: int
+    uid: str
+    component_id: int
     publisher: str
     course_name: str
     release_time: datetime
@@ -37,17 +40,3 @@ class NotificationReadByUid(BaseModel):
     content: str
     have_read: bool
     icon_type: str
-    
-
-class NotificationUpdate(BaseModel):
-    have_read: bool
-    
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                { 
-                    "have_read": True
-                }
-            ]
-        }
-    }

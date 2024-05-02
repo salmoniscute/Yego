@@ -4,6 +4,7 @@ from auth.passwd import get_password_hash
 from models.user import User as UserModel
 from models.course import Course as CourseModel
 from models.selected_course import SelectedCourse as SelectedCourseModel
+from models.component import Component as ComponentModel
 from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBulletin as WebsiteBulletinModel
 from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
@@ -15,6 +16,7 @@ model = {
     "users": UserModel,
     "courses": CourseModel,
     "selected_courses": SelectedCourseModel,
+    "components": ComponentModel,
     "course_bulletins": CourseBulletinModel,
     "website_bulletins": WebsiteBulletinModel,
     "files": FileModel,

@@ -1,6 +1,5 @@
 from .auth import router as auth_router
 from .info import router as info_router
-from .component import router as component_router
 from .course import router as course_router
 from .course_bulletin import router as course_bulletin_router
 from .discussion import router as discussion_router
@@ -14,3 +13,4 @@ from .website_bulletin import router as website_bulletin_router
 from .report import router as report_router
 from .course_material import router as course_material_router
 from .discussion_topic_reply import router as discussion_topic_reply_router
+from .report_reply import router as report_reply_router
