@@ -59,16 +59,38 @@ class NotificationCrudManager:
         return [notification[0] for notification in result.all()]
     
     async def update(self, uid: str, component_id: str, db_session: AsyncSession):
-        stmt = (
+        stmt1 = (
             update(NotificationModel)
             .where(NotificationModel.uid == uid)
             .where(NotificationModel.component_id == component_id)
             .values({"have_read": True})
         )
-        await db_session.execute(stmt)
-        await db_session.commit()
+        await db_session.execute(stmt1)
 
-        return 
+        stmt2 = select(NotificationModel).where(NotificationModel.uid == uid)
+        result = await db_session.execute(stmt2)
+
+        _list = []
+        for notification in result:
+            action = type_actions[notification[0].type]
+            await db_session.refresh(notification[0].component_info, action["refresh"])
+            
+            _list.append({
+                "id": notification[0].id,
+                "uid": notification[0].uid,
+                "component_id": notification[0].component_id,
+                "publisher": notification[0].user_info.name,
+                "course_name": action["course_name"](notification[0]),
+                "release_time": notification[0].release_time,
+                "title": notification[0].component_info.title,
+                "content": notification[0].component_info.content,
+                "have_read": notification[0].have_read,
+                "icon_type": icon_type[notification[0].type]
+            })
+
+        await db_session.commit() 
+
+        return _list
     
     async def delete(self, uid: str, component_id: str, db_session: AsyncSession):
         stmt = (
