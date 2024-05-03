@@ -109,6 +109,18 @@
             "release_time": "2024-03-19 16:10:05",
             "title": "報告二",
             "content": "No content"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-09 16:10:05",
+            "title": "f",
+            "content": "No content"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-10 16:10:05",
+            "title": "f",
+            "content": "No content"
         }
     ],
     "website_bulletins": [
@@ -157,19 +169,13 @@
   ],
     "discussions": [
         {
-            "uid": "C14096277",
-            "release_time": "2024-03-09 16:10:05",
-            "title": "討論區一",
-            "content": "No content",
+            "id": 10,
             "course_id": "CSE101"
         }
     ],
     "discussion_topics": [
         {
-            "uid": "C14096277",
-            "release_time": "2024-03-10 16:10:05",
-            "title": "討論主題一",
-            "content": "No content",
+            "id": 11,
             "discussion_id": 10
         }
     ],

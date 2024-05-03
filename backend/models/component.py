@@ -43,6 +43,13 @@ class Component(Base):
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
+    
+    discussion_reply: Mapped["DiscussionTopicReply"] = relationship(
+        "DiscussionTopicReply",
+        back_populates="info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
     files: Mapped[list["File"]] = relationship(
         "File",
@@ -84,7 +91,7 @@ class Component(Base):
     course_materials: Mapped[list["CourseMaterial"]] = relationship(
         "CourseMaterial",
         back_populates="info",
-        cascade="all, delete-orphan", 
+        cascade="all, delete-orphan",
         passive_deletes=True
     )
 
