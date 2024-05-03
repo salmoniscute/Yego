@@ -45,6 +45,21 @@ async def check_component_id(component_id: int):
     return component_id
 
 
+async def check_course_bulletin_id(course_bulletin_id: int):
+    bulletin = await CourseBulletinCrud.get(course_bulletin_id)
+    if not bulletin:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course bulletin does not exist")
+    
+    return course_bulletin_id
+
+
+async def check_website_bulletin_id(website_bulletin_id: int):
+    bulletin = await WebsiteBulletinCrud.get(website_bulletin_id)
+    if not bulletin:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Website bulletin does not exist")
+    
+    return website_bulletin_id
+
 async def check_report_id(report_id: int):
     report = await ReportCrud.get(report_id)
     if not report:
