@@ -21,6 +21,7 @@ import getTextOrigin, { localMap } from "utils/getText";
 
 import "./index.scss";
 import NotificationColumn from "components/NotificationColumn";
+import { NotiContextProvider } from "../../views/NotificationPage/context";
 
 type propsType = Readonly<{
     setLanguage: Dispatch<SetStateAction<string>>,
@@ -83,7 +84,8 @@ export default function NavigateBar(props: propsType): ReactElement {
                     {getText("login")}
                 </Link> : <div className="notification">
                     <p className="ms" onClick={DisplayNotification}>notifications</p>
-                    <div className="notificationBlock">{display === true ? <NotificationColumn seeAllBtn={true} /> : <></>}</div>
+                    <div className="notificationBlock">{display === true ? 
+                    <NotiContextProvider><NotificationColumn seeAllBtn={true}/></NotiContextProvider> : <></>}</div>
                 </div>
             }
             {
