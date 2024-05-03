@@ -6,4 +6,5 @@ export interface User {
     department: string,
     email: string,
     introduction: string,
+    avatar: string
 };

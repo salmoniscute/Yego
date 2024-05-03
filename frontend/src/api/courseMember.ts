@@ -10,6 +10,7 @@ export async function getCourseMemberList() : Promise<Array<OtherUser>>{
             name: "張老師",
             role: "教授",
             department: "歷史系",
+            avatar: ""
 
         },
         {
@@ -17,14 +18,14 @@ export async function getCourseMemberList() : Promise<Array<OtherUser>>{
             name: "張學生",
             role: "高階助教",
             department: "歷史系",
-
+            avatar: ""
         },
         {
             uid: "F74106050",
             name: "Franziska",
             role: "學生",
             department: "不分系學位學程",
-
+            avatar: ""
         }
     ]
     return result;
