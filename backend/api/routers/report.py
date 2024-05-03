@@ -20,6 +20,7 @@ router = APIRouter(
     prefix="/api"
 )
 
+
 @router.post(
     "/report", 
     status_code=status.HTTP_204_NO_CONTENT
@@ -40,7 +41,7 @@ async def create_report(
 
 @router.get(
     "/reports",
-    response_model=list[ReportSchema.ReportRead]
+    response_model=list[ReportSchema.ReportListRead]
 )
 async def get_all_reports():
     """ 
@@ -55,7 +56,7 @@ async def get_all_reports():
 
 @router.get(
     "/report/{report_id}", 
-    response_model=ReportSchema.ReportRead
+    response_model=ReportSchema.ReportReadByID
 )
 async def get_report(
     report_id: int = Depends(check_component_id)

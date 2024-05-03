@@ -1,17 +1,25 @@
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from crud.component import ComponentCrudManager
 from database.mysql import crud_class_decorator
 from models.component import Component as ComponentModel
 from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from schemas import report as ReportSchema
 
+ComponentCrud = ComponentCrudManager()
+
 
 @crud_class_decorator
 class ReportCrudManager:
     async def create(self, uid: str, newReport: ReportSchema.ReportCreate, db_session: AsyncSession):
-        newReport_dict = newReport.model_dump()
-        report = ReportModel(**newReport_dict, uid=uid)
+        newComponent_dict = newReport.model_dump()
+
+        # Add Component
+        component = await ComponentCrud.create(uid, newComponent_dict)
+
+        # Add Report
+        report = ReportModel(id=component.id)
         db_session.add(report)
         await db_session.commit()
 
@@ -21,33 +29,48 @@ class ReportCrudManager:
         stmt = select(ReportModel).where(ReportModel.id == report_id)
         result = await db_session.execute(stmt)
         report = result.first()
+    
+        obj = {}
+        if report:
+            await db_session.refresh(report[0], ["info"])
+            obj = {
+                "id": report[0].id,
+                "publisher": report[0].info.publisher_info.name,
+                "publisher_avatar": report[0].info.publisher_info.avatar,
+                "release_time": report[0].info.release_time,
+                "title": report[0].info.title,
+                "content": report[0].info.content,
+                "files": report[0].info.files
+            }
         
-        return report[0] if report else None
-
+        return obj
+    
     async def get_all(self, db_session: AsyncSession):
         stmt = select(ReportModel)
         result = await db_session.execute(stmt)
-        result = result.unique()
-        output = []
-        for report in result.all():
+        
+        _list = []
+        for report in result:
+            await db_session.refresh(report[0], ["info"])
             stmt = select(ReportReplyModel).where(ReportReplyModel.root_id == report[0].id)
             record = await db_session.execute(stmt)
-            replies = len(record.all())
-            r = {
+
+            _list.append({
                 "id": report[0].id,
-                "title": report[0].title,
-                "release_time": report[0].release_time,
-                "reply_count": replies
-            }
-            output.append(r)
-        return output
+                "release_time": report[0].info.release_time,
+                "title": report[0].info.title,
+                "reply_number": len(record.all())
+            })
+        
+        return _list
 
     async def update(self, report_id: str, updateReport: ReportSchema.ReportUpdate, db_session: AsyncSession):
-        updateReport_dict = updateReport.model_dump(exclude_none=True)
-        if updateReport_dict:
-            stmt = update(ComponentModel).where(ComponentModel.id == report_id).values(**updateReport_dict)
+        updateComponent_dict = updateReport.model_dump(exclude_none=True)
+        if updateComponent_dict:
+            stmt = await ComponentCrud.update(report_id, updateComponent_dict)
             await db_session.execute(stmt)
-            await db_session.commit()
+            
+        await db_session.commit()
 
         return
     

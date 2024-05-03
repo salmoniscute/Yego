@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
-from schemas.component import ComponentCreate, ComponentReadID, ComponentReadWithFile, ComponentUpdate
-from schemas import file as FileSchema
+from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate
+from schemas.file import FileRead
 
 
 class BulletinCreate(ComponentCreate):
@@ -36,7 +36,7 @@ class BulletinReadByID(ComponentReadID):
     title: str
     content: str
     pin_to_top: bool
-    files: Optional[list[FileSchema.FileRead]] = None
+    files: Optional[list[FileRead]] = None
 
 
 class BulletinUpdate(ComponentUpdate):

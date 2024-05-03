@@ -11,6 +11,7 @@ from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
+from models.report import Report as ReportModel
 
 model = {
     "users": UserModel,
@@ -25,6 +26,7 @@ model = {
     "course_materials": CourseMaterialModel,
     "discussions": DiscussionModel,
     "discussion_topics": DiscussionTopicModel,
+    "reports": ReportModel
 }
 
 

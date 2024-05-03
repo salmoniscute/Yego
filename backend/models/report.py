@@ -1,11 +1,11 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.base import BaseType
+from models.base import Base, BaseType
 from models.component import Component
 
 
-class Report(Component):
+class Report(Base):
     __tablename__ = "Report"
     id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
 
@@ -13,14 +13,12 @@ class Report(Component):
     info: Mapped["Component"] = relationship("Component", back_populates="report")
 
 
-    def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:
-        self.uid = uid
-        self.release_time = release_time
-        self.title = title
-        self.content = content
+    def __init__(self, id: int) -> None:
+        self.id = id
 
     def __repr__(self) -> str:
-        return f"Report(uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content})"
+        return f"Report(id={self.id})"
+
 
 class ReportReply(Component):
     __tablename__ = "ReportReply"

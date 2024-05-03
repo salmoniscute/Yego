@@ -1,5 +1,8 @@
-from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate
-from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+
+from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate, ComponentRead
+from schemas.file import FileRead
 
 
 class ReportCreate(ComponentCreate):    
@@ -16,12 +19,20 @@ class ReportCreate(ComponentCreate):
     }
 
 
-class ReportRead(BaseModel):
-    id: int
-    release_time: str
+class ReportListRead(ComponentReadID):
+    release_time: datetime
     title: str
-    reply_count: int
+    reply_number: int
 
+
+class ReportReadByID(ComponentReadID):
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
+    files: Optional[list[FileRead]] = None
+    
       
 class ReportUpdate(ComponentUpdate):
     pass
