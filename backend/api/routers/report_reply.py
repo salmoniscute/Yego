@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_user_id
-from crud.report import ReportReplyCrudManager
+from .depends import check_report_id, check_reply_id, check_user_id
+from crud.report_reply import ReportReplyCrudManager
 from schemas import report as ReportSchema
 
 not_found = HTTPException(
@@ -20,48 +20,34 @@ router = APIRouter(
     prefix="/api"
 )
 
+
 @router.post(
     "/report_reply", 
-    response_model=ReportSchema.ReportReplyCreate,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_report_reply(
     newReply: ReportSchema.ReportReplyCreate,
     uid: str = Depends(check_user_id),
-    root_id: int = Depends(check_component_id)
+    root_id: int = Depends(check_report_id),
+    parent_id: int = Depends(check_reply_id)
 ):
     """
     Create a report reply with the following information:
     - **release_time**
-    - **title**
     - **content**
     """
-    reply = await ReportReplyCrud.create(uid, root_id, newReply)
+    reply = await ReportReplyCrud.create(uid, root_id, parent_id, newReply)
 
     return reply
 
-@router.get(
-    "/report_replies",
-    response_model=list[ReportSchema.ReportReplyRead],
-    deprecated=True
-)
-async def get_all_report_replies():
-    """ 
-    Get all report replies.
-    """
-    replies = await ReportReplyCrud.get_all()
-    if replies:
-        return replies  
-    
-    raise not_found
 
 @router.get(
     "/report_reply/{reply_id}", 
-    response_model=ReportSchema.ReportReplyRead
+    response_model=ReportSchema.ReportReplyReadByID
 )
 async def get_report_reply(reply_id: int):
     """
-    Get a report reply by its id.
+    Get one report reply.
     """
     reply = await ReportReplyCrud.get(reply_id)
     if reply:
@@ -69,20 +55,22 @@ async def get_report_reply(reply_id: int):
     
     raise not_found
 
+
 @router.put(
     "/report_reply/{reply_id}",
-    response_model=ReportSchema.ReportReplyRead
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_report_reply(
     updateReply: ReportSchema.ReportUpdate,
-    reply_id: int = Depends(check_component_id)
+    reply_id: int = Depends(check_reply_id)
 ):
     """
-    Update a report reply by its id.
+    Update a report reply.
     """
-    reply = await ReportReplyCrud.update(reply_id, updateReply)
+    await ReportReplyCrud.update(reply_id, updateReply)
 
-    return reply
+    return
+
 
 @router.delete(
     "/report_reply/{reply_id}",
@@ -90,7 +78,7 @@ async def update_report_reply(
 )
 async def delete_report_reply(reply_id: int):
     """
-    Delete a report reply by its id.
+    Delete a report reply.
     """
     await ReportReplyCrud.delete(reply_id)
 

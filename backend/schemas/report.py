@@ -1,7 +1,8 @@
 from datetime import datetime
+from pydantic import BaseModel
 from typing import Optional
 
-from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate, ComponentRead
+from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate
 from schemas.file import FileRead
 
 
@@ -18,11 +19,28 @@ class ReportCreate(ComponentCreate):
         }
     }
 
-
-class ReportListRead(ComponentReadID):
+  
+class ReportReplyCreate(BaseModel):
     release_time: datetime
-    title: str
-    reply_number: int
+    content: str
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "release_time": "2021-09-01T00:00:00",
+                    "content": "This is the first report reply."
+                }
+            ]
+        }
+    }
+
+    
+class ReportReplyReadByID(ComponentReadID):
+    parent_id: int
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    content: str
 
 
 class ReportReadByID(ComponentReadID):
@@ -32,28 +50,18 @@ class ReportReadByID(ComponentReadID):
     title: str
     content: str
     files: Optional[list[FileRead]] = None
-    
-      
+    replies: Optional[list[ReportReplyReadByID]] = None
+
+
+class ReportListRead(ComponentReadID):
+    release_time: datetime
+    title: str
+    reply_number: int
+
+
 class ReportUpdate(ComponentUpdate):
     pass
 
-  
-class ReportReplyCreate(ComponentCreate):
-    parent_id: int
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                {
-                    "release_time": "2021-09-01T00:00:00",
-                    "title": "Report Reply 1",
-                    "content": "This is the first report reply.",
-                    "parent_id": 1
-                }
-            ]
-        }
-    }
 
-    
-class ReportReplyRead(ComponentRead):
-    parent_id: int
-    root_id: int
+class ReportReplyUpdate(ComponentUpdate):
+    pass

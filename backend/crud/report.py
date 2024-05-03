@@ -33,6 +33,7 @@ class ReportCrudManager:
         obj = {}
         if report:
             await db_session.refresh(report[0], ["info"])
+
             obj = {
                 "id": report[0].id,
                 "publisher": report[0].info.publisher_info.name,
@@ -40,9 +41,24 @@ class ReportCrudManager:
                 "release_time": report[0].info.release_time,
                 "title": report[0].info.title,
                 "content": report[0].info.content,
-                "files": report[0].info.files
+                "files": report[0].info.files,
+                "replies": []
             }
-        
+
+            stmt = select(ReportReplyModel).where(ReportReplyModel.root_id == report[0].id)
+            replies = await db_session.execute(stmt)
+
+            for reply in replies:
+                await db_session.refresh(reply[0], ["info"])
+                obj["replies"].append({
+                    "id": reply[0].id,
+                    "parent_id": reply[0].parent_id,
+                    "publisher": reply[0].info.publisher_info.name,
+                    "publisher_avatar": reply[0].info.publisher_info.avatar,
+                    "release_time": reply[0].info.release_time,
+                    "content": reply[0].info.content
+                })
+
         return obj
     
     async def get_all(self, db_session: AsyncSession):
@@ -67,55 +83,12 @@ class ReportCrudManager:
     async def update(self, report_id: str, updateReport: ReportSchema.ReportUpdate, db_session: AsyncSession):
         updateComponent_dict = updateReport.model_dump(exclude_none=True)
         if updateComponent_dict:
-            stmt = await ComponentCrud.update(report_id, updateComponent_dict)
-            await db_session.execute(stmt)
-            
-        await db_session.commit()
+            await ComponentCrud.update(report_id, updateComponent_dict)
 
         return
     
     async def delete(self, id: int, db_session: AsyncSession):
         stmt = delete(ComponentModel).where(ComponentModel.id == id)
-        await db_session.execute(stmt)
-        await db_session.commit()
-
-        return
-
-@crud_class_decorator
-class ReportReplyCrudManager:
-    async def create(self, uid: str, root_id: int, newReportReply: ReportSchema.ReportReplyCreate, db_session: AsyncSession):
-        newReportReply_dict = newReportReply.model_dump()
-        reply = ReportReplyModel(**newReportReply_dict, uid=uid, root_id=root_id)
-        db_session.add(reply)
-        await db_session.commit()
-
-        return reply
-
-    async def get(self, reply_id: int, db_session: AsyncSession):
-        stmt = select(ReportReplyModel).where(ReportReplyModel.id == reply_id)
-        result = await db_session.execute(stmt)
-        reportReply = result.first()
-        
-        return reportReply[0] if reportReply else None
-
-    async def get_all(self, db_session: AsyncSession):
-        stmt = select(ReportReplyModel)
-        result = await db_session.execute(stmt)
-        result = result.unique()
-        
-        return [reply[0] for reply in result.all()]
-
-    async def update(self, reply_id: int, updateReportReply: ReportSchema.ReportUpdate, db_session: AsyncSession):
-        updateReportReply_dict = updateReportReply.model_dump(exclude_none=True)
-        if updateReportReply_dict:
-            stmt = update(ComponentModel).where(ComponentModel.id == reply_id).values(**updateReportReply_dict)
-            await db_session.execute(stmt)
-            await db_session.commit()
-
-        return
-    
-    async def delete(self, reply_id: int, db_session: AsyncSession):
-        stmt = delete(ComponentModel).where(ComponentModel.id == reply_id)
         await db_session.execute(stmt)
         await db_session.commit()
 
