@@ -22,11 +22,16 @@ const HelpList: Array<HelpInfo> = [
     },
     {
         id: "1",
-        title: "常見問題",
+        title: "操作手冊",
         description: "操作教學說明"
     },
     {
         id: "2",
+        title: "常見問題",
+        description: "操作教學說明"
+    },
+    {
+        id: "3",
         title: "問題說明",
         description: "操作教學說明"
     },

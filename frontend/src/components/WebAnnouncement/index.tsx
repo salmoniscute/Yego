@@ -14,6 +14,11 @@ type propsType = Readonly<{
     webAnnouncementList: Array<WebAnnouncementInfo>,
 }>;
 
+function timestampToString(timestamp: number): string {
+    let date = new Date(timestamp);
+    return `${date.getFullYear()}-${date.getMonth().toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+}
+
 export default function WebAnnouncement(props: propsType): ReactElement {
     const {
         webAnnouncementList,
@@ -23,19 +28,16 @@ export default function WebAnnouncement(props: propsType): ReactElement {
 
     return <div className="webAnnouncement">
         <h2>{getText("website_announcement")}</h2>
-        <div className="content body-bold">
+        <div className="content">
             {
                 webAnnouncementList.map((data, i) => <div
                     key={i}
                     className="block"
                     title={data.title}
                 >
-                    {
-                        data.pin_to_top ? <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 10V2H11V0H1V2H2V10L0 12V14H5.2V20H6.8V14H12V12L10 10Z" fill="black" />
-                        </svg> : undefined
-                    }
-                    <Link to={`/webAnnouncement/${data.uid}`}>{data.title}</Link>
+                    <div className="caption timestamp">{timestampToString(data.release_time * 1000)}</div>
+                    <div className="pin caption-bold" data-pin={data.pin_to_top}>置頂</div>
+                    <Link className="body" to={`/webAnnouncement/${data.uid}`}>{data.title}</Link>
                 </div>)
             }
         </div>
