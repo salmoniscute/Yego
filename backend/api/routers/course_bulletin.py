@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_course_id, check_user_id
-from crud.bulletin import CourseBulletinCrudManager
+from .depends import check_course_id, check_course_bulletin_id, check_user_id
+from crud.course_bulletin import CourseBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.CourseBulletinCreateResponse,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -45,8 +44,8 @@ async def create_course_bulletin(
 
 @router.get(
     "/bulletin/all", 
-    response_model=list[BulletinSchema.CourseBulletinRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_course_bulletins():
     """
@@ -61,7 +60,7 @@ async def get_all_course_bulletins():
 
 @router.get(
     "/bulletin/{cb_id}", 
-    response_model=BulletinSchema.CourseBulletinRead,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
 async def get_course_bulletin(cb_id: str):
@@ -71,7 +70,7 @@ async def get_course_bulletin(cb_id: str):
     bulletin = await CourseBulletinCrud.get(cb_id)
     if bulletin:
         return bulletin
-    
+
     raise not_found
    
 
@@ -81,7 +80,7 @@ async def get_course_bulletin(cb_id: str):
 )
 async def update_course_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    cb_id: str = Depends(check_component_id)
+    cb_id: str = Depends(check_course_bulletin_id)
 ):
     """
     Update the particular course bulletin with at least one of the following information:
@@ -97,7 +96,7 @@ async def update_course_bulletin(
     "/bulletin/{cb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
+async def delete_course_bulletin(cb_id: str = Depends(check_course_bulletin_id)):
     """
     Delete the course bulletin.
     """
@@ -107,7 +106,7 @@ async def delete_course_bulletin(cb_id: str = Depends(check_component_id)):
 
 @router.get(
     "/bulletin/particular_course/{course_id}", 
-    response_model=list[BulletinSchema.CourseBulletinRead],
+    response_model=list[BulletinSchema.BulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):

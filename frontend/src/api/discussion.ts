@@ -6,33 +6,32 @@ import {
  } from "schemas/discussion";
 import axios from "axios";
 
-export async function getDiscussionList(): Promise<Array<Discussion>>{
-    const result = [
-        {
-            discussion_id: "1",
-            uid:"F74106050",
-            course_id: "",
-            title:"第一周作業討論",
-            discription: "討論HW1-1、1-2"
-        },
-        {
-            discussion_id: "2",
-            uid:"F74106050",
-            course_id: "",
-            title:"第二周作業討論",
-            discription: "討論HW2"
-        },
-        {
-            discussion_id: "3",
-            uid:"F74106050",
-            course_id: "",
-            title:"第一次小考討論",
-            discription: "討論2/29課堂小考"
-        },
-    ]
-    return result;
+export async function getDiscussionList(course_id:string): Promise<Array<Discussion>>{
+    //let url = "http://localhost:8080/api/discussions/particular_course/"+course_id;
+    let url = "http://localhost:8080/api/discussions";
+    try {
+        const response = await axios.get(url,{
+          });
+        const result = response.data;
+        return result;
+    }
+    catch(error){
+        return[];
+    }
 }
 
+export async function getDiscussion(id:string) : Promise <Discussion>{
+    let url = "http://localhost:8080/api/discussion/"+id;
+    let discussion;
+    try {
+        const response = await axios.get(url,{
+          });
+        discussion = response.data;
+    }
+    catch(error){
+    }
+    return discussion;
+}
 export async function postDiscussion(uid:string , course_id:string , title:string , content:string): Promise<Discussion>{
     let url = "http://localhost:8080/api/discussion?uid="+uid+"&course_id="+course_id;
     let discussion ;
@@ -56,17 +55,21 @@ export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicIn
     const result = [
         {
             uid:"F74106050",
-            discussion_topic_id: "",
             discussion_id: "",
             release_time: 1703390840,
             title:"1-1第一題題意",
+            id:"15",
+            follow:false,
+            reply:1,
         },
         {
             uid:"F74106050",
-            discussion_topic_id: "",
             discussion_id: "",
             release_time: 1703390840,
             title:"救我啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
+            id:"16",
+            follow:false,
+            reply:1,
         },
 
     ]
@@ -84,14 +87,14 @@ export async function getDiscussionTopicContent(data: DiscussionTopicInfo): Prom
 export async function getDiscussionTopicReplyList() : Promise<Array<DiscussionTopicReply>>{
     const result = [
         {
-            discussion_topic_reply_id:"",
+            id:"",
             uid:"F74106050",
             publisher:"林志芸",
             release_time: 1703390840,
             content:"新年快樂恭喜發財",
         },
         {
-            discussion_topic_reply_id:"",
+            id:"",
             uid:"F74106050",
             publisher:"林志芸",
             release_time: 1703390840,

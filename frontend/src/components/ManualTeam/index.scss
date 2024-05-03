@@ -1,0 +1,86 @@
+#manualTeam{
+    display: flex;
+    flex-direction: column;
+
+    .closeCross{
+        position: absolute;
+        font-size: 25px;
+        cursor: pointer;
+        top: 0em;
+        right: 0em;
+    }
+    .upper{
+        display: flex;
+        p{
+            margin-right: 1.5em;
+        }
+        textarea{
+            margin-top: 0.5em;
+            width: 15em;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+            padding: 13px 15px;
+            height: 3em;
+            resize: none;
+        }
+    }
+
+    .member{
+        display: flex;
+        flex-direction: column;
+        > p{
+            margin-bottom: 0em;
+        }
+        > div{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            .memberCard{
+                background-color: #F1F1F1;
+                display: flex;
+                width: 6em;
+                margin: 1em;
+                justify-content: space-between;
+                padding: 0em 1em;
+                margin-left: 0em;
+                margin-bottom: 0em;
+                p{
+                    padding: 0.6em 0em;
+                    margin: 0em;
+                    text-align: center;
+                    font-size: medium;
+                }
+                .icon{
+                    padding-top: 0.8em;
+                    cursor: pointer;
+                }
+            }
+        }
+    
+    }
+
+    .buttons{
+        position:absolute;
+        bottom: 0em;
+        right: 0em;
+        > button{
+            cursor: pointer;
+            border: none;
+            align-items: center;
+            width: 4em;
+            padding: 0.5em;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 1em;
+            border-radius: 0.2em;
+        }
+        .cancel{
+            background-color: #E1E1E4;
+        }
+        .confirm{
+            background-color: #FFEA79;
+        }
+    }
+   
+}

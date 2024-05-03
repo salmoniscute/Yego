@@ -31,12 +31,16 @@ import Footer from "./components/Footer";
 import MainPage from "./views/MainPage";
 import LoginPage from "views/LoginPage";
 import WebAnnouncementPage from "views/WebAnnouncementPage";
+
 import WebAnnouncementList from "views/WebAnnouncementLists";
+
 import PersonalPage from "views/PersonalPage";
 
 import CoursePage from "views/CoursePage";
 import LandingPage from "views/LandingPage";
 import ReportPage from "views/ReportPage";
+
+import TeamPage from "views/TeamPage";
 
 import NotificationPage from "views/NotificationPage";
 
@@ -117,6 +121,7 @@ export default function App(): ReactElement {
                         <Route path="/personal" element={<PersonalPage/>} />
                         <Route path="/reportBug" element={<ReportPage />} />  
                         <Route path="/notification" element={<NotificationPage />} />
+                        <Route path="/salmontest" element={<TeamPage/>} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />

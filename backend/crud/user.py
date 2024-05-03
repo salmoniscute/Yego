@@ -11,7 +11,7 @@ from schemas import user as UserSchema
 class UserCrudManager:
     async def create(self, newUser: UserSchema.UserCreate, db_session: AsyncSession):
         newUser_dict = newUser.model_dump()
-        user = UserModel(**newUser_dict)
+        user = UserModel(avatar=None, introduction=None, **newUser_dict)
         db_session.add(user)
         await db_session.commit()
 
@@ -23,7 +23,6 @@ class UserCrudManager:
         user = result.first()
         
         return user[0] if user else None
-        
     
     async def get_all(self, db_session: AsyncSession):
         stmt = select(UserModel)
@@ -43,6 +42,14 @@ class UserCrudManager:
     
     async def update_password(self, uid: str, updateUser: UserSchema.UserUpdatePassword, db_session: AsyncSession):
         updateUser_dict = {"password": get_password_hash(updateUser.password)}
+        stmt = update(UserModel).where(UserModel.uid == uid).values(updateUser_dict)
+        await db_session.execute(stmt)
+        await db_session.commit()
+
+        return
+    
+    async def update_avatar(self, uid: str, avatar_path: str, db_session: AsyncSession):
+        updateUser_dict = {"avatar": avatar_path}
         stmt = update(UserModel).where(UserModel.uid == uid).values(updateUser_dict)
         await db_session.execute(stmt)
         await db_session.commit()

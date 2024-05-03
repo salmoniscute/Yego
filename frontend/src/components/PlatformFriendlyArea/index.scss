@@ -2,22 +2,27 @@
     h2 {
         white-space: nowrap;
     }
+
     .content {
         display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        justify-content: space-between;
+        
         .block {
             color: #000;
             text-decoration: none;
-            display: flex;
-            flex-direction: column;
             padding: 1.25rem 2rem;
-            background-color: #f0f0f0;
+            background-color: #FFF;
             gap: 0.8rem;
-            > div {
+            width: calc(25% - 4rem);
+            border: 0.05rem solid #000;
+            border-radius: 0.25rem;
+            min-height: 8em;
+            
+            >div {
+                width: 100%;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                white-space: normal;
+                word-break: break-all;
             }
         }
     }

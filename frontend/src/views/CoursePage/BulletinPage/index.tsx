@@ -31,7 +31,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [title , setTitle] = useState("");
 
     useEffect(() => {
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         }).catch( error =>{
             if (error.response && error.response.status === 404) {
@@ -50,13 +50,13 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         const nowTime = new Date().getTime();
         const uid = userData?.uid;
         if (uid) {
-            const courseBulletin = await postCourseBulletin(uid, "CSE101", title, nowTime, content, false);
+            const courseBulletin = await postCourseBulletin(uid, courseID, title, nowTime, content, false);
             console.log(courseBulletin);
         }
         else {}
         setContent("");
         setTitle("");
-        getCourseBulletinList().then(data => {
+        getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         });
     }

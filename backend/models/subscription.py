@@ -12,15 +12,8 @@ class Subscription(Base):
     type: Mapped[BaseType.str_20]
     
     # Relationship to parent
-    user_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="subscriptions"
-    )
-
-    component_info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="subscriptions",
-    )
+    user_info: Mapped["User"] = relationship("User", back_populates="subscriptions")
+    component_info: Mapped["Component"] = relationship("Component", back_populates="subscriptions")
 
     def __init__(self, uid: str, component_id: str, type: str) -> None:
         self.uid = uid

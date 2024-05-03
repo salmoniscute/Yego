@@ -23,8 +23,8 @@ router = APIRouter(
 
 @router.post(
     "/notification", 
-    response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT,
+    deprecated=True
 )
 async def create_notification(
     newNotification: NotificationSchema.NotificationCreate,
@@ -45,9 +45,10 @@ async def create_notification(
     
 
 @router.get(
-    "/notifications",
+    "/notification/all",
     response_model=list[NotificationSchema.NotificationRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_notifications():
     """ 
@@ -61,9 +62,10 @@ async def get_all_notifications():
 
 
 @router.get(
-    "/notification/{uid}/{component_id}",
+    "/notification/particular/{uid}/{component_id}",
     response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_notification(uid: str, component_id: str):
     """
@@ -77,24 +79,25 @@ async def get_notification(uid: str, component_id: str):
 
 
 @router.put(
-    "/notification/{uid}/{component_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    "/notification/particular/{uid}/{component_id}",
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
 )
 async def update_notification(
-    updateNotification: NotificationSchema.NotificationUpdate,
     uid: str = Depends(check_user_id),
     component_id: str = Depends(check_component_id)
 ):
     """
     Update a notification.
     """
-    await NotificationCrud.update(uid, component_id, updateNotification)
+    notifications = await NotificationCrud.update(uid, component_id)
+    if notifications:
+        return notifications
 
-    return
-
+    raise not_found
 
 @router.delete(
-    "/notification/{uid}/{component_id}",
+    "/notification/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_notification(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
@@ -104,3 +107,34 @@ async def delete_notification(uid: str = Depends(check_user_id), component_id: s
     await NotificationCrud.delete(uid, check_component_id)
 
     return
+
+
+@router.get(
+    "/notification/user/{uid}",
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
+)
+async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
+    """
+    Get all notifications for a user.
+    """
+    notifications = await NotificationCrud.get_by_uid(uid)
+    if notifications:
+        return notifications
+
+    raise not_found
+
+
+@router.put(
+    "/notification/user/{uid}/read",
+    response_model=list[NotificationSchema.NotificationReadByUid]
+)
+async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
+    """
+    Read all notifications for one user.
+    """
+    notifications = await NotificationCrud.read_all(uid)
+    if notifications:
+        return notifications
+
+    raise not_found

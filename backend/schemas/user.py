@@ -10,8 +10,6 @@ class UserCreate(BaseModel):
     email: str
     department: str
     country: str
-    introduction: Optional[str] = None
-    avatar: Optional[str] = None
 
     model_config = {
         "json_schema_extra": {
@@ -23,9 +21,7 @@ class UserCreate(BaseModel):
                     "role": "student",
                     "email": "C14096277@gs.ncku.edu.tw",
                     "department": "Mathematics",
-                    "country": "Taiwan",
-                    "introduction": "hello world",
-                    "avatar": "/path/of/avatar"
+                    "country": "Taiwan"
                 }
             ]
         }
@@ -50,7 +46,6 @@ class UserUpdate(BaseModel):
     department: Optional[str] = None
     country: Optional[str] = None
     introduction: Optional[str] = None
-    avatar: Optional[str] = None
 
     model_config = {
         "json_schema_extra": {
@@ -61,8 +56,7 @@ class UserUpdate(BaseModel):
                     "email": "C14096277@gs.ncku.edu.tw",
                     "department": "Mathematics",
                     "country": "Taiwan",
-                    "introduction": "hello world",
-                    "avatar": "/path/of/avatar"
+                    "introduction": "hello world"
                 }
             ]
         }
@@ -71,3 +65,7 @@ class UserUpdate(BaseModel):
 
 class UserUpdatePassword(BaseModel):
     password: str
+
+
+class UserUpdateAvatar(BaseModel):
+    avatar: str

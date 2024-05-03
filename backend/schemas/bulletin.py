@@ -1,6 +1,8 @@
+from datetime import datetime
 from typing import Optional
 
-from schemas.component import ComponentCreate, ComponentRead, ComponentReadWithFile, ComponentUpdate
+from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate
+from schemas.file import FileRead
 
 
 class BulletinCreate(ComponentCreate):
@@ -19,27 +21,23 @@ class BulletinCreate(ComponentCreate):
         }
     }
 
-class CourseBulletinCreateResponse(ComponentRead):
-    course_id: str
-    type: str
+
+class BulletinListRead(ComponentReadID):
+    publisher: str
+    release_time: datetime
+    title: str
     pin_to_top: bool
 
 
-class WebsiteBulletinCreateResponse(ComponentRead):
-    type: str
+class BulletinReadByID(ComponentReadID):
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
     pin_to_top: bool
+    files: Optional[list[FileRead]] = None
 
-
-class CourseBulletinRead(ComponentReadWithFile):
-    course_id: str
-    type: str
-    pin_to_top: bool
-
-
-class WebsiteBulletinRead(ComponentReadWithFile):
-    type: str
-    pin_to_top: bool
-    
 
 class BulletinUpdate(ComponentUpdate):
     pin_to_top: Optional[bool] = None

@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/selected_course", 
-    response_model=SelectedCourseSchema.SelectedCourseRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_selected_course(
     newRow: SelectedCourseSchema.SelectedCourseCreate,
@@ -47,7 +46,8 @@ async def create_selected_course(
 @router.get(
     "/selected_courses", 
     response_model=list[SelectedCourseSchema.SelectedCourseRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_selected_courses():
     """
@@ -63,7 +63,8 @@ async def get_all_selected_courses():
 @router.get(
     "/selected_course/particular/{uid}/{course_id}", 
     response_model=SelectedCourseSchema.SelectedCourseRead,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_selected_courses(uid: str, course_id: str):
     """
@@ -117,20 +118,9 @@ async def get_selected_courses_by_uid(uid: str):
     """
     Get the selected course by uid.
     """
-    results= []
-
     selected_courses = await SelectedCourseCrud.get_by_uid(uid)
-    print(selected_courses)
     if selected_courses:
-        for selected_course in selected_courses:
-            result = {
-                "course_id": selected_course.course_info.id,
-                "course_name": selected_course.course_info.name,
-                "instructor_name": selected_course.course_info.instructor_info.name
-            }
-            results.append(result)
-            
-        return results
+        return selected_courses
     
     raise not_found
 
@@ -144,20 +134,8 @@ async def get_selected_courses_by_course_id(course_id: str):
     """
     Get the selected course by course_id.
     """
-    results = []
-
     selected_courses = await SelectedCourseCrud.get_by_course_id(course_id)
     if selected_courses:
-        for selected_course in selected_courses:
-            result = {
-                "name": selected_course.user_info.name,
-                "uid": selected_course.user_info.uid,
-                "department": selected_course.user_info.department,
-                "role": selected_course.user_info.role,
-                "group": selected_course.group
-            }
-            results.append(result)
-
-        return results
+        return selected_courses
     
     raise not_found

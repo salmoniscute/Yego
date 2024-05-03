@@ -1,0 +1,88 @@
+#autoTeam{
+    display: flex;
+    flex-direction: column;
+
+    .closeCross{
+        position: absolute;
+        font-size: 25px;
+        cursor: pointer;
+        top: 0em;
+        right: 0em;
+    }
+
+    .optionGroup{
+        display: flex;
+        flex-direction: row;
+        > p{
+            margin-top: 0.3em;
+            margin-right: 2em;
+            font-size: 17px;
+        }
+        
+        > div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .selectOption{
+                margin-bottom: 1em;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                input{
+                   display: none;
+                }
+                .checkboxLabel {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    border: 1px solid #C4C4C4;
+                    display: inline-block;
+                    position: relative;
+                    cursor: pointer;
+                }
+                
+                input:checked + .checkboxLabel::after {
+                    content: "";
+                    width: 15px;
+                    height: 15px;
+                    background-color: #007bff;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                  
+                
+                > p{
+                    margin: 0em 1em;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .buttons{
+        position:absolute;
+        bottom: 0em;
+        right: 0em;
+        > button{
+            cursor: pointer;
+            border: none;
+            align-items: center;
+            width: 4em;
+            padding: 0.5em;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 1em;
+            border-radius: 0.2em;
+        }
+        .cancel{
+            background-color: #E1E1E4;
+        }
+        .confirm{
+            background-color: #FFEA79;
+        }
+    }
+   
+}

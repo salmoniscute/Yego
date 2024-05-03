@@ -13,35 +13,31 @@ class Component(Base):
     content: Mapped[BaseType.str_100]
 
     # Relationship to parent
-    publisher_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="publications",
-        lazy="joined"
-    )
+    publisher_info: Mapped["User"] = relationship("User", back_populates="publications", lazy="joined")
 
     # Relationship to child
-    course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
+    course_bulletin: Mapped["CourseBulletin"] = relationship(
         "CourseBulletin",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
 
-    website_bulletins: Mapped[list["WebsiteBulletin"]] = relationship(
+    website_bulletin: Mapped["WebsiteBulletin"] = relationship(
         "WebsiteBulletin",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
 
-    discussions: Mapped[list["Discussion"]] = relationship(
+    discussion: Mapped["Discussion"] = relationship(
         "Discussion",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
 
-    topics: Mapped[list["DiscussionTopic"]] = relationship(
+    topic: Mapped["DiscussionTopic"] = relationship(
         "DiscussionTopic",
         back_populates="info",
         cascade="all, delete-orphan", 
@@ -60,7 +56,8 @@ class Component(Base):
         "Subscription",
         back_populates="component_info",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin"
     )
 
     notifications: Mapped[list["Notification"]] = relationship(
@@ -70,15 +67,28 @@ class Component(Base):
         passive_deletes=True
     )
     
-    reports: Mapped[list["Report"]] = relationship(
+    report: Mapped["Report"] = relationship(
         "Report",
         back_populates="info",
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
 
+    reply: Mapped["ReportReply"] = relationship(
+        "ReportReply",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+    
+    course_materials: Mapped[list["CourseMaterial"]] = relationship(
+        "CourseMaterial",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
     def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:
-        # self.id = self.id
         self.uid = uid
         self.release_time = release_time
         self.title = title

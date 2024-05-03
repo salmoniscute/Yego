@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+import os
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 from fastapi.security import OAuth2PasswordBearer
 
 from .depends import check_user_id
@@ -31,8 +32,7 @@ router = APIRouter(
 
 @router.post(
     "/user",
-    response_model=UserSchema.UserRead,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_user(newUser: UserSchema.UserCreate):
     """
@@ -44,8 +44,6 @@ async def create_user(newUser: UserSchema.UserCreate):
     - **email**
     - **department**
     - **country**
-    - **introduction** (optional)
-    - **avatar** (optional)
     """
     if await UserCrud.get(newUser.uid):
         raise already_exists
@@ -95,7 +93,7 @@ async def get_user(uid: str):
 async def update_user(
     updateUser: UserSchema.UserUpdate, 
     uid: str = Depends(check_user_id),
-    token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
+    # token: str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
 ):
     """
     Update the user with at least one of the following information:
@@ -105,15 +103,46 @@ async def update_user(
     - **department**
     - **country**
     - **introduction**
-    - **avatar**
     """
-    payload = await verify_access_token(token)
-    if payload.get("uid") != uid:
-        raise permission_denied
+    # payload = await verify_access_token(token)
+    # if payload.get("uid") != uid:
+    #     raise permission_denied
     
     await UserCrud.update(uid, updateUser)
     return 
+
+
+@router.put(
+    "/user/{uid}/avatar",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_user_avatar(
+    avatar: UploadFile,
+    uid: str = Depends(check_user_id),
+    # token: str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
+):
+    """
+    Update the user avatar.
+    """
+    # payload = await verify_access_token(token)
+    # if payload.get("uid") != uid:
+    #     raise permission_denied
     
+    avatar_path = None
+    if avatar:
+        out_file_path = f"upload/user/{uid}"
+        if not os.path.isdir(out_file_path):
+            os.makedirs(out_file_path)
+        
+        with open(f"{out_file_path}/{avatar.filename}", "wb") as file:
+            content = await avatar.read()  
+            file.write(content)
+        
+        avatar_path = f"backend/{out_file_path}/{avatar.filename}"
+    
+    await UserCrud.update_avatar(uid, avatar_path)
+    return 
+
 
 @router.put(
     "/user/{uid}/password",

@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/subscription", 
-    response_model=SubscriptionSchema.SubscriptionRead,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_subscription(
     newSubscription: SubscriptionSchema.SubscriptionCreate,
@@ -45,7 +44,8 @@ async def create_subscription(
 @router.get(
     "/subscriptions",
     response_model=list[SubscriptionSchema.SubscriptionRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_subscriptions():
     """ 

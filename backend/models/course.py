@@ -16,11 +16,7 @@ class Course(Base):
     outline: Mapped[BaseType.str_100]
 
     # Relationship to parent
-    instructor_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="courses",
-        lazy="joined"
-    )
+    instructor_info: Mapped["User"] = relationship("User", back_populates="courses", lazy="joined")
 
     # Relationship to child
     selected_courses: Mapped[list["SelectedCourse"]] = relationship(
@@ -39,6 +35,14 @@ class Course(Base):
 
     discussions: Mapped[list["Discussion"]] = relationship(
         "Discussion",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True,
+        lazy="selectin"
+    )
+    
+    course_materials: Mapped[list["CourseMaterial"]] = relationship(
+        "CourseMaterial",
         back_populates="course_info",
         cascade="all, delete-orphan", 
         passive_deletes=True

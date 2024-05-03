@@ -1,11 +1,10 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from models.base import BaseType
-from models.component import Component
+from models.base import Base, BaseType
 
 
-class Bulletin(Component):
+class Bulletin(Base):
     __tablename__ = "Bulletin"
     id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_100]
@@ -19,53 +18,35 @@ class Bulletin(Component):
 
 class WebsiteBulletin(Bulletin):
     # Relationship to parent
-    info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="website_bulletins",
-        lazy="joined"
-    )
+    info: Mapped["Component"] = relationship("Component", back_populates="website_bulletin")
 
     __mapper_args__ = {
         "polymorphic_identity": "website_bulletin",
     }
 
-    def __init__(self, uid: str, release_time: str, title: str, content: str, pin_to_top: bool) -> None:
-        self.uid = uid
-        self.release_time = release_time
-        self.title = title
-        self.content = content
+    def __init__(self, id: int, pin_to_top: bool) -> None:
+        self.id = id
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"WebsiteBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, pin_to_top={self.pin_to_top})"
+        return f"WebsiteBulletin(id={self.id}, pin_to_top={self.pin_to_top})"
 
 
 class CourseBulletin(Bulletin):
     course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"), nullable=True)
 
     # Relationship to parent
-    info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="course_bulletins",
-        lazy="joined"
-    )
-
-    course_info: Mapped["Course"] = relationship(
-        "Course",
-        back_populates="course_bulletins"
-    )
+    info: Mapped["Component"] = relationship("Component", back_populates="course_bulletin")
+    course_info: Mapped["Course"] = relationship("Course", back_populates="course_bulletins", lazy="joined")
 
     __mapper_args__ = {
         "polymorphic_identity": "course_bulletin",
     }
 
-    def __init__(self, uid: str, release_time: str, title: str, content: str, course_id: str, pin_to_top: bool) -> None:
-        self.uid = uid
-        self.release_time = release_time
-        self.title = title
-        self.content = content
+    def __init__(self, id: int, course_id: str, pin_to_top: bool) -> None:
+        self.id = id
         self.course_id = course_id 
         self.pin_to_top = pin_to_top
         
     def __repr__(self) -> str:
-        return f"CourseBulletin(id={self.id}, uid={self.uid}, release_time={self.release_time}, title={self.title}, content={self.content}, course_id={self.course_id}, pin_to_top={self.pin_to_top})"
+        return f"CourseBulletin(id={self.id}, course_id={self.course_id}, pin_to_top={self.pin_to_top})"
