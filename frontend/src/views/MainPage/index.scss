@@ -1,71 +1,71 @@
 #mainPage {
     margin: auto;
     max-width: 90vw;
-    display: flex;
-    gap: 2rem;
+
     .main {
-        flex: 3;
-        max-width: calc(100% - 17rem);
         h2 {
             margin: 1.25em 0;
             user-select: none;
         }
+
         >div {
             margin-bottom: 2.5rem;
         }
+
         .content {
             display: flex;
+
             .block {
-                background-color: #f0f0f0;
                 padding: 1rem;
-                height: 1.8rem;
-                line-height: 1.8rem;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+
                 a {
                     color: #000;
                     text-decoration: none;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
+
                 a:hover {
                     text-decoration: underline;
                 }
             }
         }
 
-        .currentCourse, .pastCourse {
+        .currentCourse {
             .content {
                 flex-wrap: wrap;
-                gap: 1rem;
+                justify-content: space-between;
+
                 .block {
-                    width: calc(50% - 2.5rem);
-                }
-            }
-        }
-    }
-    .side {
-        min-width: 18.5rem;
-        min-height: 90vh;
-        flex: 1;
-        h2 {
-            white-space: nowrap;
-        }
-        .content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            .block {
-                color: #000;
-                text-decoration: none;
-                display: flex;
-                flex-direction: column;
-                padding: 1.25rem 2rem;
-                background-color: #f0f0f0;
-                gap: 0.8rem;
-                > div {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    width: calc(30% - 1rem);
+                    background-color: #FFF;
+                    border: 0.05rem solid #000;
+                    border-radius: 0.25rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    .infoBar {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        > div {
+                            display: flex;
+                            align-items: center;
+                            overflow: hidden;
+                            width: calc(50% - 0.25rem);
+                            max-width: 9em;
+                            svg {
+                                min-width: 1.5em;
+                            }
+                            span {
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -73,6 +73,13 @@ class Component(Base):
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
+
+    reply: Mapped["ReportReply"] = relationship(
+        "ReportReply",
+        back_populates="info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
     
     course_materials: Mapped[list["CourseMaterial"]] = relationship(
         "CourseMaterial",

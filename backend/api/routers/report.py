@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_user_id
+from .depends import check_report_id, check_user_id
 from crud.report import ReportCrudManager
 from schemas import report as ReportSchema
 
@@ -19,6 +19,7 @@ router = APIRouter(
     tags=["Report"],
     prefix="/api"
 )
+
 
 @router.post(
     "/report", 
@@ -40,7 +41,7 @@ async def create_report(
 
 @router.get(
     "/reports",
-    response_model=list[ReportSchema.ReportRead]
+    response_model=list[ReportSchema.ReportListRead]
 )
 async def get_all_reports():
     """ 
@@ -55,10 +56,10 @@ async def get_all_reports():
 
 @router.get(
     "/report/{report_id}", 
-    response_model=ReportSchema.ReportRead
+    response_model=ReportSchema.ReportReadByID
 )
 async def get_report(
-    report_id: int = Depends(check_component_id)
+    report_id: int = Depends(check_report_id)
 ):
     """ 
     Get a report.
@@ -76,7 +77,7 @@ async def get_report(
 )
 async def update_report(
     updateReport: ReportSchema.ReportUpdate,
-    report_id: int = Depends(check_component_id)
+    report_id: int = Depends(check_report_id)
 ):
     """ 
     Update a report with the following information:
@@ -92,7 +93,7 @@ async def update_report(
     "/report/{report_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_report(report_id: int = Depends(check_component_id)):
+async def delete_report(report_id: int = Depends(check_report_id)):
     """ 
     Delete a report.
     """
