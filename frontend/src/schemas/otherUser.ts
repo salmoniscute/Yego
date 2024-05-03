@@ -4,6 +4,7 @@ export interface OtherUser {
     name: string,
     role: string,
     department: string,
+    avatar: string
 };
 
 export interface OtherUserContent extends OtherUser{
