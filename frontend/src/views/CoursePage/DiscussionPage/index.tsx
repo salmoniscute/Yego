@@ -30,7 +30,6 @@ export default function DiscussionPage(props: propsType): ReactElement {
     const Close = () => { setopenEditor(false); }
     const {
         courseID
-
     } = props;
 
     const userData = useContext(userDataContext);
@@ -57,7 +56,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                     discussionList.map((data,i) =>
                         <div className="discussionInfo" key={i}>
                             <p className="discussionTitle">
-                                <Link to={`./discussionTopic/${data.discussion_id}`}>{data.title}</Link>
+                                <Link to={`./${data.discussion_id}`}>{data.title}</Link>
                             </p>
                             <p className="discussionDiscription">{data.discription}</p>
                             <BiSolidBellRing />
