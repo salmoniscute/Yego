@@ -30,10 +30,14 @@ class SelectedCourseByUidRead(BaseModel):
 
 
 class SelectedCourseByCourseIdRead(BaseModel):
-    name: str
     uid: str
-    department: str
+    name: str
     role: str
+    department: str
+    country: str
+    email: str
+    avatar: Optional[str] = None
+    introduction: Optional[str] = None
     group: Optional[str] = None
 
 
