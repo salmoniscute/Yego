@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_user_id
+from .depends import check_topic_id, check_user_id, check_discussion_id
 from crud.discussion import DiscussionTopicCrudManager
 from schemas import discussion as DiscussionSchema
 
@@ -22,13 +22,12 @@ router = APIRouter(
 
 @router.post(
     "/discussion_topic", 
-    response_model=DiscussionSchema.DiscussionCreate,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_discussion_topic(
     newTopic: DiscussionSchema.DiscussionCreate,
     uid: str = Depends(check_user_id),
-    discussion_id: int = Depends(check_component_id)
+    discussion_id: int = Depends(check_discussion_id)
 ):
     """
     Create a discussion topic with the following information:
@@ -62,7 +61,7 @@ async def get_all_discussion_topics():
     response_model=DiscussionSchema.DiscussionTopicRead
 )
 async def get_discussion_topic(
-    topic_id: int=Depends(check_component_id)
+    topic_id: int=Depends(check_topic_id)
 ):
     """ 
     Get a discussion topic.
@@ -80,7 +79,7 @@ async def get_discussion_topic(
 )
 async def update_discussion_topic(
     updateDiscussion: DiscussionSchema.DiscussionUpdate,
-    topic_id: int = Depends(check_component_id)
+    topic_id: int = Depends(check_topic_id)
 ):
     """ 
     Update a discussion topic with the following information:
@@ -97,7 +96,7 @@ async def update_discussion_topic(
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_discussion_topic(
-    topic_id: int = Depends(check_component_id)
+    topic_id: int = Depends(check_topic_id)
 ):
     """ 
     Delete a discussion topic.
@@ -111,7 +110,7 @@ async def delete_discussion_topic(
     response_model=list[DiscussionSchema.DiscussionOfTopics]
 )
 async def get_discussion_topics_by_discussion_id(
-    discussion_id: int = Depends(check_component_id)
+    discussion_id: int = Depends(check_discussion_id)
 ):
     """
     Get all discussion topics by discussion id.

@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from crud.component import ComponentCrudManager
 from crud.course import CourseCrudManager
 from crud.course_bulletin import CourseBulletinCrudManager
-from crud.discussion import DiscussionCrudManager
+from crud.discussion import DiscussionCrudManager, DiscussionTopicCrudManager, DiscussionTopicReplyCrudManager
 from crud.selected_course import SelectedCourseCrudManager
 from crud.user import UserCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
@@ -14,6 +14,8 @@ ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
 CourseBulletinCrud = CourseBulletinCrudManager()
 DiscussionCrud = DiscussionCrudManager()
+DiscussionTopicCrud = DiscussionTopicCrudManager()
+DiscussionTopicReplyCrud = DiscussionTopicReplyCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 UserCrud = UserCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
@@ -77,3 +79,34 @@ async def check_reply_id(reply_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Report reply does not exist")
     
     return reply_id
+
+async def check_discussion_id(discussion_id: int):
+    discussion = await DiscussionCrud.get(discussion_id)
+    if not discussion:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion does not exist")
+    
+    return discussion_id
+
+async def check_topic_id(topic_id: int):
+    topic = await DiscussionTopicCrud.get(topic_id)
+    if not topic:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic does not exist")
+    
+    return topic_id
+
+async def check_topic_reply_id(reply_id: int):
+    reply = await DiscussionTopicReplyCrud.get(reply_id)
+    if not reply:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply does not exist")
+    
+    return reply_id
+
+async def check_topic_reply_parnet_id(parent_id: int):
+    if parent_id == 0:
+        return parent_id
+    
+    reply = await DiscussionTopicReplyCrud.get(parent_id)
+    if not reply:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply Parent does not exist")
+    
+    return parent_id
