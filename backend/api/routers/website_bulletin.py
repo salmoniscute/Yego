@@ -31,11 +31,9 @@ async def create_website_bulletin(
 ):
     """
     Create a bulletin with the following information:
-    - **id**
     - **release_time**
     - **title**
     - **content**
-    - **pin_to_top**
     """
     await WebsiteBulletinCrud.create(uid, newBulletin)
     return
