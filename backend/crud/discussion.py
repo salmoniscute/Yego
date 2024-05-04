@@ -117,11 +117,27 @@ class DiscussionTopicCrudManager:
             await db_session.refresh(topic[0], ["info"])
             obj = {
                 "id": topic[0].id,
-                "uid": topic[0].info.uid,
+                "publisher": topic[0].info.publisher_info.name,
+                "publisher_avatar": topic[0].info.publisher_info.avatar,
+                "release_time": topic[0].info.release_time,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
-                "discussion_id": topic[0].discussion_id
-            }        
+                "files": [file for file in topic[0].info.files],
+                "replies": []
+            }
+            stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id)
+            replies = await db_session.execute(stmt)
+            
+            for reply in replies:
+                await db_session.refresh(reply[0], ["info"])
+                obj["replies"].append({
+                    "id": reply[0].id,
+                    "parent_id": reply[0].parent_id,
+                    "publisher": reply[0].info.publisher_info.name,
+                    "publisher_avatar": reply[0].info.publisher_info.avatar,
+                    "release_time": reply[0].info.release_time,
+                    "content": reply[0].info.content
+                })
         return obj
 
     async def get_all(self, db_session: AsyncSession):
@@ -209,6 +225,7 @@ class DiscussionTopicReplyCrudManager:
                 "parent_id": reply[0].parent_id,
                 "root_id": reply[0].root_id,
                 "title": reply[0].info.title,
+                "release_time": reply[0].info.release_time,
                 "content": reply[0].info.content,
             }
         return obj

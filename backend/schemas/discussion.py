@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 from schemas.component import *
+
+from schemas.file import FileRead
+
 ### Discussion ###
 class DiscussionCreate(ComponentCreate):
     model_config = {
@@ -22,16 +25,6 @@ class DiscussionOfCourses(ComponentRead):
     
 class DiscussionUpdate(ComponentUpdate):
     pass
-
-### Discussion Topic ###
-class DiscussionTopicRead(ComponentRead):
-    discussion_id: int
-
-class DiscussionOfTopics(ComponentReadWithFile):
-    reply_count: int
-    publisher:str
-    avatar: Optional[str] = None
-    subscription: bool
     
 ### Discussion Topic Reply ###
 class DiscussionTopicReplyCreate(BaseModel):
@@ -48,10 +41,30 @@ class DiscussionTopicReplyCreate(BaseModel):
         }
     }
 
-class DiscussionTopicReplyRead(ComponentRead):
+class DiscussionTopicReplyRead(ComponentReadID):
     parent_id: int
-    root_id: int
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    content: str
 
+### Discussion Topic ###
+class DiscussionTopicRead(ComponentReadID):
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
+    files: Optional[list[FileRead]] = None
+    replies: Optional[list[DiscussionTopicReplyRead]] = None
 
+class DiscussionTopicReadlist(ComponentReadID):
+    title: str
+    content: str
+
+class DiscussionOfTopics(ComponentReadWithFile):
+    reply_count: int
+    publisher:str
+    avatar: Optional[str] = None
+    subscription: bool
 
 
