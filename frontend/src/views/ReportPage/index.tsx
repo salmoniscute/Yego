@@ -14,6 +14,7 @@ import './index.scss';
 export default function ReportPage(): ReactElement {
   const [openEditor, setopenEditor] = useState(false);
   const [reportList, setReportList] = useState<Array<Report>>([]);
+  const [arrow, setArrow] = useState(true); //up = true, down = false
   const Open = () => {
     setopenEditor(true);
   }
@@ -27,20 +28,41 @@ export default function ReportPage(): ReactElement {
 
   const handleReportList = () =>{
     getReportList().then(data => {
-      setReportList(data);
+      resortList(data, arrow);
     })
   };
 
-  const [arrow, setArrow] = useState(true); //up = true, down = false
+  
+  const resortList = (data:Report[] , state :boolean) =>{
+    const sortedList = [...data]; 
+    if (state === true) {
+        sortedList.sort((d1, d2) => {
+          const date1 = new Date(d1.release_time);
+          const date2 = new Date(d2.release_time);
+          return date2.getTime() - date1.getTime();
+      });
+        
+    } else {
+        sortedList.sort((d1, d2) => {
+          const date1 = new Date(d1.release_time);
+          const date2 = new Date(d2.release_time);
+          return date1.getTime() - date2.getTime();
+      });
+        
+    }
+    setReportList(sortedList);
+
+  }
+
   const Resort = () => {
-    if (arrow === true) {
-      setArrow(false);
-      // early->last api
-    }
-    else {
-      setArrow(true);
-      // last->early api
-    }
+    resortList(reportList,!arrow);
+    setArrow(!arrow);
+  }
+
+  const setTimeString = (release_time:number):string => {
+    const releaseDate = new Date(release_time);
+    const formattedDate = `${releaseDate.getFullYear()}年${releaseDate.getMonth() + 1}月${releaseDate.getDate()}日`;
+    return formattedDate
   }
 
   return <div id="reportPage">
@@ -64,13 +86,13 @@ export default function ReportPage(): ReactElement {
             <p className="title">
                 <Link to={`./${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{data.release_time}</p>
+            <p className="launch">{setTimeString(data.release_time)}</p>
             <p className="reply">{data.reply}</p>
           </div>
         )
       }
 
     </div>
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="report" updatePost={handleReportList}/></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="report" updatePost={handleReportList} parent_id=""/></div>
   </div>
 }
