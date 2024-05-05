@@ -10,8 +10,8 @@ import { IoSend } from "react-icons/io5";
 import { TiArrowBack } from "react-icons/ti";
 
 import DiscussionReplyArea from "components/DiscussionReplyArea";
-import { DiscussionTopicContent,DiscussionTopicReply } from "schemas/discussion";
-import { getDiscussionTopicContent , getDiscussionTopicReplyList } from "api/discussion";
+import { DiscussionTopic,DiscussionTopicReply } from "schemas/discussion";
+import {  getDiscussionTopicReplyList } from "api/discussion";
 
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
@@ -26,7 +26,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     } = props;
 
     const [discussionTopicReplyList,setDiscussionTopicReply] = useState<Array<DiscussionTopicReply>>([]);
-    const [discussionTopicContent , setDiscussionTopicContent] = useState<DiscussionTopicContent>();
+    const [discussionTopicContent , setDiscussionTopicContent] = useState<DiscussionTopic>();
     const [showReplyArea, setShowReplyArea] = useState<boolean>(false);
 
     useEffect(()=>{
