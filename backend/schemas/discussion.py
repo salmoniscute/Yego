@@ -55,6 +55,7 @@ class DiscussionTopicRead(ComponentReadID):
     title: str
     content: str
     files: Optional[list[FileRead]] = None
+    reply_number: int
     replies: Optional[list[DiscussionTopicReplyRead]] = None
 
 class DiscussionTopicReadlist(ComponentReadID):
@@ -62,7 +63,7 @@ class DiscussionTopicReadlist(ComponentReadID):
     content: str
 
 class DiscussionOfTopics(ComponentReadWithFile):
-    reply_count: int
+    reply_number: int
     publisher:str
     avatar: Optional[str] = None
     subscription: bool
