@@ -9,7 +9,6 @@ class DiscussionCreate(ComponentCreate):
         "json_schema_extra": {
             "examples": [
                 {
-                    "release_time": "2021-09-01T00:00:00",
                     "title": "Discussion 1",
                     "content": "This is the first discussion of the course."
                 }
@@ -28,13 +27,11 @@ class DiscussionUpdate(ComponentUpdate):
     
 ### Discussion Topic Reply ###
 class DiscussionTopicReplyCreate(BaseModel):
-    release_time: datetime
     content: str
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "release_time": "2021-09-01T00:00:00",
                     "content": "This is the first discussion topic reply of the course."
                 }
             ]
