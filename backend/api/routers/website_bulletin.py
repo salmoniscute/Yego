@@ -41,7 +41,7 @@ async def create_website_bulletin(
 
 @router.get(
     "/bulletins", 
-    response_model=list[BulletinSchema.BulletinListRead],
+    response_model=list[BulletinSchema.WebsiteBulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():

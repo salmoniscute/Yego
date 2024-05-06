@@ -106,7 +106,7 @@ async def delete_course_bulletin(cb_id: str = Depends(check_course_bulletin_id))
 
 @router.get(
     "/bulletin/particular_course/{course_id}", 
-    response_model=list[BulletinSchema.BulletinListRead],
+    response_model=list[BulletinSchema.CourseBulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):

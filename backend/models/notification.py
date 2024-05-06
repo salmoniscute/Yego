@@ -17,7 +17,7 @@ class Notification(Base):
     user_info: Mapped["User"] = relationship("User", back_populates="notifications", lazy="joined")
     component_info: Mapped["Component"] = relationship("Component", back_populates="notifications", lazy="joined")
 
-    def __init__(self, uid: str, component_id: str, have_read: bool, release_time: str, type: str) -> None:
+    def __init__(self, uid: str, component_id: str, have_read: bool, type: str, release_time: str) -> None:
         self.uid = uid
         self.component_id = component_id
         self.have_read = have_read

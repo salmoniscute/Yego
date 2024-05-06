@@ -95,7 +95,7 @@ class Component(Base):
         passive_deletes=True
     )
 
-    def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:
+    def __init__(self, uid: str, title: str, content: str, release_time: str) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title

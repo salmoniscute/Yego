@@ -53,7 +53,7 @@ class CourseBulletinCrudManager:
         result = await db_session.execute(stmt)
         result = result.unique()
         
-        return [bulletin[0] for bulletin in result.all()]
+        return [{"id": bulletin[0].id} for bulletin in result.all()]
 
     async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
         _dict = updateBulletin.model_dump(exclude_none=True)
