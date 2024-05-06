@@ -23,11 +23,15 @@ class BulletinCreate(ComponentCreate):
 
 
 class BulletinListRead(ComponentReadID):
+    uid: str
     publisher: str
+    publisher_avatar: Optional[str] = None
     release_time: datetime
     title: str
+    content: str
     pin_to_top: bool
-
+    files: Optional[list[FileRead]] = None
+    
 
 class BulletinReadByID(ComponentReadID):
     publisher: str

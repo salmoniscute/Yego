@@ -88,10 +88,14 @@ class CourseBulletinCrudManager:
             await db_session.refresh(bulletin[0], ["info"])
             _list.append({
                 "id": bulletin[0].id,
+                "uid": bulletin[0].info.uid,
                 "publisher": bulletin[0].info.publisher_info.name,
+                "publisher_avatar": bulletin[0].info.publisher_info.avatar,
                 "release_time": bulletin[0].info.release_time,
                 "title": bulletin[0].info.title,
-                "pin_to_top": bulletin[0].pin_to_top
+                "content": bulletin[0].info.content,
+                "pin_to_top": bulletin[0].pin_to_top,
+                "files": bulletin[0].info.files
             })
         
         return _list
