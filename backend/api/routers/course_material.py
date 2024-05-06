@@ -31,7 +31,6 @@ async def create_course_material(
 ):
     """
     Create a course material with the following information:
-    - **release_time**
     - **title**
     - **content**
     """

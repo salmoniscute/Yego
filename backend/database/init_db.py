@@ -9,7 +9,7 @@ from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBullet
 from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
-from models.course_material import CourseMaterial as CourseMaterialModel
+from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
 from models.report import Report as ReportModel
 

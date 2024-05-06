@@ -9,6 +9,9 @@ from crud.user import UserCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
 from crud.report import ReportCrudManager
 from crud.report_reply import ReportReplyCrudManager
+from crud.course_material import CourseMaterialCrudManager
+from crud.material_info import MaterialInfoCrudManager
+from crud.submitted_assignment import SubmittedAssignmentCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
@@ -21,7 +24,9 @@ UserCrud = UserCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 ReportCrud = ReportCrudManager()
 ReportReplyCrud = ReportReplyCrudManager()
-
+CourseMaterialCrud = CourseMaterialCrudManager()
+MaterialInfoCrud = MaterialInfoCrudManager()
+SubmittedAssignmentCrud = SubmittedAssignmentCrudManager()
 
 async def check_user_id(uid: str):
     user = await UserCrud.get(uid)
@@ -110,3 +115,24 @@ async def check_topic_reply_parnet_id(parent_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply Parent does not exist")
     
     return parent_id
+
+async def check_course_material_id(course_material_id: int):
+    material = await CourseMaterialCrud.get(course_material_id)
+    if not material:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course Material does not exist")
+    
+    return course_material_id
+
+async def check_material_info_id(material_info_id: int):
+    material_info = await MaterialInfoCrud.get(material_info_id)
+    if not material_info:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Material Info does not exist")
+    
+    return material_info_id
+
+async def check_submitted_assignment_id(submitted_assignment_id: int):
+    submitted_assignment = await SubmittedAssignmentCrud.get(submitted_assignment_id)
+    if not submitted_assignment:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Submitted Assignment does not exist")
+    
+    return submitted_assignment_id

@@ -145,18 +145,16 @@ class DiscussionTopicCrudManager:
         stmt = select(DiscussionTopicModel)
         result = await db_session.execute(stmt)
         result = result.unique()
-        obj = {}
         _list = []
         for topic in result.all():
             await db_session.refresh(topic[0], ["info"])
-            obj = {
+            _list.append({
                 "id": topic[0].id,
                 "uid": topic[0].info.uid,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
                 "discussion_id": topic[0].discussion_id
-            }
-            _list.append(obj)
+            })
         
         return _list
     
