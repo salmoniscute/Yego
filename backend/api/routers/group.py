@@ -38,8 +38,9 @@ async def create_one_group(
 
 
 @router.post(
-    "/grouping/auto", 
-    status_code=status.HTTP_200_OK
+    "/grouping/auto",
+    response_model=list[GroupSchema.GroupAutoCreateResponse],
+    status_code=status.HTTP_201_CREATED
 )
 async def auto_grouping(
     grouping_method: GroupSchema.GroupingMethod,
@@ -73,8 +74,8 @@ async def auto_grouping(
             group_dict[i] = []
             for _ in range(_members_per_group):
                 group_dict[i].append(members.pop(0))
-
             remainder = remainder - 1 if remainder > 0 else 0
+            
     elif grouping_method == GroupSchema.GroupingMethod.numbers_of_members:
         members_per_group = number_depend_on_grouping_method
         group_number = len(members) // number_depend_on_grouping_method
@@ -83,31 +84,48 @@ async def auto_grouping(
         group_dict[group_number] = members[group_number * members_per_group:]
     
     # Naming rule: alphabet or number
-    group_id_list = []
-    group_name_list = []
+    group_info_list = []
     group_name = 65 if naming_rule == GroupSchema.NamingRule.alphabet else 1
     for i in range(len(group_dict)):
         name = chr(group_name) if naming_rule == GroupSchema.NamingRule.alphabet else str(group_name)
-        group = await GroupCrud.create(course_id, GroupSchema.GroupCreate(name=name))
-        group_id_list.append(group.id)
-        group_name_list.append(name)
+        group = await GroupCrud.create(course_id, GroupSchema.GroupCreate(name=name, member_num=len(group_dict[i])))
+        group_info_list.append({"id": group.id, "group_name": name})
         group_name += 1
     
     # Response body
     res = []
-    for _group_id, _group_name, _members in zip(group_id_list, group_name_list, group_dict.values()):
+    for _group_info, _members in zip(group_info_list, group_dict.values()):
         for member in _members:
-            group_id = SelectedCourseSchema.SelectedCourseUpdate(group_id=_group_id)
-            await SelectedCourseCrud.update(member["uid"], course_id, group_id)
+            group = SelectedCourseSchema.SelectedCourseUpdate(group_id=_group_info["id"])
+            await SelectedCourseCrud.update(member["uid"], course_id, group)
 
         res.append({
-            "group_id": _group_id,
-            "group_name": _group_name,
+            "id": _group_info["id"],
+            "group_name": _group_info["group_name"],
+            "member_num": len(_members),
             "members": _members
         })
 
     return res
 
+
+@router.post(
+    "/grouping/student",
+    response_model=list[GroupSchema.GroupAutoCreateResponse],
+    status_code=status.HTTP_201_CREATED
+)
+async def student_grouping(
+    grouping_method: GroupSchema.GroupingMethod,
+    number_depend_on_grouping_method: int,
+    naming_rule: GroupSchema.NamingRule,
+    course_id: str = Depends(check_course_id),
+    deadline: str = None
+):
+    """
+    Students group by themselves.
+    """
+    pass
+       
 
 @router.get(
     "/groups",

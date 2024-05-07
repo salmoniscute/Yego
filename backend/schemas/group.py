@@ -5,12 +5,14 @@ from typing import Optional
 
 class GroupCreate(BaseModel):
     name: str
+    member_num: int
     
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "name": "A"
+                    "name": "A",
+                    "member_num": 5
                 }
             ]
         }
@@ -21,6 +23,7 @@ class GroupRead(BaseModel):
     id: int
     course_id: str
     name: str
+    member_num: int
     
     
 class GroupUpdate(BaseModel):
@@ -50,4 +53,15 @@ class DistributingMethod(str, Enum):
 class NamingRule(str, Enum):
     alphabet = "alphabet"
     number = "number"
-    
+
+
+class Member(BaseModel):
+    uid: str
+    name: str
+
+
+class GroupAutoCreateResponse(BaseModel):
+    id: int
+    group_name: str
+    member_num: int
+    members: list[Member]
