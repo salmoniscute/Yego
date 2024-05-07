@@ -52,15 +52,15 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
     const sortedList = [...data]; 
     if (state === true) {
         sortedList.sort((d1, d2) => {
-          const date1 = new Date(d1.release_time);
-          const date2 = new Date(d2.release_time);
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
           return date2.getTime() - date1.getTime();
       });
         
     } else {
         sortedList.sort((d1, d2) => {
-          const date1 = new Date(d1.release_time);
-          const date2 = new Date(d2.release_time);
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
           return date1.getTime() - date2.getTime();
       });
         
@@ -77,7 +77,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
   const setTimeString = (release_time:number):string => {
     const releaseDate = new Date(release_time);
     const formattedDate = `${releaseDate.getFullYear()}年${releaseDate.getMonth() + 1}月${releaseDate.getDate()}日`;
-    return formattedDate
+    return formattedDate;
   }
 
   return <div id="discussionTopicPage">
@@ -102,7 +102,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
             <p className="title">
                 <Link to={`./discussionTopic/${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{setTimeString(data.release_time)}</p>
+            <p className="launch">{setTimeString(data.release_time||0)}</p>
             <p className="reply">{data.reply}</p>
             <button className="follow"><p>{data.follow === true ? <BiSolidBellRing /> : <TbBellRinging />}</p></button> 
           </div>

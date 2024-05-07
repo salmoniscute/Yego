@@ -5,14 +5,14 @@ export interface Discussion {
     title:string,
     content: string,
     follow:boolean,
-    release_time:number
+    release_time?:number
 };
 
 export interface DiscussionTopic {
     id?: string,
     uid : string,
     discussion_id: string,
-    release_time: number,
+    release_time?: number,
     title:string,
     reply:number,
     follow:boolean,
