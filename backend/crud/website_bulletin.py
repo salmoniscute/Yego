@@ -27,7 +27,7 @@ class WebsiteBulletinCrudManager:
 
         return bulletin
 
-    async def get(self, bulletin_id: str, db_session: AsyncSession):
+    async def get(self, bulletin_id: int, db_session: AsyncSession):
         stmt = select(WebsiteBulletinModel).where(WebsiteBulletinModel.id == bulletin_id)
         result = await db_session.execute(stmt)
         bulletin = result.first()
@@ -65,7 +65,7 @@ class WebsiteBulletinCrudManager:
         
         return _list
 
-    async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
+    async def update(self, bulletin_id: int, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
         _dict = updateBulletin.model_dump(exclude_none=True)
 
         # Update Component

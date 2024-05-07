@@ -15,7 +15,7 @@ class ComponentCrudManager:
 
         return component
     
-    async def get(self, component_id: str, db_session: AsyncSession):
+    async def get(self, component_id: int, db_session: AsyncSession):
         stmt = select(ComponentModel).where(ComponentModel.id == component_id)
         result = await db_session.execute(stmt)
         component = result.first()
@@ -29,7 +29,7 @@ class ComponentCrudManager:
 
         return [component[0] for component in result.all()]
     
-    async def update(self, component_id: str, updateComponent: dict, db_session: AsyncSession):
+    async def update(self, component_id: int, updateComponent: dict, db_session: AsyncSession):
         if updateComponent:
             stmt = update(ComponentModel).where(ComponentModel.id == component_id).values(updateComponent)
             await db_session.execute(stmt)
@@ -37,7 +37,7 @@ class ComponentCrudManager:
 
         return 
     
-    async def delete(self, component_id: str, db_session: AsyncSession):
+    async def delete(self, component_id: int, db_session: AsyncSession):
         stmt = delete(ComponentModel).where(ComponentModel.id == component_id)
         await db_session.execute(stmt)
         await db_session.commit()

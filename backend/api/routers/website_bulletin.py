@@ -60,7 +60,7 @@ async def get_all_website_bulletins():
     response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
-async def get_website_bulletin(wb_id: str):
+async def get_website_bulletin(wb_id: int):
     """
     Get the website bulletin.
     """
@@ -77,7 +77,7 @@ async def get_website_bulletin(wb_id: str):
 )
 async def update_website_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    wb_id: str = Depends(check_website_bulletin_id)
+    wb_id: int = Depends(check_website_bulletin_id)
 ):
     """
     Update the particular website bulletin with at least one of the following information:
@@ -93,7 +93,7 @@ async def update_website_bulletin(
     "/bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_website_bulletin(wb_id: str = Depends(check_website_bulletin_id)):
+async def delete_website_bulletin(wb_id: int = Depends(check_website_bulletin_id)):
     """
     Delete the website bulletin.
     """
