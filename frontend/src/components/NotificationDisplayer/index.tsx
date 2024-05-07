@@ -1,6 +1,7 @@
 import { ReactElement, useContext, useEffect, useState } from "react";
 import NotiContext from "../../views/NotificationPage/context";
 import './index.scss';
+import { FaCircle } from "react-icons/fa";
 
 type propsType = Readonly<{
   id: number
@@ -32,7 +33,7 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
   return (
     <div id="notificationDisplayer">
       <div>
-        <h2>{ctx.currNoti.course_name}</h2>
+        <h2><FaCircle className="circle-sign"/>{ctx.currNoti.course_name}</h2>
         <h1>{ctx.currNoti.title ? ctx.currNoti.title : "尚無通知"}</h1>
         <h2>{ctx.currNoti.publisher} {formattedDate ? "發佈於" : ""} {formattedDate ? formattedDate : ""}</h2>
         <div className="content"><p>{ctx.currNoti.content}</p></div>
