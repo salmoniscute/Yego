@@ -120,6 +120,7 @@ class DiscussionTopicCrudManager:
             replies = await db_session.execute(stmt)
             obj = {
                 "id": topic[0].id,
+                "uid": topic[0].info.uid,
                 "publisher": topic[0].info.publisher_info.name,
                 "publisher_avatar": topic[0].info.publisher_info.avatar,
                 "release_time": topic[0].info.release_time,

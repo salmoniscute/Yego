@@ -49,6 +49,7 @@ class DiscussionTopicReplyRead(ComponentReadID):
 
 ### Discussion Topic ###
 class DiscussionTopicRead(ComponentReadID):
+    uid: str
     publisher: str
     publisher_avatar: Optional[str] = None
     release_time: datetime

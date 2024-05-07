@@ -13,7 +13,7 @@ ComponentCrud = ComponentCrudManager()
 class SubmittedAssignmentCrudManager:
     async def create(self, uid:str, material_info_id:int, grade:int, newSubmittedMaterial:CourseMaterialSchema.SubmittedMaterialCreate, db_session:AsyncSession):
         newComponent_dict = newSubmittedMaterial.model_dump()
-        component = await ComponentCrud.create(uid, newComponent_dict, db_session)
+        component = await ComponentCrud.create(uid, newComponent_dict)
         
         submitted_material = SubmittedAssignmentModel(id = component.id, assignment_id = material_info_id, grade = grade)
         db_session.add(submitted_material)
@@ -30,15 +30,17 @@ class SubmittedAssignmentCrudManager:
             await db_session.refresh(submitted_assignment[0], ["info"])
             obj = {
                 "id": submitted_assignment[0].id,
+                "uid": submitted_assignment[0].info.uid,
                 "assignment_id": submitted_assignment[0].assignment_id,
-                "grade": submitted_assignment[0].grade
+                "grade": submitted_assignment[0].grade,
+                "title": submitted_assignment[0].info.title,
+                "content": submitted_assignment[0].info.content
             }
         return obj
     
     async def update(self, submitted_assignment_id:int, newSubmittedMaterial:CourseMaterialSchema.SubmittedMaterialUpdate, db_session:AsyncSession):
         updateSubmittedSubmitted_dict = newSubmittedMaterial.model_dump(exclude_none=True)
         component = {
-            "id": updateSubmittedSubmitted_dict["id"],
             "title": updateSubmittedSubmitted_dict["title"],
             "content": updateSubmittedSubmitted_dict["content"]
         }
@@ -46,7 +48,7 @@ class SubmittedAssignmentCrudManager:
             "grade": updateSubmittedSubmitted_dict["grade"]
         }
         if updateSubmittedSubmitted_dict:
-            await ComponentCrud.update(submitted_assignment_id, component, db_session)
+            await ComponentCrud.update(submitted_assignment_id, component)
             stmt = update(SubmittedAssignmentModel).where(SubmittedAssignmentModel.id == submitted_assignment_id).values(submitted_assignment)
             await db_session.execute(stmt)
             await db_session.commit()

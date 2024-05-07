@@ -38,7 +38,7 @@ async def create_material_info(
     response_model=CourseMaterialSchema.MaterialInfoRead
 )
 async def get_material_info(
-    material_info_id: int = Depends(check_material_info_id)
+    material_info_id: int 
 ):
     material_info = await MaterialInfoCrud.get(material_info_id)
     if material_info:

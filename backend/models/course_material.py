@@ -40,9 +40,9 @@ class MaterialInfo(Base):
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component", back_populates="material_infos")
 
-    def __init__(self, id: int, course_material_id:int, type:str, start_time:datetime, end_time:datetime, assignment_reject_time:datetime, display:bool) -> None:
+    def __init__(self, id: int, material_id:int, type:str, start_time:datetime, end_time:datetime, assignment_reject_time:datetime, display:bool) -> None:
         self.id = id
-        self.course_material_id = course_material_id
+        self.material_id = material_id
         self.type = type
         self.start_time = start_time
         self.end_time = end_time
@@ -50,7 +50,7 @@ class MaterialInfo(Base):
         self.display = display
 
     def __repr__(self) -> str:
-        return f"MaterialInfo(id={self.id}, course_material_id={self.course_material_id}, type={self.type}, start_time={self.start_time}, end_time={self.end_time}, assignment_reject_time={self.assignment_reject_time}, display={self.display})"
+        return f"MaterialInfo(id={self.id}, material_id={self.material_id}, type={self.type}, start_time={self.start_time}, end_time={self.end_time}, assignment_reject_time={self.assignment_reject_time}, display={self.display})"
     
 class SubmittedAssignment(Base):
     __tablename__ = "SubmittedAssignment"

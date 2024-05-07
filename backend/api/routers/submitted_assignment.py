@@ -67,11 +67,9 @@ async def update_submitted_assignment(
     """
     Update a submitted assignment by its id.
     """
-    updated = await SubmittedMaterialCrud.update(submitted_assignment_id, update)
-    if updated:
-        return updated
+    await SubmittedMaterialCrud.update(submitted_assignment_id, update)
     
-    raise not_found
+    return
 
 @router.delete(
     "/submitted_assignment/{submitted_assignment_id}",
@@ -83,8 +81,6 @@ async def delete_submitted_assignment(
     """
     Delete a submitted assignment by its id.
     """
-    deleted = await SubmittedMaterialCrud.delete(submitted_assignment_id)
-    if deleted:
-        return deleted
+    await SubmittedMaterialCrud.delete(submitted_assignment_id)
     
-    raise not_found
+    return
