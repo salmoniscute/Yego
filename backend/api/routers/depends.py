@@ -9,6 +9,7 @@ from crud.user import UserCrudManager
 from crud.website_bulletin import WebsiteBulletinCrudManager
 from crud.report import ReportCrudManager
 from crud.report_reply import ReportReplyCrudManager
+from crud.group import GroupCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
@@ -21,6 +22,7 @@ UserCrud = UserCrudManager()
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 ReportCrud = ReportCrudManager()
 ReportReplyCrud = ReportReplyCrudManager()
+GroupCrud = GroupCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -80,12 +82,14 @@ async def check_reply_id(reply_id: int):
     
     return reply_id
 
+
 async def check_discussion_id(discussion_id: int):
     discussion = await DiscussionCrud.get(discussion_id)
     if not discussion:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion does not exist")
     
     return discussion_id
+
 
 async def check_topic_id(topic_id: int):
     topic = await DiscussionTopicCrud.get(topic_id)
@@ -94,12 +98,14 @@ async def check_topic_id(topic_id: int):
     
     return topic_id
 
+
 async def check_topic_reply_id(reply_id: int):
     reply = await DiscussionTopicReplyCrud.get(reply_id)
     if not reply:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply does not exist")
     
     return reply_id
+
 
 async def check_topic_reply_parnet_id(parent_id: int):
     if parent_id == 0:
@@ -110,3 +116,11 @@ async def check_topic_reply_parnet_id(parent_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply Parent does not exist")
     
     return parent_id
+
+
+async def check_group_id(group_id: int):
+    group = await GroupCrud.get(group_id)
+    if not group:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group does not exist")
+    
+    return group_id
