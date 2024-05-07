@@ -31,11 +31,9 @@ async def create_website_bulletin(
 ):
     """
     Create a bulletin with the following information:
-    - **id**
     - **release_time**
     - **title**
     - **content**
-    - **pin_to_top**
     """
     await WebsiteBulletinCrud.create(uid, newBulletin)
     return
@@ -43,7 +41,7 @@ async def create_website_bulletin(
 
 @router.get(
     "/bulletins", 
-    response_model=list[BulletinSchema.BulletinListRead],
+    response_model=list[BulletinSchema.WebsiteBulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():

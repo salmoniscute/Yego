@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -8,7 +9,7 @@ from models.component import Component as ComponentModel
 @crud_class_decorator
 class ComponentCrudManager:
     async def create(self, uid: str, newComponent: dict, db_session: AsyncSession):
-        component = ComponentModel(uid=uid, **newComponent)
+        component = ComponentModel(uid=uid, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), **newComponent)
         db_session.add(component)
         await db_session.commit()
 

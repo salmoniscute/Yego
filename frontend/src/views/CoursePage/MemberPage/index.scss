@@ -1,9 +1,27 @@
 #courseMemberPage{
     margin: 3em 4em;
     .courseMember{
-        background-color: #FFFFFF;
-        border: solid 1px #474141;
         padding: 0.5em 2em;
+        .dropdownkey{
+            background-color: #FFFFFF;
+            border: solid 1.5px #949494;
+            border-radius: 0.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20%;
+            color: #474141;
+            vertical-align: middle;
+            padding: 0.5em 1em;
+            margin-bottom: 25px;
+            .material-symbols-outlined{
+                display: inline-block;
+                font-size: 25px;
+                padding-top: 5px;
+                padding-left: 5px;
+                cursor: pointer;
+            }
+        }
         .courseMemberTab{
             display: flex;
             justify-content: space-between;
@@ -19,6 +37,13 @@
             p{
                 font-size: medium;
                 width: calc(100% / 5);
+            };
+            img{
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                vertical-align: middle;
+                margin-right: 7px;
             }
         }
         .courseMemberContent:hover{
@@ -27,24 +52,23 @@
         .memberWindow{
             display: none;
             flex-direction: column;
-            position: fixed;
+            position: fixed ;
             z-index: 1;
-            right: 0%;
-            bottom: 5%;
-            width: 30%;
+            right: 10%;
+            bottom: 25%;
+            width: 60%;
             height: 67%;
             padding-left: 3%;
-            overflow-x: scroll;
             background-color: #FFFFFF;
             cursor: auto;
             .closeWindow{
-                background-color: #D9D9D9;
-                position: fixed;
-                right: 0px;
+                display: block;
+                position: absolute;
+                right: 0;
+                padding: 5px;
                 height:35px;
                 width: 35px;
-                color: #000000;
-                text-align: center;
+                color: #474141;
                 line-height: 52px;
                 cursor: pointer;
                 .material-symbols-outlined{
@@ -55,25 +79,71 @@
             .windowSet{
                 display: flex;
                 .leftWindow{
-                    flex-grow: 3;
+                    width: 30%;
                     padding-left: 5%;
-                    .memberName{
-                        text-align: left;
-                        padding-left: 7px;
-                        padding-bottom: 10px;
-                        font-weight: bold;
-                        font-size: 28px;
-                        color: #474141;
+                    margin-top: 2%;
+                    .OtherInfo{
+                        display: flex;
+                        margin-top:7%;
+                        text-align: center;
+                        .OtherInfoTag{
+                            background-color: #FFEA79;
+                            border-radius: 20px;
+                            padding: 3%; 
+                            height: 20px;
+                            width: 45px;
+                            text-align: center;
+                            margin-right: 5%;
+                        }
+                        .OtherInfoContent{
+                            padding: 2%; 
+                            height: 20px;
+                        }
                     }
                     img{
                         width: 100px;
                         height: 100px;
                         border-radius: 50%;
                     }
+                    .memberMail{
+                        margin-top:6%;
+                        margin-left: 3px;
+                    }
                 }
                 .rightWindow{
                     line-height: 20px;
-                    flex-grow: 2;
+                    width: 70%;
+                    margin-left: 10px;
+                    margin-top: 2%;
+                    .memberName{
+                        text-align: left;
+                        padding-bottom: 10px;
+                        font-weight: bold;
+                        font-size: 28px;
+                        color: #000000;
+                    }
+                    .memberIntro{
+                        display: flex;
+                        margin-top:7%;
+                        text-align: center;
+                        flex-direction: column;
+                        .memberIntroTag{
+                            background-color: #FFEA79;
+                            border-radius: 20px;
+                            padding: 2%; 
+                            height: 20px;
+                            width: 20%;
+                            text-align: center;
+                            margin-right: 5%;
+                            margin-bottom: 3%;
+                        }
+                        .memberIntroContent{
+                            overflow: scroll;
+                            text-align: left;
+                            padding: 3%;
+                            height: 130px;
+                        }
+                    }
                 }
             }
             

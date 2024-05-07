@@ -1,12 +1,14 @@
-from schemas.component import ComponentCreate, ComponentRead, ComponentUpdate, ComponentReadWithFile
-from typing import Optional
+from pydantic import BaseModel
+from schemas.component import *
 
+from schemas.file import FileRead
+
+### Discussion ###
 class DiscussionCreate(ComponentCreate):
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "release_time": "2021-09-01T00:00:00",
                     "title": "Discussion 1",
                     "content": "This is the first discussion of the course."
                 }
@@ -14,47 +16,52 @@ class DiscussionCreate(ComponentCreate):
         }
     }
 
-
 class DiscussionRead(ComponentRead):
     pass
-    # topics: Optional[list[DiscussionTopicRead]] = None
     
-
 class DiscussionOfCourses(ComponentRead):
     subscription: bool
+    
+class DiscussionUpdate(ComponentUpdate):
+    pass
+    
+### Discussion Topic Reply ###
+class DiscussionTopicReplyCreate(BaseModel):
+    content: str
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "content": "This is the first discussion topic reply of the course."
+                }
+            ]
+        }
+    }
 
+class DiscussionTopicReplyRead(ComponentReadID):
+    parent_id: int
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    content: str
 
-class DiscussionTopicRead(ComponentRead):
-    type: str
-    discussion_id: int
+### Discussion Topic ###
+class DiscussionTopicRead(ComponentReadID):
+    publisher: str
+    publisher_avatar: Optional[str] = None
+    release_time: datetime
+    title: str
+    content: str
+    files: Optional[list[FileRead]] = None
+    replies: Optional[list[DiscussionTopicReplyRead]] = None
+
+class DiscussionTopicReadlist(ComponentReadID):
+    title: str
+    content: str
 
 class DiscussionOfTopics(ComponentReadWithFile):
     reply_count: int
     publisher:str
     avatar: Optional[str] = None
     subscription: bool
-    
 
-class DiscussionTopicReplyCreate(DiscussionCreate):
-    parent_id: int
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                {
-                    "release_time": "2021-09-01T00:00:00",
-                    "title": "Discussion Topic Reply 1",
-                    "content": "This is the first discussion topic reply of the course.",
-                    "parent_id": 1
-                }
-            ]
-        }
-    }
-
-class DiscussionTopicReplyRead(ComponentRead):
-    parent_id: int
-    root_id: int
-
-
-class DiscussionUpdate(ComponentUpdate):
-    pass
 

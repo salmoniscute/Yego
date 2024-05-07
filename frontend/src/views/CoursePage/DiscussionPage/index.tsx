@@ -40,7 +40,11 @@ export default function DiscussionPage(props: propsType): ReactElement {
     const handleDiscussionList = () => {
         getDiscussionList(courseID).then(data => {
             setDiscussion(data);
-        });
+        }).catch( error =>{
+            if(error.response && error.response.status == 404){
+                
+            }
+        })
     }
 
     return (
@@ -70,7 +74,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                 }
                 
             </div>
-            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion" updatePost={handleDiscussionList}/></div>
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion" updatePost={handleDiscussionList} parent_id={courseID}/></div>
             
         </div>
     );

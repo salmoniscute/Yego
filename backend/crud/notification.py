@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -34,7 +35,7 @@ type_actions = {
 class NotificationCrudManager:
     async def create(self, uid: str, component_id: str, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
         newNotification_dict = newNotification.model_dump()
-        notification = NotificationModel(uid=uid, component_id=component_id, **newNotification_dict)
+        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), **newNotification_dict)
         db_session.add(notification)
         await db_session.commit()
 

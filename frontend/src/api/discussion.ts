@@ -1,14 +1,12 @@
 import { 
     Discussion,
-    DiscussionTopicInfo,
-    DiscussionTopicContent,
+    DiscussionTopic,
     DiscussionTopicReply
  } from "schemas/discussion";
 import axios from "axios";
 
 export async function getDiscussionList(course_id:string): Promise<Array<Discussion>>{
-    //let url = "http://localhost:8080/api/discussions/particular_course/"+course_id;
-    let url = "http://localhost:8080/api/discussions";
+    let url = "http://localhost:8080/api/discussions/"+course_id;
     try {
         const response = await axios.get(url,{
           });
@@ -32,57 +30,54 @@ export async function getDiscussion(id:string) : Promise <Discussion>{
     }
     return discussion;
 }
-export async function postDiscussion(uid:string , course_id:string , title:string , content:string): Promise<Discussion>{
-    let url = "http://localhost:8080/api/discussion?uid="+uid+"&course_id="+course_id;
-    let discussion ;
+export async function postDiscussion(discussion:Discussion):Promise<Discussion | null>{
+    let url = "http://localhost:8080/api/discussion?uid="+discussion.uid+"&course_id="+discussion.course_id;
     try {
-        const response = await axios.post(url,{
-            "title": title,
-            "release_time": "2021-09-01T00:00:00",
-            "content": content,
-          });
-        discussion = response.data;
+        const response = await axios.post(url,discussion);
     }
     catch(error) {  
         
     }
-
     return discussion;
 }
 
 
-export async function getDiscussionTopicList() : Promise<Array<DiscussionTopicInfo>>{
-    const result = [
-        {
-            uid:"F74106050",
-            discussion_id: "",
-            release_time: 1703390840,
-            title:"1-1第一題題意",
-            id:"15",
-            follow:false,
-            reply:1,
-        },
-        {
-            uid:"F74106050",
-            discussion_id: "",
-            release_time: 1703390840,
-            title:"救我啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-            id:"16",
-            follow:false,
-            reply:1,
-        },
-
-    ]
-    return result;
+export async function getDiscussionTopicList(discussion_id:string) : Promise<Array<DiscussionTopic>>{
+    let url = "http://localhost:8080/api/discussion_topics/"+discussion_id;
+    try {
+        const response = await axios.get(url,{
+          });
+        const result = response.data;
+        return result;
+    }
+    catch(error){
+        return[];
+    }
 }
 
-export async function getDiscussionTopicContent(data: DiscussionTopicInfo): Promise<DiscussionTopicContent | null> {
-    return Object.assign(data, {
-        uid: "F74106050",
-        publisher:"林志芸",
-        content:"新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財新年快樂恭喜發財",
-    });
-};
+export async function getDiscussionTopic(id:string) : Promise <DiscussionTopic>{
+    let url = "http://localhost:8080/api/discussion_topic/"+id;
+    let discussionTopic;
+    try {
+        const response = await axios.get(url,{
+          });
+        discussionTopic = response.data;
+    }
+    catch(error){
+    }
+    return discussionTopic;
+}
+
+export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Promise<DiscussionTopic | null>{
+    let url = "http://localhost:8080/api/discussion_topic?uid="+discussionTopic.uid+"&discussion_id="+discussionTopic.discussion_id;
+    try {
+        const response = await axios.post(url,discussionTopic);
+    }
+    catch(error) {  
+        
+    }
+    return discussionTopic;
+}
 
 export async function getDiscussionTopicReplyList() : Promise<Array<DiscussionTopicReply>>{
     const result = [

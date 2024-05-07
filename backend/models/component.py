@@ -43,6 +43,13 @@ class Component(Base):
         cascade="all, delete-orphan", 
         passive_deletes=True
     )
+    
+    discussion_reply: Mapped["DiscussionTopicReply"] = relationship(
+        "DiscussionTopicReply",
+        back_populates="info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
     files: Mapped[list["File"]] = relationship(
         "File",
@@ -84,11 +91,11 @@ class Component(Base):
     course_materials: Mapped[list["CourseMaterial"]] = relationship(
         "CourseMaterial",
         back_populates="info",
-        cascade="all, delete-orphan", 
+        cascade="all, delete-orphan",
         passive_deletes=True
     )
 
-    def __init__(self, uid: str, release_time: str, title: str, content: str) -> None:
+    def __init__(self, uid: str, title: str, content: str, release_time: str) -> None:
         self.uid = uid
         self.release_time = release_time
         self.title = title

@@ -86,12 +86,15 @@ class SelectedCourseCrudManager:
         _list = []
         for selected_course in result:
             _list.append({
-                "name": selected_course[0].user_info.name,
                 "uid": selected_course[0].user_info.uid,
-                "department": selected_course[0].user_info.department,
+                "name": selected_course[0].user_info.name,
                 "role": selected_course[0].user_info.role,
+                "department": selected_course[0].user_info.department,
+                "country": selected_course[0].user_info.country,
+                "email": selected_course[0].user_info.email,
+                "avatar": selected_course[0].user_info.avatar,
+                "introduction": selected_course[0].user_info.introduction,
                 "group": selected_course[0].group
             })
 
         return _list
-    

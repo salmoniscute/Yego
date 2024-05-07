@@ -53,7 +53,7 @@ class CourseBulletinCrudManager:
         result = await db_session.execute(stmt)
         result = result.unique()
         
-        return [bulletin[0] for bulletin in result.all()]
+        return [{"id": bulletin[0].id} for bulletin in result.all()]
 
     async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
         _dict = updateBulletin.model_dump(exclude_none=True)
@@ -88,10 +88,14 @@ class CourseBulletinCrudManager:
             await db_session.refresh(bulletin[0], ["info"])
             _list.append({
                 "id": bulletin[0].id,
+                "uid": bulletin[0].info.uid,
                 "publisher": bulletin[0].info.publisher_info.name,
+                "publisher_avatar": bulletin[0].info.publisher_info.avatar,
                 "release_time": bulletin[0].info.release_time,
                 "title": bulletin[0].info.title,
-                "pin_to_top": bulletin[0].pin_to_top
+                "content": bulletin[0].info.content,
+                "pin_to_top": bulletin[0].pin_to_top,
+                "files": bulletin[0].info.files
             })
         
         return _list
