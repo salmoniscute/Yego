@@ -11,7 +11,7 @@ import userDataContext from "context/userData";
 import "./index.scss";
 import { SlOptions } from "react-icons/sl";
 
-import { CourseBulletinInfo } from "schemas/courseBulletin";
+import { CourseBulletin } from "schemas/courseBulletin";
 import { getCourseBulletinList,postCourseBulletin } from "api/courseBulletin";
 
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
@@ -25,7 +25,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         courseID
     } = props;
     const userData = useContext(userDataContext);
-    const [courseBulletinList, setCourseBulletin] = useState<Array<CourseBulletinInfo>>([]);
+    const [courseBulletinList, setCourseBulletin] = useState<Array<CourseBulletin>>([]);
     // text editor
     const [content, setContent] = useState('');
     const [title , setTitle] = useState("");
@@ -47,11 +47,19 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     };
 
     const onSubmit = async () =>{
-        const nowTime = new Date().getTime();
         const uid = userData?.uid;
+        const publisher = userData?.name;
         if (uid) {
-            const courseBulletin = await postCourseBulletin(uid, courseID, title, nowTime, content, false);
-            console.log(courseBulletin);
+            const courseBulletin : CourseBulletin = {
+                uid: uid,
+                course_id:courseID,
+                title: title,
+                pin_to_top: false,
+                content: content,
+                publisher: publisher || "",
+            }
+            const result = await postCourseBulletin(courseBulletin);
+            console.log(result);
         }
         else {}
         setContent("");
@@ -79,6 +87,13 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         { label: "刪除", action: () => deleteBulletin(id) },
         { label: "置頂", action: () => pinBulletin(id) }
     ];
+
+    const setTimeString = (release_time:number):string => {
+        const releaseDate = new Date(release_time);
+        const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+        const formattedDate = `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
+        return formattedDate;
+    }
 
     return (
         <div id="courseBulletinPage">
@@ -110,7 +125,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     { data.pin_to_top === true && <div className="cbPin">置頂</div>}
                                     <img src={UserIcon} />
                                     <p className="cbAuther">{data.publisher}</p>
-                                    <p className="cbTime">{data.release_time}</p>
+                                    <p className="cbTime">{setTimeString(data.release_time || 0)}</p>
                                 </div>
                                 { data.uid === userData?.uid && <label className="dropdownMenu">
                                     <SlOptions/>
@@ -118,7 +133,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     <div className="mask" style={{ "--length": 3 } as CSSProperties}>
                                         <div className="content body-bold">
                                             {
-                                                editOptions(data.id).map((option, i) => <div
+                                                editOptions(data.id || "").map((option, i) => <div
                                                     key={i}
                                                     onClick={option.action}
                                                 ><p>{option.label}</p></div>)
@@ -128,10 +143,11 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                 </label>}
                                       
                             </div>
+                            <h3>{data.title}</h3>  
                             <div
                                 className="cbInfor"
                                 dangerouslySetInnerHTML={{ __html: data.content }}
-                            />        
+                            />     
                         </div>)
                 }
             </div>

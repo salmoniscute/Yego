@@ -37,15 +37,15 @@ export default function ReportPage(): ReactElement {
     const sortedList = [...data]; 
     if (state === true) {
         sortedList.sort((d1, d2) => {
-          const date1 = new Date(d1.release_time);
-          const date2 = new Date(d2.release_time);
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
           return date2.getTime() - date1.getTime();
       });
         
     } else {
         sortedList.sort((d1, d2) => {
-          const date1 = new Date(d1.release_time);
-          const date2 = new Date(d2.release_time);
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
           return date1.getTime() - date2.getTime();
       });
         
@@ -86,7 +86,7 @@ export default function ReportPage(): ReactElement {
             <p className="title">
                 <Link to={`./${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{setTimeString(data.release_time)}</p>
+            <p className="launch">{setTimeString(data.release_time||0)}</p>
             <p className="reply">{data.reply}</p>
           </div>
         )

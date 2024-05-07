@@ -16,7 +16,6 @@ import { TbBellRinging } from "react-icons/tb";
 
 import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
-import { error } from "console";
 
 
 type propsType = Readonly<{
