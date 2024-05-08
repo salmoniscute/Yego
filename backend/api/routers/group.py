@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from random import shuffle
 
-from .depends import check_course_id, check_group_id
+from .depends import check_course_id, check_group_id, check_user_id
 from crud.group import GroupCrudManager
 from crud.selected_course import SelectedCourseCrudManager
 from schemas import group as GroupSchema
@@ -52,10 +52,10 @@ async def auto_grouping(
     """
     Auto grouping.
     """
+    groups = []
     members = await SelectedCourseCrud.get_by_course_id(course_id)
     members = [{"uid": member["uid"], "name": member["name"]} for member in members if member["role"] == "student"]
-    group_dict = {}
-
+    
     # Fake data from A to L
     # members = [{'uid': 'K', 'name': 'K-name'}, {'uid': 'D', 'name': 'D-name'}, {'uid': 'E', 'name': 'E-name'}, {'uid': 'C', 'name': 'C-name'}, {'uid': 'B', 'name': 'B-name'}, {'uid': 'L', 'name': 'L-name'}, {'uid': 'G', 'name': 'G-name'}, {'uid': 'I', 'name': 'I-name'}, {'uid': 'J', 'name': 'J-name'}, {'uid': 'H', 'name': 'H-name'}, {'uid': 'F', 'name': 'F-name'}, {'uid': 'A', 'name': 'A-name'}, {'uid': 'M', 'name': 'M-name'}, {'uid': 'N', 'name': 'N-name'}]
     
@@ -68,45 +68,44 @@ async def auto_grouping(
     # Grouping method: numbers of groups or numbers of members
     if grouping_method == GroupSchema.GroupingMethod.numbers_of_groups:
         group_num = number_depend_on_grouping_method
-        members_per_group, remainder = len(members) // group_num, len(members) % group_num
+        members_per_group = len(members) // group_num
+        remainder = len(members) % group_num
         for i in range(group_num):
-            _members_per_group = members_per_group + 1 if remainder > 0 else members_per_group
-            group_dict[i] = []
-            for _ in range(_members_per_group):
-                group_dict[i].append(members.pop(0))
-            remainder = remainder - 1 if remainder > 0 else 0
+            newGroup = {
+                "number_of_members": members_per_group + 1 if remainder > 0 else members_per_group,
+                "members": [],
+            }
+            newGroup["members"] = [members.pop(0) for _ in range(newGroup["number_of_members"])]
+            remainder -= 1
+            groups.append(newGroup)
             
     elif grouping_method == GroupSchema.GroupingMethod.numbers_of_members:
         members_per_group = number_depend_on_grouping_method
-        group_number = len(members) // number_depend_on_grouping_method
+        group_number = len(members) // members_per_group + 1
         for i in range(group_number):
-            group_dict[i] = members[i * members_per_group: (i + 1) * members_per_group]
-        group_dict[group_number] = members[group_number * members_per_group:]
+            newGroup = {
+                "number_of_members": len(members[i * members_per_group: (i + 1) * members_per_group]),
+                "members": members[i * members_per_group: (i + 1) * members_per_group]
+            }
+            groups.append(newGroup)
     
-    # Naming rule: alphabet or number
-    group_info_list = []
+    # Update database
     group_name = 65 if naming_rule == GroupSchema.NamingRule.alphabet else 1
-    for i in range(len(group_dict)):
+    for group_info in groups:
         name = chr(group_name) if naming_rule == GroupSchema.NamingRule.alphabet else str(group_name)
-        group = await GroupCrud.create(course_id, GroupSchema.GroupCreate(name=name, member_num=len(group_dict[i])))
-        group_info_list.append({"id": group.id, "group_name": name})
-        group_name += 1
-    
-    # Response body
-    res = []
-    for _group_info, _members in zip(group_info_list, group_dict.values()):
-        for member in _members:
-            group = SelectedCourseSchema.SelectedCourseUpdate(group_id=_group_info["id"])
-            await SelectedCourseCrud.update(member["uid"], course_id, group)
-
-        res.append({
-            "id": _group_info["id"],
-            "group_name": _group_info["group_name"],
-            "member_num": len(_members),
-            "members": _members
+        group_schema = GroupSchema.GroupCreate(name=name, number_of_members=group_info["number_of_members"])
+        group = await GroupCrud.create(course_id, group_schema)
+        group_info.update({
+            "id": group.id,
+            "name": name
         })
-
-    return res
+        
+        for member in group_info["members"]:
+            await SelectedCourseCrud.update(member["uid"], course_id, group_info["id"])
+        
+        group_name += 1
+                
+    return groups
 
 
 @router.post(
@@ -118,19 +117,61 @@ async def student_grouping(
     grouping_method: GroupSchema.GroupingMethod,
     number_depend_on_grouping_method: int,
     naming_rule: GroupSchema.NamingRule,
-    course_id: str = Depends(check_course_id),
-    deadline: str = None
+    create_deadline: str,
+    course_id: str = Depends(check_course_id)
 ):
     """
     Students group by themselves.
     """
-    pass
+    groups = []
+    members = await SelectedCourseCrud.get_by_course_id(course_id)
+    members = [member for member in members if member["role"] == "student"]
+    
+    # Fake data from A to L
+    # members = [{'uid': 'K', 'name': 'K-name'}, {'uid': 'D', 'name': 'D-name'}, {'uid': 'E', 'name': 'E-name'}, {'uid': 'C', 'name': 'C-name'}, {'uid': 'B', 'name': 'B-name'}, {'uid': 'L', 'name': 'L-name'}, {'uid': 'G', 'name': 'G-name'}, {'uid': 'I', 'name': 'I-name'}, {'uid': 'J', 'name': 'J-name'}, {'uid': 'H', 'name': 'H-name'}, {'uid': 'F', 'name': 'F-name'}, {'uid': 'A', 'name': 'A-name'}, {'uid': 'M', 'name': 'M-name'}, {'uid': 'N', 'name': 'N-name'}]
+
+    # Grouping method: numbers of groups or numbers of members
+    if grouping_method == GroupSchema.GroupingMethod.numbers_of_groups:
+        group_num = number_depend_on_grouping_method
+        members_per_group = len(members) // group_num
+        remainder = len(members) % group_num
+        for i in range(group_num):
+            newGroup = {
+                "number_of_members": members_per_group + 1 if remainder > 0 else members_per_group,
+                "members": []
+            }
+            remainder -= 1
+            groups.append(newGroup)
+            
+    elif grouping_method == GroupSchema.GroupingMethod.numbers_of_members:
+        members_per_group = number_depend_on_grouping_method
+        group_number = len(members) // members_per_group + 1
+        for i in range(group_number):
+            newGroup = {
+                "number_of_members": len(members[i * members_per_group: (i + 1) * members_per_group]),
+                "members": []
+            }
+            groups.append(newGroup)
+    
+    # Naming rule: alphabet or number AND create groups
+    group_name = 65 if naming_rule == GroupSchema.NamingRule.alphabet else 1
+    for group_info in groups:
+        name = chr(group_name) if naming_rule == GroupSchema.NamingRule.alphabet else str(group_name)
+        group_schema = GroupSchema.GroupCreate(name=name, number_of_members=group_info["number_of_members"])
+        group = await GroupCrud.create(course_id=course_id, newGroup=group_schema, create_deadline=create_deadline)
+        group_info.update({
+            "id": group.id,
+            "name": name
+        })
+        group_name += 1
+        
+    return groups
        
 
 @router.get(
     "/groups",
-    response_model=list[GroupSchema.GroupRead],
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    deprecated=True
 )
 async def get_all_groups():
     """ 
@@ -144,12 +185,15 @@ async def get_all_groups():
 
 
 @router.get(
-    "/group/{group_id}", 
-    response_model=GroupSchema.GroupRead,
+    "/group/info/{course_id}", 
+    response_model=list[GroupSchema.GroupReadByCourseID],
     status_code=status.HTTP_200_OK
 )
-async def get_group(group_id: str):
-    group = await GroupCrud.get(group_id)
+async def get_all_groups_in_one_coure(
+    course_id: str = Depends(check_course_id)
+):
+    group = await GroupCrud.get_by_course_id(course_id)
+    print(group)
     if group:
         return group
     
@@ -157,10 +201,43 @@ async def get_group(group_id: str):
 
     
 @router.put(
+    "/group/join",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def join_group(
+    uid: str = Depends(check_user_id),
+    course_id: str = Depends(check_course_id),
+    group_id: int = Depends(check_group_id)
+):
+    """ 
+    Add user into the group.
+    """
+    await GroupCrud.join(uid, course_id, group_id)
+
+    return 
+
+
+@router.put(
+    "/group/exit",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def exit_group(
+    uid: str = Depends(check_user_id),
+    course_id: str = Depends(check_course_id)
+):
+    """ 
+    Exit group.
+    """
+    await GroupCrud.exit(uid, course_id)
+
+    return 
+
+
+@router.put(
     "/group/{group_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_group(
+async def update_group_info(
     updateGroup: GroupSchema.GroupUpdate,
     group_id: int = Depends(check_group_id)
 ):

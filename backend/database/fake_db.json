@@ -43,16 +43,24 @@
             "outline": "This course is an introduction to computer science."
         }
     ],
+    "groups": [
+        {
+            "course_id": "CSE101",
+            "name": "Group 1",
+            "number_of_members": 1,
+            "create_deadline": "2024-04-10 16:10:05"
+        }
+    ],
     "selected_courses": [
         {
             "uid": "C14096277",
             "course_id": "CSE101",
-            "group": "A"
+            "group_id": 1
         },
         {
             "uid": "F74102048",
-            "course_id": "CSE102",
-            "group": "B"
+            "course_id": "CSE101",
+            "group_id": 1
         }
     ],
     "components": [
