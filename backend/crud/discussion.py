@@ -115,9 +115,9 @@ class DiscussionTopicCrudManager:
         obj = {}
         if topic:
             await db_session.refresh(topic[0], ["info"])
-            
             stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id)
             replies = await db_session.execute(stmt)
+            replies = replies.all()
             obj = {
                 "id": topic[0].id,
                 "uid": topic[0].info.uid,
@@ -127,7 +127,7 @@ class DiscussionTopicCrudManager:
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
                 "files": [file for file in topic[0].info.files],
-                "reply_number": len(replies.all()),
+                "reply_number": len(replies),
                 "replies": [],
             }
             for reply in replies:
