@@ -27,7 +27,7 @@ class CourseBulletinCrudManager:
 
         return bulletin
 
-    async def get(self, bulletin_id: str, db_session: AsyncSession):
+    async def get(self, bulletin_id: int, db_session: AsyncSession):
         stmt = select(CourseBulletinModel).where(CourseBulletinModel.id == bulletin_id)
         result = await db_session.execute(stmt)
         bulletin = result.first()
@@ -55,7 +55,7 @@ class CourseBulletinCrudManager:
         
         return [{"id": bulletin[0].id} for bulletin in result.all()]
 
-    async def update(self, bulletin_id: str, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
+    async def update(self, bulletin_id: int, updateBulletin: BulletinSchema.BulletinUpdate, db_session: AsyncSession):
         _dict = updateBulletin.model_dump(exclude_none=True)
 
         # Update Component

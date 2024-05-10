@@ -2,25 +2,11 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class SelectedCourseCreate(BaseModel):
-    group: Optional[str] = None
-
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                { 
-                    "group": "A"
-                }
-            ]
-        }
-    }
-
-
 class SelectedCourseRead(BaseModel):
     id: int
     uid: str
     course_id: str
-    group: Optional[str] = None
+    group_id: Optional[int] = None
 
 
 class SelectedCourseByUidRead(BaseModel):
@@ -38,9 +24,9 @@ class SelectedCourseByCourseIdRead(BaseModel):
     email: str
     avatar: Optional[str] = None
     introduction: Optional[str] = None
-    group: Optional[str] = None
+    group_name: Optional[str] = None
 
 
 class SelectedCourseUpdate(BaseModel):
-    group: Optional[str] = None
+    group_id: Optional[int] = None
     

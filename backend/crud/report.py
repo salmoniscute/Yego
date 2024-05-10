@@ -80,15 +80,15 @@ class ReportCrudManager:
         
         return _list
 
-    async def update(self, report_id: str, updateReport: ReportSchema.ReportUpdate, db_session: AsyncSession):
+    async def update(self, report_id: int, updateReport: ReportSchema.ReportUpdate, db_session: AsyncSession):
         updateComponent_dict = updateReport.model_dump(exclude_none=True)
         if updateComponent_dict:
             await ComponentCrud.update(report_id, updateComponent_dict)
 
         return
     
-    async def delete(self, id: int, db_session: AsyncSession):
-        stmt = delete(ComponentModel).where(ComponentModel.id == id)
+    async def delete(self, report_id: int, db_session: AsyncSession):
+        stmt = delete(ComponentModel).where(ComponentModel.id == report_id)
         await db_session.execute(stmt)
         await db_session.commit()
 

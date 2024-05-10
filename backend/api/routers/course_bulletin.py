@@ -63,7 +63,7 @@ async def get_all_course_bulletins():
     response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
-async def get_course_bulletin(cb_id: str):
+async def get_course_bulletin(cb_id: int):
     """
     Get the course bulletin.
     """
@@ -80,7 +80,7 @@ async def get_course_bulletin(cb_id: str):
 )
 async def update_course_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    cb_id: str = Depends(check_course_bulletin_id)
+    cb_id: int = Depends(check_course_bulletin_id)
 ):
     """
     Update the particular course bulletin with at least one of the following information:
@@ -96,7 +96,7 @@ async def update_course_bulletin(
     "/bulletin/{cb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course_bulletin(cb_id: str = Depends(check_course_bulletin_id)):
+async def delete_course_bulletin(cb_id: int = Depends(check_course_bulletin_id)):
     """
     Delete the course bulletin.
     """

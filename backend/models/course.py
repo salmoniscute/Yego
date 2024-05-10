@@ -26,6 +26,13 @@ class Course(Base):
         passive_deletes=True
     )
 
+    groups: Mapped[list["Group"]] = relationship(
+        "Group",
+        back_populates="course_info",
+        cascade="all, delete-orphan", 
+        passive_deletes=True
+    )
+
     course_bulletins: Mapped[list["CourseBulletin"]] = relationship(
         "CourseBulletin",
         back_populates="course_info",

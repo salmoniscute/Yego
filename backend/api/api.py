@@ -15,6 +15,7 @@ from .routers import (
     file_router,
     notification_router,
     selected_course_router,
+    group_router,
     subscription_router,
     user_router,
     website_bulletin_router,
@@ -33,6 +34,7 @@ app.include_router(report_router)
 app.include_router(report_reply_router)
 app.include_router(course_router)
 app.include_router(selected_course_router)
+app.include_router(group_router)
 app.include_router(course_bulletin_router)
 app.include_router(discussion_router)
 app.include_router(discussion_topic_router)
