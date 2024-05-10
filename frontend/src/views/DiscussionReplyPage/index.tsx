@@ -12,7 +12,6 @@ import { SlOptions } from "react-icons/sl";
 import { TiArrowBack } from "react-icons/ti";
 
 import userDataContext from "context/userData";
-import DiscussionReplyArea from "components/DiscussionReplyArea";
 import { DiscussionTopic,DiscussionTopicReply } from "schemas/discussion";
 import {  getDiscussionTopicReplyList } from "api/discussion";
 import { getDiscussionTopic } from "api/discussion";
@@ -29,7 +28,9 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     const userData = useContext(userDataContext);
     const [discussionTopicReplyList,setDiscussionTopicReply] = useState<Array<DiscussionTopicReply>>([]);
     const [discussionTopic , setDiscussionTopic] = useState<DiscussionTopic>();
-    const [showReplyArea, setShowReplyArea] = useState<boolean>(false);
+    const [replyContentList, setReplyContentList] = useState(Array(discussionTopicReplyList.length).fill(''));
+    const [showReplyAreaList, setShowReplyAreaList] = useState(Array(discussionTopicReplyList.length).fill(false));
+    const [mainReply , setMainReply] = useState("");
 
     useEffect(()=>{
         getDiscussionTopic(params.discussionTopicId || "").then( data =>{
@@ -41,8 +42,15 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         
     },[])
 
-    const handleToggleReplyArea = () => {
-        setShowReplyArea(!showReplyArea);
+    const handleToggleReplyArea = (index:number) => {
+        const newShowReplyAreaList = [...showReplyAreaList];
+        newShowReplyAreaList[index] = !newShowReplyAreaList[index];
+        setShowReplyAreaList(newShowReplyAreaList);
+    };
+    const handleReplyContentChange = (index:number, value:string) => {
+        const newReplyContentList = [...replyContentList];
+        newReplyContentList[index] = value;
+        setReplyContentList(newReplyContentList);
     };
 
 
@@ -94,8 +102,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             </div>
             <div >
                 {
-                    discussionTopicReplyList.map(data=>
-                        <div className="discussionTopicReply">
+                    discussionTopicReplyList.map((data,index)=>
+                        <div key={index} className="discussionTopicReply">
                             <div className="discussionTopicReplyTop">
                                 <img src={UserIcon}/>
                                 <h3>發布者</h3>
@@ -103,18 +111,36 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                             <p>{data.content}</p>
                             <div className="discussionTopicReplyBottom">
                                 <p>{data.release_time}</p>
-                                <div className="replyButton" onClick={handleToggleReplyArea}> 
+                                <div className="replyButton" onClick={()=>handleToggleReplyArea(index)}> 
                                     <p>回覆</p>
                                     <TiArrowBack/>
                                 </div>
                             </div>
-                            { showReplyArea === true &&  <DiscussionReplyArea parentID={data.id}/>}
+                            { showReplyAreaList[index] === true &&  <div className="discussionReplyArea">
+                                <img src={UserIcon}/>
+                                <textarea
+                                    placeholder="回覆留言"
+                                    value={replyContentList[index]}
+                                    onChange={(e) => handleReplyContentChange(index,e.target.value)}
+                                    rows={1}
+                                />
+                                <IoSend className="sendIcon"/>
+                            </div>}
                         </div> 
                     )
                 }
             </div>
 
-            <DiscussionReplyArea parentID=""/>
+            <div className="discussionReplyArea">
+                <img src={UserIcon}/>
+                <textarea
+                    placeholder="回覆貼文"
+                    value={mainReply}
+                    onChange={(e) => setMainReply(e.target.value)}
+                    rows={1}
+                />
+                <IoSend className="sendIcon"/>
+            </div>
                 
         </div>
     );
