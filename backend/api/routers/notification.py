@@ -29,7 +29,7 @@ router = APIRouter(
 async def create_notification(
     newNotification: NotificationSchema.NotificationCreate,
     uid: str = Depends(check_user_id),
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     """
     Create a notification with the following information:
@@ -67,7 +67,7 @@ async def get_all_notifications():
     status_code=status.HTTP_200_OK,
     deprecated=True
 )
-async def get_notification(uid: str, component_id: str):
+async def get_notification(uid: str, component_id: int):
     """
     Get a notification.
     """
@@ -85,7 +85,7 @@ async def get_notification(uid: str, component_id: str):
 )
 async def update_notification(
     uid: str = Depends(check_user_id),
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     """
     Update a notification.
@@ -100,11 +100,11 @@ async def update_notification(
     "/notification/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_notification(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
+async def delete_notification(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):
     """
     Delete a notification.
     """
-    await NotificationCrud.delete(uid, check_component_id)
+    await NotificationCrud.delete(uid, component_id)
 
     return
 

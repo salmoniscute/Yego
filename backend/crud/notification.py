@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -32,15 +33,15 @@ type_actions = {
 
 @crud_class_decorator
 class NotificationCrudManager:
-    async def create(self, uid: str, component_id: str, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
+    async def create(self, uid: str, component_id: int, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
         newNotification_dict = newNotification.model_dump()
-        notification = NotificationModel(uid=uid, component_id=component_id, **newNotification_dict)
+        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), **newNotification_dict)
         db_session.add(notification)
         await db_session.commit()
 
         return notification
      
-    async def get(self, uid: str, component_id: str, db_session: AsyncSession):
+    async def get(self, uid: str, component_id: int, db_session: AsyncSession):
         stmt = (
             select(NotificationModel)
             .where(NotificationModel.uid == uid)
@@ -58,7 +59,7 @@ class NotificationCrudManager:
 
         return [notification[0] for notification in result.all()]
     
-    async def update(self, uid: str, component_id: str, db_session: AsyncSession):
+    async def update(self, uid: str, component_id: int, db_session: AsyncSession):
         stmt1 = (
             update(NotificationModel)
             .where(NotificationModel.uid == uid)
@@ -92,7 +93,7 @@ class NotificationCrudManager:
 
         return _list
     
-    async def delete(self, uid: str, component_id: str, db_session: AsyncSession):
+    async def delete(self, uid: str, component_id: int, db_session: AsyncSession):
         stmt = (
             delete(NotificationModel)
             .where(NotificationModel.uid == uid)

@@ -11,7 +11,6 @@ class ReportCreate(ComponentCreate):
         "json_schema_extra": {
             "examples": [
                 {
-                    "release_time": "2021-09-01T00:00:00",
                     "title": "Report 1",
                     "content": "This is the first report."
                 }
@@ -21,13 +20,11 @@ class ReportCreate(ComponentCreate):
 
   
 class ReportReplyCreate(BaseModel):
-    release_time: datetime
     content: str
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "release_time": "2021-09-01T00:00:00",
                     "content": "This is the first report reply."
                 }
             ]

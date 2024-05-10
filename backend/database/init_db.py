@@ -12,11 +12,13 @@ from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, SubmittedAssignment as SubmittedAssignmentModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
 from models.report import Report as ReportModel
+from models.group import Group as GroupModel
 
 model = {
     "users": UserModel,
     "courses": CourseModel,
     "selected_courses": SelectedCourseModel,
+    "groups": GroupModel,
     "components": ComponentModel,
     "course_bulletins": CourseBulletinModel,
     "website_bulletins": WebsiteBulletinModel,

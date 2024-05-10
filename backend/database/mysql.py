@@ -10,6 +10,7 @@ from models.discussion import Discussion, DiscussionTopic, DiscussionTopicReply
 from models.file import File
 from models.notification import Notification
 from models.selected_course import SelectedCourse
+from models.group import Group
 from models.subscription import Subscription
 from models.user import User
 from models.report import Report, ReportReply
@@ -41,6 +42,7 @@ async def init_db():
             await db.execute(CreateTable(DiscussionTopicReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(File.__table__, if_not_exists=True))
             await db.execute(CreateTable(Notification.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Group.__table__, if_not_exists=True))
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
@@ -63,6 +65,7 @@ async def close_db():
             await db.execute(DropTable(Bulletin.__table__))
             await db.execute(DropTable(Subscription.__table__))
             await db.execute(DropTable(SelectedCourse.__table__))
+            await db.execute(DropTable(Group.__table__))
             await db.execute(DropTable(Notification.__table__))
             await db.execute(DropTable(File.__table__))
             await db.execute(DropTable(DiscussionTopicReply.__table__))

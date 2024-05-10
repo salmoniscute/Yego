@@ -11,9 +11,10 @@ class Base(DeclarativeBase):
 class BaseType:
     id = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
     int_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
+    group_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     hashed_password = Annotated[str, mapped_column(String(60))]
     boolean = Annotated[bool, mapped_column(Boolean)]
-    datetime = Annotated[datetime, mapped_column(String(60))]
+    datetime = Annotated[datetime, mapped_column(String(60), nullable=True)]
     str_20 = Annotated[str, mapped_column(String(20))]
     str_50 = Annotated[str, mapped_column(String(50))]
     str_100 = Annotated[str, mapped_column(String(100))]

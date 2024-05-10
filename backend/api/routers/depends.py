@@ -12,6 +12,7 @@ from crud.report_reply import ReportReplyCrudManager
 from crud.course_material import CourseMaterialCrudManager
 from crud.material_info import MaterialInfoCrudManager
 from crud.submitted_assignment import SubmittedAssignmentCrudManager
+from crud.group import GroupCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
@@ -27,6 +28,8 @@ ReportReplyCrud = ReportReplyCrudManager()
 CourseMaterialCrud = CourseMaterialCrudManager()
 MaterialInfoCrud = MaterialInfoCrudManager()
 SubmittedAssignmentCrud = SubmittedAssignmentCrudManager()
+GroupCrud = GroupCrudManager()
+
 
 async def check_user_id(uid: str):
     user = await UserCrud.get(uid)
@@ -85,12 +88,14 @@ async def check_reply_id(reply_id: int):
     
     return reply_id
 
+
 async def check_discussion_id(discussion_id: int):
     discussion = await DiscussionCrud.get(discussion_id)
     if not discussion:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion does not exist")
     
     return discussion_id
+
 
 async def check_topic_id(topic_id: int):
     topic = await DiscussionTopicCrud.get(topic_id)
@@ -99,12 +104,14 @@ async def check_topic_id(topic_id: int):
     
     return topic_id
 
+
 async def check_topic_reply_id(reply_id: int):
     reply = await DiscussionTopicReplyCrud.get(reply_id)
     if not reply:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Discussion Topic Reply does not exist")
     
     return reply_id
+
 
 async def check_topic_reply_parnet_id(parent_id: int):
     if parent_id == 0:
@@ -116,6 +123,7 @@ async def check_topic_reply_parnet_id(parent_id: int):
     
     return parent_id
 
+  
 async def check_course_material_id(course_material_id: int):
     material = await CourseMaterialCrud.get(course_material_id)
     if not material:
@@ -123,6 +131,7 @@ async def check_course_material_id(course_material_id: int):
     
     return course_material_id
 
+  
 async def check_material_info_id(material_info_id: int):
     material_info = await MaterialInfoCrud.get(material_info_id)
     if not material_info:
@@ -130,9 +139,18 @@ async def check_material_info_id(material_info_id: int):
     
     return material_info_id
 
+  
 async def check_submitted_assignment_id(submitted_assignment_id: int):
     submitted_assignment = await SubmittedAssignmentCrud.get(submitted_assignment_id)
     if not submitted_assignment:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Submitted Assignment does not exist")
     
     return submitted_assignment_id
+
+  
+async def check_group_id(group_id: int):
+    group = await GroupCrud.get(group_id)
+    if not group:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group does not exist")
+    
+    return group_id

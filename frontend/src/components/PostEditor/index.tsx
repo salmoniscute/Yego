@@ -125,13 +125,11 @@ export default function PostEditor(props: propsType): ReactElement {
   };
 
   const onSubmit = async () =>{
-    const nowTime = new Date().getTime();
     const uid = userData?.uid;
     const publisher = userData?.name;
     if (uid) {
       if (type === "discussion"){
         const discussion : Discussion ={
-          release_time:nowTime,
           course_id: parent_id,
           title:title,
           content: content,
@@ -144,7 +142,6 @@ export default function PostEditor(props: propsType): ReactElement {
       else if ( type === "report"){
         const report : Report = {
           uid : uid,
-          release_time: nowTime,
           title:title,
           reply:0,
           content:content,
@@ -156,7 +153,6 @@ export default function PostEditor(props: propsType): ReactElement {
         const discussionTopic : DiscussionTopic ={
           uid : uid,
           discussion_id: parent_id,
-          release_time: nowTime,
           title:title,
           reply:0,
           follow:false,

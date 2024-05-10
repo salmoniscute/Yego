@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_course_id, check_user_id
+from .depends import check_course_id, check_group_id, check_user_id
 from crud.selected_course import SelectedCourseCrudManager
 from schemas import selected_course as SelectedCourseSchema
 
@@ -26,71 +26,16 @@ router = APIRouter(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_selected_course(
-    newRow: SelectedCourseSchema.SelectedCourseCreate,
     uid: str = Depends(check_user_id),
     course_id: str = Depends(check_course_id)
 ):
     """
-    Create a selected course row with the following information:
-    - **uid** (should be existing)
-    - **course_id** (should be existing)
-    - **group**
+    Create a selected course row.
     """
     if await SelectedCourseCrud.get(uid, course_id):
         raise already_exists
     
-    selected_course = await SelectedCourseCrud.create(uid, course_id, newRow)
-    return selected_course
-
-
-@router.get(
-    "/selected_courses", 
-    response_model=list[SelectedCourseSchema.SelectedCourseRead],
-    status_code=status.HTTP_200_OK,
-    deprecated=True
-)
-async def get_all_selected_courses():
-    """
-    Get all selected courses.
-    """
-    selected_courses = await SelectedCourseCrud.get_all()
-    if selected_courses:
-        return selected_courses
-    
-    raise not_found
-
-
-@router.get(
-    "/selected_course/particular/{uid}/{course_id}", 
-    response_model=SelectedCourseSchema.SelectedCourseRead,
-    status_code=status.HTTP_200_OK,
-    deprecated=True
-)
-async def get_selected_courses(uid: str, course_id: str):
-    """
-    Get the particular selected course.
-    """
-    selected_course = await SelectedCourseCrud.get(uid, course_id)
-    if selected_course:
-        return selected_course
-    
-    raise not_found
-
-
-@router.put(
-    "/selected_course/particular/{uid}/{course_id}",
-    status_code=status.HTTP_204_NO_CONTENT
-)
-async def update_selected_course(
-    updateRow: SelectedCourseSchema.SelectedCourseUpdate,
-    uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
-):
-    """
-    Update the information of the particular selected course:
-    - **group**
-    """
-    await SelectedCourseCrud.update(uid, course_id, updateRow)
+    await SelectedCourseCrud.create(uid, course_id)
     return 
 
 

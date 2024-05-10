@@ -55,6 +55,19 @@ export async function getDiscussionTopicList(discussion_id:string) : Promise<Arr
     }
 }
 
+export async function getDiscussionTopic(id:string) : Promise <DiscussionTopic>{
+    let url = "http://localhost:8080/api/discussion_topic/"+id;
+    let discussionTopic;
+    try {
+        const response = await axios.get(url,{
+          });
+        discussionTopic = response.data;
+    }
+    catch(error){
+    }
+    return discussionTopic;
+}
+
 export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Promise<DiscussionTopic | null>{
     let url = "http://localhost:8080/api/discussion_topic?uid="+discussionTopic.uid+"&discussion_id="+discussionTopic.discussion_id;
     try {
