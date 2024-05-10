@@ -36,12 +36,14 @@ export default function NotificationColumn(props: propsType): ReactElement {
       <button onClick={ctx.read_all}>全部標示為已讀</button>
       {props.seeAllBtn === true ? <Link to="/notification/1" className="seeall">查看全部</Link> : <></>}
     </div>
-    <div>
-      {listRender}
-    </div>
-    <p className="header">已讀的訊息</p>
-    <div>
-      {haveReadListRender}
+    <div className="content">
+      <div>
+        {listRender}
+      </div>
+      <p className="header">已讀的訊息</p>
+      <div>
+        {haveReadListRender}
+      </div>
     </div>
   </div>
 }
