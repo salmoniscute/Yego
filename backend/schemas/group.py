@@ -28,6 +28,32 @@ class GroupCreate(BaseModel):
     number_of_members: int
 
 
+class GroupManualCreate(BaseModel):
+    name: str
+    members: Optional[list[Member]] = []
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "name": "A",
+                    "members": [
+                        {
+                            "uid": "C14096277",
+                            "name": "nt1026"
+                        },
+                        {
+                            "uid": "F74102048",
+                            "name": "little ming"
+                        }
+                    ]
+                }
+            ]
+        }
+    
+    }
+
+
 class GroupAutoCreateResponse(BaseModel):
     id: int
     name: str

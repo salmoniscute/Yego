@@ -21,23 +21,6 @@ router = APIRouter(
 
 
 @router.post(
-    "/group", 
-    status_code=status.HTTP_204_NO_CONTENT
-)
-async def create_one_group(
-    newGroup: GroupSchema.GroupCreate,
-    course_id: str = Depends(check_course_id)
-):
-    """
-    Create a group with the following information:
-    - **name**
-    """
-    await GroupCrud.create(course_id, newGroup)
-
-    return
-
-
-@router.post(
     "/grouping/auto",
     response_model=list[GroupSchema.GroupAutoCreateResponse],
     status_code=status.HTTP_201_CREATED
@@ -168,6 +151,26 @@ async def student_grouping(
     return groups
        
 
+@router.post(
+    "/grouping/manual", 
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def manual_grouping(
+    newGroup: GroupSchema.GroupManualCreate,
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Manual grouping with the following information:
+    - **name**
+    - **members** (list)
+        - **uid**
+        - **name**
+    """
+    await GroupCrud.manual_create(course_id, newGroup)
+
+    return
+
+
 @router.get(
     "/groups",
     status_code=status.HTTP_200_OK,
@@ -193,7 +196,6 @@ async def get_all_groups_in_one_coure(
     course_id: str = Depends(check_course_id)
 ):
     group = await GroupCrud.get_by_course_id(course_id)
-    print(group)
     if group:
         return group
     

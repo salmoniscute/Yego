@@ -17,6 +17,25 @@ class GroupCrudManager:
 
         return group
     
+    async def manual_create(self, course_id: str, newGroup: GroupSchema.GroupManualCreate, db_session: AsyncSession):
+        newGroup_dict = newGroup.model_dump()
+        group = GroupModel(course_id=course_id, create_deadline=None, number_of_members=len(newGroup.members), name=newGroup_dict["name"])
+        db_session.add(group)
+        await db_session.flush()
+
+        for member in newGroup.members:
+            stmt = (
+                update(SelectedCourseModel)
+                .where(SelectedCourseModel.uid == member.uid)
+                .where(SelectedCourseModel.course_id == course_id)
+                .values({"group_id": group.id})
+            )
+            await db_session.execute(stmt)
+
+        await db_session.commit()
+
+        return group
+    
     async def get(self, group_id: int, db_session: AsyncSession):
         stmt = select(GroupModel).where(GroupModel.id == group_id)
         result = await db_session.execute(stmt)
@@ -54,6 +73,8 @@ class GroupCrudManager:
         _list = []
         for group in result:
             await db_session.refresh(group[0], ["members"])
+            for member in group[0].members:
+                print(member.user_info.uid, member.user_info.name)
             _list.append({
                 "id": group[0].id,
                 "name": group[0].name,
