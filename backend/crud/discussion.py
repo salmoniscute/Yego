@@ -240,6 +240,13 @@ class DiscussionTopicReplyCrudManager:
     async def delete(self, reply_id: int, db_session: AsyncSession):
         stmt = delete(ComponentModel).where(ComponentModel.id == reply_id)
         await db_session.execute(stmt)
+        stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.parent_id == reply_id)
+        result = await db_session.execute(stmt)
+        # delete all replies to this reply
+        for reply in result.all():
+            stmt = delete(ComponentModel).where(ComponentModel.id == reply[0].id)
+            await db_session.execute(stmt)
+        
         await db_session.commit()
 
         return
