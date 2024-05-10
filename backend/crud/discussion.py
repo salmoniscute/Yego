@@ -115,19 +115,21 @@ class DiscussionTopicCrudManager:
         obj = {}
         if topic:
             await db_session.refresh(topic[0], ["info"])
+            
+            stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id)
+            replies = await db_session.execute(stmt)
             obj = {
                 "id": topic[0].id,
+                "uid": topic[0].info.uid,
                 "publisher": topic[0].info.publisher_info.name,
                 "publisher_avatar": topic[0].info.publisher_info.avatar,
                 "release_time": topic[0].info.release_time,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
                 "files": [file for file in topic[0].info.files],
-                "replies": []
+                "reply_number": len(replies.all()),
+                "replies": [],
             }
-            stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id)
-            replies = await db_session.execute(stmt)
-            
             for reply in replies:
                 await db_session.refresh(reply[0], ["info"])
                 obj["replies"].append({
@@ -144,18 +146,16 @@ class DiscussionTopicCrudManager:
         stmt = select(DiscussionTopicModel)
         result = await db_session.execute(stmt)
         result = result.unique()
-        obj = {}
         _list = []
         for topic in result.all():
             await db_session.refresh(topic[0], ["info"])
-            obj = {
+            _list.append({
                 "id": topic[0].id,
                 "uid": topic[0].info.uid,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
                 "discussion_id": topic[0].discussion_id
-            }
-            _list.append(obj)
+            })
         
         return _list
     
@@ -175,7 +175,7 @@ class DiscussionTopicCrudManager:
                 "release_time": topic[0].info.release_time,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
-                "reply_count": replies,
+                "reply_number": replies,
                 "publisher": topic[0].info.publisher_info.name,
                 "avatar": topic[0].info.publisher_info.avatar,
                 "files": [file for file in topic[0].info.files],

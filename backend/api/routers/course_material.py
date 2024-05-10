@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_course_id, check_user_id
+from .depends import check_course_id, check_user_id, check_course_material_id
 from crud.course_material import CourseMaterialCrudManager
 from schemas import course_material as CourseMaterialSchema
 
@@ -31,7 +31,6 @@ async def create_course_material(
 ):
     """
     Create a course material with the following information:
-    - **release_time**
     - **title**
     - **content**
     """
@@ -60,7 +59,7 @@ async def get_all_course_materials():
     "/course_material/{course_material_id}", 
     response_model=CourseMaterialSchema.CourseMaterialRead
 )
-async def get_course_material(course_material_id: str):
+async def get_course_material(course_material_id: int = Depends(check_course_material_id)):
     course_material = await CourseMaterialCrud.get(course_material_id)
     if course_material:
         return course_material
