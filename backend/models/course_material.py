@@ -29,7 +29,7 @@ class CourseMaterial(Base):
     
 class MaterialInfo(Base):
     __tablename__ = "MaterialInfo"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     material_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("CourseMaterial.id", ondelete="CASCADE"))
     type: Mapped[BaseType.str_20]
     start_time: Mapped[BaseType.datetime]
@@ -54,7 +54,7 @@ class MaterialInfo(Base):
     
 class SubmittedAssignment(Base):
     __tablename__ = "SubmittedAssignment"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     assignment_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("MaterialInfo.id", ondelete="CASCADE"))
     grade: Mapped[BaseType.int_type]
     
