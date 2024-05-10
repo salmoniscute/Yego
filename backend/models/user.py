@@ -6,15 +6,15 @@ from models.base import Base, BaseType
 
 class User(Base):
     __tablename__ = "User"
-    uid: Mapped[BaseType.id]
+    uid: Mapped[BaseType.uid]
     password: Mapped[BaseType.hashed_password]
-    name: Mapped[BaseType.str_20]
-    role: Mapped[BaseType.str_20]
-    email: Mapped[BaseType.str_50]
-    department: Mapped[BaseType.str_20]
+    name: Mapped[BaseType.str_50]
+    role: Mapped[BaseType.str_10]
+    email: Mapped[BaseType.str_100]
+    department: Mapped[BaseType.str_50]
     country: Mapped[BaseType.str_20]
-    introduction: Mapped[BaseType.optional_str_200]
-    avatar: Mapped[BaseType.optional_str_200]
+    introduction: Mapped[BaseType.optional_str_1000]
+    avatar: Mapped[BaseType.path]
 
     # Relationship to child
     courses: Mapped[list["Course"]] = relationship(

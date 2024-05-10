@@ -6,11 +6,11 @@ from models.base import Base, BaseType
 
 class Component(Base):
     __tablename__ = "Component"
-    id: Mapped[BaseType.int_id]
-    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id]
+    uid: Mapped[BaseType.str_10] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     release_time: Mapped[BaseType.datetime]
     title: Mapped[BaseType.str_100]
-    content: Mapped[BaseType.str_100]
+    content: Mapped[BaseType.str_1000]
 
     # Relationship to parent
     publisher_info: Mapped["User"] = relationship("User", back_populates="publications", lazy="joined")
