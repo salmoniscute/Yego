@@ -70,7 +70,6 @@ export default function TeamPage(): ReactElement {
             </div>}
             <div className="close ms" onClick={() => {}}>close</div>
         </div>
-
       </div>
   )
 }

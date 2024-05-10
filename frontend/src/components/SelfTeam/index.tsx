@@ -34,7 +34,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     { value: "0", label: "00" }
   ];
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -77,8 +77,6 @@ export default function AutoTeam(props:propsType): React.ReactElement {
       const label = i.toString().padStart(2, '0');
       hourOptions.push({ value: value, label: label });
     }
-    const currentDate = new Date();
-    setSelectedDate(currentDate);
   }, []);
 
   return (
