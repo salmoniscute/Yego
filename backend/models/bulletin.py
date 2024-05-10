@@ -6,8 +6,8 @@ from models.base import Base, BaseType
 
 class Bulletin(Base):
     __tablename__ = "Bulletin"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
-    type: Mapped[BaseType.str_100]
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    type: Mapped[BaseType.str_20]
     pin_to_top: Mapped[BaseType.boolean]
 
     __mapper_args__ = {
@@ -33,7 +33,7 @@ class WebsiteBulletin(Bulletin):
 
 
 class CourseBulletin(Bulletin):
-    course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"), nullable=True)
+    course_id: Mapped[BaseType.str_10] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"), nullable=True)
 
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component", back_populates="course_bulletin")

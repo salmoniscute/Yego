@@ -2,12 +2,11 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.base import Base, BaseType
-from models.component import Component
 
 
 class Report(Base):
     __tablename__ = "Report"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
 
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component", back_populates="report")
@@ -21,7 +20,7 @@ class Report(Base):
 
 class ReportReply(Base):
     __tablename__ = "ReportReply"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     root_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Report.id", ondelete="CASCADE"))
     parent_id: Mapped[BaseType.int_type] 
 

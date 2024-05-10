@@ -7,8 +7,8 @@ from datetime import datetime
 
 class CourseMaterial(Base):
     __tablename__ = "CourseMaterial"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
-    course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    course_id: Mapped[BaseType.str_10] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
 
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component", back_populates="course_materials")

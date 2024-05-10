@@ -7,13 +7,13 @@ from models.base import Base, BaseType
 
 class Course(Base):
     __tablename__ = "Course"
-    id: Mapped[BaseType.id]
-    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    course_code: Mapped[BaseType.str_20]
-    academic_year: Mapped[BaseType.str_20]
-    semester: Mapped[int]
-    name: Mapped[BaseType.str_100]
-    outline: Mapped[BaseType.str_100]
+    id: Mapped[BaseType.course_id]
+    uid: Mapped[BaseType.str_10] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    course_code: Mapped[BaseType.str_10]
+    academic_year: Mapped[BaseType.int_type]
+    semester: Mapped[BaseType.int_type]
+    name: Mapped[BaseType.str_50]
+    outline: Mapped[BaseType.str_1000]
 
     # Relationship to parent
     instructor_info: Mapped["User"] = relationship("User", back_populates="courses", lazy="joined")

@@ -7,8 +7,8 @@ from models.component import Component
 
 class Discussion(Base):
     __tablename__ = "Discussion"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
-    course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    course_id: Mapped[BaseType.str_10] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
 
     # Relationship to parent
     info: Mapped["Component"] = relationship("Component",back_populates="discussion")
@@ -30,7 +30,7 @@ class Discussion(Base):
 
 class DiscussionTopic(Base):
     __tablename__ = "DiscussionTopic"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     discussion_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Discussion.id", ondelete="CASCADE"))
 
     # Relationship to parent
@@ -46,7 +46,7 @@ class DiscussionTopic(Base):
 
 class DiscussionTopicReply(Base):
     __tablename__ = "DiscussionTopicReply"
-    id: Mapped[BaseType.int_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
+    id: Mapped[BaseType.component_id] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     root_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("DiscussionTopic.id", ondelete="CASCADE"))
     parent_id: Mapped[BaseType.int_type]
     

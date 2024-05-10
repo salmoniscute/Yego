@@ -7,7 +7,7 @@ from models.base import Base, BaseType
 class Group(Base):
     __tablename__ = "Group"
     id: Mapped[BaseType.group_id]
-    course_id: Mapped[BaseType.str_20] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
+    course_id: Mapped[BaseType.str_10] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
     name: Mapped[BaseType.str_20]
     number_of_members: Mapped[BaseType.int_type]
     create_deadline: Mapped[BaseType.datetime]
