@@ -10,6 +10,7 @@ import userDataContext from "context/userData";
 
 import ManaulTeam from "components/ManualTeam";
 import AutoTeam from "components/AutoTeam";
+import SelfTeam from "components/SelfTeam";
 
 import "./index.scss";
 
@@ -64,10 +65,11 @@ export default function TeamPage(): ReactElement {
               <AutoTeam close={closeWindow}/>
             </div>}
             { selectMethod === "學生自行分組" && <div className="byStudent" >
+              <h3>{selectMethod} - 設定</h3>
+              <SelfTeam close={closeWindow}/>
             </div>}
             <div className="close ms" onClick={() => {}}>close</div>
         </div>
-
       </div>
   )
 }
