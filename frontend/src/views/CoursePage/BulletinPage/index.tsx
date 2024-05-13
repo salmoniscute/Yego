@@ -114,10 +114,10 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         action: (() => void) | undefined;
     };
     
-    const editOptions = (id: string): Option[] => [
+    const editOptions = (id: string , isPinned: boolean): Option[] => [
         { label: "編輯" ,action:() => editBulletin(id)},
         { label: "刪除", action: () => deleteBulletin(id) },
-        { label: "置頂", action: () => pinBulletin(id) }
+        { label: isPinned ? "取消置頂" : "置頂" , action: () => pinBulletin(id) }
     ];
 
     const setTimeString = (release_time:number):string => {
@@ -165,7 +165,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     <div className="mask" style={{ "--length": 3 } as CSSProperties}>
                                         <div className="content body-bold">
                                             {
-                                                editOptions(data.id || "").map((option, i) => <div
+                                                editOptions(data.id || "" , data.pin_to_top).map((option, i) => <div
                                                     key={i}
                                                     onClick={option.action}
                                                 ><p>{option.label}</p></div>)
