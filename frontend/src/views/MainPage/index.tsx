@@ -94,5 +94,6 @@ export default function MainPage(props: propsType): ReactElement {
         } */}
     </div>
     </div>
+    
         ;
 };

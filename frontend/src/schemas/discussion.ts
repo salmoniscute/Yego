@@ -14,7 +14,7 @@ export interface DiscussionTopic {
     discussion_id: string,
     release_time?: number,
     title:string,
-    reply:number,
+    reply_number:number,
     follow:boolean,
     publisher:string,
     content:string,
