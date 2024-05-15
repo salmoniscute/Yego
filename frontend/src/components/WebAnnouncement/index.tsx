@@ -40,9 +40,10 @@ export default function WebAnnouncement(props: propsType): ReactElement {
                     <Link className="body" to={`/webAnnouncement/${data.uid}`}>{data.title}</Link>
                 </div>)
             }
+            <div className="seeMore">
+                <Link to="/webAnnouncement" >{getText("see_more")}</Link>
+            </div>
         </div>
-        <div className="seeMore">
-            <Link to="/webAnnouncement" >{getText("see_more")}</Link>
-        </div>
+        
     </div>
 }

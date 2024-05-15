@@ -1,13 +1,12 @@
 .webAnnouncement {
     h2 {
-        margin: 1.25em 0;
+        margin: 1.25em 1.2em;
         user-select: none;
     }
 
     .content {
         flex-direction: column;
         gap: 0.5rem;
-        overflow: hidden;
 
         .block {
             display: flex;
@@ -16,7 +15,6 @@
             align-items: center;
             height: 1.8rem;
             line-height: 1.8rem;
-
 
             .pin {
                 opacity: 0%;
@@ -31,23 +29,24 @@
                 opacity: 100%;
             }
         }
+        .seeMore {
+            margin: 1.5rem 1.2em;
+            display: flex;
+            justify-content: right;
+    
+            a {
+                color: #000;
+                text-decoration: none;
+                transition: color 0.3s;
+                background-color: #E1E1E4;
+                padding: 0.25em 1em;
+            }
+    
+            a:hover {
+                color: #000;
+            }
+        }
     }
 
-    .seeMore {
-        margin: 0.75rem 0;
-        display: flex;
-        justify-content: right;
-
-        a {
-            color: #000;
-            text-decoration: none;
-            transition: color 0.3s;
-            background-color: #E1E1E4;
-            padding: 0.25em 1em;
-        }
-
-        a:hover {
-            color: #000;
-        }
-    }
+    
 }

@@ -1,6 +1,7 @@
 .platformFriendlyArea {
     h2 {
         white-space: nowrap;
+        margin: 0.8em 1em;
     }
 
     .content {
@@ -14,7 +15,7 @@
             background-color: #FFF;
             gap: 0.8rem;
             width: calc(25% - 4rem);
-            border: 0.05rem solid #000;
+            border: 0.07rem solid #000;
             border-radius: 0.25rem;
             min-height: 8em;
             
