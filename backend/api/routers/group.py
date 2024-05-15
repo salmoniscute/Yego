@@ -1,3 +1,5 @@
+import json
+import os
 from fastapi import APIRouter, Depends, HTTPException, status
 from random import shuffle
 
@@ -12,6 +14,11 @@ not_found = HTTPException(
     detail="Group does not exist"
 )
 
+group_tmp_file_not_found = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND,
+    detail="Grouping information does not exist"
+)
+
 GroupCrud = GroupCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 router = APIRouter(
@@ -20,10 +27,10 @@ router = APIRouter(
 )
 
 
-@router.post(
-    "/grouping/auto",
+@router.get(
+    "/grouping/auto/preview",
     response_model=list[GroupSchema.GroupAutoCreateResponse],
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_200_OK
 )
 async def auto_grouping(
     grouping_method: GroupSchema.GroupingMethod,
@@ -33,14 +40,11 @@ async def auto_grouping(
     course_id: str = Depends(check_course_id)
 ):
     """
-    Auto grouping.
+    Auto grouping preview.
     """
     groups = []
     members = await SelectedCourseCrud.get_by_course_id(course_id)
     members = [{"uid": member["uid"], "name": member["name"]} for member in members if member["role"] == "student"]
-    
-    # Fake data from A to L
-    # members = [{'uid': 'K', 'name': 'K-name'}, {'uid': 'D', 'name': 'D-name'}, {'uid': 'E', 'name': 'E-name'}, {'uid': 'C', 'name': 'C-name'}, {'uid': 'B', 'name': 'B-name'}, {'uid': 'L', 'name': 'L-name'}, {'uid': 'G', 'name': 'G-name'}, {'uid': 'I', 'name': 'I-name'}, {'uid': 'J', 'name': 'J-name'}, {'uid': 'H', 'name': 'H-name'}, {'uid': 'F', 'name': 'F-name'}, {'uid': 'A', 'name': 'A-name'}, {'uid': 'M', 'name': 'M-name'}, {'uid': 'N', 'name': 'N-name'}]
     
     # Distributing method: random or by first name
     if distributing_method == GroupSchema.DistributingMethod.random:
@@ -75,20 +79,67 @@ async def auto_grouping(
     # Update database
     group_name = 65 if naming_rule == GroupSchema.NamingRule.alphabet else 1
     for group_info in groups:
-        name = chr(group_name) if naming_rule == GroupSchema.NamingRule.alphabet else str(group_name)
-        group_schema = GroupSchema.GroupCreate(name=name, number_of_members=group_info["number_of_members"])
-        group = await GroupCrud.create(course_id, group_schema)
         group_info.update({
-            "id": group.id,
-            "name": name
+            "name": chr(group_name) if naming_rule == GroupSchema.NamingRule.alphabet else str(group_name)
         })
-        
-        for member in group_info["members"]:
-            await SelectedCourseCrud.update(member["uid"], course_id, group_info["id"])
-        
         group_name += 1
+    
+    with open(f"tmp/auto_grouping_{course_id}.tmp", "w") as file:
+        file.write(json.dumps(groups))
                 
     return groups
+
+
+@router.post(
+    "/grouping/auto",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def auto_grouping(
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Auto grouping.
+    """
+    tmp_file = f"tmp/auto_grouping_{course_id}.tmp"
+
+    if os.path.isfile(tmp_file):
+        with open(tmp_file, "r") as file:
+            groups = json.loads(file.read())
+
+        # Update database
+        for group_info in groups:
+            group_schema = GroupSchema.GroupCreate(name=group_info["name"], number_of_members=group_info["number_of_members"])
+            group = await GroupCrud.create(course_id, group_schema)
+            
+            for member in group_info["members"]:
+                print(member["uid"])
+                await SelectedCourseCrud.update(member["uid"], course_id, group.id)
+        
+        os.remove(tmp_file)
+        
+        return
+    
+    raise group_tmp_file_not_found
+
+
+@router.delete(
+    "/grouping/auto/cancel",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def auto_grouping_cancel(
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Auto grouping cancelling.
+    """
+    tmp_file = f"tmp/auto_grouping_{course_id}.tmp"
+
+    if os.path.isfile(tmp_file):
+        os.remove(tmp_file)
+
+        return
+    
+    raise group_tmp_file_not_found
 
 
 @router.post(

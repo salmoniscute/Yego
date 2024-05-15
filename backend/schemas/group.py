@@ -55,7 +55,6 @@ class GroupManualCreate(BaseModel):
 
 
 class GroupAutoCreateResponse(BaseModel):
-    id: int
     name: str
     number_of_members: int
     members: Optional[list[Member]] = []
