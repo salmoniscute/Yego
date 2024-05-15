@@ -13,15 +13,23 @@ import {
 
 import { OtherUser } from "schemas/otherUser";
 
-export default function MemberPage(): ReactElement {
-    const tab = ["成員名稱", "學號", "系所", "身份", "組別"]
+type propsType = Readonly<{
+    courseID: string,
+}>;
+
+export default function MemberPage(props: propsType): ReactElement {
+    const {
+        courseID
+    } = props;
+    
+    const tab = ["成員名稱", "學號", "系所", "身份", "組別"];
 
     const [courseMemberList, setCourseMember] = useState<Array<OtherUser>>([]);
     const [selectedStudent, setSelectedStudent] = useState<OtherUser | undefined>();
     const [showMember, setShowMember] = useState<boolean>(false);
 
     useEffect(() => {
-        getCourseMemberList().then(data => {
+        getCourseMemberList(courseID).then(data => {
             setCourseMember(data);
         });
     }, [])
