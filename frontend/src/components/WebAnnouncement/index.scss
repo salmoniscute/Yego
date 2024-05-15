@@ -1,12 +1,13 @@
 .webAnnouncement {
     h2 {
-        margin: 1.25em 1.2em;
+        margin: 1.25em 1em;
         user-select: none;
     }
 
     .content {
         flex-direction: column;
         gap: 0.5rem;
+        overflow: hidden;
 
         .block {
             display: flex;

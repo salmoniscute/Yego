@@ -57,13 +57,14 @@
                     padding: 0.5rem;
                     height: 1.8rem;
                     line-height: 1.8rem;
-                    text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
                     a {
                         color: #000;
                         text-decoration: none;
                         font-size: medium;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                     a:hover {
                         text-decoration: underline;
