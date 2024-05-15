@@ -92,7 +92,7 @@ class SelectedCourseCrudManager:
                 "email": selected_course[0].user_info.email,
                 "avatar": selected_course[0].user_info.avatar,
                 "introduction": selected_course[0].user_info.introduction,
-                "group_name": selected_course[0].group_info.name
+                "group_name": selected_course[0].group_info.name if selected_course[0].group_info else None
             })
 
         return _list
