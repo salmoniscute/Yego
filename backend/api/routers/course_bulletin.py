@@ -43,7 +43,7 @@ async def create_course_bulletin(
 
 
 @router.get(
-    "/bulletin/all", 
+    "/bulletins", 
     status_code=status.HTTP_200_OK,
     deprecated=True
 )
