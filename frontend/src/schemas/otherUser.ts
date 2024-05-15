@@ -4,11 +4,9 @@ export interface OtherUser {
     name: string,
     role: string,
     department: string,
-    avatar: string
-};
-
-export interface OtherUserContent extends OtherUser{
+    avatar: string,
     country: string,
     email: string,
     introduction: string,
-}
+    group_name: string
+};

@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 import "./index.scss";
 
 import {
-    getCourseMemberList,
-    getCourseMemberContent
+    getCourseMemberList
 } from "api/courseMember";
 
 import { OtherUser } from "schemas/otherUser";
@@ -55,6 +54,7 @@ export default function MemberPage(): ReactElement {
                         <p>{data.uid}</p>
                         <p>{data.department}</p>
                         <p>{data.role}</p>
+                        <p>{data.group_name}</p>
                     </div> 
                 )}
                 <div className="memberWindow" data-show={showMember}>
@@ -70,7 +70,7 @@ export default function MemberPage(): ReactElement {
                             <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">國家</div>
-                                <div className="OtherInfoContent">{selectedStudent?.department}</div>
+                                <div className="OtherInfoContent">{selectedStudent?.country}</div>
                             </div>
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">科系</div>
@@ -78,9 +78,9 @@ export default function MemberPage(): ReactElement {
                             </div>
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">學號</div>
-                                <div className="OtherInfoContent">{selectedStudent?.department}</div>
+                                <div className="OtherInfoContent">{selectedStudent?.uid}</div>
                             </div>
-                            <div className="memberMail">Email</div>
+                            <div className="memberMail">{selectedStudent?.email}</div>
                             <br/>
                         </div>
                         <div className="rightWindow">
@@ -89,9 +89,7 @@ export default function MemberPage(): ReactElement {
                             <div className="memberIntro">
                                 <div className="memberIntroTag">自我介紹</div>
                                 <div className="memberIntroContent">
-                                    {selectedStudent?.department}
-                                    我的名字叫吉良吉影，33歲。住在杜王町東北部的別墅區一帶，未婚。我在龜友連鎖店服務。每天都要加班到晚上8點才能回家。我不抽煙，酒僅止於淺嚐。晚上11點睡，每天要睡足8個小時。睡前，我一定喝一杯溫牛奶，然後做20分鐘的柔軟操，上了床，馬上熟睡。一覺到天亮，決不把疲勞和壓力留到第二天。醫生都說我很正常。」
-                                    
+                                    {selectedStudent?.introduction}
                                 </div>
                             </div>
                         </div>
