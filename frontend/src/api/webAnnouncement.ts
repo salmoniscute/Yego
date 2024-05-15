@@ -8,7 +8,7 @@ export async function getWebAnnouncementList(): Promise<Array<WebAnnouncementInf
     const result = [
         {
             uid: "0",
-            title: "公告標題-News 113/1/1(一)9:00~17:00 Moodle平臺暫停服務",
+            title: "公告標題-News 113/1/1(一)9:00~17:00 Moodle平臺暫停服務ddddddddddddddddddddddddddddddddd",
             release_time: 1703390840,
             pin_to_top: false,
         },

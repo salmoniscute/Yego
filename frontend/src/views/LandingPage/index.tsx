@@ -17,7 +17,7 @@ export default function landing(props: propsType): ReactElement {
         <div id="landPage">
             <div className="Content">
                 <div className="description">
-                    <p>Short description <br />pppppppp</p>
+                    <p>YEGO一個最</p>
                 </div>
                 <div className="identity">
                     <div className="IDoption">
@@ -25,7 +25,7 @@ export default function landing(props: propsType): ReactElement {
                             我是本校學生
                         </div>
                         <div className="operate">
-                            操作教學說明
+                            登入說明
                         </div>
                     </div>
                     <div className="IDoption">
@@ -33,7 +33,7 @@ export default function landing(props: propsType): ReactElement {
                             我是教師
                         </div>
                         <div className="operate">
-                            操作教學說明
+                            登入說明
                         </div>
                     </div>
                     <div className="IDoption">
@@ -41,7 +41,7 @@ export default function landing(props: propsType): ReactElement {
                             我是外校學生
                         </div>
                         <div className="operate">
-                            操作教學說明
+                            登入說明
                         </div>
                     </div>
                 </div>

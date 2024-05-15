@@ -13,35 +13,35 @@
             margin-top: 5%;
             p {
                 color:#000000;
-                margin-left: 10%;
+                margin-left: 6%;
                 margin-top: 2%;
-                font-weight: 691;
+                font-weight: bold;
             }
         }
         .identity{
             display: flex;
             flex-direction: row;
             justify-content: center;
-            height:180px;  
-            padding-left: 32px;
+            height:150px;  
             padding-top: 5.5%;
+            gap: 2rem;
+            margin-left: 2%;
             .IDoption{
-                flex:none;
                 width: 28%;
-                margin: 2%;
                 padding-top: 3%;
                 background-color: #FFF;
                 border: 0.07rem solid #000;
                 border-radius: 0.25rem;
-            }
-            .Iam{
-                margin-left: 8%;
-                margin-bottom: 5%;
-                font-weight: bolder;
-                font-size: large;
-            }
-            .operate{
-                margin-left: 8%;
+                cursor: pointer;
+                .Iam{
+                    margin-left: 8%;
+                    margin-bottom: 5%;
+                    font-weight: bolder;
+                    font-size: large;
+                }
+                .operate{
+                    margin-left: 8%;
+                }
             }
         }
         .WebAnnoList{
@@ -52,9 +52,9 @@
                 gap: 0.5rem;
                 background-color: #FFF;
                 border: 0.07rem solid #000;
-                margin-bottom: 1.5%;
+                padding: 1.8rem 1rem;
                 .block {
-                    padding: 1rem;
+                    padding: 0.5rem;
                     height: 1.8rem;
                     line-height: 1.8rem;
                     text-overflow: ellipsis;
@@ -76,10 +76,11 @@
             .content{
                 flex-direction: row;
                 .block{
-                    margin: 1rem;
+                    margin-bottom: 3rem;
                     .body-bold{
                         font-size: large;
                         font-weight: bold;
+                        line-height: 40px
                     }
                     .body{
                         font-size: medium;
