@@ -66,7 +66,6 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
         
     }
     setDiscussionTopic(sortedList);
-
   }
 
   const Resort = () => {
@@ -103,7 +102,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
                 <Link to={`./discussionTopic/${data.id}`}>{data.title}</Link>
             </p>
             <p className="launch">{setTimeString(data.release_time||0)}</p>
-            <p className="reply">{data.reply}</p>
+            <p className="reply">{data.reply_number}</p>
             <button className="follow"><p>{data.follow === true ? <BiSolidBellRing /> : <TbBellRinging />}</p></button> 
           </div>
         )

@@ -12,7 +12,7 @@ import "./index.scss";
 import { SlOptions } from "react-icons/sl";
 
 import { CourseBulletin } from "schemas/courseBulletin";
-import { getCourseBulletinList,postCourseBulletin } from "api/courseBulletin";
+import { getCourseBulletinList,postCourseBulletin , deleteCourseBulletin , updateCourseBulletin } from "api/courseBulletin";
 
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
@@ -30,7 +30,14 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     const [content, setContent] = useState('');
     const [title , setTitle] = useState("");
 
+    const [isEditing , setEdit] = useState(false);
+    const [editingCB , setEditingCB] = useState<CourseBulletin>();
+
     useEffect(() => {
+        handleCourseBulletinList();
+    }, []);
+
+    const handleCourseBulletinList = () => {
         getCourseBulletinList(courseID).then(data => {
             setCourseBulletin(data);
         }).catch( error =>{
@@ -40,41 +47,66 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 
             }
         });
-    }, []);
+    }
 
     const handleContentChange = (value:string, delta:any) => {
         setContent(value);
     };
 
     const onSubmit = async () =>{
-        const uid = userData?.uid;
-        const publisher = userData?.name;
-        if (uid) {
-            const courseBulletin : CourseBulletin = {
-                uid: uid,
-                course_id:courseID,
-                title: title,
-                pin_to_top: false,
-                content: content,
-                publisher: publisher || "",
+
+        if (!isEditing){
+            const uid = userData?.uid;
+            const publisher = userData?.name;
+            if (uid) {
+                const courseBulletin : CourseBulletin = {
+                    uid: uid,
+                    course_id:courseID,
+                    title: title,
+                    pin_to_top: false,
+                    content: content,
+                    publisher: publisher || "",
+                }
+                const result = await postCourseBulletin(courseBulletin);
             }
-            const result = await postCourseBulletin(courseBulletin);
-            console.log(result);
+            else {}
         }
-        else {}
+        else {
+            if(editingCB){
+                editingCB.content = content;
+                editingCB.title = title;
+                await updateCourseBulletin(editingCB);
+            }
+            setEdit(false);
+        }
+        
         setContent("");
         setTitle("");
-        getCourseBulletinList(courseID).then(data => {
-            setCourseBulletin(data);
-        });
+        handleCourseBulletinList();
     }
 
     const deleteBulletin = async(id:string) =>{
-        console.log("hihi"+id);
+        await deleteCourseBulletin(id);
+        handleCourseBulletinList();
     }
 
     const pinBulletin = async(id:string) =>{
-        console.log("hi"+id);
+        const theBulletin = courseBulletinList.find(item => item.id === id) ;
+        if (theBulletin) {
+            theBulletin.pin_to_top = !theBulletin.pin_to_top;
+            await updateCourseBulletin(theBulletin);
+        } else {
+            console.error("theBulletin is undefined.");
+        }
+        handleCourseBulletinList();
+    }
+
+    const editBulletin = async(id:string) =>{
+        const theBulletin = courseBulletinList.find(item => item.id === id);
+        setContent(theBulletin?.content||"");
+        setTitle(theBulletin?.title||"");
+        setEditingCB(theBulletin);
+        setEdit(true);
     }
 
     type Option = {
@@ -82,10 +114,10 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         action: (() => void) | undefined;
     };
     
-    const editOptions = (id: string): Option[] => [
-        { label: "編輯" ,action:() => deleteBulletin(id)},
+    const editOptions = (id: string , isPinned: boolean): Option[] => [
+        { label: "編輯" ,action:() => editBulletin(id)},
         { label: "刪除", action: () => deleteBulletin(id) },
-        { label: "置頂", action: () => pinBulletin(id) }
+        { label: isPinned ? "取消置頂" : "置頂" , action: () => pinBulletin(id) }
     ];
 
     const setTimeString = (release_time:number):string => {
@@ -133,7 +165,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     <div className="mask" style={{ "--length": 3 } as CSSProperties}>
                                         <div className="content body-bold">
                                             {
-                                                editOptions(data.id || "").map((option, i) => <div
+                                                editOptions(data.id || "" , data.pin_to_top).map((option, i) => <div
                                                     key={i}
                                                     onClick={option.action}
                                                 ><p>{option.label}</p></div>)

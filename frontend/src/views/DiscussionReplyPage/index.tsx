@@ -6,7 +6,6 @@ import {
 } from "react";
 import { Link ,useParams} from "react-router-dom";
 import "./index.scss";
-import { FaPen } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { SlOptions } from "react-icons/sl";
 import { TiArrowBack } from "react-icons/ti";
@@ -73,7 +72,24 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     return (
         <div id="discussionReplyPage">
             <div className="mainDiscussionTopic">
-                <h3>{discussionTopic?.title}</h3>
+                <div className="mainDtTop">
+                    <h3>{discussionTopic?.title}</h3>
+                    { discussionTopic?.uid === userData?.uid && <label className="dropdownMenu">
+                        <SlOptions/>
+                        <input type="checkbox" />
+                        <div className="mask" style={{ "--length": 1 } as CSSProperties}>
+                            <div className="content body-bold">
+                                {
+                                    editOptions().map((option, i) => <div
+                                    key={i}
+                                    onClick={option.action}
+                                ><p>{option.label}</p></div>)
+                                }
+                            </div>
+                        </div>
+                    </label>}
+                </div>
+                
                 <div className="discussionTopicTop">
                     <img src={UserIcon}/>
                     <h3>{discussionTopic?.publisher}</h3>
@@ -85,20 +101,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 <div className="dtBottom">
                     <p>回覆</p>
                 </div>
-                { discussionTopic?.uid === userData?.uid && <label className="dropdownMenu">
-                    <SlOptions/>
-                    <input type="checkbox" />
-                    <div className="mask" style={{ "--length": 1 } as CSSProperties}>
-                        <div className="content body-bold">
-                            {
-                                editOptions().map((option, i) => <div
-                                key={i}
-                                onClick={option.action}
-                            ><p>{option.label}</p></div>)
-                            }
-                        </div>
-                    </div>
-                </label>}
+                
             </div>
             <div >
                 {
