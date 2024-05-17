@@ -4,8 +4,8 @@ import {
 } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/src/stylesheets/datepicker.scss";
 import "./index.scss";
 
 type propsType = Readonly<{

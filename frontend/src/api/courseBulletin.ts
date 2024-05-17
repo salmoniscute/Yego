@@ -31,3 +31,23 @@ export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise
 
 }
 
+export async function deleteCourseBulletin(id:string){
+    let url = "http://localhost:8080/api/course/bulletin/{cb_id}?course_bulletin_id="+id;
+    try {
+        const response = await axios.delete(url,{});
+    }
+    catch(error) {  
+        
+    }
+}
+
+export async function updateCourseBulletin(courseBulletin:CourseBulletin){
+    let url = "http://localhost:8080/api/course/bulletin/{cb_id}?course_bulletin_id="+courseBulletin.id;
+    try {
+        const response = await axios.put(url,courseBulletin);
+    }
+    catch(error) {  
+        
+    }
+}
+

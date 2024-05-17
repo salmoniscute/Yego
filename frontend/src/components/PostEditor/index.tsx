@@ -154,7 +154,7 @@ export default function PostEditor(props: propsType): ReactElement {
           uid : uid,
           discussion_id: parent_id,
           title:title,
-          reply:0,
+          reply_number:0,
           follow:false,
           publisher : publisher || "",
           content:content,
