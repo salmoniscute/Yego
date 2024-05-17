@@ -1,168 +1,239 @@
 {
-   "users":[
+    "users": [
+        {
+            "uid": "C14096277",
+            "password": "test123",
+            "name": "nt1026",
+            "role": "student",
+            "email": "C14096277@gs.ncku.edu.tw",
+            "department": "Mathematics",
+            "country": "Taiwan",
+            "introduction": null,
+            "avatar": null
+        },
+        {
+            "uid": "F74102048",
+            "password": "test456",
+            "name": "little ming",
+            "role": "student",
+            "email": "F74102048@gs.ncku.edu.tw",
+            "department": "Computer Science",
+            "country": "Taiwan",
+            "introduction": null,
+            "avatar": null
+        }
+    ],
+    "courses": [
+        {
+            "id": "CSE101",
+            "uid": "C14096277",
+            "course_code": "CSE101",
+            "academic_year": 2021,
+            "semester": 1,
+            "name": "Introduction to Mathematics",
+            "outline": "This course is an introduction to mathematics."
+        },
+        {
+            "id": "CSE102",
+            "uid": "F74102048",
+            "course_code": "CSE102",
+            "academic_year": 2021,
+            "semester": 1,
+            "name": "Introduction to Computer Science",
+            "outline": "This course is an introduction to computer science."
+        }
+    ],
+    "groups": [
+        {
+            "course_id": "CSE101",
+            "name": "Group 1",
+            "number_of_members": 2,
+            "create_deadline": "2024-04-10 16:10:05"
+        }
+    ],
+    "selected_courses": [
+        {
+            "uid": "C14096277",
+            "course_id": "CSE101",
+            "group_id": 1
+        },
+        {
+            "uid": "F74102048",
+            "course_id": "CSE101",
+            "group_id": 1
+        }
+    ],
+    "components": [
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-10 16:10:05",
+            "title": "網站公告一",
+            "content": "這是第一個網站公告"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-19 10:53:12",
+            "title": "網站公告二",
+            "content": "這是第二個網站公告"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-22 09:30:57",
+            "title": "網站公告三",
+            "content": "那這就是第三個網站公告"
+        },
+        {
+            "uid": "C14096277",
+            "release_time": "2024-03-09 16:10:05",
+            "title": "課程公告一",
+            "content": "記得換教室喔"
+        },
+        {
+            "uid": "C14096277",
+            "release_time": "2024-04-12 12:01:37",
+            "title": "課程公告二",
+            "content": "教授這裡風好大我好害怕"
+        },
+        {
+            "uid": "C14096277",
+            "release_time": "2024-04-13 23:54:15",
+            "title": "課程公告三",
+            "content": "可是代數不考選擇題"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-05-01 12:33:45",
+            "title": "課程公告四",
+            "content": "好像又有地震了"
+        },
+        {
+            "uid": "C14096277",
+            "release_time": "2024-03-09 16:10:05",
+            "title": "報告一",
+            "content": "No content"
+        },
+        {
+            "uid": "C14096277",
+            "release_time": "2024-03-19 16:10:05",
+            "title": "報告二",
+            "content": "No content"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-09 16:10:05",
+            "title": "f",
+            "content": "No content"
+        },
+        {
+            "uid": "F74102048",
+            "release_time": "2024-04-10 16:10:05",
+            "title": "f",
+            "content": "No content"
+        }
+    ],
+    "website_bulletins": [
+        {
+            "id": 1,
+            "pin_to_top": false
+        },
+        {
+            "id": 2,
+            "pin_to_top": true
+        },
+        {
+            "id": 3,
+            "pin_to_top": false
+        }
+    ],
+    "course_bulletins": [
+        {
+            "id": 4,
+            "pin_to_top": false,
+            "course_id": "CSE101"
+        },
+        {
+            "id": 5,
+            "pin_to_top": true,
+            "course_id": "CSE101"
+        },
+        {
+            "id": 6,
+            "pin_to_top": false,
+            "course_id": "CSE102"
+        },
+        {
+            "id": 7,
+            "pin_to_top": true,
+            "course_id": "CSE102"
+        }
+    ],
+    "reports": [
       {
-         "uid":"C14096277",
-         "password":"test123",
-         "name":"nt1026",
-         "role":"student",
-         "email":"C14096277@gs.ncku.edu.tw",
-         "department":"Mathematics",
-         "country":"Taiwan",
-         "introduction":null,
-         "avatar":null
+          "id": 8
       },
       {
-         "uid":"F74102048",
-         "password":"test456",
-         "name":"little ming",
-         "role":"student",
-         "email":"F74102048@gs.ncku.edu.tw",
-         "department":"Computer Science",
-         "country":"Taiwan",
-         "introduction":null,
-         "avatar":null
+          "id": 9
       }
-   ],
-   "courses":[
-      {
-         "id":"CSE101",
-         "uid":"C14096277",
-         "course_code":"CSE101",
-         "academic_year":2021,
-         "semester":1,
-         "name":"Introduction to Mathematics",
-         "outline":"This course is an introduction to mathematics."
-      },
-      {
-         "id":"CSE102",
-         "uid":"F74102048",
-         "course_code":"CSE102",
-         "academic_year":2021,
-         "semester":1,
-         "name":"Introduction to Computer Science",
-         "outline":"This course is an introduction to computer science."
-      }
-   ],
-   "selected_courses":[
-      {
-         "uid":"C14096277",
-         "course_id":"CSE101",
-         "group":"A"
-      },
-      {
-         "uid":"F74102048",
-         "course_id":"CSE102",
-         "group":"B"
-      }
-   ],
-   "course_bulletins":[
-      {
-         "uid":"C14096277",
-         "release_time":"2024-03-09 16:10:05",
-         "title":"教室更動通知",
-         "content":"記得換教室喔",
-         "pin_to_top":false,
-         "course_id":"CSE101"
-      },
-      {
-         "uid":"C14096277",
-         "release_time":"2024-04-12 12:01:37",
-         "title":"代數(二) 第一次期中考將於 4/16(二) 進行",
-         "content":"教授這裡風好大我好害怕",
-         "pin_to_top":true,
-         "course_id":"CSE101"
-      },
-      {
-         "uid":"C14096277",
-         "release_time":"2024-04-13 23:54:15",
-         "title":"期中好運貓貓祝福你選擇題百猜百中",
-         "content":"可是代數不考選擇題",
-         "pin_to_top":false,
-         "course_id":"CSE102"
-      },
-      {
-         "uid":"F74102048",
-         "release_time":"2021-09-01 00:00:00",
-         "title":"Bulletin 2",
-         "content":"This is another bulletin.",
-         "pin_to_top":true,
-         "course_id":"CSE102"
-      }
-   ],
-   "website_bulletins":[
-      {
-         "uid":"F74102048",
-         "release_time":"2021-09-01 00:00:00",
-         "title":"Bulletin 2",
-         "content":"This is another bulletin.",
-         "pin_to_top":true
-      }
-   ],
-   "subscriptions":[
-      {
-         "uid":"C14096277",
-         "component_id":1,
-         "type":"course"
-      },
-      {
-         "uid":"F74102048",
-         "component_id":2,
-         "type":"course"
-      }
-   ],
-   "notifications":[
-      {
-         "uid":"C14096277",
-         "component_id":1,
-         "have_read":true,
-         "release_time":"2024-03-09 16:10:05",
-         "type":"course_bulletin"
-      },
-      {
-         "uid":"C14096277",
-         "component_id":2,
-         "have_read":false,
-         "release_time":"2024-04-12 16:24:05",
-         "type":"course_bulletin"
-      },
-      {
-         "uid":"C14096277",
-         "component_id":3,
-         "have_read":false,
-         "release_time":"2024-04-14 10:30:12",
-         "type":"course_bulletin"
-      },
-      {
-         "uid":"F74102048",
-         "component_id":2,
-         "have_read":false,
-         "release_time":"2021-09-01 00:00:00",
-         "type":"course_bulletin"
-      },
-      {
-         "uid":"F74102048",
-         "component_id":1,
-         "have_read":false,
-         "release_time":"2021-09-01 00:00:00",
-         "type":"course_bulletin"
-      }
-   ],
-   "discussions":[
-      {
-         "uid":"C14096277",
-         "release_time":"2024-03-09 16:10:05",
-         "title":"教室更動通知",
-         "content":"記得換教室喔",
-         "course_id":"CSE101"
-      }
-   ],
-   "discussion_topics":[
-      {
-         "uid":"C14096277",
-         "release_time":"2024-03-09 16:10:05",
-         "title":"教室更動通知",
-         "content":"記得換教室喔",
-         "discussion_id":6
-      }
-   ]
+  ],
+    "discussions": [
+        {
+            "id": 10,
+            "course_id": "CSE101"
+        }
+    ],
+    "discussion_topics": [
+        {
+            "id": 11,
+            "discussion_id": 10
+        }
+    ],
+    "subscriptions": [
+        {
+            "uid": "C14096277",
+            "component_id": 10,
+            "type": "discussion"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 10,
+            "type": "discussion"
+        }
+    ],
+    "notifications": [
+        {
+            "uid": "C14096277",
+            "component_id": 5,
+            "have_read": true,
+            "release_time": "2024-03-09 16:10:05",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 6,
+            "have_read": false,
+            "release_time": "2024-04-12 16:24:05",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-04-14 10:30:12",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 5,
+            "have_read": false,
+            "release_time": "2021-09-01 00:00:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 6,
+            "have_read": false,
+            "release_time": "2021-09-01 00:00:00",
+            "type": "course_bulletin"
+        }
+    ]
 }

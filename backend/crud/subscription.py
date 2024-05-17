@@ -8,7 +8,7 @@ from schemas import subscription as SubscriptionSchema
 
 @crud_class_decorator
 class SubscriptionCrudManager:
-    async def create(self, uid, component_id, newSubscription: SubscriptionSchema.SubscriptionCreate, db_session: AsyncSession):
+    async def create(self, uid: str, component_id: int, newSubscription: SubscriptionSchema.SubscriptionCreate, db_session: AsyncSession):
         newSubscription_dict = newSubscription.model_dump()
         subscription = SubscriptionModel(uid=uid, component_id=component_id, **newSubscription_dict)
         db_session.add(subscription)
@@ -16,7 +16,7 @@ class SubscriptionCrudManager:
 
         return subscription
      
-    async def get(self, uid: str, component_id: str, db_session: AsyncSession):
+    async def get(self, uid: str, component_id: int, db_session: AsyncSession):
         stmt = (
             select(SubscriptionModel)
             .where(SubscriptionModel.uid == uid)
@@ -34,7 +34,7 @@ class SubscriptionCrudManager:
 
         return [subscription[0] for subscription in result.all()]
     
-    async def delete(self, uid: str, component_id: str, db_session: AsyncSession):
+    async def delete(self, uid: str, component_id: int, db_session: AsyncSession):
         stmt = (
             delete(SubscriptionModel)
             .where(SubscriptionModel.uid == uid)
@@ -55,7 +55,7 @@ class SubscriptionCrudManager:
 
         return [subscription[0] for subscription in result.all()]
     
-    async def get_by_component_id(self, component_id: str, db_session: AsyncSession):
+    async def get_by_component_id(self, component_id: int, db_session: AsyncSession):
         stmt = (
             select(SubscriptionModel)
             .where(SubscriptionModel.component_id == component_id)

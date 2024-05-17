@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_user_id
-from crud.bulletin import WebsiteBulletinCrudManager
+from .depends import check_user_id, check_website_bulletin_id
+from crud.website_bulletin import WebsiteBulletinCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -23,8 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/bulletin", 
-    response_model=BulletinSchema.WebsiteBulletinCreateResponse,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_website_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -32,20 +31,17 @@ async def create_website_bulletin(
 ):
     """
     Create a bulletin with the following information:
-    - **id**
     - **release_time**
     - **title**
     - **content**
-    - **pin_to_top**
     """
-    bulletin = await WebsiteBulletinCrud.create(uid, newBulletin)
-    
-    return bulletin
+    await WebsiteBulletinCrud.create(uid, newBulletin)
+    return
 
 
 @router.get(
-    "/bulletin/all", 
-    response_model=list[BulletinSchema.WebsiteBulletinRead],
+    "/bulletins", 
+    response_model=list[BulletinSchema.WebsiteBulletinListRead],
     status_code=status.HTTP_200_OK
 )
 async def get_all_website_bulletins():
@@ -61,17 +57,17 @@ async def get_all_website_bulletins():
 
 @router.get(
     "/bulletin/{wb_id}", 
-    response_model=BulletinSchema.WebsiteBulletinRead,
+    response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
 )
-async def get_website_bulletin(wb_id: str):
+async def get_website_bulletin(wb_id: int):
     """
     Get the website bulletin.
     """
     bulletin = await WebsiteBulletinCrud.get(wb_id)
     if bulletin:
         return bulletin
-    
+
     raise not_found
    
 
@@ -81,7 +77,7 @@ async def get_website_bulletin(wb_id: str):
 )
 async def update_website_bulletin(
     updateBulletin: BulletinSchema.BulletinUpdate, 
-    wb_id: str = Depends(check_component_id)
+    wb_id: int = Depends(check_website_bulletin_id)
 ):
     """
     Update the particular website bulletin with at least one of the following information:
@@ -97,7 +93,7 @@ async def update_website_bulletin(
     "/bulletin/{wb_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_website_bulletin(wb_id: str = Depends(check_component_id)):
+async def delete_website_bulletin(wb_id: int = Depends(check_website_bulletin_id)):
     """
     Delete the website bulletin.
     """

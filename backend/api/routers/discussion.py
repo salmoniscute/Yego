@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_course_id, check_user_id
+from .depends import check_discussion_id, check_course_id, check_user_id
 from crud.discussion import DiscussionCrudManager
 from schemas import discussion as DiscussionSchema
 
@@ -22,8 +22,7 @@ router = APIRouter(
 
 @router.post(
     "/discussion", 
-    response_model=DiscussionSchema.DiscussionCreate,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_discussion(
     newDiscussion: DiscussionSchema.DiscussionCreate,
@@ -35,7 +34,7 @@ async def create_discussion(
     - **release_time**
     - **title**
     - **content**
-    """
+    """    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
 
     return discussion
@@ -62,7 +61,7 @@ async def get_all_discussions():
     response_model=DiscussionSchema.DiscussionRead
 )
 async def get_discussion(
-    discussion_id: int=Depends(check_component_id)
+    discussion_id: int = Depends(check_discussion_id)
 ):
     """ 
     Get a discussion.
@@ -80,7 +79,7 @@ async def get_discussion(
 )
 async def update_discussion(
     updateDiscussion: DiscussionSchema.DiscussionUpdate,
-    discussion_id: int = Depends(check_component_id)
+    discussion_id: int = Depends(check_discussion_id)
 ):
     """ 
     Update a discussion with the following information:
@@ -97,7 +96,7 @@ async def update_discussion(
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_discussion(
-    discussion_id: int = Depends(check_component_id)
+    discussion_id: int = Depends(check_discussion_id)
 ):
     """ 
     Delete a discussion.
@@ -107,6 +106,20 @@ async def delete_discussion(
     return 
 
 
-@router.get("/discussions/particular_course/{course_id}")
-async def get_discussions_in_particular_course(course_id: str):
-    return 
+@router.get(
+    "/discussions/{course_id}",
+    response_model=list[DiscussionSchema.DiscussionOfCourses]
+)
+async def get_course_discussions_by_course_id(
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Get all discussions for a course.
+    """
+    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
+    if discussions:
+        return discussions
+    
+    raise not_found
+
+

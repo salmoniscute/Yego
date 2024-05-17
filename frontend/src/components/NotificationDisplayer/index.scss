@@ -1,0 +1,32 @@
+#notificationDisplayer {
+  width: 50%;
+  padding: 2rem;
+  border: 1px #474141 solid;
+  border-radius: 5px;
+  background-color: white;
+  
+  h2 {
+    margin: 0;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+
+    .circle-sign {
+      color: #FFEA79;
+      margin-right: 0.5rem;
+    }
+  }
+  h1 {
+    margin: 10px 0;
+  }
+  .content {
+    min-height: 300px;
+    background-color: #f0f0f0;
+    p {
+      font-size: 18px;
+      padding: 20px 10px;
+      border-radius: 10px;
+      
+    }
+  }
+}

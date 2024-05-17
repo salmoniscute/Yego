@@ -23,13 +23,12 @@ router = APIRouter(
 
 @router.post(
     "/subscription", 
-    response_model=SubscriptionSchema.SubscriptionRead,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_subscription(
     newSubscription: SubscriptionSchema.SubscriptionCreate,
     uid: str = Depends(check_user_id),
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     """
     Create a subscription.
@@ -64,7 +63,7 @@ async def get_all_subscriptions():
     response_model=SubscriptionSchema.SubscriptionRead,
     status_code=status.HTTP_200_OK
 )
-async def get_subscription(uid: str, component_id):
+async def get_subscription(uid: str, component_id: int):
     """
     Get a subscription.
     """
@@ -79,7 +78,7 @@ async def get_subscription(uid: str, component_id):
     "/subscription/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_subscription(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
+async def delete_subscription(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):
     """
     Delete a subscription.
     """

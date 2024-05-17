@@ -2,8 +2,8 @@ import { ReactElement, useState , useEffect} from "react";
 import { Link ,useParams} from "react-router-dom";
 import PostEditor from "components/PostEditor";
 
-import { DiscussionTopicInfo, Discussion } from "schemas/discussion";
-import { getDiscussionTopicList , getDiscussion } from "api/discussion";
+import { DiscussionTopic, Discussion } from "schemas/discussion";
+import {  getDiscussionTopicList, getDiscussion } from "api/discussion";
 
 import { BiSolidBellRing } from "react-icons/bi";
 import { TbBellRinging } from "react-icons/tb";
@@ -23,9 +23,11 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   const params = useParams();
 
-  const [discussionTopicList, setDiscussionTopic] = useState<Array<DiscussionTopicInfo>>([]);
+  const [discussionTopicList, setDiscussionTopic] = useState<Array<DiscussionTopic>>([]);
   const [discussion , setDiscussion] = useState<Discussion>();
   const [openEditor, setopenEditor] = useState(false);
+  const [arrow, setArrow] = useState(true); //up = true, down = false
+
   const Open = () => {
     setopenEditor(true);
   }
@@ -41,21 +43,40 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
   }, [])
 
   const handleDiscussionTopicList = () =>{
-    getDiscussionTopicList().then(data => {
-      setDiscussionTopic(data);
-    })
+    getDiscussionTopicList(params.discussionId|| "").then(data => {
+      resortList(data, arrow);
+    });
   };
 
-  const [arrow, setArrow] = useState(true); //up = true, down = false
+  const resortList = (data:DiscussionTopic[] , state :boolean) =>{
+    const sortedList = [...data]; 
+    if (state === true) {
+        sortedList.sort((d1, d2) => {
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
+          return date2.getTime() - date1.getTime();
+      });
+        
+    } else {
+        sortedList.sort((d1, d2) => {
+          const date1 = new Date(d1.release_time||0);
+          const date2 = new Date(d2.release_time||0);
+          return date1.getTime() - date2.getTime();
+      });
+        
+    }
+    setDiscussionTopic(sortedList);
+  }
+
   const Resort = () => {
-    if (arrow === true) {
-      setArrow(false);
-      // early->last api
-    }
-    else {
-      setArrow(true);
-      // last->early api
-    }
+    resortList(discussionTopicList,!arrow);
+    setArrow(!arrow);
+  }
+
+  const setTimeString = (release_time:number):string => {
+    const releaseDate = new Date(release_time);
+    const formattedDate = `${releaseDate.getFullYear()}年${releaseDate.getMonth() + 1}月${releaseDate.getDate()}日`;
+    return formattedDate;
   }
 
   return <div id="discussionTopicPage">
@@ -80,8 +101,8 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
             <p className="title">
                 <Link to={`./discussionTopic/${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{data.release_time}</p>
-            <p className="reply">{data.reply}</p>
+            <p className="launch">{setTimeString(data.release_time||0)}</p>
+            <p className="reply">{data.reply_number}</p>
             <button className="follow"><p>{data.follow === true ? <BiSolidBellRing /> : <TbBellRinging />}</p></button> 
           </div>
         )
@@ -89,6 +110,6 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
     </div>
     
-    {/* <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic"/></div> */}
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopicList} parent_id={params.discussionId || ""}/></div>
   </div>
 }

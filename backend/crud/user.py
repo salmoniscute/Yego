@@ -80,3 +80,84 @@ class UserCrudManager:
 
         return user if user else None
     
+    async def search(self, keyword: str, db_session: AsyncSession):
+        output = []
+        stmt = select(UserModel).where(UserModel.name.like(f"%{keyword}%"))
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        for user in result.all():
+            output.append({
+                "uid": user[0].uid,
+                "name": user[0].name,
+                "role": user[0].role,
+                "country": user[0].country,
+                "department": user[0].department,
+                "email": user[0].email,
+                "introduction": user[0].introduction,
+                "avatar": user[0].avatar
+            })
+        
+        stmt = select(UserModel).where(UserModel.uid.like(f"%{keyword}%"))
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        for user in result.all():
+            output.append({
+                "uid": user[0].uid,
+                "name": user[0].name,
+                "role": user[0].role,
+                "country": user[0].country,
+                "department": user[0].department,
+                "email": user[0].email,
+                "introduction": user[0].introduction,
+                "avatar": user[0].avatar
+            })
+            
+        stmt = select(UserModel).where(UserModel.role.like(f"%{keyword}%"))
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        for user in result.all():
+            output.append({
+                "uid": user[0].uid,
+                "name": user[0].name,
+                "role": user[0].role,
+                "country": user[0].country,
+                "department": user[0].department,
+                "email": user[0].email,
+                "introduction": user[0].introduction,
+                "avatar": user[0].avatar
+            })
+            
+        stmt = select(UserModel).where(UserModel.country.like(f"%{keyword}%"))
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        for user in result.all():
+            output.append({
+                "uid": user[0].uid,
+                "name": user[0].name,
+                "role": user[0].role,
+                "country": user[0].country,
+                "department": user[0].department,
+                "email": user[0].email,
+                "introduction": user[0].introduction,
+                "avatar": user[0].avatar
+            })
+            
+        stmt = select(UserModel).where(UserModel.department.like(f"%{keyword}%"))
+        result = await db_session.execute(stmt)
+        result = result.unique()
+        for user in result.all():
+            output.append({
+                "uid": user[0].uid,
+                "name": user[0].name,
+                "role": user[0].role,
+                "country": user[0].country,
+                "department": user[0].department,
+                "email": user[0].email,
+                "introduction": user[0].introduction,
+                "avatar": user[0].avatar
+            })
+        
+               
+        
+        return output
+    

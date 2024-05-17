@@ -4,7 +4,11 @@ import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import "./index.scss";
 
-import { postDiscussion } from 'api/discussion';
+import { Discussion , DiscussionTopic } from 'schemas/discussion';
+import { Report } from 'schemas/report';
+
+import { postDiscussion ,postDiscussionTopic} from 'api/discussion';
+import { postReport } from 'api/report';
 
 import { RxCross2 } from "react-icons/rx";
 import { CgExpand } from "react-icons/cg";
@@ -91,6 +95,7 @@ type propsType = Readonly<{
   onClose : () => void,
   type : string
   updatePost:() => void,
+  parent_id : string
 }>;
 
 export default function PostEditor(props: propsType): ReactElement {
@@ -103,7 +108,8 @@ export default function PostEditor(props: propsType): ReactElement {
   const {
     onClose,
     type,
-    updatePost
+    updatePost,
+    parent_id
   } = props;
 
   const Close = () => {
@@ -119,18 +125,42 @@ export default function PostEditor(props: propsType): ReactElement {
   };
 
   const onSubmit = async () =>{
-    const nowTime = new Date().getTime();
     const uid = userData?.uid;
+    const publisher = userData?.name;
     if (uid) {
       if (type === "discussion"){
-        const discussion = await postDiscussion(uid, "CSE101", title, content);
+        const discussion : Discussion ={
+          course_id: parent_id,
+          title:title,
+          content: content,
+          follow:false,
+          uid:uid
+        };
+        await postDiscussion(discussion);
         updatePost();
       }
       else if ( type === "report"){
-  
+        const report : Report = {
+          uid : uid,
+          title:title,
+          reply:0,
+          content:content,
+        }
+        await postReport(report);
+        updatePost();
       }
       else if ( type === "discussionTopic"){
-        
+        const discussionTopic : DiscussionTopic ={
+          uid : uid,
+          discussion_id: parent_id,
+          title:title,
+          reply_number:0,
+          follow:false,
+          publisher : publisher || "",
+          content:content,
+        };
+        await postDiscussionTopic(discussionTopic);
+        updatePost();
       }
       
     }

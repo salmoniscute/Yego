@@ -6,15 +6,12 @@ from models.base import Base, BaseType
 
 class File(Base):
     __tablename__ = "File"
-    id: Mapped[BaseType.int_id]
+    id: Mapped[BaseType.file_id]
     component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     path: Mapped[BaseType.str_100]
 
     # Relationship to parent
-    component_info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="files"
-    )
+    component_info: Mapped["Component"] = relationship("Component", back_populates="files")
 
     def __init__(self, component_id: str, path: str) -> None:
         self.component_id = component_id

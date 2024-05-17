@@ -89,7 +89,7 @@
                         position: absolute;
                         top: 100%;
                         left: 0%;
-                        width: 3em;
+                        width: 5em;
                         background-color: #FFFFFF;
                         overflow: hidden;
                         transition: height 0.3s;
@@ -102,7 +102,7 @@
                                 p {
                                     font-size: 16px;
                                     margin: 0 auto;
-                                    width: 3em;
+                                    width: 5em;
                                     color: #949494;
                                     cursor: pointer;
                                     transition: color 0.3s;
@@ -132,10 +132,17 @@
                     
                                 
             }
-            .cbInfor{
+            > h3{
                 font-size: large;
-                font-weight: 400;
                 margin-bottom: 0em;
+                margin-top: 0.8em;
+            }
+            .cbInfor{
+                p{
+                    margin: 0em;
+                    margin-top: 0.5em ;
+                }
+                
             }
         
             

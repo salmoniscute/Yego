@@ -5,7 +5,6 @@ from schemas import file as FileSchema
 
 
 class ComponentCreate(BaseModel):
-    release_time: datetime
     title: str
     content: str
 
@@ -13,7 +12,6 @@ class ComponentCreate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 { 
-                    "release_time": "2024-04-02 16:00:00",
                     "title": "This is a title",
                     "content": "This is a content"
                 }
@@ -21,11 +19,13 @@ class ComponentCreate(BaseModel):
         }
     }
 
+class ComponentReadID(BaseModel):
+    id: int
+    
 
 class ComponentRead(BaseModel):
     id: int
     uid: str
-    release_time: datetime
     title: str
     content: str
 

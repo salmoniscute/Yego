@@ -10,10 +10,11 @@ from models.discussion import Discussion, DiscussionTopic, DiscussionTopicReply
 from models.file import File
 from models.notification import Notification
 from models.selected_course import SelectedCourse
+from models.group import Group
 from models.subscription import Subscription
 from models.user import User
-from models.report import Report
-from models.course_material import CourseMaterial
+from models.report import Report, ReportReply
+from models.course_material import CourseMaterial, MaterialInfo, SubmittedAssignment
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -41,21 +42,30 @@ async def init_db():
             await db.execute(CreateTable(DiscussionTopicReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(File.__table__, if_not_exists=True))
             await db.execute(CreateTable(Notification.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Group.__table__, if_not_exists=True))
             await db.execute(CreateTable(SelectedCourse.__table__, if_not_exists=True))
             await db.execute(CreateTable(Subscription.__table__, if_not_exists=True))
             await db.execute(CreateTable(Bulletin.__table__, if_not_exists=True))
-            # await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Report.__table__, if_not_exists=True))
+            await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(CourseMaterial.__table__, if_not_exists=True))
+            await db.execute(CreateTable(MaterialInfo.__table__, if_not_exists=True))
+            await db.execute(CreateTable(SubmittedAssignment.__table__, if_not_exists=True))
             
             await FakeDB().create_entity_list(db)
             
 async def close_db():
     async with SessionLocal() as db:
         async with db.begin():
+            await db.execute(DropTable(SubmittedAssignment.__table__))
+            await db.execute(DropTable(MaterialInfo.__table__))
             await db.execute(DropTable(CourseMaterial.__table__))
+            await db.execute(DropTable(ReportReply.__table__))
+            await db.execute(DropTable(Report.__table__))
             await db.execute(DropTable(Bulletin.__table__))
             await db.execute(DropTable(Subscription.__table__))
             await db.execute(DropTable(SelectedCourse.__table__))
+            await db.execute(DropTable(Group.__table__))
             await db.execute(DropTable(Notification.__table__))
             await db.execute(DropTable(File.__table__))
             await db.execute(DropTable(DiscussionTopicReply.__table__))

@@ -1,19 +1,16 @@
 import axios from "axios";
 import {
-    CourseBulletinInfo
+    CourseBulletin
 } from "../schemas/courseBulletin";
 
-export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletinInfo>>{
+export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletin>>{
     let url = "http://localhost:8080/api/course/bulletin/particular_course/"+course_id;
-    //let url = "http://localhost:8080/api/course/bulletin/all";
     try {
         const response = await axios.get(url,{
           });
         const result = response.data;
-        const pinedResult = result.filter((data: CourseBulletinInfo) => data.pin_to_top);
-        const notPinedResult = result.filter((data: CourseBulletinInfo) => !data.pin_to_top);
-        //pinedResult.sort((d1: CourseBulletinInfo, d2: CourseBulletinInfo) => d2.release_time - d1.release_time);
-        //notPinedResult.sort((d1: CourseBulletinInfo, d2: CourseBulletinInfo) => d2.release_time - d1.release_time);
+        const pinedResult = result.filter((data: CourseBulletin) => data.pin_to_top);
+        const notPinedResult = result.filter((data: CourseBulletin) => !data.pin_to_top);
         return pinedResult.concat(notPinedResult);
     }
     catch(error){
@@ -21,24 +18,36 @@ export async function getCourseBulletinList(course_id:string) :Promise<Array<Cou
     }
 }
 
-export async function postCourseBulletin(uid:string,course_id:string,title:string,release_time:number,content:string,pin_to_top:boolean) :Promise<CourseBulletinInfo>{
-    let url = "http://localhost:8080/api/course/bulletin?uid="+uid+"&course_id="+course_id;
-    let courseBulletin ;
-
+export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise<CourseBulletin>{
+    let url = "http://localhost:8080/api/course/bulletin?uid="+courseBulletin.uid+"&course_id="+courseBulletin.course_id;
     try {
-        const response = await axios.post(url,{
-            "title": title,
-            "release_time": "2021-09-01T00:00:00",
-            "content": content,
-            "pin_to_top": pin_to_top
-          });
-        courseBulletin = response.data;
+        const response = await axios.post(url,courseBulletin);
     }
     catch(error) {  
         
     }
-
     return courseBulletin;
+    
 
+}
+
+export async function deleteCourseBulletin(id:string){
+    let url = "http://localhost:8080/api/course/bulletin/{cb_id}?course_bulletin_id="+id;
+    try {
+        const response = await axios.delete(url,{});
+    }
+    catch(error) {  
+        
+    }
+}
+
+export async function updateCourseBulletin(courseBulletin:CourseBulletin){
+    let url = "http://localhost:8080/api/course/bulletin/{cb_id}?course_bulletin_id="+courseBulletin.id;
+    try {
+        const response = await axios.put(url,courseBulletin);
+    }
+    catch(error) {  
+        
+    }
 }
 

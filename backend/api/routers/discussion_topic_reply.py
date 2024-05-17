@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 
-from .depends import check_component_id, check_user_id
+from .depends import check_topic_reply_id, check_topic_reply_parnet_id, check_topic_id, check_user_id
 from crud.discussion import DiscussionTopicReplyCrudManager
 from schemas import discussion as DiscussionSchema
 
@@ -21,14 +21,14 @@ router = APIRouter(
 )
 
 @router.post(
-    "/discussion_topic_reply", 
-    response_model=DiscussionSchema.DiscussionTopicReplyCreate,
-    status_code=status.HTTP_201_CREATED
+    "/discussion_topic_reply",
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_discussion_topic_reply(
     newReply: DiscussionSchema.DiscussionTopicReplyCreate,
     uid: str = Depends(check_user_id),
-    root_id: int = Depends(check_component_id)
+    root_id: int = Depends(check_topic_id),
+    parent_id: int = Depends(check_topic_reply_parnet_id)    
 ):
     """
     Create a discussion topic reply with the following information:
@@ -36,30 +36,16 @@ async def create_discussion_topic_reply(
     - **title**
     - **content**
     """
-    reply = await TopicReplyCrud.create(uid, root_id, newReply)
+    reply = await TopicReplyCrud.create(uid, root_id, parent_id, newReply)
 
     return reply
-
-@router.get(
-    "/discussion_topic_replies",
-    response_model=list[DiscussionSchema.DiscussionTopicReplyRead]
-)
-async def get_all_discussion_topic_replies():
-    """ 
-    Get all discussion topic replies.
-    """
-    replies = await TopicReplyCrud.get_all()
-    if replies:
-        return replies
-    
-    raise not_found
 
 @router.get(
     "/discussion_topic_reply/{reply_id}", 
     response_model=DiscussionSchema.DiscussionTopicReplyRead
 )
 async def get_discussion_topic_reply(
-    reply_id: int = Depends(check_component_id)
+    reply_id: int = Depends(check_topic_reply_id)
 ):
     """ 
     Get a discussion topic reply by its id.
@@ -76,7 +62,7 @@ async def get_discussion_topic_reply(
 )
 async def update_discussion_topic_reply(
     updateReply: DiscussionSchema.DiscussionUpdate,
-    reply_id: int = Depends(check_component_id)
+    reply_id: int = Depends(check_topic_reply_id)
 ):
     """ 
     Update a discussion topic reply by its id.
@@ -90,7 +76,7 @@ async def update_discussion_topic_reply(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_discussion_topic_reply(
-    reply_id: int = Depends(check_component_id)
+    reply_id: int = Depends(check_topic_reply_id)
 ):
     """ 
     Delete a discussion topic reply by its id.

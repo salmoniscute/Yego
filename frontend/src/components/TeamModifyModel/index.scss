@@ -1,0 +1,56 @@
+#teamModifyModel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
+  .box{
+    position: relative;
+    width: 400px;
+    color: #474141;
+    background-color: white;
+    padding: 2em 3em;
+    padding-top: 1em;
+    margin: auto auto;
+
+    p {
+      font-size: 16px;
+    }
+
+    .closeCross{
+      position: absolute;
+      font-size: 25px;
+      cursor: pointer;
+      top: 1em;
+      right: 2em;
+    }
+
+    .buttons{
+      position:absolute;
+      bottom: 1.5em;
+      right: 3.5em;
+      > button{
+          cursor: pointer;
+          border: none;
+          align-items: center;
+          width: 4em;
+          padding: 0.5em;
+          font-size: 16px;
+          font-weight: bold;
+          margin-left: 1em;
+          border-radius: 0.2em;
+      }
+      .cancel{
+          background-color: #E1E1E4;
+      }
+      .confirm{
+          background-color: #FFEA79;
+      }
+    }
+  }
+}
+
+#none {
+  display: none;
+}

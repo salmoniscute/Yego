@@ -14,7 +14,7 @@ export default function Personal(): ReactElement {
         <div id="PersonalPage">
             <div className="twoSide">
                 <div className="leftSide">
-                    <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
+                    <img alt="avatar" src={userData?.avatar}/>
                     <div className="Name">
                         {userData?.name}
                     </div>

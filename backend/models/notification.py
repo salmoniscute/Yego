@@ -6,27 +6,18 @@ from models.base import Base, BaseType
 
 class Notification(Base):
     __tablename__ = "Notification"
-    id: Mapped[BaseType.int_id]
-    uid: Mapped[BaseType.str_20] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
+    id: Mapped[BaseType.notification_id]
+    uid: Mapped[BaseType.str_10] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
     component_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Component.id", ondelete="CASCADE"))
     have_read: Mapped[BaseType.boolean]
     release_time: Mapped[BaseType.datetime]
     type: Mapped[BaseType.str_20]
     
     # Relationship to parent
-    user_info: Mapped["User"] = relationship(
-        "User",
-        back_populates="notifications",
-        lazy="joined"
-    )
+    user_info: Mapped["User"] = relationship("User", back_populates="notifications", lazy="joined")
+    component_info: Mapped["Component"] = relationship("Component", back_populates="notifications", lazy="joined")
 
-    component_info: Mapped["Component"] = relationship(
-        "Component",
-        back_populates="notifications",
-        lazy="joined"
-    )
-
-    def __init__(self, uid: str, component_id: str, have_read: bool, release_time: str, type: str) -> None:
+    def __init__(self, uid: str, component_id: str, have_read: bool, type: str, release_time: str) -> None:
         self.uid = uid
         self.component_id = component_id
         self.have_read = have_read

@@ -23,14 +23,13 @@ router = APIRouter(
 
 @router.post(
     "/notification", 
-    response_model=NotificationSchema.NotificationRead,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_204_NO_CONTENT,
     deprecated=True
 )
 async def create_notification(
     newNotification: NotificationSchema.NotificationCreate,
     uid: str = Depends(check_user_id),
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     """
     Create a notification with the following information:
@@ -68,7 +67,7 @@ async def get_all_notifications():
     status_code=status.HTTP_200_OK,
     deprecated=True
 )
-async def get_notification(uid: str, component_id: str):
+async def get_notification(uid: str, component_id: int):
     """
     Get a notification.
     """
@@ -81,30 +80,31 @@ async def get_notification(uid: str, component_id: str):
 
 @router.put(
     "/notification/particular/{uid}/{component_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    response_model=list[NotificationSchema.NotificationReadByUid],
+    status_code=status.HTTP_200_OK
 )
 async def update_notification(
-    updateNotification: NotificationSchema.NotificationUpdate,
     uid: str = Depends(check_user_id),
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     """
     Update a notification.
     """
-    await NotificationCrud.update(uid, component_id, updateNotification)
+    notifications = await NotificationCrud.update(uid, component_id)
+    if notifications:
+        return notifications
 
-    return
-
+    raise not_found
 
 @router.delete(
     "/notification/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_notification(uid: str = Depends(check_user_id), component_id: str = Depends(check_component_id)):
+async def delete_notification(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):
     """
     Delete a notification.
     """
-    await NotificationCrud.delete(uid, check_component_id)
+    await NotificationCrud.delete(uid, component_id)
 
     return
 
@@ -118,23 +118,9 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     Get all notifications for a user.
     """
-    results= []
-
     notifications = await NotificationCrud.get_by_uid(uid)
     if notifications:
-        for notification in notifications:
-            results.append({
-                "id": notification.id,
-                "publisher": notification.user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
-                "release_time": notification.release_time,
-                "title": notification.component_info.title,
-                "content": notification.component_info.content,
-                "have_read": notification.have_read,
-                "icon_type": notification.type
-            })
-        return results
+        return notifications
 
     raise not_found
 
@@ -147,21 +133,8 @@ async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     Read all notifications for one user.
     """
-    results = []
     notifications = await NotificationCrud.read_all(uid)
     if notifications:
-        for notification in notifications:
-            results.append({
-                "id": notification.id,
-                "publisher": notification.user_info.name,
-                # "course_name": notification.component_info.course_name,
-                "course_name": "(TODO)",
-                "release_time": notification.release_time,
-                "title": notification.component_info.title,
-                "content": notification.component_info.content,
-                "have_read": notification.have_read,
-                "icon_type": notification.type
-            })
-        return results
+        return notifications
 
     raise not_found
