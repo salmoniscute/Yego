@@ -1,6 +1,8 @@
 {
     "current_language": "正體中文",
     "login": "登入",
+    "cancel": "取消",
+    "next": "下一步",
     "sidebar_menu": "選單",
     "website_announcement": "網站公告",
     "see_more": "查看更多",
@@ -16,5 +18,15 @@
     "dark_mode": "深色模式",
     "use_tutorial": "使用教學",
     "setting": "設定",
-    "logout": "登出"
+    "logout": "登出",
+    "edit_mode": "編輯模式",
+    "edit_finish": "完成編輯",
+    "add_theme": "新增主題",
+    "add_theme_name": "主題名稱",
+    "add": "新增",
+    "add_material": "新增教材",
+    "edit_material": "編輯教材",
+    "material_roll_call": "點名",
+    "material_assignment": "作業",
+    "material_file": "檔案"
 }

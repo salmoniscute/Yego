@@ -112,8 +112,8 @@ export default function App(): ReactElement {
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
-                        <Route path="/personal" element={<PersonalPage/>} />
-                        <Route path="/reportBug" element={<ReportPage />} />  
+                        <Route path="/personal" element={<PersonalPage />} />
+                        <Route path="/reportBug" element={<ReportPage />} />
                         <Route path="/notification" element={<NotificationPage />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
