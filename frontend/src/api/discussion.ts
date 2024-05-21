@@ -22,7 +22,7 @@ export async function getDiscussion(id:string) : Promise <Discussion>{
     let url = "http://localhost:8080/api/discussion/"+id;
     let discussion;
     try {
-        const response = await axios.get(url,{
+        const response = await axios.delete(url,{
           });
         discussion = response.data;
     }

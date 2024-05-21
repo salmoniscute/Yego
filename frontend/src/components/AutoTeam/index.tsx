@@ -5,7 +5,7 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import Select from 'react-select';
 import "./index.scss";
-import { post_auto_team } from "api/group";
+import { get_auto_team_preview, cancel, post_auto } from "api/group";
 import { Group } from "schemas/group";
 
 type propsType = Readonly<{
@@ -14,21 +14,19 @@ type propsType = Readonly<{
 }>;
 
 export default function AutoTeam(props:propsType): React.ReactElement {
-
     const {
         close,
     } = props;
+    const [showPreview, setshowPreview] = useState(false);
     const [groups, setgroups] = useState<Group[]>([]);
     const [groupingMethod, setGroupingMethod] = useState<string | null>(null);
     const [number, setnumber] = useState<number>(0);
     const [namingMethod, setNamingMethod] = useState<string | null>(null);
-    const [distributeMethod, setdistributeMethod] = useState<string| null>(null);
+    const [distributeMethod, setdistributeMethod] = useState<string| null>("random");
     const [listRender, setlistRender] = useState<JSX.Element[]>();
 
     const numberOptions = [
         { value: 1, label: "1" },
-        { value: 2, label: "2" },
-        { value: 3, label: "3" },
     ];
     const methodOptions = [
         { value: "random", label: "隨機" },
@@ -61,25 +59,72 @@ export default function AutoTeam(props:propsType): React.ReactElement {
 
     const grouping = async () => { //course_id 待改
         if(groupingMethod && number && distributeMethod && namingMethod){
-            setgroups(await post_auto_team(groupingMethod, number, distributeMethod, namingMethod, "CSE101"));
+            await get_auto_team_preview(groupingMethod, number, distributeMethod, namingMethod, "CSE101").then(data => {
+                if(data) setgroups(data);
+              });
             console.log(groups);
             if(groups) {
-                console.log(groups[0].name);
-                setlistRender(groups.map((item) => { 
-                    return <div>
-                            <h3>{item.name}</h3>
-                            <p>{item.members}</p>
+                setlistRender(groups.map((group) => { 
+                    return <div key={group.name} className="group">
+                            <h3>第{group.name}組</h3>
+                                <div className="members">
+                                    {group.members.map(member => (
+                                    <p>{member.name}</p>
+                                    ))}  
+                                </div>
                             </div>}));
+                setshowPreview(true);
             }
         }
         else alert("請勾選所有項目");
     }
     
+    const lastStep = () => {
+        cancel("CSE101");
+        setshowPreview(false);
+    }
+
+    const confirm = () => {
+        post_auto("CSE101");
+        setshowPreview(false);
+        close();
+        setGroupingMethod(null);
+        setNamingMethod(null);
+        setnumber(0);
+        setdistributeMethod("random");
+    }
+    useEffect(() => {
+        for (let i = 2; i <= 24; i++) { // generate dynamic options for number choice
+            const value = i;
+            const label = i.toString();
+            numberOptions.push({ value: value, label: label });
+        }
+    });
+    useEffect(() => {
+        if (groups.length > 0) {
+          const renderedList = groups.map((group) => (
+            <div key={group.name} className="group">
+              <h3>第{group.name}組</h3>
+              <div className="members">
+                {group.members.map(member => (
+                <p>{member.name}</p>
+                ))}  
+            </div>
+            </div>
+          ));
+          setlistRender(renderedList);
+          setshowPreview(true);
+        }
+      }, [groups]);
 
     return (
-        <div>
-            <div id="autoTeam">
-                <RxCross2 className="closeCross" onClick={close}/>
+        <div id="autoTeam">
+            <RxCross2 className="closeCross" onClick={() => {
+                close();
+                if(showPreview === true) cancel("CSE101"); 
+            }}/>
+            <div className={showPreview === false ? "setting" : "hide"} data-show={showPreview}>
+                <h3>自動分組 - 設定</h3>
                 <div className="optionGroup">
                     <p>分組方式</p>
                     <div>
@@ -96,7 +141,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                                 styles={customStyles}
                                 onChange={(selectedOption) => {
                                     if (selectedOption) {
-                                      setnumber(selectedOption.value);
+                                        setnumber(selectedOption.value);
                                     }
                                 }}
                             />
@@ -114,7 +159,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                                 styles={customStyles}
                                 onChange={(selectedOption) => {
                                     if (selectedOption) {
-                                      setnumber(selectedOption.value);
+                                        setnumber(selectedOption.value);
                                     }
                                 }}
                             />
@@ -133,7 +178,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                             styles={customStyles}
                             onChange={(selectedOption) => {
                                 if (selectedOption) {
-                                  setdistributeMethod(selectedOption.value);
+                                    setdistributeMethod(selectedOption.value);
                                 }
                             }}
                         />
@@ -163,8 +208,13 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                     <button className="cancel" onClick={close}>取消</button>
                     <button className="confirm" onClick={grouping}>預覽</button>
                 </div>
-                <div className="preview">
-                    {listRender}
+            </div>
+            <div className={showPreview === true ? "preview" : "hide"} data-show={showPreview}>
+                <h3>自動分組 - 預覽</h3>
+                <div className="groupList">{listRender}</div>
+                <div className="buttons">
+                    <button className="cancel" onClick={lastStep}>上一步</button>
+                    <button className="confirm" onClick={confirm}>確認</button>
                 </div>
             </div>
         </div>

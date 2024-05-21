@@ -5,6 +5,7 @@
     padding: 0.95rem max(5vw, calc(50vw - 570px));
 
     height: 60vh;
+    overflow: scroll;
 
     label.dropdownMenu {
         position: relative;
@@ -77,18 +78,7 @@
     }
 
     .selectedWork{
-        position: fixed;
-        pointer-events: none;
-        left: 20%; 
-        top: 18%; 
-        width: 60%; 
-        height: 64%; 
-        opacity: 0%;
-        background-color: #FFF;
-        transition: opacity 0.5s;
-        display: flex;
-        padding: 3em 4em;
-        box-sizing: border-box;
+        
         .manual{
             h3{
                 margin-top: 0em;
@@ -106,9 +96,8 @@
 
     }
 
-    .selectedWork[data-show="true"] {
-        pointer-events: initial;
-        opacity: 100%;
+    .selectedWork[data-show="false"] {
+        opacity: 0%;
     }
 
 }

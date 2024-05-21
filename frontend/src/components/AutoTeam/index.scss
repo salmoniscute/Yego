@@ -1,92 +1,153 @@
 #autoTeam{
-    display: flex;
-    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 50%; 
+    background-color: #FFF;
+    padding: 3em 4em;
+    box-sizing: border-box;
 
     .closeCross{
         position: absolute;
         font-size: 25px;
         cursor: pointer;
-        top: 0em;
-        right: 0em;
+        top: 2em;
+        right: 2em;
     }
 
-    .optionGroup{
+    .setting {
+        height: 60%; 
         display: flex;
-        flex-direction: row;
-        > p{
-            margin-top: 0.3em;
-            margin-right: 2em;
-            font-size: 17px;
-        }
-        
-        > div{
+        flex-direction: column;
+        .optionGroup{
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            .selectOption{
-                margin-bottom: 1em;
+            flex-direction: row;
+            > p{
+                margin-top: 0.3em;
+                margin-right: 2em;
+                font-size: 17px;
+            }
+            
+            > div{
                 display: flex;
-                text-align: center;
+                flex-direction: column;
                 align-items: center;
-                input{
-                   display: none;
+                .selectOption{
+                    margin-bottom: 1em;
+                    display: flex;
+                    text-align: center;
+                    align-items: center;
+                    input{
+                    display: none;
+                    }
+                    .checkboxLabel {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        border: 1px solid #C4C4C4;
+                        display: inline-block;
+                        position: relative;
+                        cursor: pointer;
+                    }
+                    
+                    input:checked + .checkboxLabel::after {
+                        content: "";
+                        width: 15px;
+                        height: 15px;
+                        background-color: #007bff;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    
+                    
+                    > p{
+                        margin: 0em 1em;
+                        font-size: 16px;
+                    }
                 }
-                .checkboxLabel {
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    border: 1px solid #C4C4C4;
-                    display: inline-block;
-                    position: relative;
-                    cursor: pointer;
-                }
-                
-                input:checked + .checkboxLabel::after {
-                    content: "";
-                    width: 15px;
-                    height: 15px;
-                    background-color: #007bff;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-                  
-                
-                > p{
-                    margin: 0em 1em;
-                    font-size: 16px;
-                }
+            }
+        }
+
+        .buttons{
+            position:absolute;
+            bottom: 2em;
+            right: 3em;
+            > button{
+                cursor: pointer;
+                border: none;
+                align-items: center;
+                width: 4em;
+                padding: 0.5em;
+                font-size: 16px;
+                font-weight: bold;
+                margin-left: 1em;
+                border-radius: 0.2em;
+            }
+            .cancel{
+                background-color: #E1E1E4;
+            }
+            .confirm{
+                background-color: #FFEA79;
             }
         }
     }
 
-    .buttons{
-        position:absolute;
-        bottom: 0em;
-        right: 0em;
-        > button{
-            cursor: pointer;
-            border: none;
-            align-items: center;
-            width: 4em;
-            padding: 0.5em;
-            font-size: 16px;
-            font-weight: bold;
-            margin-left: 1em;
-            border-radius: 0.2em;
+    .preview {
+        display: block;
+        width: 100%;
+        height: 30em;
+        .groupList {
+            height: 80%;
+            overflow-y: auto;
+            .group {
+                padding: 20px;
+                border: 1px solid black;
+                margin-bottom: 20px;
+    
+                h3 {
+                    font-weight: normal;
+                    margin-bottom: 0;
+                }
+    
+                .members {
+                    display: flex;
+                    flex-wrap: wrap;
+                    p {
+                        margin-right: 10px;
+                    }
+                }
+            }
         }
-        .cancel{
-            background-color: #E1E1E4;
-        }
-        .confirm{
-            background-color: #FFEA79;
+        .buttons{
+            position:absolute;
+            bottom: 1em;
+            right: 3em;
+            > button{
+                cursor: pointer;
+                border: none;
+                align-items: center;
+                width: 4em;
+                padding: 0.5em;
+                font-size: 16px;
+                font-weight: bold;
+                margin-left: 1em;
+                border-radius: 0.2em;
+            }
+            .cancel{
+                background-color: #E1E1E4;
+            }
+            .confirm{
+                background-color: #FFEA79;
+            }
         }
     }
-
-    .preview {
-        background-color: red;
-        height: 20px;
+    
+    .hide {
+        display: none;
     }
 }

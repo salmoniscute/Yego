@@ -57,15 +57,12 @@ export default function TeamPage(): ReactElement {
 
         <div className="selectedWork" data-show={showWork} >
             { selectMethod === "手動建立新群組" && <div className="manual">
-              <h3>{selectMethod} - 設定</h3>
               <ManaulTeam close={closeWindow}/>
             </div>}
             { selectMethod === "自動分組" && <div className="auto">
-              <h3>{selectMethod} - 設定</h3>
               <AutoTeam close={closeWindow}/>
             </div>}
             { selectMethod === "學生自行分組" && <div className="byStudent" >
-              <h3>{selectMethod} - 設定</h3>
               <SelfTeam close={closeWindow}/>
             </div>}
             <div className="close ms" onClick={() => {}}>close</div>

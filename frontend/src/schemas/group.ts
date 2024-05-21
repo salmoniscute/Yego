@@ -3,5 +3,5 @@ export interface Group {
   id: number,
   name: string,
   number_of_members: number,
-  members: Array<string>
+  members: Array<any>
 }
