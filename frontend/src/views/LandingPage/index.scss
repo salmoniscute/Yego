@@ -1,94 +1,93 @@
 #landPage {
-    .news{
-        display: flex;
-        background-color: #B4B4B4;
-        height:48px;
-        align-items: center;  
-        justify-content: left;  
-    }
-    .newsContent{
-        font-size: 15px;
-        color: #474141;
-        vertical-align:middle;
-        margin-left: 10%;
-        font-weight: 678;
-    }
-
-    .description{
+    display: flex;
+    justify-content: center;
+    .Content{
         display: flex;
         flex-direction: column;
-        background-color: #D9D9D9;
-        height:334px;  
-        justify-content: left;  
-    }
-    .description p {
-        color:#000000;
-        margin-left: 10%;
-        margin-top: 10%;
-        font-weight: 691;
-    }
-    .twoSide{
-        display: flex;
-        .leftSide{
-            flex-grow: 2;
-            .WebAnnoList{
+        justify-content: center;
+        width: 80%;
+        .description{
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            margin-top: 5%;
+            p {
+                color:#000000;
                 margin-left: 6%;
-                width: 87%;
-                .content{
-                    display: flex;
-                    gap: 0.5rem;
-                    .block {
-                        background-color: #f0f0f0;
-                        padding: 1rem;
-                        height: 1.8rem;
-                        line-height: 1.8rem;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
+                margin-top: 2%;
+                font-weight: bold;
+            }
+        }
+        .identity{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height:150px;  
+            padding-top: 5.5%;
+            gap: 2rem;
+            margin-left: 2%;
+            .IDoption{
+                width: 28%;
+                padding-top: 3%;
+                background-color: #FFF;
+                border: 0.07rem solid #000;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                .Iam{
+                    margin-left: 8%;
+                    margin-bottom: 5%;
+                    font-weight: bolder;
+                    font-size: large;
+                }
+                .operate{
+                    margin-left: 8%;
+                }
+            }
+        }
+        .WebAnnoList{
+            margin-left: 6%;
+            font-weight: bold;
+            .content{
+                display: flex;
+                gap: 0.5rem;
+                background-color: #FFF;
+                border: 0.07rem solid #000;
+                padding: 1.8rem 1rem;
+                .block {
+                    padding: 0.5rem;
+                    height: 1.8rem;
+                    line-height: 1.8rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    a {
+                        color: #000;
+                        text-decoration: none;
+                        font-size: medium;
                         overflow: hidden;
-                        a {
-                            color: #000;
-                            text-decoration: none;
-                        }
-                        a:hover {
-                            text-decoration: underline;
-                        }
+                        text-overflow: ellipsis;
+                    }
+                    a:hover {
+                        text-decoration: underline;
                     }
                 }
             }
-        
-            .identity{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                width: 92.5%;
-                height:180px;  
-                padding-left: 32px;
-                padding-top: 5.5%;
-            }
-            .IDoption{
-                flex:none;
-                width: 28%;
-                background-color: #F0F0F0;
-                margin: 2%;
-                padding-top: 3%;
-            }
-            .Iam{
-                margin-left: 8%;
-                margin-bottom: 5%;
-                font-weight: bolder;
-            }
-            .operate{
-                margin-left: 8%;
-            }
         }
-        .rightSide{
-            flex-grow: 1;
-            margin-right: 5%;
-            padding-top: 1.5%;
-            .block{
-                padding: 1.25rem 1rem;
+        .platformFriendlyArea{
+            margin-left: 3%;
+            .content{
+                flex-direction: row;
+                .block{
+                    margin-bottom: 3rem;
+                    .body-bold{
+                        font-size: large;
+                        font-weight: bold;
+                        line-height: 40px
+                    }
+                    .body{
+                        font-size: medium;
+                    }
+                }
             }
-            
         }
     }
     

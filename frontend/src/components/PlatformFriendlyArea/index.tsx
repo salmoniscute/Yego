@@ -18,7 +18,7 @@ const HelpList: Array<HelpInfo> = [
     {
         id: "0",
         title: "母課程申請",
-        description: "操作教學說明"
+        description: "提供教師在多門課程使用共同教材的需求。"
     },
     {
         id: "1",
