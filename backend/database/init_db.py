@@ -11,7 +11,7 @@ from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, SubmittedAssignment as SubmittedAssignmentModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
-from models.report import Report as ReportModel
+from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from models.group import Group as GroupModel
 
 model = {
@@ -28,13 +28,14 @@ model = {
     "course_materials": CourseMaterialModel,
     "discussions": DiscussionModel,
     "discussion_topics": DiscussionTopicModel,
-    "reports": ReportModel
+    "reports": ReportModel,
+    "report_replies": ReportReplyModel,
 }
 
 
 class FakeDB:
     def __init__(self):
-        with open("./database/fake_db.json", encoding="utf8") as file:
+        with open("./fakeDB/fake_db.json", encoding="utf8") as file:
             self.data = json.load(file)
 
     async def create_entity_list(self, db_session):
