@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from sqlalchemy.schema import CreateTable, DropTable
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -53,7 +54,11 @@ async def init_db():
             await db.execute(CreateTable(SubmittedAssignment.__table__, if_not_exists=True))
             
             await FakeDB().create_entity_list(db)
+
+            if not os.path.isdir("tmp"):
+                os.mkdir("tmp")
             
+
 async def close_db():
     async with SessionLocal() as db:
         async with db.begin():
