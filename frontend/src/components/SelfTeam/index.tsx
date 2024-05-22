@@ -4,11 +4,13 @@ import {
 } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from 'react-select';
+import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/src/stylesheets/datepicker.scss";
 import "./index.scss";
 
 import { post_team_by_student } from "api/group";
+import { getCourseMemberList } from "api/courseMember";
 
 type propsType = Readonly<{
   close : () => void
@@ -23,11 +25,10 @@ export default function AutoTeam(props:propsType): React.ReactElement {
   const [groupingMethod, setGroupingMethod] = useState<string | null>(null);
   const [number, setnumber] = useState<number>(0);
   const [namingMethod, setNamingMethod] = useState<string | null>(null);
+  const [studentNum, setstudentNum] = useState<number>(0);
 
   const numberOptions = [
       { value: 1, label: "1" },
-      { value: 2, label: "2" },
-      { value: 3, label: "3" },
   ];
 
   let minuteOptions = [
@@ -38,6 +39,8 @@ export default function AutoTeam(props:propsType): React.ReactElement {
   ];
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [hour, sethour] = useState<string>("");
+  const [minute, setminute] = useState<string>("");
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -70,11 +73,25 @@ export default function AutoTeam(props:propsType): React.ReactElement {
   };
   
   const grouping = () => {
-    if(groupingMethod && number && namingMethod && selectedDate) post_team_by_student(groupingMethod, number, namingMethod, selectedDate.toString(), "CSE101");
+    if(groupingMethod && number && namingMethod && selectedDate && hour && minute) post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", "CSE101");
     else alert("請勾選所有項目");
 }
 
+const get_members_number = async () => {
+    await getCourseMemberList("CSE101").then(data => {
+        if(data) setstudentNum(data.length);
+    });
+}
+
   useEffect(() => {
+    get_members_number();
+    if(studentNum > 0){
+        for (let i = 2; i <= studentNum; i++) { // generate dynamic options for number choice
+            const value = i;
+            const label = i.toString();
+            numberOptions.push({ value: value, label: label });
+        }
+    }
     for (let i = 1; i < 60; i++) {
       const value = i;
       const label = i.toString().padStart(2, '0');
@@ -98,8 +115,8 @@ export default function AutoTeam(props:propsType): React.ReactElement {
             <p>分組方式</p>
             <div>
                 <div className="selectOption">
-                    <input type="checkbox" checked={groupingMethod === "組別"}
-                            onChange={() => setGroupingMethod("組別")} id="checkboxGroup"/>
+                    <input type="checkbox" checked={groupingMethod === "numbers_of_groups"}
+                            onChange={() => setGroupingMethod("numbers_of_groups")} id="checkboxGroup"/>
                     <label htmlFor="checkboxGroup" className="checkboxLabel"></label>
                     <p>依組別數 , 分成</p>
                     <Select
@@ -116,8 +133,8 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                     />
                 </div>
                 <div className="selectOption"> 
-                    <input type="checkbox" checked={groupingMethod === "成員"}
-                            onChange={() => setGroupingMethod("成員")} id="checkboxMember"/>
+                    <input type="checkbox" checked={groupingMethod === "numbers_of_members"}
+                            onChange={() => setGroupingMethod("numbers_of_members")} id="checkboxMember"/>
                     <label htmlFor="checkboxMember" className="checkboxLabel"></label>
                     <p>依成員數 , 分成</p>
                     <Select
@@ -140,14 +157,14 @@ export default function AutoTeam(props:propsType): React.ReactElement {
             <p>命名規則</p>
             <div>
                 <div className="selectOption" >
-                    <input type="checkbox" checked={namingMethod === "字母"}
-                            onChange={() => setNamingMethod("字母")} id="checkboxLetter"/>
+                    <input type="checkbox" checked={namingMethod === "alphabet"}
+                            onChange={() => setNamingMethod("alphabet")} id="checkboxLetter"/>
                     <label htmlFor="checkboxLetter" className="checkboxLabel"></label>
                     <p>字母編號</p>
                 </div>
                 <div className="selectOption"> 
-                    <input type="checkbox" checked={namingMethod === "數字"}
-                            onChange={() => setNamingMethod("數字")} id="checkboxNumber"/>
+                    <input type="checkbox" checked={namingMethod === "number"}
+                            onChange={() => setNamingMethod("number")} id="checkboxNumber"/>
                     <label htmlFor="checkboxNumber" className="checkboxLabel"></label>
                     <p>數字編號</p>
                     
@@ -170,6 +187,11 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                     placeholder = "時"
                     options={hourOptions}
                     styles={customStyles}
+                    onChange={(selectedOption) => {
+                        if (selectedOption) {
+                            sethour(selectedOption.label);
+                        }
+                    }}
                 />
             </div>
             <div className="selectOption">
@@ -179,6 +201,11 @@ export default function AutoTeam(props:propsType): React.ReactElement {
                     placeholder = "分"
                     options={minuteOptions}
                     styles={customStyles}
+                    onChange={(selectedOption) => {
+                        if (selectedOption) {
+                            setminute(selectedOption.label);
+                        }
+                    }}
                 />
             </div>
         </div>

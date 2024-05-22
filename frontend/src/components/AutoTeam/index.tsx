@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import Select from 'react-select';
 import "./index.scss";
 import { get_auto_team_preview, cancel, post_auto } from "api/group";
+import { getCourseMemberList } from "api/courseMember";
 import { Group } from "schemas/group";
 
 type propsType = Readonly<{
@@ -24,6 +25,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     const [namingMethod, setNamingMethod] = useState<string | null>(null);
     const [distributeMethod, setdistributeMethod] = useState<string| null>("random");
     const [listRender, setlistRender] = useState<JSX.Element[]>();
+    const [studentNum, setstudentNum] = useState<number>(0);
 
     const numberOptions = [
         { value: 1, label: "1" },
@@ -93,11 +95,20 @@ export default function AutoTeam(props:propsType): React.ReactElement {
         setnumber(0);
         setdistributeMethod("random");
     }
+
+    const get_members_number = async () => {
+        await getCourseMemberList("CSE101").then(data => {
+            if(data) setstudentNum(data.length);
+        });
+    }
     useEffect(() => {
-        for (let i = 2; i <= 24; i++) { // generate dynamic options for number choice
-            const value = i;
-            const label = i.toString();
-            numberOptions.push({ value: value, label: label });
+        get_members_number();
+        if(studentNum > 0){
+            for (let i = 2; i <= studentNum; i++) { // generate dynamic options for number choice
+                const value = i;
+                const label = i.toString();
+                numberOptions.push({ value: value, label: label });
+            }
         }
     });
     useEffect(() => {

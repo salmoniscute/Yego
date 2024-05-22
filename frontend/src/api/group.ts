@@ -40,6 +40,7 @@ export async function post_auto(course_id: string) {
 export async function post_team_by_student(grouping_method: string, number_depend_on_grouping_method: number, naming_rule: string, create_deadline: string,  course_id: string) {
   let url = `http://localhost:8080/api/grouping/student?`;
   try {
+      console.log(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
       const response = await axios.post(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
       console.log("post empty groups success");
   }
