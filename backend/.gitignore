@@ -163,3 +163,6 @@ config.json
 
 # upload file
 upload/
+
+# tmp file
+tmp/

@@ -32,7 +32,7 @@ router = APIRouter(
     response_model=list[GroupSchema.GroupAutoCreateResponse],
     status_code=status.HTTP_200_OK
 )
-async def auto_grouping(
+async def auto_grouping_preview(
     grouping_method: GroupSchema.GroupingMethod,
     number_depend_on_grouping_method: int,
     distributing_method: GroupSchema.DistributingMethod,
