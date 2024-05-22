@@ -4,9 +4,6 @@
     max-width: calc(1200px);
     padding: 0.95rem max(5vw, calc(50vw - 570px));
 
-    height: 60vh;
-    overflow: scroll;
-
     label.dropdownMenu {
         position: relative;
         display: inline-block;
@@ -100,4 +97,46 @@
         opacity: 0%;
     }
 
+    .header {
+        display: flex;
+        padding: 0.1em 0.5em;
+        font-size: 20px;
+        font-weight: bold;
+        color: #474141;
+
+        .nameTitle {
+            width: 20%;
+        }
+
+        p {
+            margin-top: 0;
+        }
+    }
+
+    .groups {
+        .group {
+            display: flex;
+            background-color: #fff;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            padding: 0.1em 0.5em;
+            margin-bottom: 1em;
+            
+            .name {
+                width: 20%;
+            }
+
+            .members {
+                display: flex;
+                width: 70%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                p {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
 }

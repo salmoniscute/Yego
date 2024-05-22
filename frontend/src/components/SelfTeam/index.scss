@@ -5,16 +5,24 @@
     transform: translate(-50%, -50%);
     z-index: 9999;
     width: 50%; 
+    height: 70%;
     background-color: #FFF;
     padding: 3em 4em;
     box-sizing: border-box;
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    .closeCross{
-        position: absolute;
-        font-size: 25px;
-        cursor: pointer;
-        top: 1em;
-        right: 2em;
+        h3 {
+            margin: 0;
+        }
+    
+        .closeCross{
+            font-size: 25px;
+            cursor: pointer;
+        }
     }
     p{
         margin-top: 0.3em;
@@ -24,7 +32,6 @@
     .optionGroup{
         display: flex;
         align-items: center;
-        flex-direction: row;
         > p{
             margin-top: 0.3em;
             margin-right: 2em;
@@ -71,12 +78,13 @@
                 }
             }
         }
+
+        .datePicker {
+            border: 1px solid #ccc;
+        }
     }
 
     .buttons{
-        position:absolute;
-        bottom: 3em;
-        right: 4em;
         > button{
             cursor: pointer;
             border: none;
@@ -87,6 +95,7 @@
             font-weight: bold;
             margin-left: 1em;
             border-radius: 0.2em;
+            float: right;
         }
         .cancel{
             background-color: #E1E1E4;

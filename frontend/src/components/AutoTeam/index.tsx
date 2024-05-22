@@ -122,6 +122,11 @@ export default function AutoTeam(props:propsType): React.ReactElement {
             <RxCross2 className="closeCross" onClick={() => {
                 close();
                 if(showPreview === true) cancel("CSE101"); 
+                setshowPreview(false);
+                setGroupingMethod(null);
+                setNamingMethod(null);
+                setnumber(0);
+                setdistributeMethod("random");
             }}/>
             <div className={showPreview === false ? "setting" : "hide"} data-show={showPreview}>
                 <h3>自動分組 - 設定</h3>
