@@ -1,4 +1,3 @@
-import string
 from datetime import datetime
 
 
@@ -16,7 +15,7 @@ class WebsiteBulletin:
         }
         
         
-    def generate(self,components , component_id_counter):
+    def generate(self, components, component_id_counter):
         results = []
         
         count = 5
