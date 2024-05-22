@@ -52,7 +52,7 @@ class User:
                     user["password"] = self.random_password()
                     user["name"] = role + str(uid_counter)
                     user["role"] = role
-                    user["email"] = f"{user["uid"]}@gs.ncku.edu.tw"
+                    user["email"] = f"{user['uid']}@gs.ncku.edu.tw"
                     user["department"] = dept
                     user["country"] = "Taiwan"
                     user["introduction"] = self.random_introduction()
