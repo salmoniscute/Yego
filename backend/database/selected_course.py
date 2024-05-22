@@ -51,5 +51,6 @@ class SelectedCourse:
             selected_course["uid"] = random.choice([assistant for assistant in self.assistant_list if assistant["department"] == department])["uid"]
             selected_course["course_id"] = course["id"]
             selected_course["group_id"] = None
+            results.append(selected_course)
 
         return results

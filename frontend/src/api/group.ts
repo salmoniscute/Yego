@@ -51,7 +51,7 @@ export async function post_team_by_student(grouping_method: string, number_depen
 
 export async function get_all_groups_info(course_id: string): Promise<Group[]> {
   let groups = [];
-  let url = `http://localhost:8080/api/group/info/${course_id}`;
+  let url = `http://localhost:8080/api/group/${course_id}`;
   try {
       const response = await axios.get(url);
       groups = response.data;
@@ -59,6 +59,7 @@ export async function get_all_groups_info(course_id: string): Promise<Group[]> {
   }
   catch {  
       console.log("hi");
+      groups = [];
   }
   return groups;
 }
