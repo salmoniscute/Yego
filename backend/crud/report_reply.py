@@ -34,8 +34,11 @@ class ReportReplyCrudManager:
         obj = {}
         if reply:
             await db_session.refresh(reply[0], ["info"])
+            await db_session.refresh(reply[0].info, ["publisher_info"])
             obj = {
                 "id": reply[0].id,
+                "uid": reply[0].info.publisher_info.uid,
+                "publisher": reply[0].info.publisher_info.name,
                 "parent_id": reply[0].parent_id,
                 "publisher": reply[0].info.publisher_info.name,
                 "publisher_avatar": reply[0].info.publisher_info.avatar,

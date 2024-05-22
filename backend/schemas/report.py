@@ -33,6 +33,8 @@ class ReportReplyCreate(BaseModel):
 
     
 class ReportReplyReadByID(ComponentReadID):
+    uid: str
+    publisher: str
     parent_id: int
     publisher: str
     publisher_avatar: Optional[str] = None
