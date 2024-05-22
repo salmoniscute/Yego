@@ -10,7 +10,7 @@ from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, SubmittedAssignment as SubmittedAssignmentModel
-from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
+from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel, DiscussionTopicReply as DiscussionTopicReplyModel
 from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from models.group import Group as GroupModel
 
@@ -28,6 +28,7 @@ model = {
     "course_materials": CourseMaterialModel,
     "discussions": DiscussionModel,
     "discussion_topics": DiscussionTopicModel,
+    "discussion_topic_replies": DiscussionTopicReplyModel,
     "reports": ReportModel,
     "report_replies": ReportReplyModel,
 }
