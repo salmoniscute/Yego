@@ -73,13 +73,13 @@ export default function AutoTeam(props:propsType): React.ReactElement {
   };
   
   const grouping = () => {
-    if(groupingMethod && number && namingMethod && selectedDate && hour && minute) post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", "CSE101");
+    if(groupingMethod && number && namingMethod && selectedDate && hour && minute) post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", "B2474");
     else alert("請勾選所有項目");
 }
 
 const get_members_number = async () => {
-    await getCourseMemberList("CSE101").then(data => {
-        if(data) setstudentNum(data.length);
+    await getCourseMemberList("B2474").then(data => {
+        if(data) setstudentNum(data.filter(user => user.role === "student").length);
     });
 }
 
