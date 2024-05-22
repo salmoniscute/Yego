@@ -219,6 +219,7 @@ class DiscussionTopicReplyCrudManager:
         obj = {}
         if reply:
             await db_session.refresh(reply[0], ["info"])
+            await db_session.refresh(reply[0].info, ["publisher_info"])
             obj = {
                 "id": reply[0].id,
                 "uid": reply[0].info.uid,
@@ -227,6 +228,7 @@ class DiscussionTopicReplyCrudManager:
                 "title": reply[0].info.title,
                 "release_time": reply[0].info.release_time,
                 "content": reply[0].info.content,
+                "publisher": reply[0].info.publisher_info.name,
             }
         return obj
 

@@ -39,6 +39,8 @@ class DiscussionTopicReplyCreate(BaseModel):
     }
 
 class DiscussionTopicReplyRead(ComponentReadID):
+    uid: str
+    publisher: str
     parent_id: int
     publisher_avatar: Optional[str] = None
     release_time: datetime
