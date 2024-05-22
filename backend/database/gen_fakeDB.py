@@ -3,6 +3,7 @@ import json
 from database.user import User
 from database.course import Course
 from database.website_bulletin import WebsiteBulletin
+from database.course_bulletin import CourseBulletin
 from database.report import Report
 from database.report_reply import ReportReply
 from database.selected_course import SelectedCourse
@@ -42,6 +43,10 @@ class GenFakeDB:
     
     def generate_website_bulletin(self):
         return WebsiteBulletin().generate(self.output["components"], self.component_id_counter)
+    
+    def generate_course_bulletin(self):
+        return CourseBulletin(self.output).generate(self.output["components"], self.component_id_counter)
+    
     def generate_selected_course(self):
         return SelectedCourse(self.output).generate()
 
@@ -51,6 +56,7 @@ class GenFakeDB:
         self.output["reports"], self.component_id_counter = self.generate_report()
         self.output["report_replies"], self.component_id_counter = self.generate_report_reply()
         self.output["website_bulletins"], self.component_id_counter = self.generate_website_bulletin()
+        self.output["course_bulletins"], self.component_id_counter = self.generate_course_bulletin()
         self.output["selected_courses"] = self.generate_selected_course()
 
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:

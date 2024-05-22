@@ -12,7 +12,7 @@ class BaseType:
     uid = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
     component_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     file_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
-    course_id = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
+    course_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     selected_course_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     group_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     notification_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]

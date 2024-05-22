@@ -39,7 +39,7 @@ async def check_user_id(uid: str):
     return uid
 
 
-async def check_course_id(course_id: str):
+async def check_course_id(course_id: int):
     course = await CourseCrud.get(course_id)
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course does not exist")
