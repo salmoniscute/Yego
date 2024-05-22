@@ -52,7 +52,7 @@ class User:
                     user["password"] = self.random_password()
                     user["name"] = role + str(uid_counter)
                     user["role"] = role
-                    user["email"] = f"{user["uid"]}@gs.ncku.edu.tw"
+                    user["email"] = f'{user["uid"]}@gs.ncku.edu.tw'
                     user["department"] = dept
                     user["country"] = "Taiwan"
                     user["introduction"] = self.random_introduction()
@@ -69,6 +69,7 @@ class User:
         user["role"] = "admin"
         user["email"] = "yego_admin@gs.ncku.edu.tw"
         user["department"] = "admin"
+        user["country"] = "Taiwan"
         user["introduction"] = None
         user["avatar"] = "backend/upload/user/default/default.png"
         results.append(user)
