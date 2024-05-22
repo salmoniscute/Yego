@@ -20,7 +20,7 @@ class Course:
             "Biology"
         ]
         self.teacher_list = [user["uid"] for user in fakeDB["users"] if user["role"] == "teacher"]
-
+        self.student_list = [user["uid"] for user in fakeDB["users"] if user["role"] == "student"]
 
     def random_course_id(self, department):
         return department[0] + "".join(random.choices(string.digits, k=4))
