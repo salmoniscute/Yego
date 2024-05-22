@@ -158,6 +158,7 @@ export default function PostEditor(props: propsType): ReactElement {
           follow:false,
           publisher : publisher || "",
           content:content,
+          publisher_avatar : ""
         };
         await postDiscussionTopic(discussionTopic);
         updatePost();

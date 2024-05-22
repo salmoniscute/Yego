@@ -136,6 +136,8 @@
         }
         > p{
             margin: 0em 0em;
+            word-wrap: break-word; 
+            word-break: break-word;
         }
 
         .replyButton{
@@ -145,6 +147,30 @@
             padding-left: 1em;
             > p{
                 margin-right: 0.5em;
+            }
+        }
+
+        .replyTheReply{
+            margin: 0em 3em;
+            .replyTheReplyTop{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                img{
+                    width: 2.5em;
+                    height: 2.5em;
+                    margin-right: 1em;
+                }
+                h3{
+                    margin-right:0.5em;
+                    font-size: large;
+                }
+            }
+            > p{
+                margin: 0em 0em;
+                margin-bottom: 1em;
+                word-wrap: break-word; 
+                word-break: break-word;
             }
         }
 
