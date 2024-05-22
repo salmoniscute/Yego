@@ -1,9 +1,9 @@
 import json
 
-from user import User
-from course import Course
+from database.user import User
+from database.course import Course
+from database.selected_course import SelectedCourse
 
-fakeDB = "fake_db.json"
 tables = [
     "users",
     "courses",
@@ -19,7 +19,7 @@ tables = [
     "notifications"
 ]
 
-class FakeDB:
+class GenFakeDB:
     def __init__(self):
         self.output = {table: [] for table in tables}
     
@@ -28,14 +28,14 @@ class FakeDB:
 
     def generate_course(self):
         return Course(self.output).generate()
+    
+    def generate_selected_course(self):
+        return SelectedCourse(self.output).generate()
 
     def generate(self):
         self.output["users"] = self.generate_user()
         self.output["courses"] = self.generate_course()
+        self.output["selected_courses"] = self.generate_selected_course()
 
-        with open(fakeDB, mode="w", encoding="utf-8") as file:
+        with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:
             json.dump(self.output, file, indent=4)
-
-
-if __name__ == '__main__':
-    FakeDB().generate()

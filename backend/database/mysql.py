@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from sqlalchemy.schema import CreateTable, DropTable
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
+from database.gen_fakeDB import GenFakeDB
 from database.init_db import FakeDB
 from models.bulletin import Bulletin
 from models.component import Component
@@ -34,6 +35,7 @@ async def get_db():
 
 async def init_db():
     async with SessionLocal() as db:
+        GenFakeDB().generate()
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Component.__table__, if_not_exists=True))

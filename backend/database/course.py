@@ -19,7 +19,7 @@ class Course:
             "Chemistry",
             "Biology"
         ]
-        self.teacher_list = [user["uid"] for user in fakeDB["users"] if user["role"] == "teacher"]
+        self.teacher_list = [user for user in fakeDB["users"] if user["role"] == "teacher"]
 
 
     def random_course_id(self, department):
@@ -29,11 +29,11 @@ class Course:
         results = []
 
         for teacher in self.teacher_list:
-            department = teacher[0]
+            department = teacher["department"][0]
 
             course = self.default.copy()
             course["id"] = self.random_course_id(department)
-            course["uid"] = teacher
+            course["uid"] = teacher["uid"]
             course["course_code"] = course["id"]
             course["name"] = f"Introduction to {department}"
             course["academic_year"] = random.choice([2021, 2022, 2023])
