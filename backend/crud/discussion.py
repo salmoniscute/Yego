@@ -134,6 +134,7 @@ class DiscussionTopicCrudManager:
                 await db_session.refresh(reply[0], ["info"])
                 obj["replies"].append({
                     "id": reply[0].id,
+                    "uid": reply[0].info.uid,
                     "parent_id": reply[0].parent_id,
                     "publisher": reply[0].info.publisher_info.name,
                     "publisher_avatar": reply[0].info.publisher_info.avatar,
