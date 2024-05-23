@@ -3,8 +3,10 @@ from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.mysql import crud_class_decorator
+from models.base import NotificationType
 from models.notification import Notification as NotificationModel
 from schemas import notification as NotificationSchema
+
 
 icon_type = {
     "course_bulletin": "announcement",
@@ -33,9 +35,9 @@ type_actions = {
 
 @crud_class_decorator
 class NotificationCrudManager:
-    async def create(self, uid: str, component_id: int, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
+    async def create(self, uid: str, component_id: int, type: NotificationType, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
         newNotification_dict = newNotification.model_dump()
-        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), **newNotification_dict)
+        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, **newNotification_dict)
         db_session.add(notification)
         await db_session.commit()
 
