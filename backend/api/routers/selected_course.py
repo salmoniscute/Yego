@@ -39,21 +39,6 @@ async def create_selected_course(
     return 
 
 
-@router.delete(
-    "/selected_course/particular/{uid}/{course_id}",
-    status_code=status.HTTP_204_NO_CONTENT
-)
-async def delete_selected_course(
-    uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
-):
-    """
-    Delete the selected course.
-    """
-    await SelectedCourseCrud.delete(uid, course_id)
-    return 
-
-
 @router.get(
     "/selected_course/user/{uid}", 
     response_model=list[SelectedCourseSchema.SelectedCourseByUidRead],
@@ -84,3 +69,18 @@ async def get_selected_courses_by_course_id(course_id: str):
         return selected_courses
     
     raise not_found
+
+
+@router.delete(
+    "/selected_course/particular/{uid}/{course_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def delete_selected_course(
+    uid: str = Depends(check_user_id),
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Delete the selected course.
+    """
+    await SelectedCourseCrud.delete(uid, course_id)
+    return 

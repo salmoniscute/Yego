@@ -41,22 +41,6 @@ async def create_discussion_topic(
 
 
 @router.get(
-    "/discussion_topics",
-    response_model=list[DiscussionSchema.DiscussionTopicReadlist],
-    deprecated=True
-)
-async def get_all_discussion_topics():
-    """ 
-    Get all discussion topics.
-    """
-    topics = await TopicCrud.get_all()
-    if topics:
-        return topics
-    
-    raise not_found
-
-
-@router.get(
     "/discussion_topic/{topic_id}", 
     response_model=DiscussionSchema.DiscussionTopicRead
 )
@@ -69,6 +53,23 @@ async def get_discussion_topic(
     topic = await TopicCrud.get(topic_id)
     if topic:
         return topic
+    
+    raise not_found
+
+
+@router.get(
+    "/discussion_topics/{discussion_id}",
+    response_model=list[DiscussionSchema.DiscussionOfTopics]
+)
+async def get_discussion_topics_by_discussion_id(
+    discussion_id: int = Depends(check_discussion_id)
+):
+    """
+    Get all discussion topics by discussion id.
+    """
+    topics = await TopicCrud.get_topics_by_discussion_id(discussion_id)
+    if topics:
+        return topics
     
     raise not_found
     
@@ -104,19 +105,3 @@ async def delete_discussion_topic(
     await TopicCrud.delete(topic_id)
     
     return 
-
-@router.get(
-    "/discussion_topics/{discussion_id}",
-    response_model=list[DiscussionSchema.DiscussionOfTopics]
-)
-async def get_discussion_topics_by_discussion_id(
-    discussion_id: int = Depends(check_discussion_id)
-):
-    """
-    Get all discussion topics by discussion id.
-    """
-    topics = await TopicCrud.get_topics_by_discussion_id(discussion_id)
-    if topics:
-        return topics
-    
-    raise not_found
