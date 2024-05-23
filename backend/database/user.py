@@ -27,6 +27,7 @@ class User:
             "teacher", 
             "assistant"
         ]
+        self.results = []
 
     def random_uid(self, department):
         return department[0] + "".join(random.choices(string.digits, k=8))
@@ -39,39 +40,38 @@ class User:
         return f"This is a random introduction: {str(random.randint(1, 1000))}"
 
     def generate(self):
-        results = []
-
         # Generate 15 students and 4 teachers/assistants for each department
         uid_counter = 0
         for dept in self.departments:
             for role in self.roles:
                 count = 15 if role == "student" else 4
                 for _ in range(count):
-                    user = self.default.copy()
-                    user["uid"] = self.random_uid(dept)
-                    user["password"] = self.random_password()
-                    user["name"] = role + str(uid_counter)
-                    user["role"] = role
-                    user["email"] = f"{user['uid']}@gs.ncku.edu.tw"
-                    user["department"] = dept
-                    user["country"] = "Taiwan"
-                    user["introduction"] = self.random_introduction()
-                    user["avatar"] = "backend/upload/user/default/default.jpg"
-                    
-                    results.append(user)
+                    self.results.append({
+                        **self.default,
+                        "uid": self.random_uid(dept),
+                        "password": self.random_password(),
+                        "name": role + str(uid_counter),
+                        "role": role,
+                        "email": f"{self.random_uid(dept)}@gs.ncku.edu.tw",
+                        "department": dept,
+                        "country": "Taiwan",
+                        "introduction": self.random_introduction(),
+                        "avatar": "backend/upload/user/default/default.jpg"
+                    })
                     uid_counter += 1
         
         # Generate 1 admin
-        user = self.default.copy()
-        user["uid"] = "admin"
-        user["password"] = "password"
-        user["name"] = "admin"
-        user["role"] = "admin"
-        user["email"] = "yego_admin@gs.ncku.edu.tw"
-        user["department"] = "admin"
-        user["country"] = "Taiwan"
-        user["introduction"] = None
-        user["avatar"] = "backend/upload/user/default/default.png"
-        results.append(user)
-
-        return results
+        self.results.append({
+            **self.default,
+            "uid": "admin",
+            "password": "password",
+            "name": "admin",
+            "role": "admin",
+            "email": "yego_admin@gs.ncku.edu.tw",
+            "department": "admin",
+            "country": "Taiwan",
+            "introduction": None,
+            "avatar": "backend/upload/user/default/default.png"
+        })
+        
+        return self.results
