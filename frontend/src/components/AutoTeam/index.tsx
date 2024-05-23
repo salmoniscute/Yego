@@ -61,7 +61,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
 
     const grouping = async () => { //course_id 待改
         if(groupingMethod && number && distributeMethod && namingMethod){
-            await get_auto_team_preview(groupingMethod, number, distributeMethod, namingMethod, "B2474").then(data => {
+            await get_auto_team_preview(groupingMethod, number, distributeMethod, namingMethod, 1).then(data => {
                 if(data) setgroups(data);
               });
             console.log(groups);
@@ -82,12 +82,12 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     }
     
     const lastStep = () => {
-        cancel("B2474");
+        cancel(1);
         setshowPreview(false);
     }
 
     const confirm = () => {
-        post_auto("B2474");
+        post_auto(1);
         setshowPreview(false);
         close();
         setGroupingMethod(null);
@@ -97,7 +97,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     }
 
     const get_members_number = async () => {
-        await getCourseMemberList("B2474").then(data => {
+        await getCourseMemberList(1).then(data => {
             if(data) setstudentNum(data.filter(user => user.role === "student").length);
             console.log(data);
         });
@@ -133,7 +133,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
         <div id="autoTeam">
             <RxCross2 className="closeCross" onClick={() => {
                 close();
-                if(showPreview === true) cancel("B2474"); 
+                if(showPreview === true) cancel(1); 
                 setshowPreview(false);
                 setGroupingMethod(null);
                 setNamingMethod(null);

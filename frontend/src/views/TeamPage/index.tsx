@@ -40,7 +40,7 @@ export default function TeamPage(): ReactElement {
   ];
 
   const showGroups = async () => {
-    await get_all_groups_info("B2474").then(data => {
+    await get_all_groups_info(1).then(data => {
       if(data) setgroups(data);
     });
     console.log(groups);

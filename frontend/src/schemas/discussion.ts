@@ -1,7 +1,7 @@
 export interface Discussion {
     id?: string,
     uid:string,
-    course_id: string,
+    course_id: number,
     title:string,
     content: string,
     follow:boolean,
@@ -11,7 +11,7 @@ export interface Discussion {
 export interface DiscussionTopic {
     id?: string,
     uid : string,
-    discussion_id: string,
+    discussion_id: number,
     release_time?: number,
     title:string,
     reply_number:number,

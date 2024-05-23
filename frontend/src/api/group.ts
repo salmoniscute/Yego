@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Group } from 'schemas/group';
 
-export async function get_auto_team_preview(grouping_method: string, number_depend_on_grouping_method: number, distributing_method: string, naming_rule: string, course_id: string): Promise<Group[]> {
+export async function get_auto_team_preview(grouping_method: string, number_depend_on_grouping_method: number, distributing_method: string, naming_rule: string, course_id: number): Promise<Group[]> {
   let groups = [];
   let url = `http://localhost:8080/api/grouping/auto/preview?`;
   try {
@@ -15,7 +15,7 @@ export async function get_auto_team_preview(grouping_method: string, number_depe
   return groups;
 }
 
-export async function cancel(course_id: string) {
+export async function cancel(course_id: number) {
   let url = `http://localhost:8080/api/grouping/auto/cancel?`;
   try {
       const response = await axios.delete(url+"course_id="+course_id);
@@ -26,7 +26,7 @@ export async function cancel(course_id: string) {
   }
 }
 
-export async function post_auto(course_id: string) {
+export async function post_auto(course_id: number) {
   let url = `http://localhost:8080/api/grouping/auto?`;
   try {
       const response = await axios.post(url+"course_id="+course_id);
@@ -37,7 +37,7 @@ export async function post_auto(course_id: string) {
   }
 }
 
-export async function post_team_by_student(grouping_method: string, number_depend_on_grouping_method: number, naming_rule: string, create_deadline: string,  course_id: string) {
+export async function post_team_by_student(grouping_method: string, number_depend_on_grouping_method: number, naming_rule: string, create_deadline: string,  course_id: number) {
   let url = `http://localhost:8080/api/grouping/student?`;
   try {
       console.log(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
@@ -49,7 +49,7 @@ export async function post_team_by_student(grouping_method: string, number_depen
   }
 }
 
-export async function get_all_groups_info(course_id: string): Promise<Group[]> {
+export async function get_all_groups_info(course_id: number): Promise<Group[]> {
   let groups = [];
   let url = `http://localhost:8080/api/group/${course_id}`;
   try {
