@@ -1,11 +1,14 @@
 import random
+from datetime import datetime
 
 
-class Subscription:
+class Notification:
     def __init__(self, fakeDB):
         self.default = {
             "uid": None,
             "component_id": None,
+            "have_read": False,
+            "release_time": None,
             "type": None
         }
         self.user_list = fakeDB["users"]
@@ -19,6 +22,8 @@ class Subscription:
                     **self.default, 
                     "uid": user["uid"], 
                     "component_id": report["id"], 
+                    "have_read": False,
+                    "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
                     "type": "report"
                 })
             

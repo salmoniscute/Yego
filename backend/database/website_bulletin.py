@@ -22,7 +22,7 @@ class WebsiteBulletin:
             self.components.append({
                 **self.component_default,
                 "uid": "admin",
-                "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,
+                "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "title": f"網站公告 id = {self.component_id_counter}",
                 "content": f"網站公告 id = {self.component_id_counter}"
             })
