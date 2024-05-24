@@ -19,11 +19,11 @@ interface Info {
   content: string;
   files: Document[];
 }
-const MAX_ID = 10;
 
 export default function WebAnnouncementPage() {
   const { id } = useParams<{ id: string }>();
   const [announcementData, setAnnouncementData] = useState<Info | null>(null);
+  const [totalAnnouncements, setTotalAnnouncements] = useState<number>(0);
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/website/bulletin/${id}`)
@@ -34,11 +34,23 @@ export default function WebAnnouncementPage() {
       .catch(error => {
         console.error('Error fetching announcement data:', error);
       });
+
+    fetch(`http://localhost:8080/api/website/bulletin`)
+      .then(res => res.json())
+      .then(data => {
+        setTotalAnnouncements(data.length);
+      })
+      .catch(error => {
+        console.error('Error fetching total announcements:', error);
+      });
   }, [id]);
 
-  if (!announcementData) {
+  if (!announcementData || totalAnnouncements === 0) {
     return <div>Loading...</div>;
   }
+
+  const prevId = parseInt(id || '') - 1;
+  const nextId = parseInt(id || '') + 1;
 
   return (
     <div className="web-announcement-container">
@@ -74,17 +86,17 @@ export default function WebAnnouncementPage() {
         </div>
       </div>
       <div className="announcement-navigation">
-      {parseInt(id || '') > 0 && (
-        <Link to={`/webAnnouncement/${parseInt(id || '') - 1}`}>
-          <AiFillCaretLeft /> 上一篇標題
-        </Link>
-      )}
-      {parseInt(id || '') < MAX_ID && (
-        <Link to={`/webAnnouncement/${parseInt(id || '') + 1}`}>
-          下一篇標題 <AiFillCaretRight />
-        </Link>
-      )}
-    </div>
+        {prevId > 0 && (
+          <Link to={`/webAnnouncement/${prevId}`}>
+            <AiFillCaretLeft /> 上一篇標題
+          </Link>
+        )}
+        {nextId <= totalAnnouncements && (
+          <Link to={`/webAnnouncement/${nextId}`}>
+            下一篇標題 <AiFillCaretRight />
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
