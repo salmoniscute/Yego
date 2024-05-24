@@ -100,7 +100,7 @@ async def update_course_bulletin(
     
     users = await SelectedCourseCrud.get_by_course_id(bulletin["course_id"])
     for user in users:
-        await NotificationCrud.create(user["uid"], bulletin["id"], "course_bulletin")
+        await NotificationCrud.create(user["uid"], cb_id, "course_bulletin")
     
     return 
 
