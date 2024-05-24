@@ -79,23 +79,14 @@ export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Pro
     return discussionTopic;
 }
 
-export async function getDiscussionTopicReplyList() : Promise<Array<DiscussionTopicReply>>{
-    const result = [
-        {
-            id:"",
-            uid:"F74106050",
-            publisher:"林志芸",
-            release_time: 1703390840,
-            content:"新年快樂恭喜發財",
-        },
-        {
-            id:"",
-            uid:"F74106050",
-            publisher:"林志芸",
-            release_time: 1703390840,
-            content:"新年快樂恭喜發財",
-        },
+export async function postDTReply(reply : DiscussionTopicReply):Promise<DiscussionTopicReply>{
+    let url = "http://localhost:8080/api/discussion_topic_reply?uid="+ reply.uid + "&topic_id=" + reply.topic_id + "&parent_id="+ reply.parent_id;
+    try{
+        const response = await axios.post(url,reply);
+        return response.data;
+    }
+    catch(error){
 
-    ]
-    return result;
+    }
+    return reply;
 }
