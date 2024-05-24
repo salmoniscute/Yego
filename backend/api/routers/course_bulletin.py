@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from .depends import check_course_id, check_course_bulletin_id, check_user_id
 from crud.course_bulletin import CourseBulletinCrudManager
+from crud.notification import NotificationCrudManager
+from crud.selected_course import SelectedCourseCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -20,6 +22,8 @@ router = APIRouter(
     tags=["Course Bulletin"]
 )
 
+NotificationCrud = NotificationCrudManager()
+SelectedCourseCrud = SelectedCourseCrudManager()
 
 @router.post(
     "/bulletin", 
@@ -38,7 +42,10 @@ async def create_course_bulletin(
     - **pin_to_top**
     """
     bulletin = await CourseBulletinCrud.create(uid, course_id, newBulletin)
-
+    users = await SelectedCourseCrud.get_by_course_id(course_id)
+    for user in users:
+        await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin")
+        
     return bulletin
 
 
@@ -89,6 +96,12 @@ async def update_course_bulletin(
     - **pin_to_top**
     """
     await CourseBulletinCrud.update(cb_id, updateBulletin)
+    bulletin = await CourseBulletinCrud.get(cb_id)
+    
+    users = await SelectedCourseCrud.get_by_course_id(bulletin["course_id"])
+    for user in users:
+        await NotificationCrud.create(user["uid"], bulletin["id"], "course_bulletin")
+    
     return 
 
 
