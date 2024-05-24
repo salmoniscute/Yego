@@ -6,6 +6,7 @@ from .depends import check_user_id
 from auth.jwt import verify_access_token
 from auth.passwd import get_password_hash
 from crud.user import UserCrudManager
+from models.base import Avatar
 from schemas import user as UserSchema
 
 permission_denied = HTTPException(
@@ -121,6 +122,20 @@ async def update_user(
     #     raise permission_denied
     
     await UserCrud.update(uid, updateUser)
+    return 
+
+
+@router.put(
+    "/user/{uid}/default_avatar",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_user_role(
+    avatar: Avatar,
+    uid: str = Depends(check_user_id)
+):
+    avatar_path = f"backend/upload/user/default/{avatar}.png"
+    await UserCrud.update_avatar(uid, avatar_path)
+
     return 
 
 

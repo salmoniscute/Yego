@@ -9,6 +9,12 @@ class Base(DeclarativeBase):
     pass
 
 
+class Avatar(str, Enum):
+    Dago = "Dago"
+    Yego = "Yego"
+    Yegogo = "Yegogo"
+    
+
 class NotificationType(str, Enum):  
     course_bulletin = "course_bulletin"
     report = "report"
