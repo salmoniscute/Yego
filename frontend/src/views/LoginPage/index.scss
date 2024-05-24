@@ -62,6 +62,134 @@
       }
   
     }
+
+    .selectedWork{
+      position: fixed;
+      pointer-events: none;
+      left: 20%; 
+      top: 15%; 
+      width: 60%; 
+      height: 70%; 
+      opacity: 0%;
+      background-color: #FFF;
+      transition: opacity 0.5s;
+      display: flex;
+      padding: 3em 4em;
+      box-sizing: border-box;
+      h2{
+        margin-top: 0em;
+      }
+      button{
+        cursor: pointer;
+        display: flex;
+        align-self: end;
+        background-color: #FFEA79;
+        padding: 1em 1em;
+        border-radius: 0.3em;
+        border-width: 0em;
+        p{
+          font-size: medium;
+          font-weight: 600;
+          margin: 0em;
+        }
+      }
+      .page1{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        img{
+          width: 10em;
+          height: 10em;
+          margin-top: 6em;
+          margin-left: 1em;
+        }
+        .intro{
+          position: absolute;
+          top: 30%;
+          left: 25%;
+          background-color: rgba(255, 234, 121, 0.42);
+          .title{
+            font-size: larger;
+            font-weight: 600;
+          }
+          padding: 0.5em 2em;
+          border-radius: 1em;
+        }
+      }
+      .page2{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .intro{
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 1.5em;
+          img{
+            width: 4em;
+            height: 4em;
+            margin-right: 2em;
+          }
+          p{
+            align-content: center;
+          }
+        }
+        textarea{
+          background-color: #F7F7F7;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          outline: none;
+          border: none;
+          resize: none;
+          margin-bottom: 1.5em;
+          padding: 2em ;
+          font-size: 16px;
+        }
+
+      }
+      .page3{
+        width: 100%;
+        div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .character{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            img{
+              width: 12em;
+              height: 12em;
+            }
+            .name{
+              font-size: larger;
+              font-weight: 600;
+              margin-bottom: 0em;
+            }
+            .intro{
+              width: 12em;
+            }
+          }
+
+        }
+        .button{
+          margin-top: 0.5em;
+          justify-content: end;
+          button{
+            margin-left: 2em;
+          }
+        }
+      }
+
+
+  }
+
+  .selectedWork[data-show="true"] {
+      pointer-events: initial;
+      opacity: 100%;
+  }
   
 
   
