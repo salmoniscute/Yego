@@ -1,0 +1,147 @@
+.subcoursepage{
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: min(90vw, 1200px);
+    width: 70rem;
+    margin: auto;
+
+    
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .button-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .button-text {
+        margin-left: 5px; // 調整按鈕文字與按鈕之間的間距
+    }
+    
+    .circle-button, .square-button {
+        width: 20px;
+        height: 20px;
+        background-color: #FFF; /* 將按鈕的背景顏色設置為白色 */
+        border: 2px solid #FFEA79; /* 添加2px寬的黃色邊框 */
+        border-radius: 50%; /* 圓形按鈕的邊框半徑 */
+        margin-right: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* 添加過渡效果以使按鈕變色平滑 */
+    }
+
+    .circle-button:hover, .square-button:hover {
+        background-color: #FFEA79 ; 
+    }
+    
+    .button-container.active .circle-button {
+        background-color: #FFEA79; 
+    }
+    
+    .button-container.active .square-button {
+        background-color: #FFEA79; 
+    }
+    
+    .square-button-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+    .circle-button {
+        border-radius: 50%;
+    }
+    
+    .select-action, .grading-action {
+        margin-left: 10px;
+        width: 400px;
+        height: 40px;
+        padding: 10px;
+    }
+    
+    .title-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .individual-page {
+        display: flex;
+        gap: 20px; 
+    }
+    
+    .student-list {
+        flex: 1;
+        min-width: 150px; 
+        border-right: 1px solid #ccc;
+        padding-right: 10px;
+    }
+    
+    .student-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .student-item:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .student-info {
+        flex: 2;
+        min-width: 300px; 
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .grade-input {
+        flex: 3;
+        min-width: 200px; 
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .comment {
+        margin-top: 10px;
+    }
+    
+    textarea {
+        width: 100%;
+        height: 100px;
+        resize: none;
+    }
+    
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    button {
+        padding: 10px;
+        background-color: #FFEA79;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #FFEA79;
+    }
+    
+    button:active {
+        background-color: #FFEA79; /* 按下後的顏色 */
+    }
+    }
+
+   

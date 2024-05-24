@@ -10,6 +10,9 @@ from database.selected_course import SelectedCourse
 from database.discussion import Discussion
 from database.discussion_topic import DiscussionTopic
 from database.discussion_topic_reply import DiscussionTopicReply
+from database.file import File
+from database.notification import Notification
+from database.subscription import Subscription
 
 tables = [
     "users",
@@ -39,29 +42,38 @@ class GenFakeDB:
     def generate_course(self):
         return Course(self.output).generate()
     
-    def generate_report(self):
-        return Report(self.output).generate(self.output["components"], self.component_id_counter)
-    
-    def generate_report_reply(self):
-        return ReportReply(self.output).generate(self.output["components"], self.component_id_counter)
-    
-    def generate_website_bulletin(self):
-        return WebsiteBulletin().generate(self.output["components"], self.component_id_counter)
-    
-    def generate_course_bulletin(self):
-        return CourseBulletin(self.output).generate(self.output["components"], self.component_id_counter)
-    
     def generate_selected_course(self):
         return SelectedCourse(self.output).generate()
     
+    def generate_report(self):
+        return Report(self.output, self.component_id_counter).generate()
+    
+    def generate_report_reply(self):
+        return ReportReply(self.output, self.component_id_counter).generate()
+    
+    def generate_website_bulletin(self):
+        return WebsiteBulletin(self.output, self.component_id_counter).generate()
+    
+    def generate_course_bulletin(self):
+        return CourseBulletin(self.output, self.component_id_counter).generate()
+    
     def generate_discussion(self):
-        return Discussion(self.output).generate(self.output["components"], self.component_id_counter)
+        return Discussion(self.output, self.component_id_counter).generate()
 
     def generate_discussion_topic(self):
-        return DiscussionTopic(self.output).generate(self.output["components"], self.component_id_counter)
+        return DiscussionTopic(self.output, self.component_id_counter).generate()
 
     def generate_discussion_topic_reply(self):
-        return DiscussionTopicReply(self.output).generate(self.output["components"], self.component_id_counter)
+        return DiscussionTopicReply(self.output, self.component_id_counter).generate()
+    
+    def generate_file(self):
+        return File(self.output).generate()
+    
+    def generate_notification(self):
+        return Notification(self.output).generate()
+    
+    def generate_subscription(self):
+        return Subscription(self.output).generate()
 
     def generate(self):
         self.output["users"] = self.generate_user()
@@ -74,7 +86,9 @@ class GenFakeDB:
         self.output["discussions"], self.component_id_counter = self.generate_discussion()
         self.output["discussion_topics"], self.component_id_counter = self.generate_discussion_topic()
         self.output["discussion_topic_replies"], self.component_id_counter = self.generate_discussion_topic_reply()
+        self.output["files"] = self.generate_file()
+        self.output["notifications"] = self.generate_notification()
+        self.output["subscriptions"] = self.generate_subscription()
         
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
-

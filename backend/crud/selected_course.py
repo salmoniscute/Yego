@@ -8,14 +8,14 @@ from schemas import selected_course as SelectedCourseSchema
 
 @crud_class_decorator
 class SelectedCourseCrudManager:
-    async def create(self, uid: str, course_id: str, db_session: AsyncSession, group_id: int = None):
+    async def create(self, uid: str, course_id: int, db_session: AsyncSession, group_id: int = None):
         selected_course = SelectedCourseModel(uid=uid, course_id=course_id, group_id=group_id)
         db_session.add(selected_course)
         await db_session.commit()
 
         return selected_course
     
-    async def get(self, uid: str, course_id: str, db_session: AsyncSession):
+    async def get(self, uid: str, course_id: int, db_session: AsyncSession):
         stmt = (
             select(SelectedCourseModel)
             .where(SelectedCourseModel.uid == uid)
@@ -33,7 +33,7 @@ class SelectedCourseCrudManager:
 
         return [selected_course[0] for selected_course in result.all()]    
     
-    async def update(self, uid: str, course_id: str, group_id: int, db_session: AsyncSession):
+    async def update(self, uid: str, course_id: int, group_id: int, db_session: AsyncSession):
         stmt = (
             update(SelectedCourseModel)
             .where(SelectedCourseModel.uid == uid)
@@ -45,7 +45,7 @@ class SelectedCourseCrudManager:
 
         return 
     
-    async def delete(self, uid: str, course_id: str, db_session: AsyncSession):
+    async def delete(self, uid: str, course_id: int, db_session: AsyncSession):
         stmt = (
             delete(SelectedCourseModel)
             .where(SelectedCourseModel.uid == uid)
@@ -73,7 +73,7 @@ class SelectedCourseCrudManager:
 
         return _list
     
-    async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
+    async def get_by_course_id(self, course_id: int, db_session: AsyncSession):
         stmt = (
             select(SelectedCourseModel)
             .where(SelectedCourseModel.course_id == course_id)

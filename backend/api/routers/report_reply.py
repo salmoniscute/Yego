@@ -22,8 +22,9 @@ router = APIRouter(
 
 
 @router.post(
-    "/report_reply", 
-    status_code=status.HTTP_204_NO_CONTENT
+    "/report_reply",
+    response_model=ReportSchema.ReportReplyReadByID,
+    status_code=status.HTTP_201_CREATED
 )
 async def create_report_reply(
     newReply: ReportSchema.ReportReplyCreate,
@@ -37,13 +38,15 @@ async def create_report_reply(
     - **content**
     """
     reply = await ReportReplyCrud.create(uid, root_id, parent_id, newReply)
+    reply = await ReportReplyCrud.get(reply.id)
 
     return reply
 
 
 @router.get(
     "/report_reply/{reply_id}", 
-    response_model=ReportSchema.ReportReplyReadByID
+    response_model=ReportSchema.ReportReplyReadByID,
+    deprecated=True
 )
 async def get_report_reply(reply_id: int):
     """

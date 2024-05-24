@@ -55,7 +55,7 @@ class Course(Base):
         passive_deletes=True
     )
 
-    def __init__(self, id: str, uid: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
+    def __init__(self, id: int, uid: str, course_code: float, academic_year: int, semester: int, name: str, outline: Optional[str]) -> None:
         self.id = id
         self.uid = uid
         self.course_code = course_code

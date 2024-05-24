@@ -5,12 +5,12 @@ from typing import Optional
 class SelectedCourseRead(BaseModel):
     id: int
     uid: str
-    course_id: str
+    course_id: int
     group_id: Optional[int] = None
 
 
 class SelectedCourseByUidRead(BaseModel):
-    course_id: str
+    course_id: int
     course_name: str
     instructor_name: str
 
