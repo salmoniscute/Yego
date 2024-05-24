@@ -22,7 +22,8 @@ router = APIRouter(
 
 @router.post(
     "/discussion_topic_reply",
-    status_code=status.HTTP_204_NO_CONTENT
+    response_model=DiscussionSchema.DiscussionTopicReplyRead,
+    status_code=status.HTTP_201_CREATED
 )
 async def create_discussion_topic_reply(
     newReply: DiscussionSchema.DiscussionTopicReplyCreate,
@@ -37,12 +38,14 @@ async def create_discussion_topic_reply(
     - **content**
     """
     reply = await TopicReplyCrud.create(uid, root_id, parent_id, newReply)
+    reply = await TopicReplyCrud.get(reply.id)
 
     return reply
 
 @router.get(
     "/discussion_topic_reply/{reply_id}", 
-    response_model=DiscussionSchema.DiscussionTopicReplyRead
+    response_model=DiscussionSchema.DiscussionTopicReplyRead,
+    deprecated=True
 )
 async def get_discussion_topic_reply(
     reply_id: int = Depends(check_topic_reply_id)

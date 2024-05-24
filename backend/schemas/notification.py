@@ -1,17 +1,15 @@
-from pydantic import BaseModel
 from datetime import datetime
+from pydantic import BaseModel
 
 
 class NotificationCreate(BaseModel):
     have_read: bool
-    type: str
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
-                    "have_read": False,
-                    "type": "website_bulletin"
+                    "have_read": False
                 }
             ]
         }
