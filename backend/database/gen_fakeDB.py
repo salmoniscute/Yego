@@ -11,6 +11,7 @@ from database.discussion import Discussion
 from database.discussion_topic import DiscussionTopic
 from database.discussion_topic_reply import DiscussionTopicReply
 from database.file import File
+from database.notification import Notification
 
 tables = [
     "users",
@@ -66,6 +67,9 @@ class GenFakeDB:
     
     def generate_file(self):
         return File(self.output).generate()
+    
+    def generate_notification(self):
+        return Notification(self.output).generate()
 
     def generate(self):
         self.output["users"] = self.generate_user()
@@ -79,6 +83,7 @@ class GenFakeDB:
         self.output["discussion_topics"], self.component_id_counter = self.generate_discussion_topic()
         self.output["discussion_topic_replies"], self.component_id_counter = self.generate_discussion_topic_reply()
         self.output["files"] = self.generate_file()
+        self.output["notifications"] = self.generate_notification()
         
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
