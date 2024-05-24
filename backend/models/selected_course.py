@@ -9,7 +9,7 @@ class SelectedCourse(Base):
     __tablename__ = "SelectedCourse"
     id: Mapped[BaseType.selected_course_id]
     uid: Mapped[BaseType.str_10] = mapped_column(ForeignKey("User.uid", ondelete="CASCADE"))
-    course_id: Mapped[BaseType.str_10] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
+    course_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
     group_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Group.id"), nullable=True)
 
     # Relationship to parent

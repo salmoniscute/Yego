@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class CourseCreate(BaseModel):
-    id: str
+    id: int
     course_code: str
     academic_year: int
     semester: int
@@ -14,7 +14,6 @@ class CourseCreate(BaseModel):
         "json_schema_extra": {
             "examples": [
                 {
-                    "id": "CSE101",
                     "course_code": "CSE101",
                     "academic_year": 2021,
                     "semester": 1,
@@ -27,7 +26,7 @@ class CourseCreate(BaseModel):
 
 
 class CourseRead(BaseModel):
-    id: str
+    id: int
     uid: str
     course_code: str
     academic_year: int
