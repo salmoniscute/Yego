@@ -160,6 +160,13 @@ cython_debug/
 #.idea/
 
 config.json
+.DS_Store
 
 # upload file
 upload/
+
+# tmp file
+tmp/
+
+# fake DB
+database/fake_db.json

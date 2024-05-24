@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import DeclarativeBase, mapped_column
 from typing import Annotated, Optional
@@ -8,11 +9,20 @@ class Base(DeclarativeBase):
     pass
 
 
+class NotificationType(str, Enum):  
+    course_bulletin = "course_bulletin"
+    report = "report"
+    course_material = "course_material"
+    course_assignment = "course_assignment"
+    discussion = "discussion"
+    discussion_topic = "discussion_topic"
+
+
 class BaseType:
     uid = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
     component_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     file_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
-    course_id = Annotated[int, mapped_column(String(10), primary_key=True, unique=True)]
+    course_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     selected_course_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     group_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
     notification_id = Annotated[int, mapped_column(Integer, primary_key=True, unique=True, autoincrement=True)]
@@ -30,3 +40,4 @@ class BaseType:
     optional_str_1000 = Annotated[Optional[str], mapped_column(String(1000), nullable=True)]
     datetime = Annotated[datetime, mapped_column(String(60), nullable=True)]
     path = Annotated[str, mapped_column(String(1000), nullable=True)]
+    

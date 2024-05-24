@@ -5,7 +5,7 @@ import {
  } from "schemas/discussion";
 import axios from "axios";
 
-export async function getDiscussionList(course_id:string): Promise<Array<Discussion>>{
+export async function getDiscussionList(course_id:number): Promise<Array<Discussion>>{
     let url = "http://localhost:8080/api/discussions/"+course_id;
     try {
         const response = await axios.get(url,{
@@ -22,7 +22,7 @@ export async function getDiscussion(id:string) : Promise <Discussion>{
     let url = "http://localhost:8080/api/discussion/"+id;
     let discussion;
     try {
-        const response = await axios.get(url,{
+        const response = await axios.delete(url,{
           });
         discussion = response.data;
     }

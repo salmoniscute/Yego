@@ -33,11 +33,11 @@ export default function CoursePage(): ReactElement {
     const tab = params["*"]?.split("/")[0];
 
     const tabs = useMemo(() => courseID ? [
-        { label: "公告", path: "announcement", component: <BulletinPage courseID={courseID} /> },
-        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={courseID}/> },
-        { label: "課程教材", path: "material", component: <MaterialPage courseID={courseID} /> },
+        { label: "公告", path: "announcement", component: <BulletinPage courseID={Number(courseID)} /> },
+        { label: "討論區", path: "discussion", component: <DiscussionPage courseID={Number(courseID)}/> },
+        { label: "課程教材", path: "material", component: <MaterialPage courseID={Number(courseID)} /> },
         { label: "成績", path: "grade", component: <GradePage /> },
-        { label: "成員", path: "member", component: <MemberPage courseID={courseID}/> }
+        { label: "成員", path: "member", component: <MemberPage courseID={Number(courseID)}/> }
     ] : [], [courseID]);
 
     const courseForum = (

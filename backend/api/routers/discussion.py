@@ -27,7 +27,7 @@ router = APIRouter(
 async def create_discussion(
     newDiscussion: DiscussionSchema.DiscussionCreate,
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Create a discussion with the following information:
@@ -73,6 +73,23 @@ async def get_discussion(
     raise not_found
     
 
+@router.get(
+    "/discussions/{course_id}",
+    response_model=list[DiscussionSchema.DiscussionOfCourses]
+)
+async def get_course_discussions_by_course_id(
+    course_id: str = Depends(check_course_id)
+):
+    """
+    Get all discussions for a course.
+    """
+    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
+    if discussions:
+        return discussions
+    
+    raise not_found
+
+
 @router.put(
     "/discussion/{discussion_id}",
     status_code=status.HTTP_204_NO_CONTENT
@@ -104,22 +121,3 @@ async def delete_discussion(
     await DiscussionCrud.delete(discussion_id)
     
     return 
-
-
-@router.get(
-    "/discussions/{course_id}",
-    response_model=list[DiscussionSchema.DiscussionOfCourses]
-)
-async def get_course_discussions_by_course_id(
-    course_id: str = Depends(check_course_id)
-):
-    """
-    Get all discussions for a course.
-    """
-    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
-    if discussions:
-        return discussions
-    
-    raise not_found
-
-

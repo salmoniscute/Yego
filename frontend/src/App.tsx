@@ -113,10 +113,10 @@ export default function App(): ReactElement {
                         />} />
                         <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
-                        <Route path="/webAnnouncement" element={<WebAnnouncementPage />} />
+                        <Route path="/webAnnouncement/:id" element={<WebAnnouncementPage />} />
                         <Route path="/webAnnouncementlist" element={<WebAnnouncementList />} />
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
-                        <Route path="/personal" element={<PersonalPage/>} />
+                        <Route path="/personal/:uid/*" element={<PersonalPage/>} />
                         <Route path="/reportBug" element={<ReportPage />} />  
                         <Route path="/notification/:id" element={<NotificationPage />} />
                         <Route path="/salmontest" element={<TeamPage/>} />

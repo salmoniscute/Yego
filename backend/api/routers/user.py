@@ -86,6 +86,18 @@ async def get_user(uid: str):
     raise not_found
 
 
+@router.get(
+    "/user/search/{keyword}",
+    response_model=list[UserSchema.UserRead],
+    status_code=status.HTTP_200_OK
+)
+async def search_user(keyword: str=None):
+    users = await UserCrud.search(keyword)
+    if users:
+        return users
+    raise not_found
+
+
 @router.put(
     "/user/{uid}",
     status_code=status.HTTP_204_NO_CONTENT
@@ -175,15 +187,3 @@ async def delete_user(uid: str = Depends(check_user_id)):
     """
     await UserCrud.delete(uid)
     return 
-
-
-@router.get(
-    "/user/search/{keyword}",
-    response_model=list[UserSchema.UserRead],
-    status_code=status.HTTP_200_OK
-)
-async def search_user(keyword: str=None):
-    users = await UserCrud.search(keyword)
-    if users:
-        return users
-    raise not_found

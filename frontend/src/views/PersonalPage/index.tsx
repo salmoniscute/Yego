@@ -3,14 +3,19 @@ import {
     useContext
 } from "react";
 
-import userDataContext from "context/userData";
+import {
+    Link,
+    Route,
+    Routes,
+} from "react-router-dom";
 
+import userDataContext from "context/userData";
+import ReportPage from "views/ReportPage";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
     const userData = useContext(userDataContext);
-
-    return (
+    const personalInfo = (
         <div id="PersonalPage">
             <div className="twoSide">
                 <div className="leftSide">
@@ -21,10 +26,10 @@ export default function Personal(): ReactElement {
                     <div className="eMail">
                         {userData?.email}
                     </div>
-                    <div className="EditPerson">
+                    <Link className="EditPerson" to="./editPerson">
                         <span className="material-symbols-outlined">edit</span>
-                        <div>編輯個人資料</div>
-                    </div>
+                        <div>&nbsp;編輯個人資料</div>
+                    </Link>
                 </div>
                 <div className="rightSide">
                     <div className="OtherInfo">
@@ -43,7 +48,13 @@ export default function Personal(): ReactElement {
                     <div className="IntroContent">{userData?.introduction}</div>
                 </div>
             </div>
-
         </div>
+    )
+
+    return (
+        <Routes>
+            <Route path="*" element={personalInfo}/>
+            <Route path="/editPerson" element={<ReportPage/>}/>
+        </Routes>
     )
 }

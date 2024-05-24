@@ -42,42 +42,6 @@ async def create_files(
             file = await FileCrud.create(component_id=component_id, path=file_path)
 
     return
-    
-
-@router.get(
-    "/files",
-    response_model=list[FileSchema.FileRead],
-    status_code=status.HTTP_200_OK,
-    response_description="Get all files",
-    deprecated=True
-)
-async def get_all_files():
-    """ 
-    Get all files.
-    """
-    files = await FileCrud.get_all()
-    if not files:
-        raise not_found
-    
-    return files
-
-
-@router.get(
-    "/file/{file_id}",
-    response_model=FileSchema.FileRead,
-    status_code=status.HTTP_200_OK,
-    response_description="Get a file",
-    deprecated=True
-)
-async def get_file(file_id: str):
-    """
-    Get a file.
-    """
-    file = await FileCrud.get(file_id)
-    if not file:
-        raise not_found
-    
-    return file
 
 
 @router.delete(

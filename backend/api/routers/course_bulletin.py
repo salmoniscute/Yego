@@ -43,22 +43,6 @@ async def create_course_bulletin(
 
 
 @router.get(
-    "/bulletins", 
-    status_code=status.HTTP_200_OK,
-    deprecated=True
-)
-async def get_all_course_bulletins():
-    """
-    Get all course bulletins.
-    """
-    bulletins = await CourseBulletinCrud.get_all()
-    if bulletins:
-        return bulletins
-    
-    raise not_found
-
-
-@router.get(
     "/bulletin/{cb_id}", 
     response_model=BulletinSchema.BulletinReadByID,
     status_code=status.HTTP_200_OK
@@ -71,6 +55,22 @@ async def get_course_bulletin(cb_id: int):
     if bulletin:
         return bulletin
 
+    raise not_found
+
+
+@router.get(
+    "/bulletin/particular_course/{course_id}", 
+    response_model=list[BulletinSchema.CourseBulletinListRead],
+    status_code=status.HTTP_200_OK
+)
+async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
+    """
+    Get all course bulletins in particular course.
+    """
+    bulletins = await CourseBulletinCrud.get_by_course_id(course_id)
+    if bulletins:
+        return bulletins
+    
     raise not_found
    
 
@@ -102,19 +102,3 @@ async def delete_course_bulletin(cb_id: int = Depends(check_course_bulletin_id))
     """
     await CourseBulletinCrud.delete(cb_id)
     return 
-
-
-@router.get(
-    "/bulletin/particular_course/{course_id}", 
-    response_model=list[BulletinSchema.CourseBulletinListRead],
-    status_code=status.HTTP_200_OK
-)
-async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
-    """
-    Get all course bulletins in particular course.
-    """
-    bulletins = await CourseBulletinCrud.get_by_course_id(course_id)
-    if bulletins:
-        return bulletins
-    
-    raise not_found

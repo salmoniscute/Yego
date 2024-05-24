@@ -10,8 +10,8 @@ from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
 from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, SubmittedAssignment as SubmittedAssignmentModel
-from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
-from models.report import Report as ReportModel
+from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel, DiscussionTopicReply as DiscussionTopicReplyModel
+from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from models.group import Group as GroupModel
 
 model = {
@@ -28,7 +28,9 @@ model = {
     "course_materials": CourseMaterialModel,
     "discussions": DiscussionModel,
     "discussion_topics": DiscussionTopicModel,
-    "reports": ReportModel
+    "discussion_topic_replies": DiscussionTopicReplyModel,
+    "reports": ReportModel,
+    "report_replies": ReportReplyModel,
 }
 
 
@@ -39,6 +41,7 @@ class FakeDB:
 
     async def create_entity_list(self, db_session):
         for table, entity_list in self.data.items():
+            print(f"Creating {table}...")
             for entity in entity_list:
                 if entity.get("password"):
                     entity["password"] = get_password_hash(entity["password"])
