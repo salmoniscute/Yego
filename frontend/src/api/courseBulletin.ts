@@ -3,7 +3,7 @@ import {
     CourseBulletin
 } from "../schemas/courseBulletin";
 
-export async function getCourseBulletinList(course_id:string) :Promise<Array<CourseBulletin>>{
+export async function getCourseBulletinList(course_id: number) :Promise<Array<CourseBulletin>>{
     let url = "http://localhost:8080/api/course/bulletin/particular_course/"+course_id;
     try {
         const response = await axios.get(url,{

@@ -110,6 +110,6 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
     </div>
     
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopicList} parent_id={params.discussionId || ""}/></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopicList} parent_id={parseInt(params.discussionId || "") || 0}/></div>
   </div>
 }

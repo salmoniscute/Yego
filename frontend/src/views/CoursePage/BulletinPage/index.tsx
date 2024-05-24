@@ -17,7 +17,7 @@ import { getCourseBulletinList,postCourseBulletin , deleteCourseBulletin , updat
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 type propsType = Readonly<{
-    courseID: string
+    courseID: number
 }>;
 
 export default function BulletinPage(props: propsType): React.ReactElement {

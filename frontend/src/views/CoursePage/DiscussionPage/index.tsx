@@ -19,7 +19,7 @@ import { getDiscussionList } from "api/discussion";
 
 
 type propsType = Readonly<{
-    courseID: string,
+    courseID: number,
 }>;
 
 export default function DiscussionPage(props: propsType): ReactElement {

@@ -9,7 +9,7 @@ import {
 import "./index.scss";
 
 type propsType = Readonly<{
-    courseID: string
+    courseID: number
 }>;
 
 interface DataType {

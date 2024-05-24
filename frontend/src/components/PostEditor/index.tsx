@@ -95,7 +95,7 @@ type propsType = Readonly<{
   onClose : () => void,
   type : string
   updatePost:() => void,
-  parent_id : string
+  parent_id : number
 }>;
 
 export default function PostEditor(props: propsType): ReactElement {
