@@ -7,6 +7,9 @@ from database.course_bulletin import CourseBulletin
 from database.report import Report
 from database.report_reply import ReportReply
 from database.selected_course import SelectedCourse
+from database.discussion import Discussion
+from database.discussion_topic import DiscussionTopic
+from database.discussion_topic_reply import DiscussionTopicReply
 
 tables = [
     "users",
@@ -19,6 +22,7 @@ tables = [
     "reports",
     "discussions",
     "discussion_topics",
+    "discussion_topic_replies",
     "subscriptions",
     "notifications"
 ]
@@ -49,6 +53,15 @@ class GenFakeDB:
     
     def generate_selected_course(self):
         return SelectedCourse(self.output).generate()
+    
+    def generate_discussion(self):
+        return Discussion(self.output).generate(self.output["components"], self.component_id_counter)
+
+    def generate_discussion_topic(self):
+        return DiscussionTopic(self.output).generate(self.output["components"], self.component_id_counter)
+
+    def generate_discussion_topic_reply(self):
+        return DiscussionTopicReply(self.output).generate(self.output["components"], self.component_id_counter)
 
     def generate(self):
         self.output["users"] = self.generate_user()
@@ -58,7 +71,10 @@ class GenFakeDB:
         self.output["website_bulletins"], self.component_id_counter = self.generate_website_bulletin()
         self.output["course_bulletins"], self.component_id_counter = self.generate_course_bulletin()
         self.output["selected_courses"] = self.generate_selected_course()
-
+        self.output["discussions"], self.component_id_counter = self.generate_discussion()
+        self.output["discussion_topics"], self.component_id_counter = self.generate_discussion_topic()
+        self.output["discussion_topic_replies"], self.component_id_counter = self.generate_discussion_topic_reply()
+        
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
 
