@@ -71,6 +71,24 @@ async def get_selected_courses_by_course_id(course_id: int):
     raise not_found
 
 
+@router.get(
+    "/selected_course/particular/{uid}/{course_id}", 
+    status_code=status.HTTP_200_OK
+)
+async def get_user_group(
+    uid: str = Depends(check_user_id),
+    course_id: int = Depends(check_course_id)
+):
+    """
+    Get the group of particular user in this course.
+    """
+    selected_course = await SelectedCourseCrud.get(uid, course_id)
+    if selected_course.group_info:
+        return selected_course.group_info.name
+    else:
+        return None
+
+
 @router.delete(
     "/selected_course/particular/{uid}/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT
