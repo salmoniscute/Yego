@@ -7,7 +7,6 @@ from .depends import check_course_id, check_group_id, check_user_id
 from crud.group import GroupCrudManager
 from crud.selected_course import SelectedCourseCrudManager
 from schemas import group as GroupSchema
-from schemas import selected_course as SelectedCourseSchema
 
 not_found = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
@@ -28,11 +27,26 @@ router = APIRouter(
 
 
 @router.get(
+    "/group/{course_id}", 
+    response_model=list[GroupSchema.GroupReadByCourseID],
+    status_code=status.HTTP_200_OK
+)
+async def get_all_groups_in_one_coure(
+    course_id: str = Depends(check_course_id)
+):
+    group = await GroupCrud.get_by_course_id(course_id)
+    if group:
+        return group
+    
+    raise not_found
+
+
+@router.get(
     "/grouping/auto/preview",
     response_model=list[GroupSchema.GroupAutoCreateResponse],
     status_code=status.HTTP_200_OK
 )
-async def auto_grouping(
+async def auto_grouping_preview(
     grouping_method: GroupSchema.GroupingMethod,
     number_depend_on_grouping_method: int,
     distributing_method: GroupSchema.DistributingMethod,
@@ -64,7 +78,8 @@ async def auto_grouping(
             }
             newGroup["members"] = [members.pop(0) for _ in range(newGroup["number_of_members"])]
             remainder -= 1
-            groups.append(newGroup)
+            if newGroup["number_of_members"] > 0:
+                groups.append(newGroup)
             
     elif grouping_method == GroupSchema.GroupingMethod.numbers_of_members:
         members_per_group = number_depend_on_grouping_method
@@ -102,24 +117,33 @@ async def auto_grouping(
     """
     tmp_file = f"tmp/auto_grouping_{course_id}.tmp"
 
-    if os.path.isfile(tmp_file):
-        with open(tmp_file, "r") as file:
-            groups = json.loads(file.read())
-
-        # Update database
-        for group_info in groups:
-            group_schema = GroupSchema.GroupCreate(name=group_info["name"], number_of_members=group_info["number_of_members"])
-            group = await GroupCrud.create(course_id, group_schema)
-            
-            for member in group_info["members"]:
-                print(member["uid"])
-                await SelectedCourseCrud.update(member["uid"], course_id, group.id)
-        
-        os.remove(tmp_file)
-        
-        return
+    if not os.path.isfile(tmp_file):
+        raise group_tmp_file_not_found
     
-    raise group_tmp_file_not_found
+    with open(tmp_file, "r") as file:
+        groups = json.loads(file.read())
+
+    # Delete all groups in the course
+    students = await SelectedCourseCrud.get_by_course_id(course_id)
+    for student in students:
+        await SelectedCourseCrud.update(student["uid"], course_id, None)
+    
+    del_groups = await GroupCrud.get_by_course_id(course_id)
+    for group in del_groups:
+        await GroupCrud.delete(group["id"])
+
+    # Update database
+    for group_info in groups:
+        group_schema = GroupSchema.GroupCreate(name=group_info["name"], number_of_members=group_info["number_of_members"])
+        group = await GroupCrud.create(course_id, group_schema)
+        
+        for member in group_info["members"]:
+            await SelectedCourseCrud.update(member["uid"], course_id, group.id)
+    
+    os.remove(tmp_file)
+    
+    return
+    
 
 
 @router.delete(
@@ -134,18 +158,16 @@ async def auto_grouping_cancel(
     """
     tmp_file = f"tmp/auto_grouping_{course_id}.tmp"
 
-    if os.path.isfile(tmp_file):
-        os.remove(tmp_file)
-
-        return
+    if not os.path.isfile(tmp_file):
+        raise group_tmp_file_not_found
     
-    raise group_tmp_file_not_found
+    os.remove(tmp_file)
+    return
 
 
 @router.post(
     "/grouping/student",
-    response_model=list[GroupSchema.GroupAutoCreateResponse],
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def student_grouping(
     grouping_method: GroupSchema.GroupingMethod,
@@ -157,13 +179,20 @@ async def student_grouping(
     """
     Students group by themselves.
     """
+    # Delete all groups in the course
+    students = await SelectedCourseCrud.get_by_course_id(course_id)
+    for student in students:
+        await SelectedCourseCrud.update(student["uid"], course_id, None)
+    
+    del_groups = await GroupCrud.get_by_course_id(course_id)
+    for group in del_groups:
+        await GroupCrud.delete(group["id"])
+
+    # Grouping
     groups = []
     members = await SelectedCourseCrud.get_by_course_id(course_id)
     members = [member for member in members if member["role"] == "student"]
     
-    # Fake data from A to L
-    # members = [{'uid': 'K', 'name': 'K-name'}, {'uid': 'D', 'name': 'D-name'}, {'uid': 'E', 'name': 'E-name'}, {'uid': 'C', 'name': 'C-name'}, {'uid': 'B', 'name': 'B-name'}, {'uid': 'L', 'name': 'L-name'}, {'uid': 'G', 'name': 'G-name'}, {'uid': 'I', 'name': 'I-name'}, {'uid': 'J', 'name': 'J-name'}, {'uid': 'H', 'name': 'H-name'}, {'uid': 'F', 'name': 'F-name'}, {'uid': 'A', 'name': 'A-name'}, {'uid': 'M', 'name': 'M-name'}, {'uid': 'N', 'name': 'N-name'}]
-
     # Grouping method: numbers of groups or numbers of members
     if grouping_method == GroupSchema.GroupingMethod.numbers_of_groups:
         group_num = number_depend_on_grouping_method
@@ -175,7 +204,8 @@ async def student_grouping(
                 "members": []
             }
             remainder -= 1
-            groups.append(newGroup)
+            if newGroup["number_of_members"] > 0:
+                groups.append(newGroup)
             
     elif grouping_method == GroupSchema.GroupingMethod.numbers_of_members:
         members_per_group = number_depend_on_grouping_method
@@ -199,7 +229,7 @@ async def student_grouping(
         })
         group_name += 1
         
-    return groups
+    return
        
 
 @router.post(
@@ -220,37 +250,6 @@ async def manual_grouping(
     await GroupCrud.manual_create(course_id, newGroup)
 
     return
-
-
-@router.get(
-    "/groups",
-    status_code=status.HTTP_200_OK,
-    deprecated=True
-)
-async def get_all_groups():
-    """ 
-    Get all groups.
-    """
-    groups = await GroupCrud.get_all()
-    if groups:
-        return groups
-    
-    raise not_found
-
-
-@router.get(
-    "/group/info/{course_id}", 
-    response_model=list[GroupSchema.GroupReadByCourseID],
-    status_code=status.HTTP_200_OK
-)
-async def get_all_groups_in_one_coure(
-    course_id: str = Depends(check_course_id)
-):
-    group = await GroupCrud.get_by_course_id(course_id)
-    if group:
-        return group
-    
-    raise not_found
 
     
 @router.put(
@@ -287,10 +286,10 @@ async def exit_group(
 
 
 @router.put(
-    "/group/{group_id}",
+    "/group/{group_id}/name",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_group_info(
+async def update_group_name(
     updateGroup: GroupSchema.GroupUpdate,
     group_id: int = Depends(check_group_id)
 ):

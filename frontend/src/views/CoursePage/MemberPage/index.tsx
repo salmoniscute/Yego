@@ -14,7 +14,7 @@ import {
 import { OtherUser } from "schemas/otherUser";
 
 type propsType = Readonly<{
-    courseID: string,
+    courseID: number,
 }>;
 
 export default function MemberPage(props: propsType): ReactElement {

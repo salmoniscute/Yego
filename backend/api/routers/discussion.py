@@ -27,7 +27,7 @@ router = APIRouter(
 async def create_discussion(
     newDiscussion: DiscussionSchema.DiscussionCreate,
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Create a discussion with the following information:
