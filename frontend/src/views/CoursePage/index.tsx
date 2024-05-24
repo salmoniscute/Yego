@@ -21,6 +21,7 @@ import DiscussionPage from "./DiscussionPage";
 import "./index.scss";
 import MaterialPage from "./MaterialPage";
 import GradePage from "./GradePage";
+import SubGradePage from './GradePage/SubGradePage';
 import DiscussionTopicPage from "views/DiscussionTopicPage";
 import DiscussionReplyPage from "views/DiscussionReplyPage";
 
@@ -78,6 +79,7 @@ export default function CoursePage(): ReactElement {
         
         <Routes>
             <Route path="*" element={courseForum}/>
+            <Route path="/grade/subgradepage" element={<SubGradePage />} />
             <Route path="/discussion/:discussionId"  element={<DiscussionTopicPage/>}/>
             <Route path="/discussion/:discussionId/discussionTopic/:discussionTopicId"  element={<DiscussionReplyPage/>}/>
         </Routes>
