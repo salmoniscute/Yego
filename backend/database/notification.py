@@ -12,12 +12,7 @@ class Notification:
             "type": None
         }
         self.user_list = fakeDB["users"]
-        self.component_list = fakeDB["components"]
-        self.selected_course_list = fakeDB["selected_courses"]
         self.report_list = fakeDB["reports"]
-        self.course_bulletin_list = fakeDB["course_bulletins"]
-        self.discussion_list = fakeDB["discussions"]
-        self.discussion_topic_list = fakeDB["discussion_topics"] 
         self.results = []
         
     def generate(self):
