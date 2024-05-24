@@ -36,7 +36,7 @@ export default function TeamPage(): ReactElement {
   const teamOptions = (): Option[] => [
     { label: "自動分組" },
     { label: "學生自行分組" },
-    { label: "手動建立新群組"}
+    //{ label: "手動建立新群組"}
   ];
 
   const showGroups = async () => {
@@ -86,7 +86,7 @@ export default function TeamPage(): ReactElement {
         <label className="dropdownMenu">
           <div className="button">建立群組</div>
           <input type="checkbox" />
-          <div className="mask" style={{ "--length": 3 } as CSSProperties}>
+          <div className="mask" style={{ "--length": 2 } as CSSProperties}>
             <div className="content body-bold">
               { teamOptions().map((option, i) => <div
               key={i}

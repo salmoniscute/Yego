@@ -73,7 +73,10 @@ export default function AutoTeam(props:propsType): React.ReactElement {
   };
   
   const grouping = () => {
-    if(groupingMethod && number && namingMethod && selectedDate && hour && minute) post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", 1);
+    if(groupingMethod && number && namingMethod && selectedDate && hour && minute){
+        post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", 1);
+        close();
+    }
     else alert("請勾選所有項目");
 }
 
