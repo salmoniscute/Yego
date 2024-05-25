@@ -133,9 +133,7 @@ async def update_user_role(
     avatar: Avatar,
     uid: str = Depends(check_user_id)
 ):
-    avatar_path = f"backend/upload/user/default/{avatar}.png"
-    await UserCrud.update_avatar(uid, avatar_path)
-
+    await UserCrud.update_avatar(uid, f"/assets/{avatar}.png")
     return 
 
 
@@ -157,17 +155,18 @@ async def update_user_avatar(
     
     avatar_path = None
     if avatar:
-        out_file_path = f"upload/user/{uid}"
-        if not os.path.isdir(out_file_path):
-            os.makedirs(out_file_path)
+        public_dir = "../frontend/public"
+        avatar_dir = f"assets/upload/user/{uid}"
+        if not os.path.isdir(f"{public_dir}/{avatar_dir}"):
+            os.makedirs(f"{public_dir}/{avatar_dir}")
         
-        with open(f"{out_file_path}/{avatar.filename}", "wb") as file:
+        with open(f"{public_dir}/{avatar_dir}/{avatar.filename}", "wb") as file:
             content = await avatar.read()  
             file.write(content)
         
-        avatar_path = f"backend/{out_file_path}/{avatar.filename}"
+        avatar_path = f"{avatar_dir}/{avatar.filename}"
     
-    await UserCrud.update_avatar(uid, avatar_path)
+    await UserCrud.update_avatar(uid, f"/{avatar_path}")
     return 
 
 

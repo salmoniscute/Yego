@@ -1,4 +1,4 @@
-from datetime import datetime
+import random
 
 
 class File:
@@ -18,7 +18,7 @@ class File:
             self.results.append({
                 **self.default,
                 "component_id": report["id"],
-                "path": "backend/upload/user/default/default.jpg"
+                "path": random.choice(["/assets/Yego.png", "/assets/Yegogo.png", "/assets/Dago.png"])
             })
         
         return self.results

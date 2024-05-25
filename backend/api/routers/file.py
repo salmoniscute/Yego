@@ -31,15 +31,16 @@ async def create_files(
     files: list[UploadFile],
     component_id: str = Depends(check_component_id)
 ):
-    out_file_path = f"upload/component/{component_id}/"
-    if not os.path.isdir(out_file_path):
-        os.makedirs(out_file_path)
+    public_dir = "../frontend/public"
+    component_dir = f"assets/upload/component/{component_id}"
+    if not os.path.isdir(f"{public_dir}/{component_dir}"):
+        os.makedirs(f"{public_dir}/{component_dir}")
     for file in files:
-        with open(out_file_path + file.filename, 'wb') as out_file:
-            file_path = "backend/" + out_file_path + file.filename
+        with open(f"{public_dir}/{component_dir}/{file.filename}", 'wb') as out_file:
+            file_path = f"{component_dir}/{file.filename}"
             content = await file.read()  
             out_file.write(content) 
-            file = await FileCrud.create(component_id=component_id, path=file_path)
+            file = await FileCrud.create(component_id=component_id, path=f"/{file_path}")
 
     return
 
