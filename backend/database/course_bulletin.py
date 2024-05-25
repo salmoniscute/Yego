@@ -20,7 +20,6 @@ class CourseBulletin:
             "Biology"
         ]
         self.course_list = fakeDB["courses"]
-        self.teacher_list = [user for user in fakeDB["users"] if user["role"] == "teacher"]
         self.components = fakeDB["components"]
         self.component_id_counter = component_id_counter
         self.results = []
@@ -32,7 +31,7 @@ class CourseBulletin:
                 for _ in range(5):
                     self.components.append({
                         **self.component_default,
-                        "uid": self.teacher_list[0]["uid"],
+                        "uid": course["uid"],
                         "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,
                         "title": f"{dept} 課程公告 id = {self.component_id_counter}",
                         "content": f"{dept} 課程公告 id = {self.component_id_counter}"

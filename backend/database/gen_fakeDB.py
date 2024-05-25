@@ -78,11 +78,11 @@ class GenFakeDB:
     def generate(self):
         self.output["users"] = self.generate_user()
         self.output["courses"] = self.generate_course()
+        self.output["selected_courses"] = self.generate_selected_course()
         self.output["reports"], self.component_id_counter = self.generate_report()
         self.output["report_replies"], self.component_id_counter = self.generate_report_reply()
         self.output["website_bulletins"], self.component_id_counter = self.generate_website_bulletin()
         self.output["course_bulletins"], self.component_id_counter = self.generate_course_bulletin()
-        self.output["selected_courses"] = self.generate_selected_course()
         self.output["discussions"], self.component_id_counter = self.generate_discussion()
         self.output["discussion_topics"], self.component_id_counter = self.generate_discussion_topic()
         self.output["discussion_topic_replies"], self.component_id_counter = self.generate_discussion_topic_reply()

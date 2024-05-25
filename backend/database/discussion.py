@@ -19,7 +19,6 @@ class Discussion:
             "Chemistry",
             "Biology"
         ]
-        self.teacher_list = [user for user in fakeDB["users"] if user["role"] == "teacher"]
         self.course_list = fakeDB["courses"]
         self.components = fakeDB["components"]
         self.component_id_counter = component_id_counter
@@ -32,7 +31,7 @@ class Discussion:
                 for _ in range(3):
                     self.components.append({
                         **self.component_default,
-                        "uid": self.teacher_list[0]["uid"],
+                        "uid": course["uid"],
                         "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,
                         "title": f"{dept} 課程討論 id = {self.component_id_counter}",
                         "content": f"{dept} 課程討論 id = {self.component_id_counter}"
