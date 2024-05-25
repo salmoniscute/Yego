@@ -83,10 +83,13 @@ async def get_user_group(
     Get the group of particular user in this course.
     """
     selected_course = await SelectedCourseCrud.get(uid, course_id)
-    if selected_course.group_info:
-        return selected_course.group_info.name
-    else:
-        return None
+    if selected_course:
+        if selected_course.group_info:
+            return selected_course.group_info.name
+        else:
+            return None
+    
+    raise not_found
 
 
 @router.delete(
