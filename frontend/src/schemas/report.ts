@@ -1,5 +1,5 @@
 export interface Report {
-    id?: string,
+    id?: number,
     uid : string,
     release_time?: number,
     title:string,

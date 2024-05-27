@@ -85,12 +85,12 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         handleCourseBulletinList();
     }
 
-    const deleteBulletin = async(id:string) =>{
+    const deleteBulletin = async(id:number) =>{
         await deleteCourseBulletin(id);
         handleCourseBulletinList();
     }
 
-    const pinBulletin = async(id:string) =>{
+    const pinBulletin = async(id:number) =>{
         const theBulletin = courseBulletinList.find(item => item.id === id) ;
         if (theBulletin) {
             theBulletin.pin_to_top = !theBulletin.pin_to_top;
@@ -101,7 +101,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         handleCourseBulletinList();
     }
 
-    const editBulletin = async(id:string) =>{
+    const editBulletin = async(id:number) =>{
         const theBulletin = courseBulletinList.find(item => item.id === id);
         setContent(theBulletin?.content||"");
         setTitle(theBulletin?.title||"");
@@ -114,7 +114,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         action: (() => void) | undefined;
     };
     
-    const editOptions = (id: string , isPinned: boolean): Option[] => [
+    const editOptions = (id: number , isPinned: boolean): Option[] => [
         { label: "編輯" ,action:() => editBulletin(id)},
         { label: "刪除", action: () => deleteBulletin(id) },
         { label: isPinned ? "取消置頂" : "置頂" , action: () => pinBulletin(id) }
@@ -165,7 +165,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                                     <div className="mask" style={{ "--length": 3 } as CSSProperties}>
                                         <div className="content body-bold">
                                             {
-                                                editOptions(data.id || "" , data.pin_to_top).map((option, i) => <div
+                                                editOptions(data.id || 0 , data.pin_to_top).map((option, i) => <div
                                                     key={i}
                                                     onClick={option.action}
                                                 ><p>{option.label}</p></div>)
