@@ -36,7 +36,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     },[])
 
     const handleDiscussionTopic = () =>{
-        getDiscussionTopic(params.discussionTopicId || "").then( data =>{
+        getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
             setDiscussionTopic(data);
             if (discussionTopic && discussionTopic.replies) {
                 categorizeReplies(discussionTopic.replies);
@@ -74,6 +74,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         return formattedDate;
     }
     const postReply  = async (parent_id:number , index:number) =>{
+        console.log(parent_id);
+        console.log(index);
         if (userData){
             const uid = userData?.uid;
             const publisher = userData?.name;
@@ -87,19 +89,26 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             };
             if (parent_id == 0){
                 reply.content = mainReply;
-                const r = await postDTReply(reply);
+                const response = await postDTReply(reply);
+                if (response) {
+                    categorizedReplies[parent_id].push(response);
+                    categorizedReplies[response.id || 0] = [];
+                }
                 setMainReply("");
             }
             else {
                 reply.content = replyContentList[index];
-                const r = await postDTReply(reply);
-                handleReplyContentChange(index,"");
+                const response = await postDTReply(reply);
+                if (response){
+                    categorizedReplies[parent_id].push(response);
+                }
             }
-            if (!categorizedReplies[parent_id]) {
-                categorizedReplies[parent_id] = [];
-            }
-            categorizedReplies[parent_id].push(reply);
+            
             setCategorizedReplies(categorizedReplies);
+            console.log(categorizedReplies);
+
+            setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
+            setShowReplyAreaList(Array(categorizedReplies[0]?.length || 0).fill(false));
         }
         
     }
@@ -107,10 +116,13 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     const categorizeReplies = (replies: DiscussionTopicReply[]) => {
         const categorizedReplies: { [key: number]: DiscussionTopicReply[] } = {};
         replies.forEach(reply => {
-            if (!categorizedReplies[Number(reply.parent_id)]) {
-              categorizedReplies[Number(reply.parent_id)] = [];
+            if (reply.parent_id == 0){
+                categorizedReplies[reply?.id||0] = [];
             }
-            categorizedReplies[Number(reply.parent_id)].push(reply);
+            if (!categorizedReplies[reply.parent_id]) {
+                categorizedReplies[reply.parent_id] = [];
+            }
+            categorizedReplies[reply.parent_id].push(reply);
         });
         setCategorizedReplies(categorizedReplies);
     }

@@ -37,13 +37,13 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   useEffect(() => {
     handleDiscussionTopicList();
-    getDiscussion(params.discussionId || "").then( data=>{
+    getDiscussion(Number(params.discussionId) || 0).then( data=>{
       setDiscussion(data);
     })
   }, [])
 
   const handleDiscussionTopicList = () =>{
-    getDiscussionTopicList(params.discussionId|| "").then(data => {
+    getDiscussionTopicList(Number(params.discussionId)|| 0).then(data => {
       resortList(data, arrow);
     });
   };
@@ -66,7 +66,6 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
         
     }
     setDiscussionTopic(sortedList);
-    console.log(discussionTopicList);
   }
 
   const Resort = () => {
