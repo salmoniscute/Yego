@@ -3,6 +3,7 @@ import {
     useState,
     CSSProperties,
     useContext,
+    useRef
 } from "react";
 import { Link ,useParams} from "react-router-dom";
 import "./index.scss";
@@ -29,6 +30,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     const [replyContentList, setReplyContentList] = useState(Array());
     const [showReplyAreaList, setShowReplyAreaList] = useState(Array());
     const [mainReply , setMainReply] = useState("");
+    const [showMainReplyArea, setShowMainReplyArea] = useState(false);
+    const mainReplyAreaRef = useRef<HTMLDivElement>(null);
     const [categorizedReplies, setCategorizedReplies] = useState<{ [key: number]: DiscussionTopicReply[] }>({});
 
     useEffect(()=>{
@@ -38,6 +41,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     const handleDiscussionTopic = () =>{
         getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
             setDiscussionTopic(data);
+            categorizedReplies[0] = [];
             if (discussionTopic && discussionTopic.replies) {
                 categorizeReplies(discussionTopic.replies);
                 setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
@@ -45,6 +49,15 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             };
         });
     }
+
+    const handleMainReplyClick = () => {
+        setShowMainReplyArea(true);
+        setTimeout(() => {
+            if (mainReplyAreaRef.current) {
+                mainReplyAreaRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100);
+      };
 
     const handleToggleReplyArea = (index:number) => {
         const newShowReplyAreaList = [...showReplyAreaList];
@@ -67,15 +80,13 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         { label: "編輯" ,action:undefined },
     ];
 
-    const setTimeString = (release_time:number):string => {
+    const setTimeString = (release_time:string):string => {
         const releaseDate = new Date(release_time);
         const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
         const formattedDate = `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
         return formattedDate;
     }
     const postReply  = async (parent_id:number , index:number) =>{
-        console.log(parent_id);
-        console.log(index);
         if (userData){
             const uid = userData?.uid;
             const publisher = userData?.name;
@@ -95,6 +106,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     categorizedReplies[response.id || 0] = [];
                 }
                 setMainReply("");
+                setShowMainReplyArea(false);
             }
             else {
                 reply.content = replyContentList[index];
@@ -151,15 +163,14 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 <div className="discussionTopicTop">
                     <img src={UserIcon}/>
                     <h3>{discussionTopic?.publisher}</h3>
-                    <p>{setTimeString(discussionTopic?.release_time||0)}</p>
+                    <p>{setTimeString(discussionTopic?.release_time||"")}</p>
                 </div>
                 <div className="dtContent">
                     <p dangerouslySetInnerHTML={{ __html: discussionTopic?.content || '' }}/>
                 </div>
-                <div className="dtBottom">
+                <div className="dtBottom" onClick={handleMainReplyClick}>
                     <p>回覆</p>
                 </div>
-                
             </div>
 
             <div >
@@ -169,11 +180,11 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                             <div key={index} className="discussionTopicReply">
                                 <div className="discussionTopicReplyTop">
                                     <img src={UserIcon}/>
-                                    <h3>發布者</h3>
+                                    <h3>{data.publisher}</h3>
                                 </div>
                                 <p>{data.content}</p>
                                 <div className="discussionTopicReplyBottom">
-                                    <p>{data.release_time}</p>
+                                    <p>{setTimeString(data?.release_time||"")}</p>
                                     <div className="replyButton" onClick={()=>handleToggleReplyArea(index)}> 
                                         <p>回覆</p>
                                         <TiArrowBack/>
@@ -194,10 +205,10 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                     <div key={index2} className="replyTheReply">
                                         <div className="replyTheReplyTop">
                                             <img src={UserIcon}/>
-                                            <h3>發布者</h3>
+                                            <h3>{data2.publisher}</h3>
                                         </div>
                                         <p>{data2.content}</p>
-                                        <p>{data2.release_time}</p>
+                                        <p>{setTimeString(data2?.release_time||"")}</p>
                                     </div>
                                 )))}
                             </div> 
@@ -208,7 +219,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 }
             </div>
 
-            <div className="discussionReplyArea">
+            { showMainReplyArea && <div className="discussionReplyArea" ref={mainReplyAreaRef}>
                 <img src={UserIcon}/>
                 <textarea
                     placeholder="回覆貼文"
@@ -217,7 +228,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     rows={1}
                 />
                 <IoSend className="sendIcon" onClick={() => postReply(0 , 0)}/>
-            </div>
+            </div>}
                 
         </div> 
     );

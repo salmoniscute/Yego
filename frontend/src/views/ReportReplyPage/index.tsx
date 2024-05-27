@@ -67,7 +67,7 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
         { label: "編輯" ,action:undefined },
     ];
 
-    const setTimeString = (release_time:number):string => {
+    const setTimeString = (release_time:string):string => {
         const releaseDate = new Date(release_time);
         const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
         const formattedDate = `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
@@ -151,7 +151,7 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                 <div className="discussionTopicTop">
                     <img src={UserIcon}/>
                     <h3>{report?.publisher}</h3>
-                    <p>{setTimeString(report?.release_time||0)}</p>
+                    <p>{setTimeString(report?.release_time||"")}</p>
                 </div>
                 <div className="dtContent">
                     <p dangerouslySetInnerHTML={{ __html: report?.content || '' }}/>

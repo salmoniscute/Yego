@@ -2,7 +2,7 @@ export interface Report {
     id?: number,
     uid : string,
     publisher_avatar : string ,
-    release_time?: number,
+    release_time?: string,
     title:string,
     reply_number:number,
     publisher:string,
@@ -18,6 +18,6 @@ export interface ReportReply{
     publisher_avatar : string ,
     uid:string,
     publisher:string,
-    release_time?: number,
+    release_time?: string,
     content:string,
 }

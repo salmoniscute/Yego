@@ -58,7 +58,7 @@ export default function ReportPage(): ReactElement {
     setArrow(!arrow);
   }
 
-  const setTimeString = (release_time:number):string => {
+  const setTimeString = (release_time:string):string => {
     const releaseDate = new Date(release_time);
     const formattedDate = `${releaseDate.getFullYear()}年${releaseDate.getMonth() + 1}月${releaseDate.getDate()}日`;
     return formattedDate
@@ -85,7 +85,7 @@ export default function ReportPage(): ReactElement {
             <p className="title">
                 <Link to={`./${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{setTimeString(data.release_time||0)}</p>
+            <p className="launch">{setTimeString(data.release_time||"")}</p>
             <p className="reply">{data.reply_number}</p>
           </div>
         )

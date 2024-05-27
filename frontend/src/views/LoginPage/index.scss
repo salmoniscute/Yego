@@ -150,6 +150,9 @@
       }
       .page3{
         width: 100%;
+        h2{
+          margin-bottom: 0.5em;
+        }
         div {
           display: flex;
           flex-direction: row;
@@ -181,7 +184,7 @@
             }
             
           }
-          .character:hover{
+          .character:hover , .character.selected{
             img{
               transform: translateY(1em) ;
               transition-duration: 0.3s;
@@ -197,7 +200,7 @@
 
         }
         .button{
-          margin-top: 0.5em;
+          margin-top: 1.5em;
           justify-content: end;
           button{
             margin-left: 2em;
