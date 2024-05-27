@@ -31,7 +31,6 @@ export default function LoginPage(): ReactElement {
       } else {
           
       }
-      setShowWork(true);
   };
 
   return (
@@ -107,23 +106,29 @@ export default function LoginPage(): ReactElement {
               <div>
                 <div className='character'>
                   <img src={DagoIcon}/>
-                  <p className='name'>Dago</p>
-                  <p className='intro'>每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。</p>
+                  <div className='hoverEffect'>
+                    <p className='name'>Dago</p>
+                    <p className='intro'>每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。</p>
+                  </div>
                 </div>
                 <div className='character'>
                   <img src={YegogoIcon}/>
-                  <p className='name'>Yegogo</p>
-                  <p className='intro'>愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。</p>
+                  <div className='hoverEffect'>
+                    <p className='name'>Yegogo</p>
+                    <p className='intro'>愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。</p> 
+                  </div>
                 </div>
                 <div className='character'>
                   <img src={YegoIcon}/>
-                  <p className='name'>Yego</p>
-                  <p className='intro'>成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。</p>
+                  <div className='hoverEffect'>
+                    <p className='name'>Yego</p>
+                    <p className='intro'>成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。</p>
+                  </div>
                 </div>
               </div>
               <div className='button'>
                 <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                <button onClick={()=>{}}><p>大公告成！</p></button>
+                <button onClick={()=>{navigate("/");}}><p>大公告成！</p></button>
               </div>
             </div>}
             <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>

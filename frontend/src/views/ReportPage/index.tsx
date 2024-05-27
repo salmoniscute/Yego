@@ -51,7 +51,6 @@ export default function ReportPage(): ReactElement {
         
     }
     setReportList(sortedList);
-
   }
 
   const Resort = () => {
@@ -87,7 +86,7 @@ export default function ReportPage(): ReactElement {
                 <Link to={`./${data.id}`}>{data.title}</Link>
             </p>
             <p className="launch">{setTimeString(data.release_time||0)}</p>
-            <p className="reply">{data.reply}</p>
+            <p className="reply">{data.reply_number}</p>
           </div>
         )
       }
