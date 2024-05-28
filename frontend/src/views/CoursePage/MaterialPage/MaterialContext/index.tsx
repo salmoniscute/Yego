@@ -11,6 +11,7 @@ import {
 import "./index.scss";
 import functionContext from "context/function";
 import NewMaterial from "./NewMaterial";
+import NewFiles from "./NewFiles";
 
 
 type propsType = Readonly<{
@@ -197,6 +198,12 @@ export default function MaterialContext(props: propsType): ReactElement {
                 callback={() => { }}
             /> : undefined
         }
+        <NewFiles
+            show={false}
+            themeId={themeId}
+            close={() => setShowNewMaterial(false)}
+            callback={() => { }}
+        />
         {
             currentData?.materials.map((v, i) => <div
                 key={v.id}

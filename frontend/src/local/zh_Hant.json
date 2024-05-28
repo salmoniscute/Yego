@@ -25,8 +25,10 @@
     "add_theme_name": "主題名稱",
     "add": "新增",
     "add_material": "新增教材",
+    "add_material_setting": "新增教材 - 設定",
     "edit_material": "編輯教材",
     "material_roll_call": "點名",
     "material_assignment": "作業",
-    "material_file": "檔案"
+    "material_file": "檔案",
+    "confirm": "確認"
 }

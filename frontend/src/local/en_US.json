@@ -25,8 +25,10 @@
     "add_theme_name": "Theme Name",
     "add": "Add",
     "add_material": "Add Material",
+    "add_material_setting": "Add Material - Setting",
     "edit_material": "Edit Material",
     "material_roll_call": "Roll Call",
     "material_assignment": "Assignment",
-    "material_file": "File"
+    "material_file": "File",
+    "confirm": "Confirm"
 }

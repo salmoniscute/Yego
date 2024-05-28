@@ -1,0 +1,198 @@
+#newFiles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6668;
+    opacity: 0%;
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 0.5s;
+
+    .box {
+        position: relative;
+        width: 48rem;
+        padding: 1.5rem;
+        max-width: calc(95vw - 3rem);
+        background-color: #FFF;
+        border-radius: 1rem;
+        transform: translateY(-15rem);
+        transition: transform 0.5s;
+
+        div.title {
+            margin-bottom: 1.5rem;
+        }
+
+        button.close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: inherit;
+        }
+
+        .buttonBar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+
+            button {
+                border-radius: 0.25em;
+                padding: 0.5em 1em;
+            }
+
+            .cancel {
+                background-color: #E1E1E4;
+            }
+
+            .next {
+                background-color: #FFEA79;
+            }
+        }
+
+        .setting {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+
+            .left,
+            .right {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                .row {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+
+                    svg {
+                        object-fit: contain;
+                        height: 55%;
+                    }
+
+                    input.date {
+                        height: 1.2rem;
+                        line-height: 1.2rem;
+                        outline: none;
+                    }
+                }
+            }
+
+            .left {
+                flex: 3;
+
+                .row {
+                    .key {
+                        width: 4em;
+                    }
+
+                    input {
+                        height: 1.5rem;
+                        line-height: 1.5rem;
+                    }
+
+                    input,
+                    textarea {
+                        flex: 1;
+                        resize: none;
+                        font-size: 1rem;
+                        outline: none;
+                        border: 0.05rem #C4C4C4 solid;
+                        transition: border-color 0.3s;
+                    }
+
+                    input:focus,
+                    textarea:focus {
+                        border-color: #000;
+                    }
+
+                    textarea {
+                        height: 8em;
+                    }
+                }
+
+                .row:has(textarea) {
+                    align-items: stretch;
+                }
+            }
+
+            .right {
+                flex: 5;
+                isolation: isolate;
+
+                .first {
+                    z-index: 10;
+                }
+
+                .visible {
+                    .row {
+                        label {
+                            position: relative;
+                            width: 2.75rem;
+                            height: 1.5rem;
+                            cursor: pointer;
+                            user-select: none;
+                            border: 0.085rem #C4C4C4 solid;
+                            border-radius: 0.75rem;
+                            transition: border-color 0.5s, background-color 0.5s;
+
+                            input {
+                                display: none;
+                            }
+                        }
+
+                        label::before {
+                            content: "";
+                            position: absolute;
+                            top: 0.1rem;
+                            left: 0.1rem;
+                            height: 1.3rem;
+                            width: 1.3rem;
+                            border-radius: 0.65rem;
+                            background-color: #C4C4C4;
+                            transition: left 0.5s, background-color 0.5s;
+                        }
+
+                        label:has(input:checked) {
+                            border-color: #FFEA79;
+                            background-color: #FFEA79;
+                        }
+
+                        label:has(input:checked)::before {
+                            left: calc(100% - 1.4rem);
+                            background-color: #FFF;
+                        }
+                    }
+                }
+            }
+        }
+
+        .addFiles {
+            .title {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                button {
+                    background-color: #FFEA79;
+                    padding: 0.3rem 1rem;
+                    border-radius: 0.25rem;
+                }
+            }
+        }
+    }
+}
+
+#newFiles[data-show=true] {
+    pointer-events: initial;
+    opacity: 100%;
+
+    .box {
+        transform: translateY(0rem);
+    }
+}
