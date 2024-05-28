@@ -18,11 +18,11 @@ export async function getDiscussionList(course_id:number): Promise<Array<Discuss
     }
 }
 
-export async function getDiscussion(id:string) : Promise <Discussion>{
+export async function getDiscussion(id:number) : Promise <Discussion>{
     let url = "http://localhost:8080/api/discussion/"+id;
     let discussion;
     try {
-        const response = await axios.delete(url,{
+        const response = await axios.get(url,{
           });
         discussion = response.data;
     }
@@ -42,7 +42,7 @@ export async function postDiscussion(discussion:Discussion):Promise<Discussion |
 }
 
 
-export async function getDiscussionTopicList(discussion_id:string) : Promise<Array<DiscussionTopic>>{
+export async function getDiscussionTopicList(discussion_id:number) : Promise<Array<DiscussionTopic>>{
     let url = "http://localhost:8080/api/discussion_topics/"+discussion_id;
     try {
         const response = await axios.get(url,{
@@ -55,7 +55,7 @@ export async function getDiscussionTopicList(discussion_id:string) : Promise<Arr
     }
 }
 
-export async function getDiscussionTopic(id:string) : Promise <DiscussionTopic>{
+export async function getDiscussionTopic(id:number) : Promise <DiscussionTopic>{
     let url = "http://localhost:8080/api/discussion_topic/"+id;
     let discussionTopic;
     try {
@@ -79,14 +79,16 @@ export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Pro
     return discussionTopic;
 }
 
-export async function postDTReply(reply:DiscussionTopicReply){
-    let url = "http://localhost:8080/api/discussion_topic?uid="+reply.uid+"&topic_id="+reply.topic_id + "&parent_id="+reply.parent_id;
+export async function postDTReply(reply:DiscussionTopicReply):Promise<DiscussionTopicReply | null>{
+    let url = "http://localhost:8080/api/discussion_topic_reply?uid="+reply.uid+"&topic_id="+reply.topic_id + "&parent_id="+reply.parent_id;
     try {
         const response = await axios.post(url,reply);
+        return response.data;
     }
     catch(error) {  
         
     }
+    return reply;
 
 }
 

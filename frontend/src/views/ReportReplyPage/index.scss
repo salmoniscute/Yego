@@ -1,0 +1,213 @@
+#discussionReplyPage{
+    position: relative;
+    margin: 6em 17em;
+
+    .mainDiscussionTopic{
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
+        padding: 1em 2em;
+        .discussionTopicTop{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            img{
+                width: 2.5em;
+                height: 2.5em;
+                margin-right: 1em;
+            }
+            h3{
+                margin-right:0.5em;
+                font-size: large;
+            }
+        }
+        .dtContent{
+            > p{
+                font-size: large;
+            }
+        }
+
+        .mainDtTop{
+            display: flex;
+            justify-content: space-between;
+            > h3{
+                font-size: x-large;
+                margin: 0.5em 0em;
+            }
+            label.dropdownMenu {
+                position: relative;
+                display: flex;
+                gap: 0.5rem;
+                line-height: 2rem;
+                background-color:#FFFFFF;
+                text-align: center;
+                align-self: center;
+                font-size: 20px;
+                > * {
+                    cursor: pointer;
+                }
+                input {
+                    display: none;
+                }
+                .mask {
+                    position: absolute;
+                    top: 100%;
+                    left: 0%;
+                    width: 3em;
+                    background-color: #FFFFFF;
+                    overflow: hidden;
+                    transition: height 0.3s;
+                    cursor: default;
+                    .content {
+                        display: flex;
+                        flex-direction: column;
+                        > div {
+                            transition: background-color 0.3s;
+                            p {
+                                font-size: 16px;
+                                margin: 0 auto;
+                                width: 3em;
+                                color: #949494;
+                                cursor: pointer;
+                                transition: color 0.3s;
+                            }
+                        }
+                        > div:has(p:hover) {
+                            background-color: #cecece;
+                            p {
+                                color: #000;
+                            }
+                        }
+                    }
+                }
+            }
+            label.dropdownMenu:has(input:not(:checked)) {
+                .mask {
+                    height: 0;
+                    border: none;
+                }
+            }
+            label.dropdownMenu:has(input:checked) {
+                .mask {
+                    height: calc(2rem* var(--length));
+                    border: 1px solid #474141;
+                }
+            }
+    
+
+        }
+        
+        
+
+        .dtBottom{
+            display: flex;
+            justify-content: end;
+            p{
+                cursor: pointer;
+                background-color: #FFEA79;
+                padding: 1em 1em;
+                border-radius: 0.3em;
+            }
+        }
+
+        
+    }
+    div .discussionTopicReply{
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
+        border-top: none;
+        padding: 0.5em 2em;
+        .discussionTopicReplyTop{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            img{
+                width: 2.5em;
+                height: 2.5em;
+                margin-right: 1em;
+            }
+            h3{
+                margin-right:0.5em;
+                font-size: large;
+            }
+        }
+        .discussionTopicReplyBottom{
+            display: flex;
+            flex-direction: row;
+        }
+        > p{
+            margin: 0em 0em;
+            word-wrap: break-word; 
+            word-break: break-word;
+        }
+
+        .replyButton{
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+            > p{
+                margin-right: 0.5em;
+            }
+        }
+
+        .replyTheReply{
+            margin: 0em 3em;
+            .replyTheReplyTop{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                img{
+                    width: 2.5em;
+                    height: 2.5em;
+                    margin-right: 1em;
+                }
+                h3{
+                    margin-right:0.5em;
+                    font-size: large;
+                }
+            }
+            > p{
+                margin: 0em 0em;
+                margin-bottom: 1em;
+                word-wrap: break-word; 
+                word-break: break-word;
+            }
+        }
+
+    }
+
+    .discussionReplyArea ,div .discussionTopicReply .discussionReplyArea{
+        margin-top: 1em;
+        position: relative;
+        overflow: hidden;
+        padding: 1em 2em;
+        display: flex;
+        background-color: #FFFFFF;
+        border: solid 1px #424242;
+        img{
+            width: 2.5em;
+            height: 2.5em;
+            margin-right: 1em;
+        }
+        textarea{
+            width: 100%; 
+            border: 0; 
+            font-size: large;
+            resize:none; 
+            outline: none;
+            padding-top: 0.5em;
+        }
+        .sendIcon{
+            align-self: center;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        
+    }
+    div .discussionTopicReply .discussionReplyArea{
+        margin-top: 0em;
+        margin-bottom: 1em;
+    }
+
+
+}

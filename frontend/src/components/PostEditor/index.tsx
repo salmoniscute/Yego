@@ -143,8 +143,10 @@ export default function PostEditor(props: propsType): ReactElement {
         const report : Report = {
           uid : uid,
           title:title,
-          reply:0,
+          reply_number:0,
           content:content,
+          publisher : publisher || "",
+          publisher_avatar : ""
         }
         await postReport(report);
         updatePost();

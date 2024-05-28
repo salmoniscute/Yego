@@ -40,7 +40,6 @@ export default function DiscussionPage(props: propsType): ReactElement {
     const handleDiscussionList = () => {
         getDiscussionList(courseID).then(data => {
             setDiscussion(data);
-            console.log(discussionList);
         }).catch( error =>{
             if(error.response && error.response.status == 404){
                 

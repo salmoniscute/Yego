@@ -37,13 +37,13 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
 
   useEffect(() => {
     handleDiscussionTopicList();
-    getDiscussion(params.discussionId || "").then( data=>{
+    getDiscussion(Number(params.discussionId) || 0).then( data=>{
       setDiscussion(data);
     })
   }, [])
 
   const handleDiscussionTopicList = () =>{
-    getDiscussionTopicList(params.discussionId|| "").then(data => {
+    getDiscussionTopicList(Number(params.discussionId)|| 0).then(data => {
       resortList(data, arrow);
     });
   };
@@ -66,7 +66,6 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
         
     }
     setDiscussionTopic(sortedList);
-    console.log(discussionTopicList);
   }
 
   const Resort = () => {
@@ -74,7 +73,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
     setArrow(!arrow);
   }
 
-  const setTimeString = (release_time:number):string => {
+  const setTimeString = (release_time:string):string => {
     const releaseDate = new Date(release_time);
     const formattedDate = `${releaseDate.getFullYear()}年${releaseDate.getMonth() + 1}月${releaseDate.getDate()}日`;
     return formattedDate;
@@ -102,7 +101,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
             <p className="title">
                 <Link to={`./discussionTopic/${data.id}`}>{data.title}</Link>
             </p>
-            <p className="launch">{setTimeString(data.release_time||0)}</p>
+            <p className="launch">{setTimeString(data.release_time||"")}</p>
             <p className="reply">{data.reply_number}</p>
             <button className="follow"><p>{data.follow === true ? <BiSolidBellRing /> : <TbBellRinging />}</p></button> 
           </div>
