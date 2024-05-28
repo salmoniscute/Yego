@@ -3,6 +3,7 @@ import {
     useState,
     CSSProperties,
     useContext,
+    useRef
 } from "react";
 import { Link ,useParams} from "react-router-dom";
 import "./index.scss";
@@ -12,7 +13,7 @@ import { TiArrowBack } from "react-icons/ti";
 
 import userDataContext from "context/userData";
 import { ReportReply, Report } from "schemas/report";
-import { getDiscussionTopic, postDTReply } from "api/discussion";
+import { getReport , postReportReply } from "api/report";
 
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
@@ -29,6 +30,8 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
     const [replyContentList, setReplyContentList] = useState(Array());
     const [showReplyAreaList, setShowReplyAreaList] = useState(Array());
     const [mainReply , setMainReply] = useState("");
+    const [showMainReplyArea, setShowMainReplyArea] = useState(false);
+    const mainReplyAreaRef = useRef<HTMLDivElement>(null);
     const [categorizedReplies, setCategorizedReplies] = useState<{ [key: number]: ReportReply[] }>({});
 
     useEffect(()=>{
@@ -36,8 +39,9 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
     },[])
 
     const handleDiscussionTopic = () =>{
-        getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
+        getReport(Number(params.reportId) || 0).then( data =>{
             setReport(data);
+            categorizedReplies[0] = [];
             if (report && report.replies) {
                 categorizeReplies(report.replies);
                 setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
@@ -45,6 +49,14 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
             };
         });
     }
+    const handleMainReplyClick = () => {
+        setShowMainReplyArea(true);
+        setTimeout(() => {
+            if (mainReplyAreaRef.current) {
+                mainReplyAreaRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100);
+      };
 
     const handleToggleReplyArea = (index:number) => {
         const newShowReplyAreaList = [...showReplyAreaList];
@@ -74,14 +86,12 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
         return formattedDate;
     }
     const postReply  = async (parent_id:number , index:number) =>{
-        console.log(parent_id);
-        console.log(index);
         if (userData){
             const uid = userData?.uid;
             const publisher = userData?.name;
             const reply : ReportReply = {
                 parent_id : parent_id ,
-                topic_id : Number(params.discussionTopicId)|| 0,
+                report_id : Number(params.reportId)|| 0,
                 publisher_avatar : "" ,
                 uid:uid,
                 publisher:publisher,
@@ -89,24 +99,23 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
             };
             if (parent_id == 0){
                 reply.content = mainReply;
-                const response = await postDTReply(reply);
+                const response = await postReportReply(reply);
                 if (response) {
                     categorizedReplies[parent_id].push(response);
                     categorizedReplies[response.id || 0] = [];
                 }
                 setMainReply("");
+                setShowMainReplyArea(false);
             }
             else {
                 reply.content = replyContentList[index];
-                const response = await postDTReply(reply);
+                const response = await postReportReply(reply);
                 if (response){
                     categorizedReplies[parent_id].push(response);
                 }
             }
             
             setCategorizedReplies(categorizedReplies);
-            console.log(categorizedReplies);
-
             setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
             setShowReplyAreaList(Array(categorizedReplies[0]?.length || 0).fill(false));
         }
@@ -156,7 +165,7 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                 <div className="dtContent">
                     <p dangerouslySetInnerHTML={{ __html: report?.content || '' }}/>
                 </div>
-                <div className="dtBottom">
+                <div className="dtBottom" onClick={handleMainReplyClick}>
                     <p>回覆</p>
                 </div>
                 
@@ -169,11 +178,11 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                             <div key={index} className="discussionTopicReply">
                                 <div className="discussionTopicReplyTop">
                                     <img src={UserIcon}/>
-                                    <h3>發布者</h3>
+                                    <h3>{data.publisher}</h3>
                                 </div>
                                 <p>{data.content}</p>
                                 <div className="discussionTopicReplyBottom">
-                                    <p>{data.release_time}</p>
+                                    <p>{setTimeString(data?.release_time||"")}</p>
                                     <div className="replyButton" onClick={()=>handleToggleReplyArea(index)}> 
                                         <p>回覆</p>
                                         <TiArrowBack/>
@@ -194,10 +203,10 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                                     <div key={index2} className="replyTheReply">
                                         <div className="replyTheReplyTop">
                                             <img src={UserIcon}/>
-                                            <h3>發布者</h3>
+                                            <h3>{data2.publisher}</h3>
                                         </div>
                                         <p>{data2.content}</p>
-                                        <p>{data2.release_time}</p>
+                                        <p>{setTimeString(data2?.release_time||"")}</p>
                                     </div>
                                 )))}
                             </div> 
@@ -208,7 +217,7 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                 }
             </div>
 
-            <div className="discussionReplyArea">
+            { showMainReplyArea && <div className="discussionReplyArea" ref={mainReplyAreaRef}>
                 <img src={UserIcon}/>
                 <textarea
                     placeholder="回覆貼文"
@@ -217,7 +226,7 @@ export default function ReportReplyPage(props: propsType): React.ReactElement {
                     rows={1}
                 />
                 <IoSend className="sendIcon" onClick={() => postReply(0 , 0)}/>
-            </div>
+            </div>}
                 
         </div> 
     );

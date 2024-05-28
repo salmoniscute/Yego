@@ -14,7 +14,7 @@ export interface Report {
 export interface ReportReply{
     id?:number,
     parent_id : number ,
-    topic_id : number , 
+    report_id : number , 
     publisher_avatar : string ,
     uid:string,
     publisher:string,

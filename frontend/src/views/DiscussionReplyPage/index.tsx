@@ -117,8 +117,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             }
             
             setCategorizedReplies(categorizedReplies);
-            console.log(categorizedReplies);
-
             setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
             setShowReplyAreaList(Array(categorizedReplies[0]?.length || 0).fill(false));
         }

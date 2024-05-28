@@ -37,6 +37,7 @@ import PersonalPage from "views/PersonalPage";
 import CoursePage from "views/CoursePage";
 import LandingPage from "views/LandingPage";
 import ReportPage from "views/ReportPage";
+import ReportReplyPage from "views/ReportReplyPage";
 
 import TeamPage from "views/TeamPage";
 
@@ -118,7 +119,7 @@ export default function App(): ReactElement {
                         <Route path="/course/:courseID/*" element={<CoursePage />} />
                         <Route path="/personal/:uid/*" element={<PersonalPage/>} />
                         <Route path="/reportBug" element={<ReportPage />} />  
-                        <Route path="/reportBug/:reportId" element={<ReportPage />} />
+                        <Route path="/reportBug/:reportId" element={<ReportReplyPage />} />
                         <Route path="/notification/:id" element={<NotificationPage />} />
                         <Route path="/salmontest" element={<TeamPage/>} />
                         <Route path="*" element={<Navigate to="/" />} />
