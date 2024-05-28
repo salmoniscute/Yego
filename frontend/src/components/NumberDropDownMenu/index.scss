@@ -1,0 +1,52 @@
+.numberDropDownMenu {
+    position: relative;
+    width: 4rem;
+    height: 1.75rem;
+    
+    .mask {
+        position: relative;
+        background-color: #FFF;;
+        border: 0.05rem solid #888;
+        border-radius: 0.3rem;
+        overflow: hidden;
+        height: 1.25rem;
+        padding: 0.25rem 0;
+        transition: height 0.5s;
+
+        .content {
+            font-size: 1rem;
+            height: 1.25rem;
+            line-height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            user-select: none;
+    
+            .ms {
+                cursor: pointer;
+            }
+        }
+
+        .values {
+            margin-top: 0.25rem;
+            height: 5rem;
+            text-align: center;
+            overflow-y: auto;
+
+            .value {
+                user-select: none;
+                cursor: pointer;
+            }
+
+            .value:hover {
+                background-color: #AAA8;
+            }
+        }
+    }
+}
+
+.numberDropDownMenu[data-open=true] {
+    .mask {
+        height: 6.5rem;
+    }
+}

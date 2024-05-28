@@ -1,6 +1,8 @@
 {
     "current_language": "English",
     "login": "Login",
+    "cancel": "Cancel",
+    "next": "Next",
     "sidebar_menu": "Menu",
     "website_announcement": "Website Announcement",
     "see_more": "See More",
@@ -16,5 +18,17 @@
     "dark_mode": "Dark mode",
     "use_tutorial": "Use tutorial",
     "setting": "Setting",
-    "logout": "Logout"
+    "logout": "Logout",
+    "edit_mode": "Edit Mode",
+    "edit_finish": "Finish",
+    "add_theme": "Add Theme",
+    "add_theme_name": "Theme Name",
+    "add": "Add",
+    "add_material": "Add Material",
+    "add_material_setting": "Add Material - Setting",
+    "edit_material": "Edit Material",
+    "material_roll_call": "Roll Call",
+    "material_assignment": "Assignment",
+    "material_file": "File",
+    "confirm": "Confirm"
 }
