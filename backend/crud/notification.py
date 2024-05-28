@@ -35,9 +35,8 @@ type_actions = {
 
 @crud_class_decorator
 class NotificationCrudManager:
-    async def create(self, uid: str, component_id: int, type: NotificationType, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
-        newNotification_dict = newNotification.model_dump()
-        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, **newNotification_dict)
+    async def create(self, uid: str, component_id: int, type: NotificationType, db_session: AsyncSession):
+        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, have_read=False)
         db_session.add(notification)
         await db_session.commit()
 

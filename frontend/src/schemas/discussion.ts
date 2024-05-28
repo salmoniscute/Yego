@@ -1,5 +1,5 @@
 export interface Discussion {
-    id?: string,
+    id?: number,
     uid:string,
     course_id: number,
     title:string,
@@ -9,9 +9,10 @@ export interface Discussion {
 };
 
 export interface DiscussionTopic {
-    id?: string,
+    id?: number,
     uid : string,
     discussion_id: number,
+    publisher_avatar : string ,
     release_time?: number,
     title:string,
     reply_number:number,
@@ -19,12 +20,16 @@ export interface DiscussionTopic {
     publisher:string,
     content:string,
     files?: Array<string>,
+    replies?:Array<DiscussionTopicReply>,
 };
 
 export interface DiscussionTopicReply{
-    id:string,
+    id?:number,
+    parent_id : number ,
+    topic_id : number , 
+    publisher_avatar : string ,
     uid:string,
     publisher:string,
-    release_time: number,
+    release_time?: number,
     content:string,
 }

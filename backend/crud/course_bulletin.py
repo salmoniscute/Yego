@@ -35,6 +35,7 @@ class CourseBulletinCrudManager:
         obj = {}
         if bulletin:
             await db_session.refresh(bulletin[0], ["info"])
+            await db_session.refresh(bulletin[0], ["course_info"])
             obj = {
                 "id": bulletin[0].id,
                 "publisher": bulletin[0].info.publisher_info.name,
@@ -43,7 +44,8 @@ class CourseBulletinCrudManager:
                 "title": bulletin[0].info.title,
                 "content": bulletin[0].info.content,
                 "pin_to_top": bulletin[0].pin_to_top,
-                "files": bulletin[0].info.files
+                "files": bulletin[0].info.files,
+                "course_id": bulletin[0].course_id
             }
         
         return obj

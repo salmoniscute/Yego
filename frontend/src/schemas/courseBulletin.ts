@@ -1,5 +1,5 @@
 export interface CourseBulletin {
-    id?:string,
+    id?:number,
     uid: string,
     course_id:number,
     title: string,
