@@ -2,12 +2,15 @@ from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.component import ComponentCrudManager
+from crud.subscription import SubscriptionCrudManager
 from database.mysql import crud_class_decorator
 from models.component import Component as ComponentModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel, DiscussionTopicReply as DiscussionTopicReplyModel
 from schemas import discussion as DiscussionSchema
 
 ComponentCrud = ComponentCrudManager()
+SubscriptionCrud = SubscriptionCrudManager()
+
 
 @crud_class_decorator
 class DiscussionCrudManager:
@@ -78,21 +81,21 @@ class DiscussionCrudManager:
 
         return
     
-    async def get_discussions_by_course_id(self, course_id: str, db_session: AsyncSession):
+    async def get_discussions_by_course_id(self, uid: str, course_id: int, db_session: AsyncSession):
         stmt = select(DiscussionModel).where(DiscussionModel.course_id == course_id)
         result = await db_session.execute(stmt)
         result = result.unique()
         output = []
         for discussion in result.all():
             await db_session.refresh(discussion[0], ["info"])
-            d = {
+            subscription = await SubscriptionCrud.get(uid, discussion[0].id)
+            output.append({
                 "id": discussion[0].id,
                 "uid": discussion[0].info.uid,
                 "title": discussion[0].info.title,
                 "content": discussion[0].info.content,
-                "subscription": True if discussion[0].info.subscriptions else False
-            }
-            output.append(d)
+                "subscription_status": True if subscription else False
+            })
         return output
 
 
@@ -160,7 +163,7 @@ class DiscussionTopicCrudManager:
         
         return _list
     
-    async def get_topics_by_discussion_id(self, discussion_id: int, db_session: AsyncSession):
+    async def get_topics_by_discussion_id(self, uid: str, discussion_id: int, db_session: AsyncSession):
         stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.discussion_id == discussion_id)
         result = await db_session.execute(stmt)
         result = result.unique()
@@ -169,20 +172,19 @@ class DiscussionTopicCrudManager:
             await db_session.refresh(topic[0], ["info"])
             stmt = select(DiscussionTopicReplyModel).where(DiscussionTopicReplyModel.root_id == topic[0].id) 
             record = await db_session.execute(stmt)
-            replies = len(record.all())
-            t = {
+            subscription = await SubscriptionCrud.get(uid, topic[0].id)
+            _list.append({
                 "id": topic[0].id,
                 "uid": topic[0].info.uid,
                 "release_time": topic[0].info.release_time,
                 "title": topic[0].info.title,
                 "content": topic[0].info.content,
-                "reply_number": replies,
+                "reply_number": len(record.all()),
                 "publisher": topic[0].info.publisher_info.name,
                 "avatar": topic[0].info.publisher_info.avatar,
                 "files": [file for file in topic[0].info.files],
-                "subscription": True if topic[0].info.subscriptions else False
-            }
-            _list.append(t)
+                "subscription_status": True if subscription else False
+            })
         return _list
             
 
@@ -199,6 +201,7 @@ class DiscussionTopicCrudManager:
         await db_session.commit()
 
         return
+
 
 @crud_class_decorator
 class DiscussionTopicReplyCrudManager:
@@ -254,3 +257,4 @@ class DiscussionTopicReplyCrudManager:
         await db_session.commit()
 
         return
+    

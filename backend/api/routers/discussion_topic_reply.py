@@ -20,6 +20,7 @@ router = APIRouter(
     prefix="/api"
 )
 
+
 @router.post(
     "/discussion_topic_reply",
     response_model=DiscussionSchema.DiscussionTopicReplyRead,
@@ -42,22 +43,6 @@ async def create_discussion_topic_reply(
 
     return reply
 
-@router.get(
-    "/discussion_topic_reply/{reply_id}", 
-    response_model=DiscussionSchema.DiscussionTopicReplyRead,
-    deprecated=True
-)
-async def get_discussion_topic_reply(
-    reply_id: int = Depends(check_topic_reply_id)
-):
-    """ 
-    Get a discussion topic reply by its id.
-    """
-    reply = await TopicReplyCrud.get(reply_id)
-    if reply:
-        return reply
-    
-    raise not_found
 
 @router.put(
     "/discussion_topic_reply/{reply_id}",
@@ -73,6 +58,7 @@ async def update_discussion_topic_reply(
     await TopicReplyCrud.update(reply_id, updateReply)
 
     return
+
 
 @router.delete(
     "/discussion_topic_reply/{reply_id}",

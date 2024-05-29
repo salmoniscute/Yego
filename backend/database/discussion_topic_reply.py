@@ -1,4 +1,6 @@
+import random
 from datetime import datetime
+
 
 class DiscussionTopicReply:
     def __init__(self, fakeDB, component_id_counter):
@@ -19,7 +21,7 @@ class DiscussionTopicReply:
             "Chemistry",
             "Biology"
         ]
-        self.teacher_list = [user for user in fakeDB["users"] if user["role"] == "teacher"]
+        self.selected_courses = fakeDB["selected_courses"]
         self.course_list = fakeDB["courses"]
         self.discussion_list = fakeDB["discussions"]
         self.discussion_topic_list = fakeDB["discussion_topics"]
@@ -40,7 +42,7 @@ class DiscussionTopicReply:
                                 parent = self.component_id_counter
                             self.components.append({
                                 **self.component_default,
-                                "uid": self.teacher_list[0]["uid"],
+                                "uid": random.choice(self.selected_courses)["uid"],
                                 "release_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,
                                 "title": f"{dept} 討論回覆 id = {self.component_id_counter}",
                                 "content": f"{dept} 討論回覆 id = {self.component_id_counter}"
