@@ -29,7 +29,6 @@ class CourseBulletinListRead(ComponentReadID):
     title: str
     content: str
     pin_to_top: bool
-    subscription_status: bool
     files: Optional[list[FileRead]] = None
 
 
