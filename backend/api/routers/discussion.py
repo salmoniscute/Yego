@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, status, Depends
 
 from .depends import check_discussion_id, check_course_id, check_user_id
 from crud.discussion import DiscussionCrudManager
+from crud.notification import NotificationCrudManager
+from crud.selected_course import SelectedCourseCrudManager
 from schemas import discussion as DiscussionSchema
 
 not_found = HTTPException(
@@ -15,6 +17,8 @@ already_exists = HTTPException(
 )
 
 DiscussionCrud = DiscussionCrudManager()
+SelectedCourseCrud = SelectedCourseCrudManager()
+NotificationCrud = NotificationCrudManager()
 router = APIRouter(
     tags=["Discussion"],
     prefix="/api"
@@ -36,7 +40,10 @@ async def create_discussion(
     - **content**
     """    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
-
+    users = await SelectedCourseCrud.get_by_course_id(course_id)
+    for user in users:
+        await NotificationCrud.create(user["uid"], discussion.id, "discussion")
+        
     return discussion
 
 
@@ -89,7 +96,12 @@ async def update_discussion(
     - **content**
     """
     await DiscussionCrud.update(discussion_id, updateDiscussion)
-
+    discussion = await DiscussionCrud.get(discussion_id)
+    
+    users = await SelectedCourseCrud.get_by_course_id(discussion["course_id"])
+    for user in users:
+        await NotificationCrud.create(user["uid"], discussion["id"], "discussion")
+    
     return 
 
 
