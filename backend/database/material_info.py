@@ -25,7 +25,7 @@ class MaterialInfo:
         
     def generate(self):
         for course_material in self.course_material_list:
-            for _ in range(random.choice([3, 4, 5])):
+            for _ in range(random.choice([2, 3, 4])):
                 teacher = None
                 for course in self.course_list:
                     teacher = course["uid"] if course["id"] == course_material["course_id"] else None

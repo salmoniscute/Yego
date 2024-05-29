@@ -28,7 +28,7 @@ class CourseMaterial:
         for dept in self.departments:
             courses = [course for course in self.course_list if course["course_code"][0] == dept[0]]
             for course in self.course_list:
-                for _ in range(5):
+                for _ in range(3):
                     self.components.append({
                         **self.component_default,
                         "uid": course["uid"],
