@@ -35,6 +35,7 @@ class DiscussionCrudManager:
             obj = {
                 "id": discussion[0].id,
                 "uid": discussion[0].info.uid,
+                "course_id": discussion[0].course_id,
                 "release_time": discussion[0].info.release_time,
                 "title": discussion[0].info.title,
                 "content": discussion[0].info.content,
@@ -124,6 +125,7 @@ class DiscussionTopicCrudManager:
             obj = {
                 "id": topic[0].id,
                 "uid": topic[0].info.uid,
+                "discussion_id": topic[0].discussion_id,
                 "publisher": topic[0].info.publisher_info.name,
                 "publisher_avatar": topic[0].info.publisher_info.avatar,
                 "release_time": topic[0].info.release_time,
