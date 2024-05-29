@@ -55,22 +55,6 @@ async def create_report_reply(
     return reply
 
 
-@router.get(
-    "/report_reply/{reply_id}", 
-    response_model=ReportSchema.ReportReplyReadByID,
-    deprecated=True
-)
-async def get_report_reply(reply_id: int):
-    """
-    Get one report reply.
-    """
-    reply = await ReportReplyCrud.get(reply_id)
-    if reply:
-        return reply
-    
-    raise not_found
-
-
 @router.put(
     "/report_reply/{reply_id}",
     status_code=status.HTTP_204_NO_CONTENT

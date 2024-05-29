@@ -2,12 +2,14 @@ from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.component import ComponentCrudManager
+from crud.subscription import SubscriptionCrudManager
 from database.mysql import crud_class_decorator
 from models.component import Component as ComponentModel
 from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from schemas import report as ReportSchema
 
 ComponentCrud = ComponentCrudManager()
+SubscriptionCrud = SubscriptionCrudManager()
 
 
 @crud_class_decorator
@@ -62,7 +64,7 @@ class ReportCrudManager:
 
         return obj
     
-    async def get_all(self, db_session: AsyncSession):
+    async def get_all(self, uid: str, db_session: AsyncSession):
         stmt = select(ReportModel)
         result = await db_session.execute(stmt)
         
@@ -71,12 +73,14 @@ class ReportCrudManager:
             await db_session.refresh(report[0], ["info"])
             stmt = select(ReportReplyModel).where(ReportReplyModel.root_id == report[0].id)
             record = await db_session.execute(stmt)
+            subscription = await SubscriptionCrud.get(uid, report[0].id)
 
             _list.append({
                 "id": report[0].id,
                 "release_time": report[0].info.release_time,
                 "title": report[0].info.title,
-                "reply_number": len(record.all())
+                "reply_number": len(record.all()),
+                "subscription_status": True if subscription else False
             })
         
         return _list

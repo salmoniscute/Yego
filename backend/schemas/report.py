@@ -57,6 +57,7 @@ class ReportListRead(ComponentReadID):
     release_time: datetime
     title: str
     reply_number: int
+    subscription_status: bool
 
 
 class ReportUpdate(ComponentUpdate):

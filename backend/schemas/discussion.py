@@ -3,6 +3,7 @@ from schemas.component import *
 
 from schemas.file import FileRead
 
+
 ### Discussion ###
 class DiscussionCreate(ComponentCreate):
     model_config = {
@@ -16,15 +17,19 @@ class DiscussionCreate(ComponentCreate):
         }
     }
 
+
 class DiscussionRead(ComponentRead):
     pass
     
+
 class DiscussionOfCourses(ComponentRead):
-    subscription: bool
+    subscription_status: bool
+
     
 class DiscussionUpdate(ComponentUpdate):
     pass
     
+
 ### Discussion Topic Reply ###
 class DiscussionTopicReplyCreate(BaseModel):
     content: str
@@ -38,6 +43,7 @@ class DiscussionTopicReplyCreate(BaseModel):
         }
     }
 
+
 class DiscussionTopicReplyRead(ComponentReadID):
     uid: str
     publisher: str
@@ -46,6 +52,7 @@ class DiscussionTopicReplyRead(ComponentReadID):
     publisher_avatar: Optional[str] = None
     release_time: datetime
     content: str
+
 
 ### Discussion Topic ###
 class DiscussionTopicRead(ComponentReadID):
@@ -59,14 +66,14 @@ class DiscussionTopicRead(ComponentReadID):
     reply_number: int
     replies: Optional[list[DiscussionTopicReplyRead]] = None
 
+
 class DiscussionTopicReadlist(ComponentReadID):
     title: str
     content: str
+
 
 class DiscussionOfTopics(ComponentReadWithFile):
     reply_number: int
     publisher:str
     avatar: Optional[str] = None
-    subscription: bool
-
-
+    subscription_status: bool
