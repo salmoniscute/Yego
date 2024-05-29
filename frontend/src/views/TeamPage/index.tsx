@@ -112,7 +112,6 @@ export default function TeamPage(): ReactElement {
             { selectMethod === "學生自行分組" && <div className="byStudent" >
               <SelfTeam close={closeWindow}/>
             </div>}
-            <div className="close ms" onClick={() => {}}>close</div>
         </div>
         <div className="groups">
           <div className="header">

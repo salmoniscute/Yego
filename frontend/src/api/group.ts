@@ -63,3 +63,37 @@ export async function get_all_groups_info(course_id: number): Promise<Group[]> {
   }
   return groups;
 }
+
+export async function get_user_group_info(uid: string | null, course_id: number): Promise<String | null> {
+  let group;
+  let url = `http://localhost:8080/api/selected_course/particular/${uid}/${course_id}`;
+  try {
+      const response = await axios.get(url);
+      group = response.data;
+      console.log(group);
+  }
+  catch {  
+      console.log("hi");
+  }
+  return group;
+}
+
+export async function join_group(uid: string | null, course_id: number, group_id: number) {
+  let url = `http://localhost:8080/api/group/join?`;
+  try {
+      const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id + "&group_id=" + group_id);
+  }
+  catch {  
+      console.log("hi");
+  }
+}
+
+export async function exit_group(uid: string | null, course_id: number) {
+  let url = `http://localhost:8080/api/group/exit?`;
+  try {
+      const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id);
+  }
+  catch {  
+      console.log("hi");
+  }
+}

@@ -1,0 +1,51 @@
+#joinGroupModel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 50%; 
+  height: 80%;
+  background-color: #FFF;
+  padding: 3em 4em;
+  box-sizing: border-box;
+
+  .closeCross{
+    position: absolute;
+    font-size: 25px;
+    cursor: pointer;
+    top: 2em;
+    right: 2em;
+  }
+
+  .groupList {
+    height: 90%;
+    overflow-y: auto;
+    .group {
+        padding: 20px;
+        border: 1px solid black;
+        margin-bottom: 20px;
+
+        h3 {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+
+        .members {
+            display: flex;
+            flex-wrap: wrap;
+            p {
+                margin-right: 10px;
+            }
+        }
+
+        .join {
+          color: #376236;
+        }
+
+        .exit {
+          color: #f25c1c;
+        }
+    }
+  }
+}
