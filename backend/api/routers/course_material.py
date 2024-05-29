@@ -20,6 +20,7 @@ router = APIRouter(
     prefix="/api"
 )
 
+
 @router.post(
     "/course_material", 
     status_code=status.HTTP_204_NO_CONTENT
@@ -32,7 +33,6 @@ async def create_course_material(
     """
     Create a course material with the following information:
     - **title**
-    - **content**
     """
     course_material = await CourseMaterialCrud.create(uid, course_id, newCourseMaterial)
 
@@ -40,48 +40,38 @@ async def create_course_material(
 
 
 @router.get(
-    "/course_materials",
-    response_model=list[CourseMaterialSchema.CourseMaterialRead],
-    deprecated=True
+    "/course_material/particular_course/{course_id}",
+    response_model=list[CourseMaterialSchema.CourseMaterialRead]
 )
-async def get_all_course_materials():
+async def get_all_course_materials_in_particular_course(
+    course_id: str = Depends(check_course_id)
+):
     """ 
-    Get all course materials.
+    Get all course materials in particular course.
     """
-    course_materials = await CourseMaterialCrud.get_all()
+    course_materials = await CourseMaterialCrud.get_all_in_particular_course(course_id)
     if course_materials:
         return course_materials
     
     raise not_found
 
 
-@router.get(
-    "/course_material/{course_material_id}", 
-    response_model=CourseMaterialSchema.CourseMaterialRead
-)
-async def get_course_material(course_material_id: int = Depends(check_course_material_id)):
-    course_material = await CourseMaterialCrud.get(course_material_id)
-    if course_material:
-        return course_material
-    
-    raise not_found
-
 @router.put(
     "/course_material/{course_material_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_course_material(
-    course_material_id: str,
-    updateCourseMaterial: CourseMaterialSchema.CourseMaterialUpdate
+    updateCourseMaterial: CourseMaterialSchema.CourseMaterialUpdate,
+    course_material_id: int = Depends(check_course_material_id)
 ):
     await CourseMaterialCrud.update(course_material_id, updateCourseMaterial)
     return 
+
 
 @router.delete(
     "/course_material/{course_material_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_course_material(course_material_id: str):
+async def delete_course_material(course_material_id: int = Depends(check_course_material_id)):
     await CourseMaterialCrud.delete(course_material_id)
-    
     return
