@@ -4,7 +4,7 @@ export interface Discussion {
     course_id: number,
     title:string,
     content: string,
-    follow:boolean,
+    subscription_status:boolean,
     release_time?:string
 };
 
@@ -16,7 +16,7 @@ export interface DiscussionTopic {
     release_time?: string,
     title:string,
     reply_number:number,
-    follow:boolean,
+    subscription_status:boolean,
     publisher:string,
     content:string,
     files?: Array<string>,

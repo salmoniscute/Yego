@@ -133,7 +133,7 @@ export default function PostEditor(props: propsType): ReactElement {
           course_id: parent_id,
           title:title,
           content: content,
-          follow:false,
+          subscription_status:false,
           uid:uid
         };
         await postDiscussion(discussion);
@@ -157,7 +157,7 @@ export default function PostEditor(props: propsType): ReactElement {
           discussion_id: parent_id,
           title:title,
           reply_number:0,
-          follow:false,
+          subscription_status:false,
           publisher : publisher || "",
           content:content,
           publisher_avatar : ""
