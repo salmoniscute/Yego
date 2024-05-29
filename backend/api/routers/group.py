@@ -232,24 +232,24 @@ async def student_grouping(
     return
        
 
-@router.post(
-    "/grouping/manual", 
-    status_code=status.HTTP_204_NO_CONTENT
-)
-async def manual_grouping(
-    newGroup: GroupSchema.GroupManualCreate,
-    course_id: str = Depends(check_course_id)
-):
-    """
-    Manual grouping with the following information:
-    - **name**
-    - **members** (list)
-        - **uid**
-        - **name**
-    """
-    await GroupCrud.manual_create(course_id, newGroup)
+# @router.post(
+#     "/grouping/manual", 
+#     status_code=status.HTTP_204_NO_CONTENT
+# )
+# async def manual_grouping(
+#     newGroup: GroupSchema.GroupManualCreate,
+#     course_id: str = Depends(check_course_id)
+# ):
+#     """
+#     Manual grouping with the following information:
+#     - **name**
+#     - **members** (list)
+#         - **uid**
+#         - **name**
+#     """
+#     await GroupCrud.manual_create(course_id, newGroup)
 
-    return
+#     return
 
     
 @router.put(

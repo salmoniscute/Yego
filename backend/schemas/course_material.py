@@ -7,7 +7,7 @@ from typing import Optional
 
 
 class CourseMaterialCreate(BaseModel):
-    title: str
+    title: str = Field(min_length=1, max_length=100)
     model_config = {
         "json_schema_extra": {
             "examples": [
@@ -20,7 +20,7 @@ class CourseMaterialCreate(BaseModel):
 
 
 class CourseMaterialUpdate(BaseModel):
-    title: str
+    title: Optional[str] = Field(default=None, min_length=1, max_length=100)
 
 
 class MaterialInfoCreate(ComponentCreate):
@@ -43,7 +43,7 @@ class MaterialInfoCreate(ComponentCreate):
 
 
 class MaterialInfoUpdate(ComponentUpdate):
-    display: Optional[bool]
+    display: Optional[bool] = None
     model_config = {
         "json_schema_extra": {
             "examples": [

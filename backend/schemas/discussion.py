@@ -18,11 +18,16 @@ class DiscussionCreate(ComponentCreate):
     }
 
 
-class DiscussionRead(ComponentRead):
-    pass
+class DiscussionRead(ComponentReadID):
+    uid: str
+    title: str
+    content: str
     
 
-class DiscussionOfCourses(ComponentRead):
+class DiscussionOfCourses(ComponentReadID):
+    uid: str
+    title: str
+    content: str
     subscription_status: bool
 
     
@@ -32,7 +37,7 @@ class DiscussionUpdate(ComponentUpdate):
 
 ### Discussion Topic Reply ###
 class DiscussionTopicReplyCreate(BaseModel):
-    content: str
+    content: str = Field(min_length=1, max_length=1000)
     model_config = {
         "json_schema_extra": {
             "examples": [
