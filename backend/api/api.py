@@ -22,7 +22,6 @@ from .routers import (
     report_router,
     course_material_router,
     material_info_router,
-    submitted_assignment_router,
     report_reply_router
 )
 
@@ -43,7 +42,6 @@ app.include_router(discussion_topic_router)
 app.include_router(discussion_topic_reply_router)
 app.include_router(course_material_router)
 app.include_router(material_info_router)
-app.include_router(submitted_assignment_router)
 app.include_router(file_router)
 app.include_router(subscription_router)
 app.include_router(notification_router)
