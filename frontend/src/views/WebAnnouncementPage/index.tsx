@@ -5,15 +5,16 @@ import { BsFillHouseFill } from "react-icons/bs";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 interface Document {
+  id: number;
   path: string;
-  name: string;
+  name?: string;
 }
 
 interface Info {
   id: number;
   pin_to_top: boolean;
   title: string;
-  photo: string;
+  publisher_avatar: string;
   publisher: string;
   release_time: string;
   content: string;
@@ -23,41 +24,60 @@ interface Info {
 export default function WebAnnouncementPage() {
   const { id } = useParams<{ id: string }>();
   const [announcementData, setAnnouncementData] = useState<Info | null>(null);
-  const [totalAnnouncements, setTotalAnnouncements] = useState<number>(0);
+  const [allIds, setAllIds] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/website/bulletin/${id}`)
-      .then(res => res.json())
-      .then(data => {
+    const fetchAnnouncementData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/website/bulletin/${id}`);
+        const data = await response.json();
+        console.log("Fetched announcement data:", data);
         setAnnouncementData(data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching announcement data:', error);
-      });
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    fetch(`http://localhost:8080/api/website/bulletin`)
-      .then(res => res.json())
-      .then(data => {
-        setTotalAnnouncements(data.length);
-      })
-      .catch(error => {
-        console.error('Error fetching total announcements:', error);
-      });
+    const fetchAllIds = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/website/bulletins');
+        const data = await response.json();
+        console.log("Fetched all IDs:", data);
+        const ids = data.map((announcement: { id: number }) => announcement.id);
+        setAllIds(ids);
+      } catch (error) {
+        console.error('Error fetching all IDs:', error);
+      }
+    };
+
+    fetchAnnouncementData();
+    fetchAllIds();
   }, [id]);
 
-  if (!announcementData || totalAnnouncements === 0) {
+  if (loading || !announcementData) {
     return <div>Loading...</div>;
   }
 
-  const prevId = parseInt(id || '') - 1;
-  const nextId = parseInt(id || '') + 1;
+  const currentId = parseInt(id || '', 10);
+  const currentIndex = allIds.indexOf(currentId);
+  const prevId = allIds[currentIndex - 1];
+  const nextId = allIds[currentIndex + 1];
+  const publisherAvatarUrl = `http://localhost:8080${announcementData.publisher_avatar}`;
+
+  console.log('Current ID:', currentId);
+  console.log('Current Index:', currentIndex);
+  console.log('Previous ID:', prevId);
+  console.log('Next ID:', nextId);
 
   return (
     <div className="web-announcement-container">
       <div className="breadcrumbs">
         <span>
-          <Link to="/" ><BsFillHouseFill /></Link> / 
-          <Link to="/webAnnouncementlist">網站公告</Link> / 
+          <Link to="/"><BsFillHouseFill /></Link> /
+          <Link to="/webAnnouncementlist">網站公告</Link> /
           {announcementData.title}
         </span>
       </div>
@@ -71,27 +91,27 @@ export default function WebAnnouncementPage() {
             {announcementData.title}
           </div>
           <p className="announcement-timestamp">
-            <img src={announcementData.photo} alt="announcement" />
+            <img src={publisherAvatarUrl} alt="announcement" />
             {announcementData.publisher}
             {announcementData.release_time}
           </p>
           <p className="announcement-content">{announcementData.content}</p>
           <div className="announcement-documents">
             {announcementData.files.map((doc, index) => (
-              <a key={index} href={doc.path} className="document-link">
-                {doc.name}
+              <a key={index} href={`http://localhost:8080${doc.path}`} className="document-link">
+                {doc.name || `Document ${index + 1}`}
               </a>
             ))}
           </div>
         </div>
       </div>
       <div className="announcement-navigation">
-        {prevId > 0 && (
+        {prevId && (
           <Link to={`/webAnnouncement/${prevId}`}>
             <AiFillCaretLeft /> 上一篇標題
           </Link>
         )}
-        {nextId <= totalAnnouncements && (
+        {nextId && (
           <Link to={`/webAnnouncement/${nextId}`}>
             下一篇標題 <AiFillCaretRight />
           </Link>
