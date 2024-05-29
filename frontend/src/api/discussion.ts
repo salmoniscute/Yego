@@ -5,11 +5,10 @@ import {
  } from "schemas/discussion";
 import axios from "axios";
 
-export async function getDiscussionList(course_id:number): Promise<Array<Discussion>>{
-    let url = "http://localhost:8080/api/discussions/"+course_id;
+export async function getDiscussionList(course_id:number, uid:string | null): Promise<Array<Discussion>>{
+    let url = `http://localhost:8080/api/discussions/${course_id}?`;
     try {
-        const response = await axios.get(url,{
-          });
+        const response = await axios.get(url+"uid="+uid);
         const result = response.data;
         return result;
     }
@@ -42,11 +41,10 @@ export async function postDiscussion(discussion:Discussion):Promise<Discussion |
 }
 
 
-export async function getDiscussionTopicList(discussion_id:number) : Promise<Array<DiscussionTopic>>{
-    let url = "http://localhost:8080/api/discussion_topics/"+discussion_id;
+export async function getDiscussionTopicList(discussion_id:number, uid: string | null) : Promise<Array<DiscussionTopic>>{
+    let url = `http://localhost:8080/api/discussion_topics/${discussion_id}?`;
     try {
-        const response = await axios.get(url,{
-          });
+        const response = await axios.get(url+"uid="+uid);
         const result = response.data;
         return result;
     }

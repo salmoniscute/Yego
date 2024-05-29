@@ -91,6 +91,7 @@ export default function TeamPage(): ReactElement {
               { teamOptions().map((option, i) => <div
               key={i}
               onClick={()=> {
+                if(groups.length > 0) alert('重新設定分組將會覆蓋原先的分組資訊。');
                 setShowWork(true);
                 setSelectMethod(option.label);
               }}
