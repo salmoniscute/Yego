@@ -50,11 +50,11 @@ async def create_report(
     "/reports",
     response_model=list[ReportSchema.ReportListRead]
 )
-async def get_all_reports():
+async def get_all_reports(uid: str = Depends(check_user_id)):
     """ 
-    Get all reports.
+    Get all reports and the subscription status of user.
     """
-    reports = await ReportCrud.get_all()
+    reports = await ReportCrud.get_all(uid)
     if reports:
         return reports
     

@@ -62,12 +62,13 @@ async def get_discussion_topic(
     response_model=list[DiscussionSchema.DiscussionOfTopics]
 )
 async def get_discussion_topics_by_discussion_id(
+    uid: str = Depends(check_user_id),
     discussion_id: int = Depends(check_discussion_id)
 ):
     """
-    Get all discussion topics by discussion id.
+    Get all discussion topics by discussion id and the subscription status of user.
     """
-    topics = await TopicCrud.get_topics_by_discussion_id(discussion_id)
+    topics = await TopicCrud.get_topics_by_discussion_id(uid, discussion_id)
     if topics:
         return topics
     

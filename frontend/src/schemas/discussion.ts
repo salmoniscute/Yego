@@ -5,7 +5,7 @@ export interface Discussion {
     title:string,
     content: string,
     follow:boolean,
-    release_time?:number
+    release_time?:string
 };
 
 export interface DiscussionTopic {
@@ -13,7 +13,7 @@ export interface DiscussionTopic {
     uid : string,
     discussion_id: number,
     publisher_avatar : string ,
-    release_time?: number,
+    release_time?: string,
     title:string,
     reply_number:number,
     follow:boolean,
@@ -30,6 +30,6 @@ export interface DiscussionTopicReply{
     publisher_avatar : string ,
     uid:string,
     publisher:string,
-    release_time?: number,
+    release_time?: string,
     content:string,
 }

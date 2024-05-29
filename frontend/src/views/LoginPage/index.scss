@@ -150,32 +150,57 @@
       }
       .page3{
         width: 100%;
+        h2{
+          margin-bottom: 0.5em;
+        }
         div {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           .character{
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            
+            .hoverEffect{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding: 0em 1em;
+              border-radius: 0.5em;
+              .name{
+                font-size: larger;
+                font-weight: 600;
+                margin-bottom: 0em;
+              }
+              .intro{
+                width: 12em;
+              }
+              
+            }
             img{
               width: 12em;
               height: 12em;
             }
-            .name{
-              font-size: larger;
-              font-weight: 600;
-              margin-bottom: 0em;
+            
+          }
+          .character:hover , .character.selected{
+            img{
+              transform: translateY(1em) ;
+              transition-duration: 0.3s;
             }
-            .intro{
-              width: 12em;
+            .hoverEffect{
+              background-color: #FFEA79;
+              .intro{
+                transform: translateY(-0.6em) ;
+                transition-duration: 0.3s;
+              }
             }
           }
 
         }
         .button{
-          margin-top: 0.5em;
+          margin-top: 1.5em;
           justify-content: end;
           button{
             margin-left: 2em;

@@ -26,7 +26,6 @@ router = APIRouter(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_subscription(
-    newSubscription: SubscriptionSchema.SubscriptionCreate,
     uid: str = Depends(check_user_id),
     component_id: int = Depends(check_component_id)
 ):
@@ -36,43 +35,10 @@ async def create_subscription(
     if await SubscriptionCrud.get(uid, component_id):
         raise already_exists
     
-    subscription = await SubscriptionCrud.create(uid, component_id, newSubscription)
+    subscription = await SubscriptionCrud.create(uid, component_id)
 
     return subscription
     
-
-@router.get(
-    "/subscriptions",
-    response_model=list[SubscriptionSchema.SubscriptionRead],
-    status_code=status.HTTP_200_OK,
-    deprecated=True
-)
-async def get_all_subscriptions():
-    """ 
-    Get all subscriptions.
-    """
-    subscriptions = await SubscriptionCrud.get_all()
-    if not subscriptions:
-        raise not_found
-    
-    return subscriptions
-
-
-@router.get(
-    "/subscription/{uid}/{component_id}",
-    response_model=SubscriptionSchema.SubscriptionRead,
-    status_code=status.HTTP_200_OK
-)
-async def get_subscription(uid: str, component_id: int):
-    """
-    Get a subscription.
-    """
-    subscription = await SubscriptionCrud.get(uid, component_id)
-    if not subscription:
-        raise not_found
-    
-    return subscription
-
 
 @router.delete(
     "/subscription/{uid}/{component_id}",

@@ -12,8 +12,8 @@ import { SlOptions } from "react-icons/sl";
 import { TiArrowBack } from "react-icons/ti";
 
 import userDataContext from "context/userData";
-import { DiscussionTopic,DiscussionTopicReply} from "schemas/discussion";
-import { getDiscussionTopic, postDTReply } from "api/discussion";
+import { ReportReply, Report } from "schemas/report";
+import { getReport , postReportReply } from "api/report";
 
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
@@ -21,35 +21,34 @@ type propsType = Readonly<{
     
 }>;
 
-export default function DiscussionReplyPage(props: propsType): React.ReactElement {
+export default function ReportReplyPage(props: propsType): React.ReactElement {
 
     const params = useParams();
     const userData = useContext(userDataContext);
     
-    const [discussionTopic , setDiscussionTopic] = useState<DiscussionTopic>();
+    const [report , setReport] = useState<Report>();
     const [replyContentList, setReplyContentList] = useState(Array());
     const [showReplyAreaList, setShowReplyAreaList] = useState(Array());
     const [mainReply , setMainReply] = useState("");
     const [showMainReplyArea, setShowMainReplyArea] = useState(false);
     const mainReplyAreaRef = useRef<HTMLDivElement>(null);
-    const [categorizedReplies, setCategorizedReplies] = useState<{ [key: number]: DiscussionTopicReply[] }>({});
+    const [categorizedReplies, setCategorizedReplies] = useState<{ [key: number]: ReportReply[] }>({});
 
     useEffect(()=>{
         handleDiscussionTopic();
     },[])
 
     const handleDiscussionTopic = () =>{
-        getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
-            setDiscussionTopic(data);
+        getReport(Number(params.reportId) || 0).then( data =>{
+            setReport(data);
             categorizedReplies[0] = [];
-            if (discussionTopic && discussionTopic.replies) {
-                categorizeReplies(discussionTopic.replies);
+            if (report && report.replies) {
+                categorizeReplies(report.replies);
                 setReplyContentList(Array(categorizedReplies[0]?.length || 0).fill(''));
                 setShowReplyAreaList(Array(categorizedReplies[0]?.length || 0).fill(false));
             };
         });
     }
-
     const handleMainReplyClick = () => {
         setShowMainReplyArea(true);
         setTimeout(() => {
@@ -90,9 +89,9 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         if (userData){
             const uid = userData?.uid;
             const publisher = userData?.name;
-            const reply : DiscussionTopicReply = {
+            const reply : ReportReply = {
                 parent_id : parent_id ,
-                topic_id : Number(params.discussionTopicId)|| 0,
+                report_id : Number(params.reportId)|| 0,
                 publisher_avatar : "" ,
                 uid:uid,
                 publisher:publisher,
@@ -100,7 +99,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             };
             if (parent_id == 0){
                 reply.content = mainReply;
-                const response = await postDTReply(reply);
+                const response = await postReportReply(reply);
                 if (response) {
                     categorizedReplies[parent_id].push(response);
                     categorizedReplies[response.id || 0] = [];
@@ -110,7 +109,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             }
             else {
                 reply.content = replyContentList[index];
-                const response = await postDTReply(reply);
+                const response = await postReportReply(reply);
                 if (response){
                     categorizedReplies[parent_id].push(response);
                 }
@@ -123,8 +122,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         
     }
 
-    const categorizeReplies = (replies: DiscussionTopicReply[]) => {
-        const categorizedReplies: { [key: number]: DiscussionTopicReply[] } = {};
+    const categorizeReplies = (replies: ReportReply[]) => {
+        const categorizedReplies: { [key: number]: ReportReply[] } = {};
         replies.forEach(reply => {
             if (reply.parent_id == 0){
                 categorizedReplies[reply?.id||0] = [];
@@ -141,8 +140,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         <div id="discussionReplyPage">
             <div className="mainDiscussionTopic">
                 <div className="mainDtTop">
-                    <h3>{discussionTopic?.title}</h3>
-                    { discussionTopic?.uid === userData?.uid && <label className="dropdownMenu">
+                    <h3>{report?.title}</h3>
+                    { report?.uid === userData?.uid && <label className="dropdownMenu">
                         <SlOptions/>
                         <input type="checkbox" />
                         <div className="mask" style={{ "--length": 1 } as CSSProperties}>
@@ -160,20 +159,21 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 
                 <div className="discussionTopicTop">
                     <img src={UserIcon}/>
-                    <h3>{discussionTopic?.publisher}</h3>
-                    <p>{setTimeString(discussionTopic?.release_time||"")}</p>
+                    <h3>{report?.publisher}</h3>
+                    <p>{setTimeString(report?.release_time||"")}</p>
                 </div>
                 <div className="dtContent">
-                    <p dangerouslySetInnerHTML={{ __html: discussionTopic?.content || '' }}/>
+                    <p dangerouslySetInnerHTML={{ __html: report?.content || '' }}/>
                 </div>
                 <div className="dtBottom" onClick={handleMainReplyClick}>
                     <p>回覆</p>
                 </div>
+                
             </div>
 
             <div >
                 {
-                    discussionTopic && discussionTopic.replies && categorizedReplies[0] && (
+                    report && report.replies && categorizedReplies[0] && (
                         categorizedReplies[0].map((data,index)=>(
                             <div key={index} className="discussionTopicReply">
                                 <div className="discussionTopicReplyTop">

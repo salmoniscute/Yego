@@ -41,22 +41,6 @@ async def create_discussion(
 
 
 @router.get(
-    "/discussions",
-    response_model=list[DiscussionSchema.DiscussionRead],
-    deprecated=True
-)
-async def get_all_discussions():
-    """ 
-    Get all discussions.
-    """
-    discussions = await DiscussionCrud.get_all()
-    if discussions:
-        return discussions
-    
-    raise not_found
-
-
-@router.get(
     "/discussion/{discussion_id}", 
     response_model=DiscussionSchema.DiscussionRead
 )
@@ -78,12 +62,13 @@ async def get_discussion(
     response_model=list[DiscussionSchema.DiscussionOfCourses]
 )
 async def get_course_discussions_by_course_id(
+    uid: str = Depends(check_user_id),
     course_id: str = Depends(check_course_id)
 ):
     """
-    Get all discussions for a course.
+    Get all discussions for a course and the subscription status of user.
     """
-    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
+    discussions = await DiscussionCrud.get_discussions_by_course_id(uid, course_id)
     if discussions:
         return discussions
     
