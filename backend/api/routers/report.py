@@ -38,12 +38,10 @@ async def create_report(
 ):
     """
     Create a report with the following information:
-    - **release_time**
     - **title**
     - **content**
     """    
     report = await ReportCrud.create(uid, newReport)
-
     return report
 
 

@@ -1,4 +1,5 @@
 from datetime import datetime
+from pydantic import Field
 from typing import Optional
 
 from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate
@@ -14,7 +15,7 @@ class BulletinCreate(ComponentCreate):
                 {
                     "title": "Bulletin 1",
                     "content": "This is the first bulletin of the course.",
-                    "pin_to_top": "false"
+                    "pin_to_top": False
                 }
             ]
         }
