@@ -26,7 +26,7 @@ router = APIRouter(
 
 @router.post(
     "/discussion", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_discussion(
     newDiscussion: DiscussionSchema.DiscussionCreate,
@@ -44,7 +44,7 @@ async def create_discussion(
     for user in users:
         await NotificationCrud.create(user["uid"], discussion.id, "discussion")
         
-    return discussion
+    return {"id": discussion.id}
 
 
 @router.get(
