@@ -65,11 +65,11 @@ export async function get_all_groups_info(course_id: number): Promise<Group[]> {
 }
 
 export async function get_user_group_info(uid: string | null, course_id: number): Promise<String | null> {
-  let group;
+  let group = "";
   let url = `http://localhost:8080/api/selected_course/particular/${uid}/${course_id}`;
   try {
       const response = await axios.get(url);
-      group = response.data;
+      if(response.data !== null) group = response.data;
       console.log(group);
   }
   catch {  

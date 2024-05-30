@@ -26,9 +26,11 @@ export default function JoinGroup(): React.ReactElement {
   }
 
   const get_group = async () => {
-    get_user_group_info(userData ? userData.uid : null, Number(params.courseID)).then(data => {
-      if(data) setGroup(data);
-    })
+    await get_user_group_info(userData ? userData.uid : null, Number(params.courseID)).then(data => {
+      if(data == null) setGroup("");
+      else setGroup(data);
+      console.log(group);
+    });
   }
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function JoinGroup(): React.ReactElement {
         <MdGroupAdd />
           {group === "" ? <p><span className="no">尚未加入</span>YEGO注意到你還沒有自己的組別，趕快加入！</p> : <p><span className="yes">已加入</span>你已經找到你的好隊友了，棒棒！</p>}
         </button>
-        {showJoin ? <JoinGroupModel close={close} group={group} course_id={Number(params.courseID)}/> : ""}
+        {showJoin ? <JoinGroupModel close={close} course_id={Number(params.courseID)}/> : ""}
       </div>
   );
 }
