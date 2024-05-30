@@ -11,7 +11,7 @@ class CourseMaterial(Base):
     course_id: Mapped[BaseType.int_type] = mapped_column(ForeignKey("Course.id", ondelete="CASCADE"))
 
     # Relationship to parent
-    info: Mapped["Component"] = relationship("Component", back_populates="course_materials")
+    info: Mapped["Component"] = relationship("Component", back_populates="course_material")
     
     course_info: Mapped["Course"] = relationship(
         "Course", 
@@ -36,7 +36,7 @@ class MaterialInfo(Base):
     display: Mapped[BaseType.boolean]
     
     # Relationship to parent
-    info: Mapped["Component"] = relationship("Component", back_populates="material_infos")
+    info: Mapped["Component"] = relationship("Component", back_populates="material_info")
 
     def __init__(self, id: int, material_id: int, start_time: datetime, end_time: datetime, display: bool) -> None:
         self.id = id
