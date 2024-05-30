@@ -88,14 +88,14 @@ class Component(Base):
         passive_deletes=True
     )
     
-    course_materials: Mapped[list["CourseMaterial"]] = relationship(
+    course_material: Mapped["CourseMaterial"] = relationship(
         "CourseMaterial",
         back_populates="info",
         cascade="all, delete-orphan",
         passive_deletes=True
     )
     
-    material_infos: Mapped[list["MaterialInfo"]] = relationship(
+    material_info: Mapped["MaterialInfo"] = relationship(
         "MaterialInfo",
         back_populates="info",
         cascade="all, delete-orphan",

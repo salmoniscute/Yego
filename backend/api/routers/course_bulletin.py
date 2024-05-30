@@ -28,7 +28,7 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 
 @router.post(
     "/bulletin", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -47,7 +47,7 @@ async def create_course_bulletin(
     for user in users:
         await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin")
         
-    return bulletin
+    return {"id": bulletin.id}
 
 
 @router.get(

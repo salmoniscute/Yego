@@ -30,7 +30,7 @@ UserCrud = UserCrudManager()
 
 @router.post(
     "/report", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_report(
     newReport: ReportSchema.ReportCreate,
@@ -42,7 +42,7 @@ async def create_report(
     - **content**
     """    
     report = await ReportCrud.create(uid, newReport)
-    return report
+    return {"id": report.id}
 
 
 @router.get(

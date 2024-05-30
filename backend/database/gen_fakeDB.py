@@ -82,8 +82,8 @@ class GenFakeDB:
         self.output["course_materials"], self.component_id_counter = self.generate_course_matrerial()
         self.output["material_infos"], self.component_id_counter = self.generate_material_info()
         self.output["files"] = self.generate_file()
-        self.output["notifications"] = self.generate_notification()
-        self.output["subscriptions"] = self.generate_subscription()
+        # self.output["notifications"] = self.generate_notification()
+        # self.output["subscriptions"] = self.generate_subscription()
         
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)

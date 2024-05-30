@@ -27,7 +27,6 @@ class CourseMaterialCrudManager:
         stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == course_material_id)
         result = await db_session.execute(stmt)
         course_material = result.first()
-        print(course_material)
 
         return course_material
     
