@@ -23,7 +23,7 @@ router = APIRouter(
 
 @router.post(
     "/course_material", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_course_material(
     newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate,
@@ -36,7 +36,7 @@ async def create_course_material(
     """
     course_material = await CourseMaterialCrud.create(uid, course_id, newCourseMaterial)
 
-    return course_material
+    return {"id": course_material.id}
 
 
 @router.get(
