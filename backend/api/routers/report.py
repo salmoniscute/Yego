@@ -92,10 +92,10 @@ async def update_report(
     """
     await ReportCrud.update(report_id, updateReport)
     
-    users = await UserCrud.get_all()
-    for user in users:
-        if await SubscriptionCrud.get(user.uid, report_id):
-            await NotificationCrud.create(user.uid, report_id, "report")
+    # users = await UserCrud.get_all()
+    # for user in users:
+    #     if await SubscriptionCrud.get(user.uid, report_id):
+    #         await NotificationCrud.create(user.uid, report_id, "report")
     
 
     return 

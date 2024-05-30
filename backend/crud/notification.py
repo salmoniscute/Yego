@@ -5,14 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database.mysql import crud_class_decorator
 from models.base import NotificationType
 from models.notification import Notification as NotificationModel
-from schemas import notification as NotificationSchema
 
 
 icon_type = {
     "course_bulletin": "announcement",
-    "report": "announcement",
     "course_material": "assignment",
-    "course_assignment": "assignment",
     "discussion": "discussion",
     "discussion_topic": "discussion"
 }
@@ -22,13 +19,17 @@ type_actions = {
         "refresh": ["course_bulletin"],
         "course_name": lambda n: f"公告 - {n.component_info.course_bulletin.course_info.name}"
     },
-    "report": {
-        "refresh": ["report"],
-        "course_name": lambda n: "問題回報區"
-    },
     "discussion": {
         "refresh": ["discussion"],
         "course_name": lambda n: f"討論區 - {n.component_info.discussion.course_info.name}"
+    },
+    "discussion_topic": {
+        "refresh": ["discussion_topic"],
+        "course_name": lambda n: f"討論主題 - {n.component_info.topic.discussion.course_info.name}"
+    },
+    "material_infos": {
+        "refresh": ["material_infos"],
+        "course_name": lambda n: f"課程教材 - {n.component_info.course_material.course_info.name}"
     }
 }
 

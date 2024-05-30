@@ -45,12 +45,12 @@ async def create_report_reply(
     - **content**
     """
     reply = await ReportReplyCrud.create(uid, root_id, parent_id, newReply)
-    reply = await ReportReplyCrud.get(reply.id)
+    # reply = await ReportReplyCrud.get(reply.id)
     
-    users = await UserCrud.get_all()
-    for user in users:
-        if await SubscriptionCrud.get(user.uid, root_id):
-            await NotificationCrud.create(user.uid, root_id, "report")
+    # users = await UserCrud.get_all()
+    # for user in users:
+    #     if await SubscriptionCrud.get(user.uid, root_id):
+    #         await NotificationCrud.create(user.uid, root_id, "report")
 
     return reply
 
