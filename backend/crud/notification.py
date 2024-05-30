@@ -25,7 +25,7 @@ type_actions = {
         "course_name": "討論區 - "
     },
     "discussion_topic": {
-        "refresh": ["discussion", "topic"],
+        "refresh": ["topic"],
         "course_name": "討論主題 - "
     },
     "material_info": {
