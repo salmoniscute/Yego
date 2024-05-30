@@ -37,8 +37,8 @@ async def create_material_info(
     course_material_id: int = Depends(check_course_material_id)
 ):
     material_info = await MaterialInfoCrud.create(uid, course_material_id, newMaterialInfo)
-    course_material = await CourseMaterialCrud.get(course_material_id)
-    
+
+    course_material = await CourseMaterialCrud.get(course_material_id)  
     users = await SelectedCourseCrud.get_by_course_id(course_material[0].course_id)
     for user in users:
         await NotificationCrud.create(user["uid"], material_info.id, "material_info")
@@ -55,6 +55,13 @@ async def update_material_info(
     material_info_id: int = Depends(check_material_info_id)
 ):
     await MaterialInfoCrud.update(material_info_id, newMaterialInfo)
+
+    material_info = await MaterialInfoCrud.get(material_info_id)
+    course_material = await CourseMaterialCrud.get(material_info[0].material_id)  
+    users = await SelectedCourseCrud.get_by_course_id(course_material[0].course_id)
+    for user in users:
+        await NotificationCrud.create(user["uid"], material_info[0].id, "material_info")
+
     return
 
 
