@@ -1,5 +1,6 @@
-import React, { Component, ReactElement, useState , useContext } from 'react';
+import React, { Component, ReactElement, useState , useContext , useEffect } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
+import { Link ,useParams} from "react-router-dom";
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import "./index.scss";
@@ -7,7 +8,7 @@ import "./index.scss";
 import { Discussion , DiscussionTopic } from 'schemas/discussion';
 import { Report } from 'schemas/report';
 
-import { postDiscussion ,postDiscussionTopic} from 'api/discussion';
+import { postDiscussion ,postDiscussionTopic , getDiscussionTopic , updateDiscussionTopic} from 'api/discussion';
 import { postReport } from 'api/report';
 
 import { RxCross2 } from "react-icons/rx";
@@ -48,7 +49,6 @@ const CustomToolbar: React.FC = () => (
     <CustomButton />
   </div>
 );
-
 class Editor extends Component<{ placeholder?: string }, { editorHtml: string }> {
   // constructor(props: { placeholder?: string }) {
   //   super(props);
@@ -95,11 +95,14 @@ type propsType = Readonly<{
   onClose : () => void,
   type : string
   updatePost:() => void,
-  parent_id : number
+  parent_id : number,
+  isEditing : boolean,
 }>;
 
 export default function PostEditor(props: propsType): ReactElement {
+  const params = useParams();
   const userData = useContext(userDataContext);
+  const [discussionTopic , setDiscussionTopic] = useState<DiscussionTopic>();
   // text editor
   const [content, setContent] = useState('');
   const [title , setTitle] = useState("");
@@ -109,7 +112,8 @@ export default function PostEditor(props: propsType): ReactElement {
     onClose,
     type,
     updatePost,
-    parent_id
+    parent_id,
+    isEditing
   } = props;
 
   const Close = () => {
@@ -120,6 +124,20 @@ export default function PostEditor(props: propsType): ReactElement {
     }
   }
 
+  useEffect(() => {
+      if (isEditing){
+        if (type == "discussionTopic"){
+          getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
+            setDiscussionTopic(data);
+            if (discussionTopic){
+              setTitle(discussionTopic.title);
+              setContent(discussionTopic.content);
+            }
+          });
+        }
+      }
+  }, [])
+
   const handleContentChange = (value:any, delta:any) => {
     setContent(value);
   };
@@ -127,47 +145,59 @@ export default function PostEditor(props: propsType): ReactElement {
   const onSubmit = async () =>{
     const uid = userData?.uid;
     const publisher = userData?.name;
-    if (uid) {
-      if (type === "discussion"){
-        const discussion : Discussion ={
-          course_id: parent_id,
-          title:title,
-          content: content,
-          follow:false,
-          uid:uid
-        };
-        await postDiscussion(discussion);
-        updatePost();
-      }
-      else if ( type === "report"){
-        const report : Report = {
-          uid : uid,
-          title:title,
-          reply_number:0,
-          content:content,
-          publisher : publisher || "",
-          publisher_avatar : ""
+    if (!isEditing){
+      if (uid) {
+        if (type === "discussion"){
+          const discussion : Discussion ={
+            course_id: parent_id,
+            title:title,
+            content: content,
+            subscription_status:false,
+            uid:uid
+          };
+          await postDiscussion(discussion);
+          updatePost();
         }
-        await postReport(report);
-        updatePost();
+        else if ( type === "report"){
+          const report : Report = {
+            uid : uid,
+            title:title,
+            reply_number:0,
+            content:content,
+            publisher : publisher || "",
+            publisher_avatar : ""
+          }
+          await postReport(report);
+          updatePost();
+        }
+        else if ( type === "discussionTopic"){
+          const discussionTopic : DiscussionTopic ={
+            uid : uid,
+            discussion_id: parent_id,
+            title:title,
+            reply_number:0,
+            subscription_status:false,
+            publisher : publisher || "",
+            content:content,
+            publisher_avatar : ""
+          };
+          await postDiscussionTopic(discussionTopic);
+          updatePost();
+        }
+        
       }
-      else if ( type === "discussionTopic"){
-        const discussionTopic : DiscussionTopic ={
-          uid : uid,
-          discussion_id: parent_id,
-          title:title,
-          reply_number:0,
-          follow:false,
-          publisher : publisher || "",
-          content:content,
-          publisher_avatar : ""
-        };
-        await postDiscussionTopic(discussionTopic);
-        updatePost();
-      }
-      
+      else {}
     }
-    else {}
+    else{
+      if (uid){
+        if (type == "discussionTopic" && discussionTopic){
+          discussionTopic.title = title;
+          discussionTopic.content = content;
+          await updateDiscussionTopic(discussionTopic);
+          updatePost();
+        }
+      }
+    }    
     Close();
     setContent("");
     setTitle("");

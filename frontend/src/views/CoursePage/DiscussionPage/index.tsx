@@ -74,7 +74,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                 }
                 
             </div>
-            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion" updatePost={handleDiscussionList} parent_id={courseID}/></div>
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussion" updatePost={handleDiscussionList} parent_id={courseID} isEditing={false}/></div>
             
         </div>
     );
