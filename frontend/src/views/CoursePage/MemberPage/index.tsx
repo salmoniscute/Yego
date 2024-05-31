@@ -56,7 +56,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             setShowMember(true);
                             setSelectedStudent(data)
                         }}>
-                            <img src="https://i.imgur.com/XdMhWxz.png"/>
+                            <img src={data.avatar}/>
                             {data.name}
                         </p>
                         <p>{data.uid}</p>
