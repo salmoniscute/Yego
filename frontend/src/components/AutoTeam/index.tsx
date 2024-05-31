@@ -10,8 +10,8 @@ import { getCourseMemberList } from "api/courseMember";
 import { Group } from "schemas/group";
 
 type propsType = Readonly<{
-    close : () => void
-
+    close : () => void,
+    course_id: number
 }>;
 
 export default function AutoTeam(props:propsType): React.ReactElement {
@@ -59,9 +59,9 @@ export default function AutoTeam(props:propsType): React.ReactElement {
         })
     };
 
-    const grouping = async () => { //course_id 待改
-        if(groupingMethod && number && distributeMethod && namingMethod){
-            await get_auto_team_preview(groupingMethod, number, distributeMethod, namingMethod, 1).then(data => {
+    const grouping = async () => { 
+        if(groupingMethod && number && distributeMethod && namingMethod && props.course_id){
+            await get_auto_team_preview(groupingMethod, number, distributeMethod, namingMethod, props.course_id).then(data => {
                 if(data) setgroups(data);
               });
             console.log(groups);
@@ -82,12 +82,12 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     }
     
     const lastStep = () => {
-        cancel(1);
+        cancel(props.course_id);
         setshowPreview(false);
     }
 
-    const confirm = () => {
-        post_auto(1);
+    const confirm = async () => {
+        await post_auto(props.course_id);
         setshowPreview(false);
         close();
         setGroupingMethod(null);
@@ -97,7 +97,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
     }
 
     const get_members_number = async () => {
-        await getCourseMemberList(1).then(data => {
+        await getCourseMemberList(props.course_id).then(data => {
             if(data) setstudentNum(data.filter(user => user.role === "student").length);
             console.log(data);
         });
@@ -133,7 +133,7 @@ export default function AutoTeam(props:propsType): React.ReactElement {
         <div id="autoTeam">
             <RxCross2 className="closeCross" onClick={() => {
                 close();
-                if(showPreview === true) cancel(1); 
+                if(showPreview === true) cancel(props.course_id); 
                 setshowPreview(false);
                 setGroupingMethod(null);
                 setNamingMethod(null);
