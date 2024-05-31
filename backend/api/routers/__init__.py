@@ -13,6 +13,7 @@ from .discussion_topic import router as discussion_topic_router
 from .discussion_topic_reply import router as discussion_topic_reply_router
 from .course_material import router as course_material_router
 from .material_info import router as material_info_router
+from .assignment import router as assignment_router
 from .file import router as file_router
 from .subscription import router as subscription_router
 from .notification import router as notification_router

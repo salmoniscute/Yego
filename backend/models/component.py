@@ -102,6 +102,13 @@ class Component(Base):
         passive_deletes=True
     )
 
+    assignment: Mapped["Assignment"] = relationship(
+        "Assignment",
+        back_populates="info",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
     def __init__(self, uid: str, title: str, content: str, release_time: str) -> None:
         self.uid = uid
         self.release_time = release_time
