@@ -10,11 +10,10 @@ import "./index.scss";
 import { IoSend } from "react-icons/io5";
 import { SlOptions } from "react-icons/sl";
 import { TiArrowBack } from "react-icons/ti";
-
+import PostEditor from "components/PostEditor";
 import userDataContext from "context/userData";
 import { DiscussionTopic,DiscussionTopicReply} from "schemas/discussion";
 import { getDiscussionTopic, postDTReply } from "api/discussion";
-
 const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 type propsType = Readonly<{
@@ -27,6 +26,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     const userData = useContext(userDataContext);
     
     const [discussionTopic , setDiscussionTopic] = useState<DiscussionTopic>();
+    const [openEditor, setopenEditor] = useState(false);
     const [replyContentList, setReplyContentList] = useState(Array());
     const [showReplyAreaList, setShowReplyAreaList] = useState(Array());
     const [mainReply , setMainReply] = useState("");
@@ -37,7 +37,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     useEffect(()=>{
         handleDiscussionTopic();
     },[])
-
     const handleDiscussionTopic = () =>{
         getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
             setDiscussionTopic(data);
@@ -49,7 +48,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             };
         });
     }
-
     const handleMainReplyClick = () => {
         setShowMainReplyArea(true);
         setTimeout(() => {
@@ -77,8 +75,15 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
     };
     
     const editOptions = (): Option[] => [
-        { label: "編輯" ,action:undefined },
+        { label: "編輯" ,action:Open },
     ];
+
+    const Open = () => {
+        setopenEditor(true);
+    }
+    const Close = () => {
+        setopenEditor(false);
+    }
 
     const setTimeString = (release_time:string):string => {
         const releaseDate = new Date(release_time);
@@ -136,7 +141,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         });
         setCategorizedReplies(categorizedReplies);
     }
-
     return (
         <div id="discussionReplyPage">
             <div className="mainDiscussionTopic">
@@ -170,7 +174,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     <p>回覆</p>
                 </div>
             </div>
-
             <div >
                 {
                     discussionTopic && discussionTopic.replies && categorizedReplies[0] && (
@@ -210,7 +213,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                     </div>
                                 )))}
                             </div> 
-
                         )
                             
                     ))
@@ -227,7 +229,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 />
                 <IoSend className="sendIcon" onClick={() => postReply(0 , 0)}/>
             </div>}
-                
+            <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopic} parent_id={Number(params.discussionId) || 0} isEditing={true}/></div>
         </div> 
     );
 }

@@ -92,3 +92,12 @@ export async function postDTReply(reply:DiscussionTopicReply):Promise<Discussion
 
 }
 
+export async function updateDiscussionTopic(discussionTopic : DiscussionTopic){
+    let url = "http://localhost:8080/api/discussion_topic/"+discussionTopic.id;
+    try {
+        await axios.put(url,discussionTopic);
+    }
+    catch(error) {  
+        
+    }
+}
