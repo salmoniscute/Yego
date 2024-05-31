@@ -16,7 +16,7 @@ from models.group import Group
 from models.subscription import Subscription
 from models.user import User
 from models.report import Report, ReportReply
-from models.course_material import CourseMaterial, MaterialInfo
+from models.course_material import CourseMaterial, MaterialInfo, Assignment
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -53,6 +53,7 @@ async def init_db():
             await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(CourseMaterial.__table__, if_not_exists=True))
             await db.execute(CreateTable(MaterialInfo.__table__, if_not_exists=True))
+            await db.execute(CreateTable(Assignment.__table__, if_not_exists=True))
             
             await FakeDB().create_entity_list(db)
 
@@ -63,6 +64,7 @@ async def init_db():
 async def close_db():
     async with SessionLocal() as db:
         async with db.begin():
+            await db.execute(DropTable(Assignment.__table__))
             await db.execute(DropTable(MaterialInfo.__table__))
             await db.execute(DropTable(CourseMaterial.__table__))
             await db.execute(DropTable(ReportReply.__table__))
