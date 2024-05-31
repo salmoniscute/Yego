@@ -184,7 +184,6 @@ export default function PostEditor(props: propsType): ReactElement {
           await postDiscussionTopic(discussionTopic);
           updatePost();
         }
-        
       }
       else {}
     }

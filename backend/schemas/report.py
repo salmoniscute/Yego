@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 from schemas.component import ComponentCreate, ComponentReadID, ComponentUpdate
@@ -20,7 +20,7 @@ class ReportCreate(ComponentCreate):
 
   
 class ReportReplyCreate(BaseModel):
-    content: str
+    content: str = Field(min_length=1, max_length=1000)
     model_config = {
         "json_schema_extra": {
             "examples": [

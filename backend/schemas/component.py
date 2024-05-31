@@ -1,12 +1,12 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 from schemas import file as FileSchema
 
 
 class ComponentCreate(BaseModel):
-    title: str
-    content: str
+    title: str = Field(min_length=1, max_length=100)
+    content: str = Field(min_length=1, max_length=1000)
 
     model_config = {
         "json_schema_extra": {
@@ -21,13 +21,6 @@ class ComponentCreate(BaseModel):
 
 class ComponentReadID(BaseModel):
     id: int
-    
-
-class ComponentRead(BaseModel):
-    id: int
-    uid: str
-    title: str
-    content: str
 
 
 class ComponentReadWithFile(BaseModel):
@@ -40,8 +33,8 @@ class ComponentReadWithFile(BaseModel):
        
 
 class ComponentUpdate(BaseModel):
-    title: Optional[str] = None
-    content: Optional[str] = None
+    title: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    content: Optional[str] = Field(default=None, min_length=1, max_length=1000)
     
     model_config = {
         "json_schema_extra": {

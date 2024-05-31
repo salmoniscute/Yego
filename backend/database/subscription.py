@@ -6,7 +6,6 @@ class Subscription:
         self.default = {
             "uid": None,
             "component_id": None,
-            "type": None
         }
         self.user_list = fakeDB["users"]
         self.report_list = fakeDB["reports"]
@@ -19,7 +18,6 @@ class Subscription:
                     **self.default, 
                     "uid": user["uid"], 
                     "component_id": report["id"], 
-                    "type": "report"
                 })
             
         return self.results

@@ -25,9 +25,10 @@ router = APIRouter(
 NotificationCrud = NotificationCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 
+
 @router.post(
     "/bulletin", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -46,7 +47,7 @@ async def create_course_bulletin(
     for user in users:
         await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin")
         
-    return bulletin
+    return {"id": bulletin.id}
 
 
 @router.get(
@@ -70,7 +71,7 @@ async def get_course_bulletin(cb_id: int):
     response_model=list[BulletinSchema.CourseBulletinListRead],
     status_code=status.HTTP_200_OK
 )
-async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
+async def get_all_course_bulletins_in_particular_course(course_id: int = Depends(check_course_id)):
     """
     Get all course bulletins in particular course.
     """

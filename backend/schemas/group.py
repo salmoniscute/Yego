@@ -1,5 +1,5 @@
 from enum import Enum
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
@@ -19,8 +19,8 @@ class NamingRule(str, Enum):
 
 
 class Member(BaseModel):
-    uid: str
-    name: str
+    uid: str = Field(min_length=1, max_length=10)
+    name: str = Field(min_length=1, max_length=50)
 
 
 class GroupCreate(BaseModel):
@@ -29,7 +29,7 @@ class GroupCreate(BaseModel):
 
 
 class GroupManualCreate(BaseModel):
-    name: str
+    name: str = Field(min_length=1, max_length=20)
     members: Optional[list[Member]] = []
 
     model_config = {
@@ -55,8 +55,8 @@ class GroupManualCreate(BaseModel):
 
 
 class GroupAutoCreateResponse(BaseModel):
-    name: str
-    number_of_members: int
+    name: str = Field(min_length=1, max_length=20)
+    number_of_members: int = Field(ge=1)
     members: Optional[list[Member]] = []
 
 
@@ -75,7 +75,7 @@ class GroupReadByCourseID(BaseModel):
 
     
 class GroupUpdate(BaseModel):
-    name: Optional[str] = None
+    name: Optional[str] = Field(default=None, min_length=1, max_length=20)
 
     model_config = {
         "json_schema_extra": {

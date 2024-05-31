@@ -81,7 +81,7 @@ class CourseBulletinCrudManager:
 
         return
     
-    async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
+    async def get_by_course_id(self, course_id: int, db_session: AsyncSession):
         stmt = select(CourseBulletinModel).where(CourseBulletinModel.course_id == course_id)
         result = await db_session.execute(stmt)
         

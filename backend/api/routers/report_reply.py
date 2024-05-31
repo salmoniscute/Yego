@@ -45,30 +45,14 @@ async def create_report_reply(
     - **content**
     """
     reply = await ReportReplyCrud.create(uid, root_id, parent_id, newReply)
-    reply = await ReportReplyCrud.get(reply.id)
+    # reply = await ReportReplyCrud.get(reply.id)
     
-    users = await UserCrud.get_all()
-    for user in users:
-        if await SubscriptionCrud.get(user.uid, root_id):
-            await NotificationCrud.create(user.uid, root_id, "report")
+    # users = await UserCrud.get_all()
+    # for user in users:
+    #     if await SubscriptionCrud.get(user.uid, root_id):
+    #         await NotificationCrud.create(user.uid, root_id, "report")
 
     return reply
-
-
-@router.get(
-    "/report_reply/{reply_id}", 
-    response_model=ReportSchema.ReportReplyReadByID,
-    deprecated=True
-)
-async def get_report_reply(reply_id: int):
-    """
-    Get one report reply.
-    """
-    reply = await ReportReplyCrud.get(reply_id)
-    if reply:
-        return reply
-    
-    raise not_found
 
 
 @router.put(

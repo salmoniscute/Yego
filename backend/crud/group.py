@@ -9,7 +9,7 @@ from schemas import group as GroupSchema
 
 @crud_class_decorator
 class GroupCrudManager:
-    async def create(self, course_id: str, newGroup: GroupSchema.GroupCreate, db_session: AsyncSession, create_deadline: str = None):
+    async def create(self, course_id: int, newGroup: GroupSchema.GroupCreate, db_session: AsyncSession, create_deadline: str = None):
         newGroup_dict = newGroup.model_dump()
         group = GroupModel(course_id=course_id, create_deadline=create_deadline, **newGroup_dict)
         db_session.add(group)
@@ -17,7 +17,7 @@ class GroupCrudManager:
 
         return group
     
-    async def manual_create(self, course_id: str, newGroup: GroupSchema.GroupManualCreate, db_session: AsyncSession):
+    async def manual_create(self, course_id: int, newGroup: GroupSchema.GroupManualCreate, db_session: AsyncSession):
         newGroup_dict = newGroup.model_dump()
         group = GroupModel(course_id=course_id, create_deadline=None, number_of_members=len(newGroup.members), name=newGroup_dict["name"])
         db_session.add(group)
@@ -66,7 +66,7 @@ class GroupCrudManager:
 
         return
     
-    async def get_by_course_id(self, course_id: str, db_session: AsyncSession):
+    async def get_by_course_id(self, course_id: int, db_session: AsyncSession):
         stmt = select(GroupModel).where(GroupModel.course_id == course_id)
         result = await db_session.execute(stmt)
 
@@ -88,7 +88,7 @@ class GroupCrudManager:
         return _list
 
     
-    async def join(self, uid: str, course_id: str, group_id: int, db_session: AsyncSession):
+    async def join(self, uid: str, course_id: int, group_id: int, db_session: AsyncSession):
         stmt = (
             update(SelectedCourseModel)
             .where(SelectedCourseModel.uid == uid)
@@ -100,7 +100,7 @@ class GroupCrudManager:
 
         return
     
-    async def exit(self, uid: str, course_id: str, group_id: int, db_session: AsyncSession):
+    async def exit(self, uid: str, course_id: int, db_session: AsyncSession):
         stmt = (
             update(SelectedCourseModel)
             .where(SelectedCourseModel.uid == uid)

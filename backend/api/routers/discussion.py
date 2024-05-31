@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, status, Depends
 
 from .depends import check_discussion_id, check_course_id, check_user_id
 from crud.discussion import DiscussionCrudManager
+from crud.notification import NotificationCrudManager
+from crud.selected_course import SelectedCourseCrudManager
 from schemas import discussion as DiscussionSchema
 
 not_found = HTTPException(
@@ -15,6 +17,8 @@ already_exists = HTTPException(
 )
 
 DiscussionCrud = DiscussionCrudManager()
+SelectedCourseCrud = SelectedCourseCrudManager()
+NotificationCrud = NotificationCrudManager()
 router = APIRouter(
     tags=["Discussion"],
     prefix="/api"
@@ -22,7 +26,7 @@ router = APIRouter(
 
 @router.post(
     "/discussion", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_discussion(
     newDiscussion: DiscussionSchema.DiscussionCreate,
@@ -36,24 +40,11 @@ async def create_discussion(
     - **content**
     """    
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
-
-    return discussion
-
-
-@router.get(
-    "/discussions",
-    response_model=list[DiscussionSchema.DiscussionRead],
-    deprecated=True
-)
-async def get_all_discussions():
-    """ 
-    Get all discussions.
-    """
-    discussions = await DiscussionCrud.get_all()
-    if discussions:
-        return discussions
-    
-    raise not_found
+    users = await SelectedCourseCrud.get_by_course_id(course_id)
+    for user in users:
+        await NotificationCrud.create(user["uid"], discussion.id, "discussion")
+        
+    return {"id": discussion.id}
 
 
 @router.get(
@@ -78,12 +69,13 @@ async def get_discussion(
     response_model=list[DiscussionSchema.DiscussionOfCourses]
 )
 async def get_course_discussions_by_course_id(
+    uid: str = Depends(check_user_id),
     course_id: str = Depends(check_course_id)
 ):
     """
-    Get all discussions for a course.
+    Get all discussions for a course and the subscription status of user.
     """
-    discussions = await DiscussionCrud.get_discussions_by_course_id(course_id)
+    discussions = await DiscussionCrud.get_discussions_by_course_id(uid, course_id)
     if discussions:
         return discussions
     
@@ -104,7 +96,12 @@ async def update_discussion(
     - **content**
     """
     await DiscussionCrud.update(discussion_id, updateDiscussion)
-
+    discussion = await DiscussionCrud.get(discussion_id)
+    
+    users = await SelectedCourseCrud.get_by_course_id(discussion["course_id"])
+    for user in users:
+        await NotificationCrud.create(user["uid"], discussion["id"], "discussion")
+    
     return 
 
 

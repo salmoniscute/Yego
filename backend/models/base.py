@@ -17,9 +17,7 @@ class Avatar(str, Enum):
 
 class NotificationType(str, Enum):  
     course_bulletin = "course_bulletin"
-    report = "report"
-    course_material = "course_material"
-    course_assignment = "course_assignment"
+    material_info = "material_info"
     discussion = "discussion"
     discussion_topic = "discussion_topic"
 
