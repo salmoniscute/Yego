@@ -48,18 +48,20 @@ export default function LoginPage(): ReactElement {
       <h2>登入YEGO</h2>
         <div className='rightBlock'>
           <p>帳號</p>
-          <textarea
+          <input
+            type="text"
+            className="loginInput"
             placeholder="帳號與成功入口相同"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            rows={1}
           />
           <p>密碼</p>
-          <textarea
+          <input
+            type="password"
+            className="loginInput"
             placeholder="密碼"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            rows={1}
           />
 
           <div className='rightBlockMiddle'>
