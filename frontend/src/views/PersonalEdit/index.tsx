@@ -2,34 +2,27 @@ import {
     ReactElement,
     useContext
 } from "react";
-
 import {
     Link,
-    Route,
-    Routes,
 } from "react-router-dom";
-
 import userDataContext from "context/userData";
-import PersonalEditPage from "views/PersonalEdit";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
     const userData = useContext(userDataContext);
-    const personalInfo = (
-        <div id="PersonalPage">
+
+    return (
+        <div id="PersonalEditPage">
             <div className="twoSide">
                 <div className="leftSide">
                     <img alt="avatar" src={userData?.avatar}/>
                     <div className="Name">
                         {userData?.name}
                     </div>
-                    <div className="eMail">
-                        {userData?.email}
-                    </div>
-                    <Link className="EditPerson" to="./editPerson">
-                        <span className="material-symbols-outlined">edit</span>
-                        <div>&nbsp;編輯個人資料</div>
+                    <Link className="EditPerson" to={`/personal/${userData?.uid}`}>
+                        <div>&nbsp;結束編輯</div>
                     </Link>
+
                 </div>
                 <div className="rightSide">
                     <div className="OtherInfo">
@@ -41,20 +34,13 @@ export default function Personal(): ReactElement {
                         <div className="OtherInfoContent">{userData?.department}</div>
                     </div>
                     <div className="OtherInfo">
-                        <div className="OtherInfoTag">學號</div>
-                        <div className="OtherInfoContent">{userData?.uid}</div>
+                        <div className="OtherInfoTag">信箱</div>
+                        <div className="OtherInfoContent">{userData?.email}</div>
                     </div>
                     <div className="IntroTag">自我介紹</div>
                     <div className="IntroContent">{userData?.introduction}</div>
                 </div>
             </div>
         </div>
-    )
-
-    return (
-        <Routes>
-            <Route path="*" element={personalInfo}/>
-            <Route path="/editPerson" element={<PersonalEditPage/>}/>
-        </Routes>
     )
 }
