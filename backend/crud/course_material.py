@@ -1,7 +1,6 @@
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
 from database.mysql import crud_class_decorator
 from crud.component import ComponentCrudManager
 from models.component import Component as ComponentModel
@@ -10,10 +9,12 @@ from schemas import course_material as CourseMaterialSchema
 
 ComponentCrud = ComponentCrudManager()
 
+
 @crud_class_decorator
 class CourseMaterialCrudManager:
-    async def create(self, uid: str, course_id: str, newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate, db_session: AsyncSession):
+    async def create(self, uid: str, course_id: int, newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate, db_session: AsyncSession):
         newComponent_dict = newCourseMaterial.model_dump()
+        newComponent_dict.update({"content": "(empty_content)"})
         component = await ComponentCrud.create(uid, newComponent_dict)
         
         course_material = CourseMaterialModel(id=component.id, course_id=course_id)
@@ -22,43 +23,18 @@ class CourseMaterialCrudManager:
 
         return course_material
     
-    async def get(self, course_material_id: str, db_session: AsyncSession):
+    async def get(self, course_material_id: int, db_session: AsyncSession):
         stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == course_material_id)
         result = await db_session.execute(stmt)
         course_material = result.first()
-        obj = {}
-        if course_material:
-            await db_session.refresh(course_material[0], ["info"])
-            stmt = select(MaterialInfoModel).where(MaterialInfoModel.material_id == course_material[0].id)
-            infos = await db_session.execute(stmt)
-            obj = {
-                "id": course_material[0].id,
-                "uid": course_material[0].info.uid,
-                "course_id": course_material[0].course_id,
-                "title": course_material[0].info.title,
-                "content": course_material[0].info.content,
-                "material_infos": []
-            }
-            for info in infos:
-                await db_session.refresh(info[0], ["info"])
-                obj["material_infos"].append({
-                    "id": info[0].id,
-                    "uid": info[0].info.uid,
-                    "content": info[0].info.content,
-                    "title": info[0].info.title,
-                    "type": info[0].type,
-                    "start_time": info[0].start_time,
-                    "end_time": info[0].end_time,
-                    "assignment_reject_time": info[0].assignment_reject_time,
-                    "display": info[0].display
-                })
-        
-        return obj
+
+        return course_material
     
-    async def get_all(self, db_session: AsyncSession):
-        stmt = select(CourseMaterialModel)
+    async def get_all_in_particular_course(self, course_id: int, db_session: AsyncSession):
+        stmt = select(CourseMaterialModel).where(CourseMaterialModel.course_id == course_id)
         result = await db_session.execute(stmt)
         result = result.unique()
+
         _list = []
         for material in result:
             await db_session.refresh(material[0], ["info"])
@@ -66,24 +42,19 @@ class CourseMaterialCrudManager:
             infos = await db_session.execute(stmt)
             obj = {
                 "id": material[0].id,
-                "uid": material[0].info.uid,
-                "course_id": material[0].course_id,
                 "title": material[0].info.title,
-                "content": material[0].info.content,
                 "material_infos": []
             }
             for info in infos:
                 await db_session.refresh(info[0], ["info"])
                 obj["material_infos"].append({
                     "id": info[0].id,
-                    "uid": info[0].info.uid,
-                    "content": info[0].info.content,
                     "title": info[0].info.title,
-                    "type": info[0].type,
+                    "content": info[0].info.content,
                     "start_time": info[0].start_time,
                     "end_time": info[0].end_time,
-                    "assignment_reject_time": info[0].assignment_reject_time,
-                    "display": info[0].display
+                    "display": info[0].display,
+                    "files": info[0].info.files
                 })
             _list.append(obj)
         

@@ -1,0 +1,78 @@
+#courseMaterialPage {
+    .context {
+        padding: 1.5rem;
+        position: relative;
+        background-color: #FFF;
+        border: 0.1rem solid #000;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        button {
+            background: none;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        h2 {
+            margin: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+
+            button svg {
+                height: 50%;
+            }
+        }
+
+        .material {
+            display: flex;
+            padding: 0.25rem 0;
+            gap: 0.5em;
+            position: relative;
+            height: 1.5em;
+            order: var(--order);
+
+            button {
+                svg {
+                    height: 50%;
+                }
+            }
+        }
+
+        .material[data-ondrag=true] {
+            >span {
+                color: #C9C9C9;
+                background-color: #C9C9C9;
+            }
+        }
+
+        button.addMaterial {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: #FFEA79;
+            padding: 0.5em 1em;
+        }
+    }
+
+    .context[data-edit=true] {
+        .material {
+            padding-inline-start: 1.25em;
+        }
+
+        .material::before {
+            content: "menu";
+            position: absolute;
+            top: calc(50% - 0.6em);
+            left: 0;
+            font-family: "Material Symbols Outlined";
+            user-select: none;
+            cursor: pointer;
+        }
+    }
+}

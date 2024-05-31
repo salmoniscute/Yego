@@ -18,7 +18,7 @@ export async function get_all_notifications(uid: String) {
 
 export async function read_all_notifications(uid: String) {
     let notifications = [];
-    let url = `http://localhost:8080/api/notification/user/${uid}/read`;
+    let url = `http://localhost:8080/api/notification/read/${uid}`;
     try {
         const response = await axios.put(url);
         notifications = response.data;
@@ -32,7 +32,7 @@ export async function read_all_notifications(uid: String) {
 }
 
 export async function read_notification(uid: String, component_id: number) {
-    let url = `http://localhost:8080/api/notification/particular/${uid}/${component_id}`;
+    let url = `http://localhost:8080/api/notification/read/${uid}/${component_id}`;
     try {
         await axios.put(url, { have_read: true });
         return true;

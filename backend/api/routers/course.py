@@ -40,11 +40,6 @@ async def create_course(
     - **name**
     - **outline**
     """
-    course = await CourseCrud.get(newCourse.id)
-    if course:
-        raise already_exists
-    
-    # create course
     course = await CourseCrud.create(uid, newCourse)
 
     return course

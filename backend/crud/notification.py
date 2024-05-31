@@ -4,15 +4,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.mysql import crud_class_decorator
 from models.base import NotificationType
+from models.course_material import CourseMaterial as CourseMaterialModel
+from models.discussion import Discussion as DiscussionModel
 from models.notification import Notification as NotificationModel
-from schemas import notification as NotificationSchema
-
 
 icon_type = {
     "course_bulletin": "announcement",
-    "report": "announcement",
-    "course_material": "assignment",
-    "course_assignment": "assignment",
+    "material_info": "assignment",
     "discussion": "discussion",
     "discussion_topic": "discussion"
 }
@@ -20,24 +18,27 @@ icon_type = {
 type_actions = {
     "course_bulletin": {
         "refresh": ["course_bulletin"],
-        "course_name": lambda n: f"公告 - {n.component_info.course_bulletin.course_info.name}"
-    },
-    "report": {
-        "refresh": ["report"],
-        "course_name": lambda n: "問題回報區"
+        "course_name": "公告 - "
     },
     "discussion": {
         "refresh": ["discussion"],
-        "course_name": lambda n: f"討論區 - {n.component_info.discussion.course_info.name}"
+        "course_name": "討論區 - "
+    },
+    "discussion_topic": {
+        "refresh": ["topic"],
+        "course_name": "討論主題 - "
+    },
+    "material_info": {
+        "refresh": ["material_info"],
+        "course_name": "課程教材 - "
     }
 }
-
+    
 
 @crud_class_decorator
 class NotificationCrudManager:
-    async def create(self, uid: str, component_id: int, type: NotificationType, newNotification: NotificationSchema.NotificationCreate, db_session: AsyncSession):
-        newNotification_dict = newNotification.model_dump()
-        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, **newNotification_dict)
+    async def create(self, uid: str, component_id: int, type: NotificationType, db_session: AsyncSession):
+        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, have_read=False)
         db_session.add(notification)
         await db_session.commit()
 
@@ -83,13 +84,28 @@ class NotificationCrudManager:
                 "uid": notification[0].uid,
                 "component_id": notification[0].component_id,
                 "publisher": notification[0].user_info.name,
-                "course_name": action["course_name"](notification[0]),
+                "course_name": action["course_name"],
                 "release_time": notification[0].release_time,
                 "title": notification[0].component_info.title,
                 "content": notification[0].component_info.content,
                 "have_read": notification[0].have_read,
                 "icon_type": icon_type[notification[0].type]
             })
+
+            if notification[0].type == "course_bulletin":
+                _list[-1]["course_name"] += notification[0].component_info.course_bulletin.course_info.name
+            elif notification[0].type == "discussion":
+                _list[-1]["course_name"] += notification[0].component_info.discussion.course_info.name
+            elif notification[0].type == "discussion_topic":
+                stmt = select(DiscussionModel).where(DiscussionModel.id == notification[0].component_info.topic.discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "material_info":
+                stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
+                result = await db_session.execute(stmt)
+                course_material = result.first()
+                _list[-1]["course_name"] += course_material[0].course_info.name
 
         await db_session.commit() 
 
@@ -120,13 +136,28 @@ class NotificationCrudManager:
                 "uid": notification[0].uid,
                 "component_id": notification[0].component_id,
                 "publisher": notification[0].user_info.name,
-                "course_name": action["course_name"](notification[0]),
+                "course_name": action["course_name"],
                 "release_time": notification[0].release_time,
                 "title": notification[0].component_info.title,
                 "content": notification[0].component_info.content,
                 "have_read": notification[0].have_read,
                 "icon_type": icon_type[notification[0].type]
             })
+
+            if notification[0].type == "course_bulletin":
+                _list[-1]["course_name"] += notification[0].component_info.course_bulletin.course_info.name
+            elif notification[0].type == "discussion":
+                _list[-1]["course_name"] += notification[0].component_info.discussion.course_info.name
+            elif notification[0].type == "discussion_topic":
+                stmt = select(DiscussionModel).where(DiscussionModel.id == notification[0].component_info.topic.discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "material_info":
+                stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
+                result = await db_session.execute(stmt)
+                course_material = result.first()
+                _list[-1]["course_name"] += course_material[0].course_info.name
 
         return _list
     
@@ -152,13 +183,28 @@ class NotificationCrudManager:
                 "uid": notification[0].uid,
                 "component_id": notification[0].component_id,
                 "publisher": notification[0].user_info.name,
-                "course_name": action["course_name"](notification[0]),
+                "course_name": action["course_name"],
                 "release_time": notification[0].release_time,
                 "title": notification[0].component_info.title,
                 "content": notification[0].component_info.content,
                 "have_read": notification[0].have_read,
                 "icon_type": icon_type[notification[0].type]
             })
+
+            if notification[0].type == "course_bulletin":
+                _list[-1]["course_name"] += notification[0].component_info.course_bulletin.course_info.name
+            elif notification[0].type == "discussion":
+                _list[-1]["course_name"] += notification[0].component_info.discussion.course_info.name
+            elif notification[0].type == "discussion_topic":
+                stmt = select(DiscussionModel).where(DiscussionModel.id == notification[0].component_info.topic.discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "material_info":
+                stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
+                result = await db_session.execute(stmt)
+                course_material = result.first()
+                _list[-1]["course_name"] += course_material[0].course_info.name
 
         await db_session.commit()
 

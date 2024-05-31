@@ -133,7 +133,7 @@ export default function PostEditor(props: propsType): ReactElement {
           course_id: parent_id,
           title:title,
           content: content,
-          follow:false,
+          subscription_status:false,
           uid:uid
         };
         await postDiscussion(discussion);
@@ -143,8 +143,10 @@ export default function PostEditor(props: propsType): ReactElement {
         const report : Report = {
           uid : uid,
           title:title,
-          reply:0,
+          reply_number:0,
           content:content,
+          publisher : publisher || "",
+          publisher_avatar : ""
         }
         await postReport(report);
         updatePost();
@@ -155,9 +157,10 @@ export default function PostEditor(props: propsType): ReactElement {
           discussion_id: parent_id,
           title:title,
           reply_number:0,
-          follow:false,
+          subscription_status:false,
           publisher : publisher || "",
           content:content,
+          publisher_avatar : ""
         };
         await postDiscussionTopic(discussionTopic);
         updatePost();

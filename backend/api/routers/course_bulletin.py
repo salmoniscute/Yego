@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from .depends import check_course_id, check_course_bulletin_id, check_user_id
 from crud.course_bulletin import CourseBulletinCrudManager
+from crud.notification import NotificationCrudManager
+from crud.selected_course import SelectedCourseCrudManager
 from schemas import bulletin as BulletinSchema
 
 not_found = HTTPException(
@@ -20,10 +22,13 @@ router = APIRouter(
     tags=["Course Bulletin"]
 )
 
+NotificationCrud = NotificationCrudManager()
+SelectedCourseCrud = SelectedCourseCrudManager()
+
 
 @router.post(
     "/bulletin", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
@@ -38,8 +43,11 @@ async def create_course_bulletin(
     - **pin_to_top**
     """
     bulletin = await CourseBulletinCrud.create(uid, course_id, newBulletin)
-
-    return bulletin
+    users = await SelectedCourseCrud.get_by_course_id(course_id)
+    for user in users:
+        await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin")
+        
+    return {"id": bulletin.id}
 
 
 @router.get(
@@ -63,7 +71,7 @@ async def get_course_bulletin(cb_id: int):
     response_model=list[BulletinSchema.CourseBulletinListRead],
     status_code=status.HTTP_200_OK
 )
-async def get_all_course_bulletins_in_particular_course(course_id: str = Depends(check_course_id)):
+async def get_all_course_bulletins_in_particular_course(course_id: int = Depends(check_course_id)):
     """
     Get all course bulletins in particular course.
     """
@@ -89,6 +97,12 @@ async def update_course_bulletin(
     - **pin_to_top**
     """
     await CourseBulletinCrud.update(cb_id, updateBulletin)
+    bulletin = await CourseBulletinCrud.get(cb_id)
+    
+    users = await SelectedCourseCrud.get_by_course_id(bulletin["course_id"])
+    for user in users:
+        await NotificationCrud.create(user["uid"], cb_id, "course_bulletin")
+    
     return 
 
 

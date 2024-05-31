@@ -1,15 +1,15 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
 class UserCreate(BaseModel):
-    uid: str
-    password: str
-    name: str
-    role: str
-    email: str
-    department: str
-    country: str
+    uid: str = Field(min_length=1, max_length=10)
+    password: str = Field(min_length=6, max_length=20)
+    name: str = Field(min_length=1, max_length=50)
+    role: str = Field(min_length=1, max_length=10)
+    email: str = Field(min_length=1, max_length=100)
+    department: str = Field(min_length=1, max_length=50)
+    country: str = Field(min_length=1, max_length=20)
 
     model_config = {
         "json_schema_extra": {
@@ -35,17 +35,17 @@ class UserRead(BaseModel):
     email: str
     department: str
     country: str
-    introduction: Optional[str] = None
-    avatar: Optional[str] = None
+    introduction: Optional[str]
+    avatar: Optional[str]
 
 
 class UserUpdate(BaseModel):
-    name: Optional[str] = None
-    role: Optional[str] = None
-    email: Optional[str] = None
-    department: Optional[str] = None
-    country: Optional[str] = None
-    introduction: Optional[str] = None
+    name: str = Field(default=None, min_length=1, max_length=50)
+    role: str = Field(default=None, min_length=1, max_length=10)
+    email: str = Field(default=None, min_length=1, max_length=100)
+    department: str = Field(default=None, min_length=1, max_length=50)
+    country: str = Field(default=None, min_length=1, max_length=20)
+    introduction: Optional[str] = Field(default=None, min_length=1, max_length=1000)
 
     model_config = {
         "json_schema_extra": {
@@ -64,8 +64,4 @@ class UserUpdate(BaseModel):
 
 
 class UserUpdatePassword(BaseModel):
-    password: str
-
-
-class UserUpdateAvatar(BaseModel):
-    avatar: str
+    password: str = Field(min_length=6, max_length=20)

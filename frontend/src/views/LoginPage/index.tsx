@@ -14,6 +14,7 @@ const DagoIcon = `${process.env.PUBLIC_URL}/assets/Dago.png`;
 export default function LoginPage(): ReactElement {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedCharacter, setSelectedCharacter] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showWork, setShowWork] = useState<boolean>(false);
   const [nowPage , setNowPage] = useState(1);
@@ -31,7 +32,15 @@ export default function LoginPage(): ReactElement {
       } else {
           
       }
-      setShowWork(true);
+  };
+
+  const characters = [
+    { name: 'Dago', icon: DagoIcon, intro: '每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。' },
+    { name: 'Yegogo', icon: YegogoIcon, intro: '愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。' },
+    { name: 'Yego', icon: YegoIcon, intro: '成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。' }
+  ];
+  const handleCharacterClick = (name:string) => {
+    setSelectedCharacter(name);
   };
 
   return (
@@ -105,25 +114,23 @@ export default function LoginPage(): ReactElement {
             {nowPage == 3 && <div className='page3'>
               <h2>選擇角色</h2>
               <div>
-                <div className='character'>
-                  <img src={DagoIcon}/>
-                  <p className='name'>Dago</p>
-                  <p className='intro'>每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。</p>
-                </div>
-                <div className='character'>
-                  <img src={YegogoIcon}/>
-                  <p className='name'>Yegogo</p>
-                  <p className='intro'>愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。</p>
-                </div>
-                <div className='character'>
-                  <img src={YegoIcon}/>
-                  <p className='name'>Yego</p>
-                  <p className='intro'>成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。</p>
-                </div>
+                  {characters.map(character => (
+                  <div
+                    key={character.name}
+                    className={`character ${selectedCharacter === character.name ? 'selected' : ''}`}
+                    onClick={() => handleCharacterClick(character.name)}
+                  >
+                    <img src={character.icon} alt={character.name} />
+                    <div className='hoverEffect'>
+                      <p className='name'>{character.name}</p>
+                      <p className='intro'>{character.intro}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className='button'>
                 <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                <button onClick={()=>{}}><p>大公告成！</p></button>
+                <button onClick={()=>{navigate("/");}}><p>大公告成！</p></button>
               </div>
             </div>}
             <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>

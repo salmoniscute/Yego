@@ -2,6 +2,9 @@ from fastapi import APIRouter, HTTPException, status, Depends
 
 from .depends import check_report_id, check_user_id
 from crud.report import ReportCrudManager
+from crud.subscription import SubscriptionCrudManager
+from crud.notification import NotificationCrudManager
+from crud.user import UserCrudManager
 from schemas import report as ReportSchema
 
 not_found = HTTPException(
@@ -20,10 +23,14 @@ router = APIRouter(
     prefix="/api"
 )
 
+SubscriptionCrud = SubscriptionCrudManager()
+NotificationCrud = NotificationCrudManager()
+UserCrud = UserCrudManager()
+
 
 @router.post(
     "/report", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_report(
     newReport: ReportSchema.ReportCreate,
@@ -31,13 +38,12 @@ async def create_report(
 ):
     """
     Create a report with the following information:
-    - **release_time**
     - **title**
     - **content**
     """    
     report = await ReportCrud.create(uid, newReport)
+    return {"id": report.id}
 
-    return report
 
 @router.get(
     "/reports",
@@ -85,6 +91,12 @@ async def update_report(
     - **content**
     """
     await ReportCrud.update(report_id, updateReport)
+    
+    # users = await UserCrud.get_all()
+    # for user in users:
+    #     if await SubscriptionCrud.get(user.uid, report_id):
+    #         await NotificationCrud.create(user.uid, report_id, "report")
+    
 
     return 
 

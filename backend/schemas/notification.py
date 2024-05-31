@@ -2,20 +2,6 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class NotificationCreate(BaseModel):
-    have_read: bool
-
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                { 
-                    "have_read": False
-                }
-            ]
-        }
-    }
-
-
 class NotificationRead(BaseModel):
     id: int
     uid: str

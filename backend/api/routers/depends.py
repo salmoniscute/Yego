@@ -11,7 +11,6 @@ from crud.report import ReportCrudManager
 from crud.report_reply import ReportReplyCrudManager
 from crud.course_material import CourseMaterialCrudManager
 from crud.material_info import MaterialInfoCrudManager
-from crud.submitted_assignment import SubmittedAssignmentCrudManager
 from crud.group import GroupCrudManager
 
 ComponentCrud = ComponentCrudManager()
@@ -27,7 +26,6 @@ ReportCrud = ReportCrudManager()
 ReportReplyCrud = ReportReplyCrudManager()
 CourseMaterialCrud = CourseMaterialCrudManager()
 MaterialInfoCrud = MaterialInfoCrudManager()
-SubmittedAssignmentCrud = SubmittedAssignmentCrudManager()
 GroupCrud = GroupCrudManager()
 
 
@@ -138,14 +136,6 @@ async def check_material_info_id(material_info_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Material Info does not exist")
     
     return material_info_id
-
-  
-async def check_submitted_assignment_id(submitted_assignment_id: int):
-    submitted_assignment = await SubmittedAssignmentCrud.get(submitted_assignment_id)
-    if not submitted_assignment:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Submitted Assignment does not exist")
-    
-    return submitted_assignment_id
 
   
 async def check_group_id(group_id: int):

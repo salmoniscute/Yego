@@ -6,6 +6,7 @@ from .depends import check_user_id
 from auth.jwt import verify_access_token
 from auth.passwd import get_password_hash
 from crud.user import UserCrudManager
+from models.base import Avatar
 from schemas import user as UserSchema
 
 permission_denied = HTTPException(
@@ -125,6 +126,18 @@ async def update_user(
 
 
 @router.put(
+    "/user/{uid}/default_avatar",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_user_role(
+    avatar: Avatar,
+    uid: str = Depends(check_user_id)
+):
+    await UserCrud.update_avatar(uid, f"/assets/{avatar}.png")
+    return 
+
+
+@router.put(
     "/user/{uid}/avatar",
     status_code=status.HTTP_204_NO_CONTENT
 )
@@ -142,17 +155,18 @@ async def update_user_avatar(
     
     avatar_path = None
     if avatar:
-        out_file_path = f"upload/user/{uid}"
-        if not os.path.isdir(out_file_path):
-            os.makedirs(out_file_path)
+        public_dir = "../frontend/public"
+        avatar_dir = f"assets/upload/user/{uid}"
+        if not os.path.isdir(f"{public_dir}/{avatar_dir}"):
+            os.makedirs(f"{public_dir}/{avatar_dir}")
         
-        with open(f"{out_file_path}/{avatar.filename}", "wb") as file:
+        with open(f"{public_dir}/{avatar_dir}/{avatar.filename}", "wb") as file:
             content = await avatar.read()  
             file.write(content)
         
-        avatar_path = f"backend/{out_file_path}/{avatar.filename}"
+        avatar_path = f"{avatar_dir}/{avatar.filename}"
     
-    await UserCrud.update_avatar(uid, avatar_path)
+    await UserCrud.update_avatar(uid, f"/{avatar_path}")
     return 
 
 

@@ -1,0 +1,167 @@
+#courseMaterialPage {
+    .sideBar {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .addThemeBox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #6668;
+            z-index: 20;
+            opacity: 0%;
+            pointer-events: none;
+            transition: opacity 0.5s;
+
+            .box {
+                position: relative;
+                transform: translateY(-5rem);
+                transition: transform 0.5s;
+                width: 24rem;
+                max-width: calc(95vw - 3rem);
+                padding: 1.5rem;
+                background-color: #FFF;
+                border-radius: 1rem;
+
+                h2 {
+                    margin-top: 0;
+                }
+
+                button.close {
+                    position: absolute;
+                    top: 1.5rem;
+                    right: 1.5rem;
+                    font-size: 1.5rem;
+                    background: none;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .column {
+                    display: flex;
+                    justify-content: space-between;
+
+                    input.value {
+                        border: none;
+                        outline: none;
+                        font-size: inherit;
+                        width: 8em;
+                        color: #949494;
+                        border-bottom: 0.05rem solid #949494;
+                        transition: color 0.3s, border-color 0.3s;
+                    }
+
+                    input.value:hover {
+                        color: #000;
+                        border-color: #000;
+                    }
+                }
+
+                .buttonBar {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 3rem;
+
+                    button {
+                        background-color: #FFEA79;
+                        outline: none;
+                        border: none;
+                        padding: 0.5em 1.5em;
+                        cursor: pointer;
+                        user-select: none;
+                    }
+                }
+            }
+        }
+
+        .addThemeBox[data-show=true] {
+            opacity: 100%;
+            pointer-events: initial;
+
+            .box {
+                transform: translateY(0);
+            }
+        }
+
+        .switchEdit {
+            background-color: #FFEA79;
+            outline: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 0;
+            width: 9rem;
+            cursor: pointer;
+            user-select: none;
+
+            svg {
+                height: 75%;
+            }
+        }
+
+        .addTheme {
+            width: 9rem;
+            text-align: center;
+            color: #949494;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .addTheme:hover {
+            color: #000;
+        }
+
+        .themeBox {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .theme {
+                padding: 0.1rem 0;
+                position: relative;
+                color: #949494;
+                transition: color 0.3s;
+                cursor: pointer;
+                user-select: none;
+                order: var(--order);
+                transition: color 0.3s;
+            }
+
+            .theme[data-selected=true] {
+                color: #000;
+            }
+
+            .theme[data-ondrag=true] {
+                color: #949494;
+                background-color: #949494;
+            }
+        }
+    }
+
+    .sideBar[data-edit=true] {
+        .theme {
+            padding-inline-start: 1.25em;
+        }
+
+        .theme::before {
+            content: "menu";
+            position: absolute;
+            top: calc(50% - 0.6em);
+            left: 0;
+            font-family: "Material Symbols Outlined";
+            user-select: none;
+        }
+    }
+}
