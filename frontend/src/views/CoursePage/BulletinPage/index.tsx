@@ -3,6 +3,7 @@ import {
     useState,
     useContext,
     CSSProperties,
+    useRef
 } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -126,6 +127,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         const formattedDate = `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
         return formattedDate;
     }
+    
 
     return (
         <div id="courseBulletinPage">
@@ -146,7 +148,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 onChange={handleContentChange}
                 formats={formats}
             />
-            <CourseBulletinEditor submitBulletin={onSubmit}/>
+            <CourseBulletinEditor submitBulletin={onSubmit} imageUpload={()=>{}}/>
             { courseBulletinList.length == 0 && <p>尚無公告</p>}
             <div className="courseBulletin">
                 {

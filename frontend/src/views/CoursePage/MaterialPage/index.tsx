@@ -9,6 +9,10 @@ import {
 import "./index.scss";
 import MaterialSideBar from "./MaterialSideBar";
 import MaterialContext from "./MaterialContext";
+import JoinGroup from "components/JoinGroup";
+
+import { get_all_groups_info } from "api/group";
+import { useParams } from "react-router-dom";
 
 type propsType = Readonly<{
     courseID: number
@@ -49,6 +53,18 @@ let themeExample: Array<{
 export default function MaterialPage(props: propsType): ReactElement {
     const [selectedTheme, setSelectTheme] = useState<number>(0);
     const [themeData, setThemeData] = useState<Array<{ name: string, order: number, id: number }>>(themeExample);
+    const [showJoinGroup, setshowJoinGroup] = useState<Boolean>(false);
+    const params = useParams();
+    
+    const isGroup = async () => {
+        await get_all_groups_info(Number(params.courseID)).then(data => {
+            if(data.length > 0) setshowJoinGroup(true);
+        });
+    }
+
+    useEffect(() => {
+        isGroup();
+    }, []);
 
     return <div id="courseMaterialPage">
         <MaterialSideBar
@@ -75,9 +91,12 @@ export default function MaterialPage(props: propsType): ReactElement {
                 setThemeData(themeExample);
             }}
         />
-        <MaterialContext
-            isTeacher={true}
-            themeId={selectedTheme}
-        />
+        <div className="block">
+            {showJoinGroup ? <JoinGroup /> : ""}
+            <MaterialContext
+                isTeacher={true}
+                themeId={selectedTheme}
+            />
+        </div>
     </div>
 }

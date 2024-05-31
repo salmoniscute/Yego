@@ -40,7 +40,6 @@ const students = [
     { name: "張XX", fullName: "張維芹", id: "B34104065", department: "歷史系三年級", status: "檔案已繳交" },
     { name: "王XX", fullName: "王小明", id: "B34104066", department: "數學系二年級", status: "檔案未繳交" },
     { name: "柯XX", fullName: "柯有倫", id: "E64096300", department: "土木系四年級", status: "檔案未繳交" }
-    // 可以在這裡添加更多學生
 ];
 
 const Individual = () => {

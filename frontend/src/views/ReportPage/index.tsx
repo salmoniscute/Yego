@@ -92,6 +92,6 @@ export default function ReportPage(): ReactElement {
       }
 
     </div>
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="report" updatePost={handleReportList} parent_id={0}/></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="report" updatePost={handleReportList} parent_id={0} isEditing={false}/></div>
   </div>
 }
