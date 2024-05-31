@@ -11,6 +11,16 @@ interface Info {
   release_time: string;
 }
 
+const formatDateTime = (dateTimeString: string) => {
+  const date = new Date(dateTimeString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，因此要加1
+  const day = date.getDate().toString().padStart(2, '0');
+  const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
+
+  return `${year}年${month}月${day}日(${weekDay})`;
+};
+
 export default function WebAnnouncementList() {
   const [announcementData, setAnnouncementData] = useState<Info[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,9 +59,6 @@ export default function WebAnnouncementList() {
 
   return (
     <div className="web-announcement-container">
-      <div className="breadcrumbs">
-        <span><Link to="/"><BsFillHouseFill /></Link> / <Link to="/webAnnouncementlist">網站公告</Link></span>
-      </div>
       <div className="web-announcement-header">
         <h1>網站公告</h1>
       </div>
@@ -64,7 +71,7 @@ export default function WebAnnouncementList() {
         {announcementData.map((announcement, index) => (
           <div className="list-item" key={index}>
             <span style={{ width: "50%" }}><Link to={`/webAnnouncement/${announcement.id}`} className="announcement-title">{announcement.title}</Link></span>
-            <span style={{ width: "30%" }}>{announcement.release_time}</span>
+            <span style={{ width: "30%" }}>{formatDateTime(announcement.release_time)}</span>
             <span style={{ width: "20%" }}>{announcement.publisher}</span>
           </div>
         ))}

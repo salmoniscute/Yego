@@ -6,6 +6,7 @@ import {
     Link,
     Navigate,
 } from "react-router-dom";
+import React, { useEffect, useState} from "react";
 
 import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
@@ -27,19 +28,32 @@ type propsType = Readonly<{
 }>;
 
 export default function MainPage(props: propsType): ReactElement {
+
+    const [bulletins, setBulletins] = useState<Array<WebAnnouncementInfo>>([]);
+    const { getText } = useContext(functionContext);
+    const userData = useContext(userDataContext);
     const {
-        webAnnouncementList,
         dueAssignment,
         currentCourse,
         pastCourse,
     } = props;
 
-    const { getText } = useContext(functionContext)
-    const userData = useContext(userDataContext);
+    useEffect(() => {
+        fetch("http://localhost:8080/api/website/bulletins")
+            .then(response => response.json())
+            .then(data => {
+                const parsedBulletins = data.map((bulletin: WebAnnouncementInfo) => ({
+                    ...bulletin,
+                    release_time: new Date(bulletin.release_time)
+                }));
+                setBulletins(parsedBulletins);
+            })
+            .catch(error => console.error("Error fetching bulletins", error));
+    }, []);
 
     return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
-            <WebAnnouncement webAnnouncementList={webAnnouncementList} />
+             <WebAnnouncement webAnnouncementList={bulletins} />
             <div className="currentCourse">
                 <h2>{getText("this_semester_courses")}</h2>
                 <div className="content body">
