@@ -57,8 +57,7 @@ async def create_discussion_topic_reply(
         topic_sub = await SubscriptionCrud.get(user["uid"], root_id)
         discussion_sub = await SubscriptionCrud.get(user["uid"], topic["discussion_id"])
         if topic_sub or discussion_sub:
-            await NotificationCrud.create(user["uid"], root_id, "discussion_reply")
-
+            await NotificationCrud.create(user["uid"], reply["id"], "discussion_reply")
     return reply
 
 

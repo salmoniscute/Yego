@@ -5,14 +5,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database.mysql import crud_class_decorator
 from models.base import NotificationType
 from models.course_material import CourseMaterial as CourseMaterialModel
-from models.discussion import Discussion as DiscussionModel
+from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel
 from models.notification import Notification as NotificationModel
 
 icon_type = {
     "course_bulletin": "announcement",
     "material_info": "assignment",
     "discussion": "discussion",
-    "discussion_topic": "discussion"
+    "discussion_topic": "discussion",
+    "discussion_reply": "discussion"
 }
 
 type_actions = {
@@ -28,10 +29,15 @@ type_actions = {
         "refresh": ["topic"],
         "course_name": "討論主題 - "
     },
+    "discussion_reply": {
+        "refresh": ["discussion_reply"],
+        "course_name": "討論回覆 - "
+    },
     "material_info": {
         "refresh": ["material_info"],
         "course_name": "課程教材 - "
     }
+    
 }
     
 
@@ -101,6 +107,14 @@ class NotificationCrudManager:
                 result = await db_session.execute(stmt)
                 discussion = result.first()
                 _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "discussion_reply":
+                stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.id == notification[0].component_info.discussion_reply.root_id)
+                result = await db_session.execute(stmt)
+                topic = result.first()
+                stmt = select(DiscussionModel).where(DiscussionModel.id == topic[0].discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
             elif notification[0].type == "material_info":
                 stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
                 result = await db_session.execute(stmt)
@@ -153,6 +167,14 @@ class NotificationCrudManager:
                 result = await db_session.execute(stmt)
                 discussion = result.first()
                 _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "discussion_reply":
+                stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.id == notification[0].component_info.discussion_reply.root_id)
+                result = await db_session.execute(stmt)
+                topic = result.first()
+                stmt = select(DiscussionModel).where(DiscussionModel.id == topic[0].discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
             elif notification[0].type == "material_info":
                 stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
                 result = await db_session.execute(stmt)
@@ -197,6 +219,14 @@ class NotificationCrudManager:
                 _list[-1]["course_name"] += notification[0].component_info.discussion.course_info.name
             elif notification[0].type == "discussion_topic":
                 stmt = select(DiscussionModel).where(DiscussionModel.id == notification[0].component_info.topic.discussion_id)
+                result = await db_session.execute(stmt)
+                discussion = result.first()
+                _list[-1]["course_name"] += discussion[0].course_info.name
+            elif notification[0].type == "discussion_reply":
+                stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.id == notification[0].component_info.discussion_reply.root_id)
+                result = await db_session.execute(stmt)
+                topic = result.first()
+                stmt = select(DiscussionModel).where(DiscussionModel.id == topic[0].discussion_id)
                 result = await db_session.execute(stmt)
                 discussion = result.first()
                 _list[-1]["course_name"] += discussion[0].course_info.name
