@@ -30,7 +30,7 @@ UserCrud = UserCrudManager()
 
 @router.post(
     "/report", 
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_201_CREATED
 )
 async def create_report(
     newReport: ReportSchema.ReportCreate,
@@ -38,13 +38,12 @@ async def create_report(
 ):
     """
     Create a report with the following information:
-    - **release_time**
     - **title**
     - **content**
     """    
     report = await ReportCrud.create(uid, newReport)
+    return {"id": report.id}
 
-    return report
 
 @router.get(
     "/reports",
@@ -93,10 +92,10 @@ async def update_report(
     """
     await ReportCrud.update(report_id, updateReport)
     
-    users = await UserCrud.get_all()
-    for user in users:
-        if await SubscriptionCrud.get(user.uid, report_id):
-            await NotificationCrud.create(user.uid, report_id, "report")
+    # users = await UserCrud.get_all()
+    # for user in users:
+    #     if await SubscriptionCrud.get(user.uid, report_id):
+    #         await NotificationCrud.create(user.uid, report_id, "report")
     
 
     return 

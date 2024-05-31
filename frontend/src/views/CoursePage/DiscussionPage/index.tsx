@@ -11,12 +11,14 @@ import PostEditor from "components/PostEditor";
 
 import "./index.scss";
 import { FaPen } from "react-icons/fa";
-import { BiSolidBellRing } from "react-icons/bi";
 import { TbBellRinging } from "react-icons/tb";
+import { BiBell } from "react-icons/bi";
 
 import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
 
+import { create_subscription, cancel_subscription } from "api/subscription";
+import { cancel } from "api/group";
 
 type propsType = Readonly<{
     courseID: number,
@@ -38,13 +40,22 @@ export default function DiscussionPage(props: propsType): ReactElement {
     }, [])
 
     const handleDiscussionList = () => {
-        getDiscussionList(courseID).then(data => {
+        getDiscussionList(courseID, userData ? userData.uid : null).then(data => {
             setDiscussion(data);
+            console.log(data);
         }).catch( error =>{
             if(error.response && error.response.status == 404){
                 
             }
         })
+    }
+
+    const follow = async (data: Discussion) => {
+        if(userData && data && data.id){            
+            if(data.subscription_status === false) await create_subscription(userData.uid, data.id);
+            else await cancel_subscription(userData.uid, data.id);
+            handleDiscussionList();
+        }
     }
 
     return (
@@ -68,7 +79,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
                                 className="discussionDiscription"
                                 dangerouslySetInnerHTML={{ __html: data.content }}
                             />       
-                            <BiSolidBellRing />
+                            <button onClick={() => follow(data)}>{data.subscription_status === true ? <TbBellRinging /> : <BiBell />}</button>
                         </div>
                     )
                 }

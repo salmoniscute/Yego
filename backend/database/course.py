@@ -5,7 +5,6 @@ import string
 class Course:
     def __init__(self, fakeDB):
         self.default = {
-            "id": None,
             "uid": None,
             "course_code": None,
             "academic_year": None,

@@ -91,6 +91,7 @@ export default function TeamPage(): ReactElement {
               { teamOptions().map((option, i) => <div
               key={i}
               onClick={()=> {
+                if(groups.length > 0) alert('重新設定分組將會覆蓋原先的分組資訊。');
                 setShowWork(true);
                 setSelectMethod(option.label);
               }}
@@ -111,7 +112,6 @@ export default function TeamPage(): ReactElement {
             { selectMethod === "學生自行分組" && <div className="byStudent" >
               <SelfTeam close={closeWindow}/>
             </div>}
-            <div className="close ms" onClick={() => {}}>close</div>
         </div>
         <div className="groups">
           <div className="header">

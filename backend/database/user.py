@@ -56,7 +56,7 @@ class User:
                         "department": dept,
                         "country": "Taiwan",
                         "introduction": self.random_introduction(),
-                        "avatar": "backend/upload/user/default/default.jpg"
+                        "avatar": random.choice(["/assets/Yego.png", "/assets/Yegogo.png", "/assets/Dago.png"])
                     })
                     uid_counter += 1
         
@@ -71,7 +71,7 @@ class User:
             "department": "admin",
             "country": "Taiwan",
             "introduction": None,
-            "avatar": "backend/upload/user/default/default.png"
+            "avatar": random.choice(["/assets/Yego.png", "/assets/Yegogo.png", "/assets/Dago.png"])
         })
         
         return self.results

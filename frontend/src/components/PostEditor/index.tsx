@@ -145,6 +145,7 @@ export default function PostEditor(props: propsType): ReactElement {
   const onSubmit = async () =>{
     const uid = userData?.uid;
     const publisher = userData?.name;
+
     if (!isEditing){
       if (uid) {
         if (type === "discussion"){
@@ -184,7 +185,6 @@ export default function PostEditor(props: propsType): ReactElement {
           await postDiscussionTopic(discussionTopic);
           updatePost();
         }
-        
       }
       else {}
     }

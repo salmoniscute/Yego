@@ -9,7 +9,7 @@ from models.bulletin import CourseBulletin as CourseBulletinModel, WebsiteBullet
 from models.file import File as FileModel
 from models.subscription import Subscription as SubscriptionModel
 from models.notification import Notification as NotificationModel
-from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, SubmittedAssignment as SubmittedAssignmentModel
+from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel
 from models.discussion import Discussion as DiscussionModel, DiscussionTopic as DiscussionTopicModel, DiscussionTopicReply as DiscussionTopicReplyModel
 from models.report import Report as ReportModel, ReportReply as ReportReplyModel
 from models.group import Group as GroupModel
@@ -20,17 +20,18 @@ model = {
     "selected_courses": SelectedCourseModel,
     "groups": GroupModel,
     "components": ComponentModel,
-    "course_bulletins": CourseBulletinModel,
+    "reports": ReportModel,
+    "report_replies": ReportReplyModel,
     "website_bulletins": WebsiteBulletinModel,
-    "files": FileModel,
-    "subscriptions": SubscriptionModel,
-    "notifications": NotificationModel,
-    "course_materials": CourseMaterialModel,
+    "course_bulletins": CourseBulletinModel,
     "discussions": DiscussionModel,
     "discussion_topics": DiscussionTopicModel,
     "discussion_topic_replies": DiscussionTopicReplyModel,
-    "reports": ReportModel,
-    "report_replies": ReportReplyModel,
+    "course_materials": CourseMaterialModel,
+    "material_infos": MaterialInfoModel,
+    "subscriptions": SubscriptionModel,
+    "notifications": NotificationModel,
+    "files": FileModel
 }
 
 

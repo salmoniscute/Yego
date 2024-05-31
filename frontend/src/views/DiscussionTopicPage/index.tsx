@@ -1,11 +1,13 @@
-import { ReactElement, useState , useEffect} from "react";
+import { ReactElement, useState , useEffect, useContext} from "react";
 import { Link ,useParams} from "react-router-dom";
 import PostEditor from "components/PostEditor";
 
+import userDataContext from "context/userData";
 import { DiscussionTopic, Discussion } from "schemas/discussion";
 import {  getDiscussionTopicList, getDiscussion } from "api/discussion";
+import { create_subscription, cancel_subscription } from "api/subscription";
 
-import { BiSolidBellRing } from "react-icons/bi";
+import { BiBell } from "react-icons/bi";
 import { TbBellRinging } from "react-icons/tb";
 import { IoArrowUp } from "react-icons/io5";
 import { IoArrowDown } from "react-icons/io5";
@@ -27,6 +29,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
   const [discussion , setDiscussion] = useState<Discussion>();
   const [openEditor, setopenEditor] = useState(false);
   const [arrow, setArrow] = useState(true); //up = true, down = false
+  const userData = useContext(userDataContext);
 
   const Open = () => {
     setopenEditor(true);
@@ -43,7 +46,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
   }, [])
 
   const handleDiscussionTopicList = () =>{
-    getDiscussionTopicList(Number(params.discussionId)|| 0).then(data => {
+    getDiscussionTopicList(Number(params.discussionId)|| 0, userData ? userData.uid : null).then(data => {
       resortList(data, arrow);
     });
   };
@@ -79,6 +82,14 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
     return formattedDate;
   }
 
+  const follow = async (data: DiscussionTopic) => {
+    if(userData && data && data.id){            
+        if(data.subscription_status === false) await create_subscription(userData.uid, data.id);
+        else await cancel_subscription(userData.uid, data.id);
+        handleDiscussionTopicList();
+    }
+  }
+
   return <div id="discussionTopicPage">
     <div className="header">
       <h1>{discussion?.title}</h1>
@@ -103,7 +114,9 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
             </p>
             <p className="launch">{setTimeString(data.release_time||"")}</p>
             <p className="reply">{data.reply_number}</p>
-            <button className="follow"><p>{data.subscription_status === true ? <BiSolidBellRing /> : <TbBellRinging />}</p></button> 
+
+            <button onClick={() => follow(data)} className="follow">{data.subscription_status === true ? <TbBellRinging /> : <BiBell />}</button>
+
           </div>
         )
       }

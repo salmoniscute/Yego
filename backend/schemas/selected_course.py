@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
@@ -25,8 +25,3 @@ class SelectedCourseByCourseIdRead(BaseModel):
     avatar: Optional[str] = None
     introduction: Optional[str] = None
     group_name: Optional[str] = None
-
-
-class SelectedCourseUpdate(BaseModel):
-    group_id: Optional[int] = None
-    

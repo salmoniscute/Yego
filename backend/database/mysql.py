@@ -16,7 +16,7 @@ from models.group import Group
 from models.subscription import Subscription
 from models.user import User
 from models.report import Report, ReportReply
-from models.course_material import CourseMaterial, MaterialInfo, SubmittedAssignment
+from models.course_material import CourseMaterial, MaterialInfo
 
 engine = create_async_engine(
     url="mysql+aiomysql://root:password@localhost:8888/yego",
@@ -35,7 +35,7 @@ async def get_db():
 
 async def init_db():
     async with SessionLocal() as db:
-        GenFakeDB().generate()
+        # GenFakeDB().generate()
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Component.__table__, if_not_exists=True))
@@ -53,7 +53,6 @@ async def init_db():
             await db.execute(CreateTable(ReportReply.__table__, if_not_exists=True))
             await db.execute(CreateTable(CourseMaterial.__table__, if_not_exists=True))
             await db.execute(CreateTable(MaterialInfo.__table__, if_not_exists=True))
-            await db.execute(CreateTable(SubmittedAssignment.__table__, if_not_exists=True))
             
             await FakeDB().create_entity_list(db)
 
@@ -64,7 +63,6 @@ async def init_db():
 async def close_db():
     async with SessionLocal() as db:
         async with db.begin():
-            await db.execute(DropTable(SubmittedAssignment.__table__))
             await db.execute(DropTable(MaterialInfo.__table__))
             await db.execute(DropTable(CourseMaterial.__table__))
             await db.execute(DropTable(ReportReply.__table__))

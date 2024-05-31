@@ -23,7 +23,8 @@ class SelectedCourseCrudManager:
         )
         result = await db_session.execute(stmt)
         selected_course = result.first()
-        await db_session.refresh(selected_course[0], ["group_info"])
+        if selected_course:
+            await db_session.refresh(selected_course[0], ["group_info"])
 
         return selected_course[0] if selected_course else None
     
