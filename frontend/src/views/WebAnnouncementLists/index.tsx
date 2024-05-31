@@ -17,10 +17,8 @@ const formatDateTime = (dateTimeString: string) => {
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，因此要加1
   const day = date.getDate().toString().padStart(2, '0');
   const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
 
-  return `${year}年${month}月${day}日(${weekDay}) ${hours}:${minutes}`;
+  return `${year}年${month}月${day}日(${weekDay})`;
 };
 
 export default function WebAnnouncementList() {
