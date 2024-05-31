@@ -23,11 +23,13 @@
                 font-weight: bolder;
                 .NameInput{
                     border: none;
+                    outline: none;
+                    border-radius: 0.2em;
                     font-size: 30px;
                     font-weight: bold;
                     text-align: center;
                     width: 70%;
-                    background-color: #f0f0f0;;
+                    background-color: #FFFFFF;;
                 }
             }
             .eMail{
@@ -80,9 +82,13 @@
                     text-align: left;
                     .InfoInput{
                         border: none;
+                        border-radius: 0.2em;
+                        outline: none;
+                        padding-left: 2%;
+                        height: 30px;
                         width: 80%;
                         font-size: medium;
-                        background-color: #f0f0f0;;
+                        background-color: #FFFFFF;
                     }
                 }
             }
@@ -98,7 +104,18 @@
             }
             .IntroContent{
                 margin-top: 3%;
-                padding-left: 3%;
+                padding-left: 1%;
+                .quill{
+                    > .ql-container{
+                        background-color: #FFFFFF;
+                        border: none;
+                        height: 20em;
+                        > .ql-editor{
+                            font-size: 18px;
+                            
+                        }
+                    }
+                }
             }
         }
     }
