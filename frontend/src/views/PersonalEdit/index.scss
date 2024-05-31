@@ -1,4 +1,4 @@
-#PersonalPage{
+#PersonalEditPage{
     .twoSide{
         margin: 5em 9em;
         margin-right: 3em;
@@ -6,7 +6,7 @@
         justify-content: center;
         text-align: center;
         .leftSide{
-            width: 40%;;
+            width: 40%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,6 +21,14 @@
                 margin-top:3%;
                 font-size: 30px;
                 font-weight: bolder;
+                .NameInput{
+                    border: none;
+                    font-size: 30px;
+                    font-weight: bold;
+                    text-align: center;
+                    width: 70%;
+                    background-color: #f0f0f0;;
+                }
             }
             .eMail{
                 margin-top:3%;
@@ -49,7 +57,7 @@
         .rightSide{
             width: 60%;
             padding-top: 42px;
-            padding-left: 15%;
+            padding-left: 5%;
             text-align: left;
             .OtherInfo{
                 display: flex;
@@ -70,6 +78,12 @@
                     height: 20px;
                     width: 80%;
                     text-align: left;
+                    .InfoInput{
+                        border: none;
+                        width: 80%;
+                        font-size: medium;
+                        background-color: #f0f0f0;;
+                    }
                 }
             }
             .IntroTag{
@@ -80,7 +94,7 @@
                 width: 90px;
                 text-align: center;
                 font-weight: bold;
-                margin-top: 3%;
+                margin-top:3%;
             }
             .IntroContent{
                 margin-top: 3%;

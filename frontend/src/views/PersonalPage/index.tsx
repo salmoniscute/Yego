@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import userDataContext from "context/userData";
-import ReportPage from "views/ReportPage";
+import PersonalEditPage from "views/PersonalEdit";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
@@ -54,7 +54,7 @@ export default function Personal(): ReactElement {
     return (
         <Routes>
             <Route path="*" element={personalInfo}/>
-            <Route path="/editPerson" element={<ReportPage/>}/>
+            <Route path="/editPerson" element={<PersonalEditPage/>}/>
         </Routes>
     )
 }
