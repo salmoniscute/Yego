@@ -57,6 +57,18 @@ export default function WebAnnouncementPage() {
     fetchAllIds();
   }, [id]);
 
+  const formatDateTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，因此要加1
+    const day = date.getDate().toString().padStart(2, '0');
+    const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${year}年${month}月${day}日(${weekDay}) ${hours}:${minutes}`;
+  };
+
   if (loading || !announcementData) {
     return <div>Loading...</div>;
   }
@@ -74,13 +86,6 @@ export default function WebAnnouncementPage() {
 
   return (
     <div className="web-announcement-container">
-      <div className="breadcrumbs">
-        <span>
-          <Link to="/"><BsFillHouseFill /></Link> /
-          <Link to="/webAnnouncementlist">網站公告</Link> /
-          {announcementData.title}
-        </span>
-      </div>
       <div className="web-announcement-header">
         <h1>網站公告</h1>
       </div>
@@ -91,9 +96,9 @@ export default function WebAnnouncementPage() {
             {announcementData.title}
           </div>
           <p className="announcement-timestamp">
-            <img src={publisherAvatarUrl} alt="announcement" />
-            {announcementData.publisher}
-            {announcementData.release_time}
+            <img src={publisherAvatarUrl} alt="announcement" style={{ marginRight: '8px' }} />
+            <span style={{ marginRight: '8px' }}>{announcementData.publisher}</span>
+            <span>{formatDateTime(announcementData.release_time)}</span>
           </p>
           <p className="announcement-content">{announcementData.content}</p>
           <div className="announcement-documents">
