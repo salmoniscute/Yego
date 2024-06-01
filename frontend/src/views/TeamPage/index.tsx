@@ -16,6 +16,7 @@ import { get_all_groups_info } from "api/group";
 import { Group } from "schemas/group";
 
 import "./index.scss";
+import { useParams } from "react-router-dom";
 
 export default function TeamPage(): ReactElement {
   const userData = useContext(userDataContext);
@@ -24,6 +25,7 @@ export default function TeamPage(): ReactElement {
   const [showWork, setShowWork] = useState<boolean>(false);
   const [groups, setgroups] = useState<Group[]>([]);
   const [listRender, setlistRender] = useState<JSX.Element[]>();
+  const params = useParams();
 
   const closeWindow = () =>{
     setShowWork(false);
@@ -40,10 +42,8 @@ export default function TeamPage(): ReactElement {
   ];
 
   const showGroups = async () => {
-    await get_all_groups_info(1).then(data => {
-      if(data) setgroups(data);
-    });
-    console.log(groups);
+    const data = await get_all_groups_info(Number(params.courseID));
+    if(data) setgroups(data);
   }
 
   useEffect(() => {
@@ -107,10 +107,10 @@ export default function TeamPage(): ReactElement {
               <ManaulTeam close={closeWindow}/>
             </div>}
             { selectMethod === "自動分組" && <div className="auto">
-              <AutoTeam close={closeWindow}/>
+              <AutoTeam close={closeWindow} course_id={Number(params.courseID)}/>
             </div>}
             { selectMethod === "學生自行分組" && <div className="byStudent" >
-              <SelfTeam close={closeWindow}/>
+              <SelfTeam close={closeWindow} course_id={Number(params.courseID)}/>
             </div>}
         </div>
         <div className="groups">

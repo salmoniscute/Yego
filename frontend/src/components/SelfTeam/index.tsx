@@ -13,8 +13,8 @@ import { post_team_by_student } from "api/group";
 import { getCourseMemberList } from "api/courseMember";
 
 type propsType = Readonly<{
-  close : () => void
-
+  close : () => void,
+  course_id: number
 }>;
 
 export default function AutoTeam(props:propsType): React.ReactElement {
@@ -72,16 +72,16 @@ export default function AutoTeam(props:propsType): React.ReactElement {
       })
   };
   
-  const grouping = () => {
-    if(groupingMethod && number && namingMethod && selectedDate && hour && minute){
-        post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", 1);
+  const grouping = async () => {
+    if(groupingMethod && number && namingMethod && selectedDate && hour && minute && props.course_id){
+        await post_team_by_student(groupingMethod, number, namingMethod, moment(selectedDate).format('YYYY-MM-DD')+" "+hour+":"+minute+":00", props.course_id);
         close();
     }
     else alert("請勾選所有項目");
 }
 
 const get_members_number = async () => {
-    await getCourseMemberList(1).then(data => {
+    await getCourseMemberList(props.course_id).then(data => {
         if(data) setstudentNum(data.filter(user => user.role === "student").length);
     });
 }

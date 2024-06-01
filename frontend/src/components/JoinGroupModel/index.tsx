@@ -29,7 +29,7 @@ export default function JoinGroupModel(props:propsType): React.ReactElement {
   const userData = useContext(userDataContext);
 
   const showGroups = async () => {
-    await get_all_groups_info(1).then(data => {
+    await get_all_groups_info(props.course_id).then(data => {
       if(data) setgroups(data);
     });
     console.log(groups);

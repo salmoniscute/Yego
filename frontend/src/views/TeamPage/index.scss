@@ -2,6 +2,7 @@
     margin: 3em 0;
     position: relative;
     max-width: calc(1200px);
+    min-height: calc(500px);
     padding: 0.95rem max(5vw, calc(50vw - 570px));
 
     label.dropdownMenu {
@@ -128,10 +129,8 @@
 
             .members {
                 display: flex;
+                flex-wrap: wrap;
                 width: 70%;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
 
                 p {
                     margin-right: 10px;
