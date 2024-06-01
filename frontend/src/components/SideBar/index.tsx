@@ -35,7 +35,7 @@ export default function SideBar(props: propsType): ReactElement {
         <div className="mask">
             <div className="content">
                 <div className="personalHomepage">
-                    <img alt="avatar" src={`${userData?.avatar}`} />
+                    <img alt="avatar" src={userData?.avatar} />
                     <Link to={`/personal/${userData?.uid}`} className="body-bold">{getText("personal_homepage")}</Link>
                 </div>
                 <div className="caption-bold subTitle">{getText("due_soon")}</div>

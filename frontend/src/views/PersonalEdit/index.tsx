@@ -176,7 +176,7 @@ export default function PersonalEdit(): ReactElement {
                         <div className="IntroContent">
                         <ReactQuill
                             theme="snow"
-                            placeholder="自我介紹..."
+                            placeholder="請輸入自我介紹..."
                             modules={modules}
                             value={intro}
                             onChange={handleIntroChange}
