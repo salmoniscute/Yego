@@ -121,7 +121,7 @@ export default function App(): ReactElement {
                         <Route path="/reportBug" element={<ReportPage />} />  
                         <Route path="/reportBug/:reportId" element={<ReportReplyPage />} />
                         <Route path="/notification/:id" element={<NotificationPage />} />
-                        <Route path="/salmontest" element={<TeamPage/>} />
+                        <Route path="/group/:courseID" element={<TeamPage/>} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                     <Footer />
