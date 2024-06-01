@@ -5,13 +5,14 @@ import {
     SetStateAction,
     useContext,
     useMemo,
-    useState
+    useState,
+    useEffect
 } from "react";
 import { Link } from "react-router-dom";
 
 import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
-
+import { getUserCourseList } from "api/course";
 import functionContext from "context/function";
 import userDataContext from "context/userData";
 
@@ -26,16 +27,14 @@ import { NotiContextProvider } from "../../views/NotificationPage/context";
 type propsType = Readonly<{
     setLanguage: Dispatch<SetStateAction<string>>,
     dueAssignment: Array<AssignmentInfo>,
-    currentCourse: Array<Course>,
 }>;
 
 export default function NavigateBar(props: propsType): ReactElement {
     const {
         setLanguage,
         dueAssignment,
-        currentCourse,
     } = props;
-
+    const [currentCourse, setCurrentCourse] = useState<Array<Course>>([]);
     const {
         getText
     } = useContext(functionContext);
@@ -56,6 +55,12 @@ export default function NavigateBar(props: propsType): ReactElement {
     const DisplayNotification = () => {
         setDisplay(!display);
     }
+    useEffect(() => {
+        getUserCourseList(userData?.uid || "").then(data => {
+            setCurrentCourse(data);
+        });
+    
+    }, []);
     return (
         <div id="navigateBar">
             <Link to="/" className="logo">

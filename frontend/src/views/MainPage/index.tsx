@@ -12,6 +12,7 @@ import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
 import { WebAnnouncementInfo } from "schemas/webAnnouncement";
 
+import { getUserCourseList } from "api/course";
 import functionContext from "context/function";
 import userDataContext from "context/userData";
 
@@ -23,19 +24,15 @@ import "./index.scss";
 type propsType = Readonly<{
     webAnnouncementList: Array<WebAnnouncementInfo>,
     dueAssignment: Array<AssignmentInfo>,
-    currentCourse: Array<Course>,
-    pastCourse: Array<Course>,
 }>;
 
 export default function MainPage(props: propsType): ReactElement {
-
+    const [currentCourse, setCurrentCourse] = useState<Array<Course>>([]);
     const [bulletins, setBulletins] = useState<Array<WebAnnouncementInfo>>([]);
     const { getText } = useContext(functionContext);
     const userData = useContext(userDataContext);
     const {
         dueAssignment,
-        currentCourse,
-        pastCourse,
     } = props;
 
     useEffect(() => {
@@ -49,6 +46,11 @@ export default function MainPage(props: propsType): ReactElement {
                 setBulletins(parsedBulletins);
             })
             .catch(error => console.error("Error fetching bulletins", error));
+        
+        getUserCourseList(userData?.uid || "").then(data => {
+            setCurrentCourse(data);
+        });
+    
     }, []);
 
     return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
@@ -61,10 +63,10 @@ export default function MainPage(props: propsType): ReactElement {
                         currentCourse.map((data, i) => <div
                             key={i}
                             className="block"
-                            title={data.name}
+                            title={data.course_name}
                         >
-                            <div className="teacherName caption">{data.teacher}</div>
-                            <Link to={`/course/${data.uid}`}>{data.name}</Link>
+                            <div className="teacherName caption">{data.instructor_name}</div>
+                            <Link to={`/course/${data.course_id}`}>{data.course_id}</Link>
                             <div className="infoBar">
                                 <div className="assignments">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
