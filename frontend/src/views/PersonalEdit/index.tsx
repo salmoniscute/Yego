@@ -1,7 +1,8 @@
 import {
     ReactElement,
     useContext,
-    useState
+    useState,
+    useEffect
 } from "react";
 import {
     Link,
@@ -9,6 +10,8 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
+import {getPersonal, updatePersonal} from "api/personal";
+import { User } from "schemas/user";
 import "./index.scss";
 
 // Undo & Redo icon
@@ -70,7 +73,6 @@ const formats = [
 "link",
 "image",
 "color",
-"code-block"
 ]
 
 function PersonalIntroEditor() : React.ReactElement {
@@ -108,9 +110,16 @@ export default function PersonalEdit(): ReactElement {
     const userData = useContext(userDataContext);
     const [user, setUser] = useState({
         name: userData?.name,
-        email: userData?.email,
-        introduction: userData?.introduction
+        email: userData?.email
     });
+    const [personalData, setPersonalData] = useState<User>();
+    
+    useEffect(() => {
+      getPersonal(userData?.name?? "").then(data => {
+          setPersonalData(data);
+      });
+    }, [])
+
     const handleChange = (e:any) => {
         const { name, value } = e.target;
         setUser({
@@ -120,60 +129,73 @@ export default function PersonalEdit(): ReactElement {
     };
     // text editor
     const [intro, setIntro] = useState(userData?.introduction);
-    const handleIntroChange = (value:string, delta:any) => {
+    const handleIntroChange = (value:any, delta:any) => {
         setIntro(value);
     };
 
+    const OnSubmit = async() => {
+      if (!user.name || !user.email) {
+        alert("Name and email cannot be empty.");
+        return;
+      }
+      else {
+        if (personalData) {
+          personalData.name = user.name;
+          personalData.email = user.email;
+          personalData.introduction = intro ?? "";
+          await updatePersonal(personalData);
+        }
+      }
+    }
+
     return (
         <div id="PersonalEditPage">
-            <form>
-                <div className="twoSide">
-                    <div className="leftSide">
-                        <img alt="avatar" src={userData?.avatar}/>
-                        <div className="Name">
-                            <input
-                                className="NameInput"
-                                type="text"
-                                name='name' 
-                                value={user.name}
-                                onChange={handleChange}
-                                maxLength={20}
-                                required
-                                placeholder="學生姓名"
-                            />
-                        </div>
-                        <Link className="EditPerson" to={`/personal/${userData?.uid}`}>
-                            <div>&nbsp;結束編輯</div>
-                        </Link>
+              <div className="twoSide">
+                  <div className="leftSide">
+                      <img alt="avatar" src={userData?.avatar}/>
+                      <div className="Name">
+                          <input
+                              className="NameInput"
+                              type="text"
+                              name='name' 
+                              value={user.name}
+                              onChange={handleChange}
+                              maxLength={20}
+                              placeholder="學生姓名"
+                          />
+                      </div>
+                      <Link className="EditPerson" to={`/personal/${userData?.uid}`} onClick={OnSubmit}>
+                          <div>&nbsp;結束編輯</div>
+                      </Link>
 
-                    </div>
-                    <div className="rightSide">
-                        <div className="OtherInfo">
-                            <div className="OtherInfoTag">國家</div>
-                            <div className="OtherInfoContent">
-                                {userData?.country}
-                            </div>
-                        </div>
-                        <div className="OtherInfo">
-                            <div className="OtherInfoTag">科系</div>
-                            <div className="OtherInfoContent">{userData?.department}</div>
-                        </div>
-                        <div className="OtherInfo">
-                            <div className="OtherInfoTag">信箱</div>
-                            <div className="OtherInfoContent">
-                                <input
-                                    className="InfoInput"
-                                    type="email"
-                                    name='email' 
-                                    value={user.email}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="學生信箱"
-                                />
-                            </div>
-                        </div>
-                        <div className="IntroTag">自我介紹</div>
-                        <div className="IntroContent">
+                  </div>
+                  <div className="rightSide">
+                      <div className="OtherInfo">
+                          <div className="OtherInfoTag" >國家</div>
+                          <div className="OtherInfoContent">
+                              {userData?.country}
+                          </div>
+                      </div>
+                      <div className="OtherInfo">
+                          <div className="OtherInfoTag">科系</div>
+                          <div className="OtherInfoContent">{userData?.department}</div>
+                      </div>
+                      <div className="OtherInfo">
+                          <div className="OtherInfoTag">信箱</div>
+                          <div className="OtherInfoContent">
+                              <input
+                                  className="InfoInput"
+                                  type="email"
+                                  name='email' 
+                                  value={user.email}
+                                  onChange={handleChange}
+                                  required
+                                  placeholder="學生信箱"
+                              />
+                          </div>
+                      </div>
+                      <div className="IntroTag">自我介紹</div>
+                      <div className="IntroContent">
                         <ReactQuill
                             theme="snow"
                             placeholder="請輸入自我介紹..."
@@ -186,10 +208,9 @@ export default function PersonalEdit(): ReactElement {
                               }}
                         />
                         <PersonalIntroEditor />
-                        </div>
-                    </div>
-                </div>
-            </form>
+                      </div>
+                  </div>
+              </div>
         </div>
     )
 }
