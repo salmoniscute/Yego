@@ -45,7 +45,9 @@ export default function Personal(): ReactElement {
                         <div className="OtherInfoContent">{userData?.uid}</div>
                     </div>
                     <div className="IntroTag">自我介紹</div>
-                    <div className="IntroContent">{userData?.introduction}</div>
+                    <div className="IntroContent">
+                        <p>{userData?.introduction}</p>
+                    </div>
                 </div>
             </div>
         </div>
