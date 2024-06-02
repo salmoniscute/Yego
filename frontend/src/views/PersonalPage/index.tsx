@@ -46,7 +46,7 @@ export default function Personal(): ReactElement {
                     </div>
                     <div className="IntroTag">自我介紹</div>
                     <div className="IntroContent">
-                        <p>{userData?.introduction}</p>
+                        <p dangerouslySetInnerHTML={{ __html: userData?.introduction || '' }}/>
                     </div>
                 </div>
             </div>
