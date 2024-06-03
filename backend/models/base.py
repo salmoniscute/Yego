@@ -20,6 +20,7 @@ class NotificationType(str, Enum):
     material_info = "material_info"
     discussion = "discussion"
     discussion_topic = "discussion_topic"
+    discussion_reply = "discussion_reply"
 
 
 class BaseType:
