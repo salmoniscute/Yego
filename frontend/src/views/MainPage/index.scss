@@ -37,8 +37,7 @@
         .currentCourse {
             .content {
                 flex-wrap: wrap;
-                justify-content: space-between;
-
+                justify-content:space-between;
                 .block {
                     width: calc(30% - 1rem);
                     background-color: #FFF;

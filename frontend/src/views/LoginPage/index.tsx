@@ -1,6 +1,6 @@
 import { ReactElement, useState , useContext} from 'react';
 
-import { login } from 'api/login';
+import { login , updateUserRole , getUser } from 'api/login';
 
 import './index.scss';
 import { useNavigate } from 'react-router-dom';
@@ -26,13 +26,23 @@ export default function LoginPage(): ReactElement {
   const handleLogin = async () => {
       const user = await login(userName, password);
       if (user) {
-          userData = user;
           setShowWork(true);
           //navigate("/");
       } else {
           
       }
   };
+
+  const updateRole = async (role:string) =>{
+    console.log(userData);
+    if (userData?.uid){
+      await updateUserRole(userData?.uid , role)
+      const user = await getUser(userData.uid);
+      userData = user;
+      console.log(userData);
+      navigate("/");
+    }
+  }
 
   const characters = [
     { name: 'Dago', icon: DagoIcon, intro: '每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。' },
@@ -132,7 +142,7 @@ export default function LoginPage(): ReactElement {
               </div>
               <div className='button'>
                 <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                <button onClick={()=>{navigate("/");}}><p>大公告成！</p></button>
+                <button onClick={() => {updateRole(selectedCharacter)}}><p>大公告成！</p></button>
               </div>
             </div>}
             <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>
