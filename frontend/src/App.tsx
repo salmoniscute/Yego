@@ -22,7 +22,6 @@ import functionContext from "context/function";
 import userDataContext from "./context/userData";
 
 import { getDueAssignments } from "api/assignment";
-import { getCurrentCourseList, getPastCourseList } from "api/course";
 import { getWebAnnouncementList } from "api/webAnnouncement";
 
 import NavigateBar from "./components/NavigateBar";
@@ -54,7 +53,6 @@ function Logout(): ReactElement {
 export default function App(): ReactElement {
     const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
     const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
-    const [currentCourse, setCurrentCourse] = useState<Array<Course>>([]);
     const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
 
@@ -77,15 +75,6 @@ export default function App(): ReactElement {
         getWebAnnouncementList().then(data => {
             setWebAnnouncementList(data);
         })
-
-        getCurrentCourseList().then(data => {
-            setCurrentCourse(data);
-        });
-
-        getPastCourseList().then(data => {
-            setPastCourse(data);
-        });
-
         getDueAssignments().then(data => {
             setDueAssignment(data);
         });
@@ -100,7 +89,6 @@ export default function App(): ReactElement {
                     <NavigateBar
                         setLanguage={setLanguage}
                         dueAssignment={dueAssignment}
-                        currentCourse={currentCourse}
                     />
                     <Routes>
                         <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
@@ -109,8 +97,6 @@ export default function App(): ReactElement {
                         /> : <MainPage
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
-                            currentCourse={currentCourse}
-                            pastCourse={pastCourse}
                         />} />
                         <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
