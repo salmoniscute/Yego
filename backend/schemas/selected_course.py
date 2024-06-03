@@ -10,7 +10,7 @@ class SelectedCourseRead(BaseModel):
 
 
 class SelectedCourseByUidRead(BaseModel):
-    course_id: int
+    id: int
     instructor_name: str
     course_code: str
     academic_year: int
