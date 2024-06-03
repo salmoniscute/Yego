@@ -45,17 +45,17 @@ export default function LoginPage(props: propsType): ReactElement {
 
   const updateRole = async (role:string) =>{
     if (user?.uid){
-      await refreshToken();
       await updateUserRole(user?.uid , role);
+      await refreshToken();
       navigate("/");
     }
   }
 
   const updateUserIntro = async () =>{
     if (user?.uid){
-      await refreshToken();
       const updatedUser = { ...user, introduction: selfIntro };
       await updateUser(updatedUser);
+      await refreshToken();
       setNowPage(3);
     }
   }

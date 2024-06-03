@@ -13,3 +13,4 @@ export async function getUserCourseList(uid : string):Promise<Array<Course>>{
     }
     return [] ; 
 }
+
