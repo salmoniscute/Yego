@@ -26,11 +26,11 @@ class CourseCreate(BaseModel):
 
 class CourseRead(BaseModel):
     id: int
-    uid: str
+    instructor_name: str
     course_code: str
     academic_year: int
     semester: int
-    name: str
+    course_name: str
     outline : str
     
     

@@ -133,7 +133,7 @@ async def update_user_role(
     avatar: Avatar,
     uid: str = Depends(check_user_id)
 ):
-    await UserCrud.update_avatar(uid, f"/assets/{avatar}.png")
+    await UserCrud.update_avatar(uid, f"/assets/{avatar.value}.png")
     return 
 
 

@@ -66,7 +66,7 @@ export default function MainPage(props: propsType): ReactElement {
                             title={data.course_name}
                         >
                             <div className="teacherName caption">{data.instructor_name}</div>
-                            <Link to={`/course/${data.course_id}`}>{data.course_id}</Link>
+                            <Link to={`/course/${data.id}`}>{data.id}</Link>
                             <div className="infoBar">
                                 <div className="assignments">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

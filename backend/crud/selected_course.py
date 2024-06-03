@@ -68,7 +68,7 @@ class SelectedCourseCrudManager:
         _list = []
         for selected_course in result:
             _list.append({
-                "course_id": selected_course[0].course_id,
+                "id": selected_course[0].course_id,
                 "instructor_name": selected_course[0].course_info.instructor_info.name,
                 "course_code": selected_course[0].course_info.course_code,
                 "academic_year": selected_course[0].course_info.academic_year,
