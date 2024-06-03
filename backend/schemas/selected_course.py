@@ -11,8 +11,12 @@ class SelectedCourseRead(BaseModel):
 
 class SelectedCourseByUidRead(BaseModel):
     course_id: int
-    course_name: str
     instructor_name: str
+    course_code: str
+    academic_year: int
+    semester: int
+    course_name: str
+    outline : str
 
 
 class SelectedCourseByCourseIdRead(BaseModel):
