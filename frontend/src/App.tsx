@@ -55,6 +55,7 @@ export default function App(): ReactElement {
     const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
     const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
+    const [refreshToken , setRefreshToken] = useState<string>(localStorage.getItem("refresh_token")||"");
 
     const location = useLocation();
 
@@ -65,7 +66,7 @@ export default function App(): ReactElement {
         }
         catch { }
         return null;
-    }, [location.pathname]);
+    }, [location.pathname,refreshToken]);
 
     const getText = useCallback((id: string) => {
         return getTextOrigin(id, language);
@@ -98,7 +99,7 @@ export default function App(): ReactElement {
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
                         />} />
-                        <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
+                        <Route path="/login" element={userData === null ? <LoginPage setRefreshToken={setRefreshToken}/> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement/:id" element={<WebAnnouncementPage />} />
                         <Route path="/webAnnouncementlist" element={<WebAnnouncementList />} />
