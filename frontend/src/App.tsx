@@ -23,7 +23,6 @@ import userDataContext from "./context/userData";
 
 import { getDueAssignments } from "api/assignment";
 import { getCurrentCourseList, getPastCourseList } from "api/course";
-import { getWebAnnouncementList } from "api/webAnnouncement";
 
 import NavigateBar from "./components/NavigateBar";
 import Footer from "./components/Footer";
@@ -74,9 +73,7 @@ export default function App(): ReactElement {
     }, [language]);
 
     useEffect(() => {
-        getWebAnnouncementList().then(data => {
-            setWebAnnouncementList(data);
-        })
+
 
         getCurrentCourseList().then(data => {
             setCurrentCourse(data);

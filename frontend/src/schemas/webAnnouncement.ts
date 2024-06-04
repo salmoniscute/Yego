@@ -1,8 +1,9 @@
 export interface WebAnnouncementInfo {
-    uid: string,
-    title: string,
-    release_time: number,
-    pin_to_top: boolean,
+    id: number;
+    publisher: string;
+    release_time: string;
+    title: string;
+    pin_to_top: boolean;
 }
 
 export interface WebAnnouncementContent extends WebAnnouncementInfo {
