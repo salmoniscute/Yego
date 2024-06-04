@@ -26,13 +26,13 @@ already_exists = HTTPException(
 
 UserCrud = UserCrudManager()
 router = APIRouter(
-    prefix="/api",
+    prefix="/user",
     tags=["Users"]
 )
 
 
 @router.post(
-    "/user",
+    "",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_user(newUser: UserSchema.UserCreate):
@@ -56,7 +56,7 @@ async def create_user(newUser: UserSchema.UserCreate):
 
     
 @router.get(
-    "/users",
+    "",
     response_model=list[UserSchema.UserRead],
     status_code=status.HTTP_200_OK
 )
@@ -72,7 +72,7 @@ async def get_all_users():
 
 
 @router.get(
-    "/user/{uid}",
+    "/{uid}",
     response_model=UserSchema.UserRead,
     status_code=status.HTTP_200_OK
 )
@@ -88,7 +88,7 @@ async def get_user(uid: str):
 
 
 @router.get(
-    "/user/search/{keyword}",
+    "/search/{keyword}",
     response_model=list[UserSchema.UserRead],
     status_code=status.HTTP_200_OK
 )
@@ -100,7 +100,7 @@ async def search_user(keyword: str=None):
 
 
 @router.put(
-    "/user/{uid}",
+    "/{uid}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_user(
@@ -126,7 +126,7 @@ async def update_user(
 
 
 @router.put(
-    "/user/{uid}/default_avatar",
+    "/{uid}/default_avatar",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_user_role(
@@ -138,7 +138,7 @@ async def update_user_role(
 
 
 @router.put(
-    "/user/{uid}/avatar",
+    "/{uid}/avatar",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_user_avatar(
@@ -156,7 +156,7 @@ async def update_user_avatar(
     avatar_path = None
     if avatar:
         public_dir = "../frontend/public"
-        avatar_dir = f"assets/upload/user/{uid}"
+        avatar_dir = f"assets/upload/{uid}"
         if not os.path.isdir(f"{public_dir}/{avatar_dir}"):
             os.makedirs(f"{public_dir}/{avatar_dir}")
         
@@ -171,7 +171,7 @@ async def update_user_avatar(
 
 
 @router.put(
-    "/user/{uid}/password",
+    "/{uid}/password",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_user_password(
@@ -192,7 +192,7 @@ async def update_user_password(
     
 
 @router.delete(
-    "/user/{uid}",
+    "/{uid}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_user(uid: str = Depends(check_user_id)):

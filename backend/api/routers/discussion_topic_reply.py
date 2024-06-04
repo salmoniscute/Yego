@@ -26,12 +26,12 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 DiscussionCrud = DiscussionCrudManager()
 router = APIRouter(
     tags=["Discussion Topic Reply"],
-    prefix="/api"
+    prefix="/discussion_topic_reply"
 )
 
 
 @router.post(
-    "/discussion_topic_reply",
+    "",
     response_model=DiscussionSchema.DiscussionTopicReplyRead,
     status_code=status.HTTP_201_CREATED
 )
@@ -62,7 +62,7 @@ async def create_discussion_topic_reply(
 
 
 @router.put(
-    "/discussion_topic_reply/{reply_id}",
+    "/{reply_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_discussion_topic_reply(
@@ -86,7 +86,7 @@ async def update_discussion_topic_reply(
 
 
 @router.delete(
-    "/discussion_topic_reply/{reply_id}",
+    "/{reply_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_discussion_topic_reply(

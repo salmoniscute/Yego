@@ -12,6 +12,7 @@ import functionContext from "context/function";
 type propsType = Readonly<{
     show: boolean,
     themeId: number,
+    closeBeforeCallback?: boolean
     close: () => void,
     callback: (type: number) => void,
 }>;
@@ -20,6 +21,7 @@ export default function NewMaterial(props: propsType): ReactElement {
     const {
         show,
         // themeId,
+        closeBeforeCallback,
         close,
         callback,
     } = props;
@@ -41,6 +43,10 @@ export default function NewMaterial(props: propsType): ReactElement {
     useEffect(() => () => {
         document.removeEventListener("keydown", onKeyDown);
     }, [onKeyDown]);
+
+    useEffect(() => {
+        setSelectType(-1)
+    }, [show]);
 
     return <div id="newMaterial" data-show={show ? true : undefined} onClick={(event) => {
         const target: HTMLElement = event.target as HTMLElement;
@@ -96,7 +102,12 @@ export default function NewMaterial(props: propsType): ReactElement {
                 <button
                     className="next caption-bold"
                     disabled={selectType === -1}
-                    onClick={() => callback(selectType)}
+                    onClick={() => {
+                        if (closeBeforeCallback !== false) {
+                            close();
+                        }
+                        callback(selectType);
+                    }}
                 >{getText("next")}</button>
             </div>
         </div>

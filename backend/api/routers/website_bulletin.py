@@ -16,7 +16,7 @@ already_exists = HTTPException(
 
 WebsiteBulletinCrud = WebsiteBulletinCrudManager()
 router = APIRouter(
-    prefix="/api/website",
+    prefix="/website",
     tags=["Website Bulletin"]
 )
 

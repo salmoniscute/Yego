@@ -17,12 +17,12 @@ already_exists = HTTPException(
 CourseMaterialCrud = CourseMaterialCrudManager()
 router = APIRouter(
     tags=["Course Material"],
-    prefix="/api"
+    prefix="/course_material"
 )
 
 
 @router.post(
-    "/course_material", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_course_material(
@@ -40,7 +40,7 @@ async def create_course_material(
 
 
 @router.get(
-    "/course_material/particular_course/{course_id}",
+    "/particular_course/{course_id}",
     response_model=list[CourseMaterialSchema.CourseMaterialRead]
 )
 async def get_all_course_materials_in_particular_course(
@@ -57,7 +57,7 @@ async def get_all_course_materials_in_particular_course(
 
 
 @router.put(
-    "/course_material/{course_material_id}",
+    "/{course_material_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_course_material(
@@ -69,7 +69,7 @@ async def update_course_material(
 
 
 @router.delete(
-    "/course_material/{course_material_id}",
+    "/{course_material_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_course_material(course_material_id: int = Depends(check_course_material_id)):
