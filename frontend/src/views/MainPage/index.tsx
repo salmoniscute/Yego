@@ -6,11 +6,13 @@ import {
     Link,
     Navigate,
 } from "react-router-dom";
+import React, { useEffect, useState} from "react";
 
 import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
 import { WebAnnouncementInfo } from "schemas/webAnnouncement";
 
+import { getUserCourseList } from "api/course";
 import functionContext from "context/function";
 import userDataContext from "context/userData";
 
@@ -22,24 +24,38 @@ import "./index.scss";
 type propsType = Readonly<{
     webAnnouncementList: Array<WebAnnouncementInfo>,
     dueAssignment: Array<AssignmentInfo>,
-    currentCourse: Array<Course>,
-    pastCourse: Array<Course>,
 }>;
 
 export default function MainPage(props: propsType): ReactElement {
+    const [currentCourse, setCurrentCourse] = useState<Array<Course>>([]);
+    const [bulletins, setBulletins] = useState<Array<WebAnnouncementInfo>>([]);
+    const { getText } = useContext(functionContext);
+    const userData = useContext(userDataContext);
     const {
-        webAnnouncementList,
         dueAssignment,
-        currentCourse,
-        pastCourse,
     } = props;
 
-    const { getText } = useContext(functionContext)
-    const userData = useContext(userDataContext);
+    useEffect(() => {
+        fetch("http://localhost:8080/api/website/bulletins")
+            .then(response => response.json())
+            .then(data => {
+                const parsedBulletins = data.map((bulletin: WebAnnouncementInfo) => ({
+                    ...bulletin,
+                    release_time: new Date(bulletin.release_time)
+                }));
+                setBulletins(parsedBulletins);
+            })
+            .catch(error => console.error("Error fetching bulletins", error));
+        
+        getUserCourseList(userData?.uid || "").then(data => {
+            setCurrentCourse(data);
+        });
+    
+    }, []);
 
     return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
-            <WebAnnouncement webAnnouncementList={webAnnouncementList} />
+             <WebAnnouncement webAnnouncementList={bulletins} />
             <div className="currentCourse">
                 <h2>{getText("this_semester_courses")}</h2>
                 <div className="content body">
@@ -47,10 +63,10 @@ export default function MainPage(props: propsType): ReactElement {
                         currentCourse.map((data, i) => <div
                             key={i}
                             className="block"
-                            title={data.name}
+                            title={data.course_name}
                         >
-                            <div className="teacherName caption">{data.teacher}</div>
-                            <Link to={`/course/${data.uid}`}>{data.name}</Link>
+                            <div className="teacherName caption">{data.instructor_name}</div>
+                            <Link to={`/course/${data.id}`}>{data.id}</Link>
                             <div className="infoBar">
                                 <div className="assignments">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

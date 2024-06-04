@@ -2,24 +2,40 @@
     margin: 3em 4em;
     .courseMember{
         padding: 0.5em 2em;
-        .dropdownkey{
-            background-color: #FFFFFF;
-            border: solid 1.5px #949494;
-            border-radius: 0.5em;
+
+        .header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            width: 20%;
-            color: #474141;
-            vertical-align: middle;
-            padding: 0.5em 1em;
-            margin-bottom: 25px;
-            .material-symbols-outlined{
-                display: inline-block;
-                font-size: 25px;
-                padding-top: 5px;
-                padding-left: 5px;
+
+            .dropdownkey{
+                background-color: #FFFFFF;
+                border: solid 1.5px #949494;
+                border-radius: 0.5em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20%;
+                color: #474141;
+                vertical-align: middle;
+                padding: 0.5em 1em;
+                margin-bottom: 25px;
+                .material-symbols-outlined{
+                    display: inline-block;
+                    font-size: 25px;
+                    padding-top: 5px;
+                    padding-left: 5px;
+                    cursor: pointer;
+                }
+            }
+
+            button {
                 cursor: pointer;
+                padding: 1em 1em;
+                background-color: #FFEA79;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 0.3em;
             }
         }
         .courseMemberTab{
@@ -82,6 +98,9 @@
                     width: 30%;
                     padding-left: 5%;
                     margin-top: 2%;
+                    .selectAvatar{
+                        display: flex;
+                    }
                     .OtherInfo{
                         display: flex;
                         margin-top:7%;
@@ -101,8 +120,8 @@
                         }
                     }
                     img{
-                        width: 100px;
-                        height: 100px;
+                        width: 150px;
+                        height: 150px;
                         border-radius: 50%;
                     }
                     .memberMail{

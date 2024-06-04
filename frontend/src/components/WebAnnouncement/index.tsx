@@ -41,7 +41,7 @@ export default function WebAnnouncement(props: propsType): ReactElement {
                 </div>)
             }
             <div className="seeMore">
-                <Link to="/webAnnouncement" >{getText("see_more")}</Link>
+                <Link to="/webAnnouncementlist" >{getText("see_more")}</Link>
             </div>
         </div>
         

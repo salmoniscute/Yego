@@ -22,7 +22,7 @@ class SubscriptionCrudManager:
         )
         result = await db_session.execute(stmt)
         subscription = result.first()
-
+        
         return subscription[0] if subscription else None
         
     async def get_all(self, db_session: AsyncSession):

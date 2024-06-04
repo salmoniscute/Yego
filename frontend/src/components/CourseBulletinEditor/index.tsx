@@ -1,5 +1,9 @@
 
-
+import {
+  useEffect,
+  useState,
+} from "react";
+import axios from 'axios';
 import "./index.scss";
 
 const CustomUndo = () => (
@@ -32,14 +36,19 @@ function redoChange() {
 
 type propsType = Readonly<{
   submitBulletin:()=>void;
+  imageUpload : () => void;
 }>;
+
+
+
+
 
 export const modules = {
   toolbar: {
     container: "#toolbar",
     handlers: {
       undo: undoChange,
-      redo: redoChange
+      redo: redoChange,
     }
   },
   history: {
@@ -61,7 +70,6 @@ export const formats = [
   "list",
   "bullet",
   "link",
-  "image",
   "color",
   "code-block"
 ]
@@ -69,8 +77,36 @@ export const formats = [
 export default function CourseBulletinEditor(props: propsType) : React.ReactElement {
 
   const {
-      submitBulletin
+      submitBulletin,
+      imageUpload
   } = props;
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files?.[0];
+    if (selectedImage) {
+      setImage(selectedImage);
+      console.log(selectedImage);
+    }
+  };
+
+  const handleUpload = async() => {
+    if (!image) {
+      alert("Please select an image.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("files", image);
+    try {
+      const response = await axios.post('http://localhost:8080/api/file?component_id=1', formData, {
+      });
+
+      console.log('Image uploaded successfully:', response.data);
+    } catch (error) {
+        console.error('Error uploading the image:', error);
+    }
+    
+  };
 
   return (
     <div id="toolbar">
@@ -98,11 +134,22 @@ export default function CourseBulletinEditor(props: propsType) : React.ReactElem
       </span>
       <span className="ql-formats">
         <button className="ql-link" />
-        <button className="ql-image" />
       </span>
       <span className="submitButton" onClick={submitBulletin}>
         發布
       </span>
+      <label htmlFor="file-input">
+        <input
+          type="file"
+          id="file-input"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+        <span className="submitButton">
+          上傳圖片
+        </span>
+      </label>
+      
 
     </div>
   )

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 import userDataContext from "context/userData";
-import ReportPage from "views/ReportPage";
+import PersonalEditPage from "views/PersonalEdit";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
@@ -45,7 +45,9 @@ export default function Personal(): ReactElement {
                         <div className="OtherInfoContent">{userData?.uid}</div>
                     </div>
                     <div className="IntroTag">自我介紹</div>
-                    <div className="IntroContent">{userData?.introduction}</div>
+                    <div className="IntroContent">
+                        <p dangerouslySetInnerHTML={{ __html: userData?.introduction || '' }}/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,7 +56,7 @@ export default function Personal(): ReactElement {
     return (
         <Routes>
             <Route path="*" element={personalInfo}/>
-            <Route path="/editPerson" element={<ReportPage/>}/>
+            <Route path="/editPerson" element={<PersonalEditPage/>}/>
         </Routes>
     )
 }

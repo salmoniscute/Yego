@@ -37,11 +37,14 @@ export default function MemberPage(props: propsType): ReactElement {
     return (
         <div id="courseMemberPage">
             <div className="courseMember">
-                <div className="dropdownkey">
-                    關鍵字搜尋或篩選
-                    <span className="material-symbols-outlined">
-                        stat_minus_1
-                    </span>
+                <div className="header">
+                    <div className="dropdownkey">
+                        關鍵字搜尋或篩選
+                        <span className="material-symbols-outlined">
+                            stat_minus_1
+                        </span>
+                    </div>
+                    <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link>
                 </div>
                 <div className="courseMemberTab">
                     {tab.map((tab, index) => (
@@ -56,7 +59,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             setShowMember(true);
                             setSelectedStudent(data)
                         }}>
-                            <img src="https://i.imgur.com/XdMhWxz.png"/>
+                            <img src={data.avatar}/>
                             {data.name}
                         </p>
                         <p>{data.uid}</p>
@@ -75,7 +78,10 @@ export default function MemberPage(props: propsType): ReactElement {
     
                     <div className="windowSet">
                         <div className="leftWindow">
-                            <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
+                            <div className="selectAvatar">
+                                <img alt="avatar" src={selectedStudent?.avatar}/>
+                            </div>
+                            
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">國家</div>
                                 <div className="OtherInfoContent">{selectedStudent?.country}</div>

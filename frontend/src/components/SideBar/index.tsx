@@ -35,7 +35,7 @@ export default function SideBar(props: propsType): ReactElement {
         <div className="mask">
             <div className="content">
                 <div className="personalHomepage">
-                    <img alt="avatar" src={`${userData?.avatar}`} />
+                    <img alt="avatar" src={userData?.avatar} />
                     <Link to={`/personal/${userData?.uid}`} className="body-bold">{getText("personal_homepage")}</Link>
                 </div>
                 <div className="caption-bold subTitle">{getText("due_soon")}</div>
@@ -48,7 +48,7 @@ export default function SideBar(props: propsType): ReactElement {
                 <div className="caption-bold subTitle">{getText("this_semester_courses")}</div>
                 {
                     currentCourse.map((data, i) => <div key={i} className="caption">
-                        <Link to={`/course/${data.uid}`}>{data.name}</Link>
+                        <Link to={`/course/${data.id}`}>{data.course_name}</Link>
                     </div>)
                 }
                 <div className="toolBox">

@@ -3,6 +3,7 @@ import {
     useState,
     useContext,
     CSSProperties,
+    useRef
 } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -126,27 +127,32 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         const formattedDate = `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
         return formattedDate;
     }
+    
 
     return (
         <div id="courseBulletinPage">
             { userData?.role == "student" && <p>課程公告</p>}
-            <textarea
-                placeholder="輸入公告標題"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                rows={1}
-            >
-
-            </textarea>
-            <ReactQuill
-                theme="snow"
-                placeholder="發文..."
-                modules={modules}
-                value={content}
-                onChange={handleContentChange}
-                formats={formats}
-            />
-            <CourseBulletinEditor submitBulletin={onSubmit}/>
+            { userData?.role == "teacher" && ( <>
+                <textarea
+                    placeholder="輸入公告標題"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    rows={1}
+                    >
+                </textarea>
+                <ReactQuill
+                    theme="snow"
+                    placeholder="發文..."
+                    modules={modules}
+                    value={content}
+                    onChange={handleContentChange}
+                    formats={formats}
+                />
+                <CourseBulletinEditor submitBulletin={onSubmit} imageUpload={()=>{}}/>
+            </>)
+            }
+            
+            
             { courseBulletinList.length == 0 && <p>尚無公告</p>}
             <div className="courseBulletin">
                 {

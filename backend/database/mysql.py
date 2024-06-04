@@ -37,6 +37,7 @@ async def init_db():
     async with SessionLocal() as db:
         gen_fake_db.generate()
         # gen_fake_db.demo()
+
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Component.__table__, if_not_exists=True))

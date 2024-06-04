@@ -114,13 +114,15 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
             </p>
             <p className="launch">{setTimeString(data.release_time||"")}</p>
             <p className="reply">{data.reply_number}</p>
+
             <button onClick={() => follow(data)} className="follow">{data.subscription_status === true ? <TbBellRinging /> : <BiBell />}</button>
+
           </div>
         )
       }
 
     </div>
     
-    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopicList} parent_id={Number(params.discussionId) || 0}/></div>
+    <div className={openEditor === true ? '' : 'editor'}><PostEditor onClose={Close} type="discussionTopic" updatePost={handleDiscussionTopicList} parent_id={Number(params.discussionId) || 0} isEditing={false}/></div>
   </div>
 }

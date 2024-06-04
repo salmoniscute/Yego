@@ -1,9 +1,9 @@
 export interface Course {
-    uid: string,
-    teacher: string,
+    id: number,
+    instructor_name: string,
     course_code: string,
     academic_year: number,
     semester: number,
-    name: string,
-    outline: string,
+    course_name: string,
+    outline: string
 };
