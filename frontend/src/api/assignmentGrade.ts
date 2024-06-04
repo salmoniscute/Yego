@@ -14,14 +14,14 @@ export async function getAssignmentGrade(): Promise<Array<AssignmentGrade>> {
             assignment_name: "第二周作業討論",
             teacher_comment: "",
             score_status: "未評分",
-            score: NaN,
+            score: undefined,
             grade: "",
         },
         {
             assignment_name: "第一次小考討論",
             teacher_comment: "",
             score_status: "未繳交",
-            score: NaN,
+            score: undefined,
             grade: "",
         },
     ];

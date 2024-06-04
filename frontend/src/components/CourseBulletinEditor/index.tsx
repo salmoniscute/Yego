@@ -135,7 +135,7 @@ export default function CourseBulletinEditor(props: propsType) : React.ReactElem
       <span className="ql-formats">
         <button className="ql-link" />
       </span>
-      <span className="submitButton" onClick={handleUpload}>
+      <span className="submitButton" onClick={submitBulletin}>
         發布
       </span>
       <label htmlFor="file-input">
