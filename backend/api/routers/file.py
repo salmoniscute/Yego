@@ -1,9 +1,15 @@
-import os
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
+from fastapi.responses import FileResponse
+from aiofiles import open as async_open
 
-from .depends import check_component_id
+from asyncio import gather, create_task
+from os import makedirs
+from os.path import isdir, isfile
+
 from crud.file import FileCrudManager
 from schemas import file as FileSchema
+
+from .depends import check_component_id
 
 not_found = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
@@ -11,19 +17,36 @@ not_found = HTTPException(
 )
 
 already_exists = HTTPException(
-    status_code=status.HTTP_409_CONFLICT, 
+    status_code=status.HTTP_409_CONFLICT,
     detail="Component already exists"
 )
 
 FileCrud = FileCrudManager()
 router = APIRouter(
     tags=["File"],
-    prefix="/api"
+    prefix="/file"
 )
+
+@router.get(
+    "",
+    status_code=status.HTTP_200_OK
+)
+async def get_file(
+    file_id: str
+):
+    file = await FileCrud.get(file_id)
+    if not file:
+        raise not_found
+    
+    path = file.path
+    if not isfile(path):
+        raise not_found
+    
+    return FileResponse(path)
 
 
 @router.post(
-    "/file", 
+    "",
     status_code=status.HTTP_204_NO_CONTENT,
     response_description="The file has been successfully created."
 )
@@ -31,22 +54,25 @@ async def create_files(
     files: list[UploadFile],
     component_id: str = Depends(check_component_id)
 ):
-    public_dir = "../frontend/public"
-    component_dir = f"assets/upload/component/{component_id}"
-    if not os.path.isdir(f"{public_dir}/{component_dir}"):
-        os.makedirs(f"{public_dir}/{component_dir}")
-    for file in files:
-        with open(f"{public_dir}/{component_dir}/{file.filename}", 'wb') as out_file:
-            file_path = f"{component_dir}/{file.filename}"
-            content = await file.read()  
-            out_file.write(content) 
-            file = await FileCrud.create(component_id=component_id, path=f"/{file_path}")
+    target_directory = f"data/component/{component_id}"
+    if not isdir(target_directory):
+        makedirs(target_directory)
+
+    async def func(file: UploadFile):
+        target_path = f"{target_directory}/{file.filename}"
+        async with async_open(target_path, "wb") as output:
+            await output.write(await file.read())
+            await FileCrud.create(component_id=component_id, path=target_path)
+    tasks = [
+        create_task(func(file)) for file in files
+    ]
+    await gather(*tasks)
 
     return
 
 
 @router.delete(
-    "/file/{file_id}",
+    "/{file_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     response_description="The file has been successfully deleted."
 )
@@ -57,7 +83,7 @@ async def delete_file(file_id: str):
     file = await FileCrud.get(file_id)
     if not file:
         raise not_found
-    
+
     await FileCrud.delete(file_id)
 
     return
