@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 from fastapi.security import OAuth2PasswordBearer
 
 from .depends import check_user_id
-from auth.jwt import verify_access_token
+from auth.jwt import verify_token
 from auth.passwd import get_password_hash
 from crud.user import UserCrudManager
 from models.base import Avatar
@@ -133,7 +133,7 @@ async def update_user_role(
     avatar: Avatar,
     uid: str = Depends(check_user_id)
 ):
-    await UserCrud.update_avatar(uid, f"/assets/{avatar}.png")
+    await UserCrud.update_avatar(uid, f"/assets/{avatar.value}.png")
     return 
 
 
@@ -177,14 +177,14 @@ async def update_user_avatar(
 async def update_user_password(
     updateUser: UserSchema.UserUpdatePassword, 
     uid: str = Depends(check_user_id),
-    token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
+    # token:str = Depends(OAuth2PasswordBearer(tokenUrl="api/auth/login"))
 ):
     """
     Update the password of the particular user.
     """
-    payload = await verify_access_token(token)
-    if payload.get("uid") != uid:
-        raise permission_denied
+    # payload = await verify_access_token(token)
+    # if payload.get("uid") != uid:
+    #     raise permission_denied
     
     await UserCrud.update_password(uid, updateUser)
 

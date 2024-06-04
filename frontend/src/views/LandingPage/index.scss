@@ -5,17 +5,24 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 80%;
-        .description{
+        width: 70%;
+        .KeyImage{
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            top: 130px;
+            z-index: -3;
+        }
+        .slogan{
+            display: flex;
             justify-content: left;
-            margin-top: 5%;
-            p {
-                color:#000000;
-                margin-left: 6%;
-                margin-top: 2%;
-                font-weight: bold;
+            position: relative;
+            top: -50px;
+            right: 12%;
+            z-index: -1;
+            img{
+                max-width: 40%;
+            
             }
         }
         .identity{
@@ -23,7 +30,7 @@
             flex-direction: row;
             justify-content: center;
             height:150px;  
-            padding-top: 5.5%;
+            padding-top: 2.5%;
             gap: 2rem;
             margin-left: 2%;
             .IDoption{
@@ -42,6 +49,17 @@
                 .operate{
                     margin-left: 8%;
                 }
+            }
+        }
+        .YegogoGreeting{
+            display: flex;
+            position: absolute;
+            justify-content: right;
+            top: 675px;
+            right: 2%;
+            z-index: 3;
+            img {
+                max-width: 80%;
             }
         }
         .WebAnnoList{

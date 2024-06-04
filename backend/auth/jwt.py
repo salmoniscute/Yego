@@ -27,18 +27,34 @@ async def create_jwt(data: sqlalchemy.engine.row.Row):
 
 
 async def create_access_token(data: UserModel):
-    expire = datetime.now(tz=timezone.utc) + timedelta(minutes=10)
+    expire = datetime.now(tz=timezone.utc) + timedelta(minutes=1)
 
     to_encode = dict(data._mapping)
     to_encode.pop("password")
     to_encode.update({"exp": expire})
 
-    access_token = jwt.encode(to_encode, secret, algorithm)
-
-    return AuthSchema.Token(access_token=access_token, token_type="bearer")
+    return jwt.encode(to_encode, secret, algorithm)
 
 
-async def verify_access_token(token: str):
+async def create_refresh_token(data: UserModel):
+    expire = datetime.now(tz=timezone.utc) + timedelta(minutes=10)
+
+    to_encode = {
+        "uid": data.uid,
+        "exp": expire
+    }
+
+    return jwt.encode(to_encode, secret, algorithm)
+
+
+async def create_token_pair(data: UserModel):
+    access_token = await create_access_token(data)
+    refresh_token = await create_refresh_token(data)
+
+    return AuthSchema.Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")
+
+
+async def verify_token(token: str):
     try:
         return jwt.decode(token, secret, algorithm)
     
