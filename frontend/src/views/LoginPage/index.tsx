@@ -140,6 +140,7 @@ export default function LoginPage(props: propsType): ReactElement {
               <button onClick={()=>updateUserIntro()}><p>我填好了！</p></button>
             </div>}
             {nowPage == 3 && <div className='page3'>
+             
               <h2>選擇角色</h2>
               <div>
                   {characters.map(character => (

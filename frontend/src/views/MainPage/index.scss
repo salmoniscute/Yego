@@ -68,6 +68,17 @@
                     }
                 }
             }
+            .YegogoGreeting{
+                display: flex;
+                position: absolute;
+                justify-content: right;
+                top: 675px;
+                right: 2%;
+                z-index: 3;
+                img {
+                    max-width: 80%;
+                }
+            }
         }
     }
 }

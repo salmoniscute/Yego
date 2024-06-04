@@ -61,8 +61,12 @@ export default function DiscussionPage(props: propsType): ReactElement {
     return (
         <div id="courseDiscussionPage">
             {userData?.role === "teacher" && <div className="addDiscussionButton">
-            <button onClick={Open}><FaPen /><span>新增討論區</span></button>
+                <button onClick={Open}><FaPen /><span>新增討論區</span></button>
             </div> }
+            <div className="yegogo">
+                <img src="/assets/Yegogo2.png"/>
+                <div>看起來討論的很熱烈！</div>
+            </div>
             <div className="discussion">
                 <div className="discussionTab">
                     <p className="discussionTitle">標題</p>

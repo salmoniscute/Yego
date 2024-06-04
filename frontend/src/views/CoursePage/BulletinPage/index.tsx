@@ -151,7 +151,10 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                 <CourseBulletinEditor submitBulletin={onSubmit} imageUpload={()=>{}}/>
             </>)
             }
-            
+            <div className="yegogo">
+                <img src="/assets/Yegogo2.png"/>
+                <div>今天也辛苦了！</div>
+            </div>
             
             { courseBulletinList.length == 0 && <p>尚無公告</p>}
             <div className="courseBulletin">

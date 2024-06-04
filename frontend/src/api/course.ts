@@ -14,3 +14,16 @@ export async function getUserCourseList(uid : string):Promise<Array<Course>>{
     return [] ; 
 }
 
+export async function getCourse(id:number):Promise<Course|null>{
+    let url = "http://localhost:8080/api/course/" + id;
+    try {
+        const response = await axios.get(url,);
+        return response.data;
+    }
+    catch {  
+        
+        //return ;
+    }
+    return null ; 
+
+}
