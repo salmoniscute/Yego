@@ -1,6 +1,8 @@
 import {
     ReactElement,
-    useContext
+    useContext,
+    useState,
+    useEffect
 } from "react";
 
 import {
@@ -10,21 +12,32 @@ import {
 } from "react-router-dom";
 
 import userDataContext from "context/userData";
+import { User } from "schemas/user";
+import {getPersonal} from "api/personal";
 import PersonalEditPage from "views/PersonalEdit";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
     const userData = useContext(userDataContext);
+    const [personalData, setPersonalData] = useState<User>();
+
+    useEffect(() => {
+        console.log("update");
+        getPersonal(userData?.uid?? "").then(data => {
+            setPersonalData(data);
+        });
+    }, [])
+
     const personalInfo = (
         <div id="PersonalPage">
             <div className="twoSide">
                 <div className="leftSide">
-                    <img alt="avatar" src={userData?.avatar}/>
+                    <img alt="avatar" src={personalData?.avatar}/>
                     <div className="Name">
-                        {userData?.name}
+                        {personalData?.name}
                     </div>
                     <div className="eMail">
-                        {userData?.email}
+                        {personalData?.email}
                     </div>
                     <Link className="EditPerson" to="./editPerson">
                         <span className="material-symbols-outlined">edit</span>
@@ -46,7 +59,7 @@ export default function Personal(): ReactElement {
                     </div>
                     <div className="IntroTag">自我介紹</div>
                     <div className="IntroContent">
-                        <p dangerouslySetInnerHTML={{ __html: userData?.introduction || '' }}/>
+                        <p dangerouslySetInnerHTML={{ __html: personalData?.introduction || '' }}/>
                     </div>
                 </div>
             </div>
