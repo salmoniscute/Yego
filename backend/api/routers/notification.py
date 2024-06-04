@@ -17,12 +17,12 @@ already_exists = HTTPException(
 NotificationCrud = NotificationCrudManager()
 router = APIRouter(
     tags=["Notification"],
-    prefix="/api"
+    prefix="/notification"
 )
 
 
 @router.get(
-    "/notification/user/{uid}",
+    "/user/{uid}",
     response_model=list[NotificationSchema.NotificationReadByUid],
     status_code=status.HTTP_200_OK
 )
@@ -37,7 +37,7 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     raise not_found
 
 @router.put(
-    "/notification/read/{uid}/{component_id}",
+    "/read/{uid}/{component_id}",
     response_model=list[NotificationSchema.NotificationReadByUid],
     status_code=status.HTTP_200_OK
 )
@@ -56,7 +56,7 @@ async def read_one_notification(
 
 
 @router.put(
-    "/notification/read/{uid}",
+    "/read/{uid}",
     response_model=list[NotificationSchema.NotificationReadByUid]
 )
 async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
@@ -71,7 +71,7 @@ async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
 
 
 @router.delete(
-    "/notification/particular/{uid}/{component_id}",
+    "/particular/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_notification(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):

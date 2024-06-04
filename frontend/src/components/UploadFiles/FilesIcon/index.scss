@@ -1,0 +1,44 @@
+.fileIcon {
+    width: 6.5rem;
+    height: 8.25rem;
+
+    .icon {
+        width: 6.5rem;
+        height: 6.5rem;
+        border-radius: 0.5rem;
+        background-color: #E1E1E1;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img,
+        svg {
+            max-width: calc(100% - 0.8rem);
+            max-height: calc(100% - 0.8rem);
+            object-fit: contain;
+        }
+    }
+
+    .name {
+        margin-top: 0.25rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #E1E1E1;
+        transition: color 0.3s;
+        cursor: pointer;
+    }
+}
+
+.fileIcon:hover {
+    .icon {
+        background-color: #C0C0C0;
+    }
+    
+    .name {
+        color: #000;
+    }
+}

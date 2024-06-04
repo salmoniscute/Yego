@@ -12,6 +12,8 @@ import "./index.scss";
 import functionContext from "context/function";
 import NewMaterial from "./NewMaterial";
 import NewFiles from "./NewFiles";
+import UploadFiles from "components/UploadFiles";
+import NewAssignments from "./NewAssignments";
 
 
 type propsType = Readonly<{
@@ -145,7 +147,9 @@ export default function MaterialContext(props: propsType): ReactElement {
     }>(undefined);
     const [holdingKey, setHoldingKey] = useState<number>(-1);
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [showNewMaterial, setShowNewMaterial] = useState<boolean>(false);
+    const [currentWindow, setCurrentWindow] = useState<number>(0);
+    const [showSelectFile, setShowSelectFile] = useState<boolean>(false);
+    const [selectFiles, setSelectFiles] = useState<Array<File>>([]);
 
     const { getText } = useContext(functionContext);
 
@@ -180,6 +184,10 @@ export default function MaterialContext(props: propsType): ReactElement {
         }
     }, [editMode, saveChange]);
 
+    useEffect(() => {
+        setSelectFiles([]);
+    }, [currentWindow]);
+
     return <div className="context" data-edit={editMode ? true : undefined} onDragOver={event => event.preventDefault()}>
         <h2>
             <span>{currentData?.name}</span>
@@ -192,18 +200,43 @@ export default function MaterialContext(props: propsType): ReactElement {
         </h2>
         {
             isTeacher && editMode ? <NewMaterial
-                show={showNewMaterial}
+                show={currentWindow == 1}
                 themeId={themeId}
-                close={() => setShowNewMaterial(false)}
-                callback={() => { }}
+                closeBeforeCallback={false}
+                close={() => setCurrentWindow(0)}
+                callback={(selectType: number) => {
+                    setCurrentWindow(selectType + 2);
+                }}
             /> : undefined
         }
-        <NewFiles
-            show={false}
+        {isTeacher && editMode ? <NewAssignments
+            show={currentWindow === 3}
             themeId={themeId}
-            close={() => setShowNewMaterial(false)}
-            callback={() => { }}
-        />
+            files={selectFiles}
+            close={() => setCurrentWindow(-1)}
+            selectFile={() => setShowSelectFile(true)}
+        /> : undefined}
+        {isTeacher && editMode ? <NewFiles
+            show={currentWindow === 4}
+            themeId={themeId}
+            files={selectFiles}
+            close={() => setCurrentWindow(-1)}
+            selectFile={() => setShowSelectFile(true)}
+        /> : undefined}
+        {isTeacher && editMode ? <UploadFiles
+            show={showSelectFile}
+            initFiles={selectFiles}
+            close={() => setShowSelectFile(false)}
+            callback={(files: Array<File>) => {
+                setSelectFiles(files);
+            }}
+        /> : undefined}
+        {
+            isTeacher && editMode ? <button
+                className="addMaterial caption"
+                onClick={() => setCurrentWindow(1)}
+            >{getText("add_material")}</button> : undefined
+        }
         {
             currentData?.materials.map((v, i) => <div
                 key={v.id}
@@ -237,12 +270,6 @@ export default function MaterialContext(props: propsType): ReactElement {
                     </button> : undefined
                 }
             </div>)
-        }
-        {
-            isTeacher && editMode ? <button
-                className="addMaterial caption"
-                onClick={() => setShowNewMaterial(true)}
-            >{getText("add_material")}</button> : undefined
         }
     </div>
 };

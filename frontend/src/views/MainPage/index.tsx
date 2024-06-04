@@ -66,7 +66,7 @@ export default function MainPage(props: propsType): ReactElement {
                             title={data.course_name}
                         >
                             <div className="teacherName caption">{data.instructor_name}</div>
-                            <Link to={`/course/${data.id}`}>{data.id}</Link>
+                            <Link to={`/course/${data.id}`}>{data.course_name}</Link>
                             <div className="infoBar">
                                 <div className="assignments">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,6 +83,9 @@ export default function MainPage(props: propsType): ReactElement {
                             </div>
                         </div>)
                     }
+                </div>
+                <div className="YegogoGreeting">
+                    <img src="/assets/landing_yegogo_greeting.png"/>
                 </div>
             </div>
             <PlatformFriendlyArea titleId="platform_friendly_area" />

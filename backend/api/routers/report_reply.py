@@ -20,7 +20,7 @@ already_exists = HTTPException(
 ReportReplyCrud = ReportReplyCrudManager()
 router = APIRouter(
     tags=["Report Reply"],
-    prefix="/api"
+    prefix="/report_reply"
 )
 
 SubscriptionCrud = SubscriptionCrudManager()
@@ -29,7 +29,7 @@ NotificationCrud = NotificationCrudManager()
 
 
 @router.post(
-    "/report_reply",
+    "",
     response_model=ReportSchema.ReportReplyReadByID,
     status_code=status.HTTP_201_CREATED
 )
@@ -56,7 +56,7 @@ async def create_report_reply(
 
 
 @router.put(
-    "/report_reply/{reply_id}",
+    "/{reply_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_report_reply(
@@ -72,7 +72,7 @@ async def update_report_reply(
 
 
 @router.delete(
-    "/report_reply/{reply_id}",
+    "/{reply_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_report_reply(reply_id: int):

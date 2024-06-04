@@ -22,12 +22,12 @@ GroupCrud = GroupCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 router = APIRouter(
     tags=["Group"],
-    prefix="/api"
+    prefix="/grouping"
 )
 
 
 @router.get(
-    "/group/{course_id}", 
+    "/{course_id}", 
     response_model=list[GroupSchema.GroupReadByCourseID],
     status_code=status.HTTP_200_OK
 )
@@ -42,7 +42,7 @@ async def get_all_groups_in_one_coure(
 
 
 @router.get(
-    "/grouping/auto/preview",
+    "/auto/preview",
     response_model=list[GroupSchema.GroupAutoCreateResponse],
     status_code=status.HTTP_200_OK
 )
@@ -106,7 +106,7 @@ async def auto_grouping_preview(
 
 
 @router.post(
-    "/grouping/auto",
+    "/auto",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def auto_grouping(
@@ -147,7 +147,7 @@ async def auto_grouping(
 
 
 @router.delete(
-    "/grouping/auto/cancel",
+    "/auto/cancel",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def auto_grouping_cancel(
@@ -166,7 +166,7 @@ async def auto_grouping_cancel(
 
 
 @router.post(
-    "/grouping/student",
+    "/student",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def student_grouping(
@@ -233,7 +233,7 @@ async def student_grouping(
        
 
 # @router.post(
-#     "/grouping/manual", 
+#     "/manual", 
 #     status_code=status.HTTP_204_NO_CONTENT
 # )
 # async def manual_grouping(

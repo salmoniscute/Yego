@@ -1,4 +1,4 @@
-#newFiles {
+#newAssignments {
     position: fixed;
     top: 0;
     left: 0;
@@ -119,6 +119,104 @@
                 .row:has(textarea) {
                     align-items: stretch;
                 }
+
+                .addFiles {
+                    .subtitle {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        margin-bottom: 0.5rem;
+
+                        button {
+                            background-color: #FFEA79;
+                            padding: 0.3rem 1rem;
+                            border-radius: 0.25rem;
+                        }
+                    }
+
+                    .files {
+                        display: flex;
+                        flex-direction: column;
+                        max-height: 5em;
+                        overflow-y: auto;
+                        gap: 0.25em;
+
+                        .file {
+                            height: 1.5em;
+                            line-height: 1.5em;
+                        }
+                    }
+                }
+
+                .format {
+                    // display: flex;
+
+                    .dropdown {
+                        flex: 1;
+                        height: 2.4rem;
+    
+                        .mask {
+                            position: relative;
+                            padding: 0.35rem 0;
+                            border: 0.05rem #888 solid;
+                            border-radius: 0.5rem;
+                            display: block;
+                            height: 1.7rem;
+                            overflow: hidden;
+                            transition: height 0.3s;
+                            background-color: #FFF;
+    
+                            div {
+                                height: 1.2rem;
+                                line-height: 1.2rem;
+                                padding: 0.25rem 0.5rem;
+                                user-select: none;
+                                transition: background-color 0.3s, opacity 0.3s;
+                                background-color: #C0C0C000;
+                            }
+    
+                            div:not(:first-child) {
+                                opacity: 0%;
+                                cursor: pointer;
+                            }
+    
+                            div:not(:first-child):hover {
+                                background-color: #C0C0C0;
+                            }
+    
+    
+                            input {
+                                display: none;
+                            }
+                        }
+    
+                        .mask::after {
+                            content: "keyboard_arrow_down";
+                            position: absolute;
+                            top: 0.35rem;
+                            height: 1.5rem;
+                            line-height: 1.5rem;
+                            right: 0.5rem;
+                            cursor: pointer;
+                            font-family: "Material Symbols Outlined";
+                            user-select: none;
+                            transition: transform 0.3s;
+                        }
+    
+                        .mask:has(input:checked) {
+                            height: calc(1.7rem * (var(--options, 0) + 1));
+    
+                            div:not(:first-child) {
+                                opacity: 100%;
+                            }
+                        }
+    
+                        .mask:has(input:checked)::after {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+
             }
 
             .right {
@@ -127,6 +225,16 @@
 
                 .first {
                     z-index: 10;
+                }
+
+                .second {
+                    z-index: 5;
+                }
+
+                >.row {
+                    .key {
+                        width: 6em;
+                    }
                 }
 
                 .visible {
@@ -171,38 +279,10 @@
                 }
             }
         }
-
-        .addFiles {
-            .subtitle {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 0.5rem;
-
-                button {
-                    background-color: #FFEA79;
-                    padding: 0.3rem 1rem;
-                    border-radius: 0.25rem;
-                }
-            }
-
-            .files {
-                display: flex;
-                flex-direction: column;
-                height: 5em;
-                overflow-y: auto;
-                gap: 0.25em;
-
-                .file {
-                    height: 1.5em;
-                    line-height: 1.5em;
-                }
-            }
-        }
     }
 }
-    
-#newFiles[data-show=true] {
+
+#newAssignments[data-show=true] {
     pointer-events: initial;
     opacity: 100%;
 

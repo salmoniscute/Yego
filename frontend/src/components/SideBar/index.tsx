@@ -27,6 +27,7 @@ export default function SideBar(props: propsType): ReactElement {
         getText
     } = useContext(functionContext);
     const userData = useContext(userDataContext);
+    console.log(userData);
 
     return <label id="sideBar">
         <input type="checkbox" />
