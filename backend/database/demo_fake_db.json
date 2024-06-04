@@ -1,0 +1,156 @@
+{
+    "users": [
+        {
+            "uid": "teacher",
+            "password": "password",
+            "name": "謝老闆",
+            "role": "teacher",
+            "email": "teacher@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/krabs.png"
+        },
+        {
+            "uid": "salmon",
+            "password": "password",
+            "name": "林志芸",
+            "role": "student",
+            "email": "salmon@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/salmon.jpg"
+        },
+        {
+            "uid": "zhihao",
+            "password": "password",
+            "name": "莊智皓",
+            "role": "student",
+            "email": "zhihao@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/zhihao.jpg"
+        },
+        {
+            "uid": "yeyeleaf",
+            "password": "password",
+            "name": "許晏綾",
+            "role": "student",
+            "email": "yeyeleaf@gs.ncku.edu.tw",
+            "department": "資工系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/yeyeleaf.jpg"
+        },
+        {
+            "uid": "jason",
+            "password": "password",
+            "name": "王政硯",
+            "role": "student",
+            "email": "jason@gs.ncku.edu.tw",
+            "department": "土木系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/jason.jpg"
+        },
+        {
+            "uid": "jamie",
+            "password": "password",
+            "name": "李潔宜",
+            "role": "student",
+            "email": "jamie@gs.ncku.edu.tw",
+            "department": "資工所",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/jamie.jpg"
+        },
+        {
+            "uid": "ming",
+            "password": "password",
+            "name": "楊凱茗",
+            "role": "student",
+            "email": "little_ming@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/little_ming.jpg"
+        },
+        {
+            "uid": "nt1026",
+            "password": "password",
+            "name": "蔡承翰",
+            "role": "student",
+            "email": "nt1026@gs.ncku.edu.tw",
+            "department": "數學系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/nt1026.jpg"
+        }
+    ],
+    "courses": [
+        {
+            "id": 1,
+            "uid": "teacher",
+            "course_code": "F7-059",
+            "academic_year": 112,
+            "semester": 2,
+            "name": "演算法",
+            "outline": "介紹演算法的分析與設計"
+        }
+    ],
+    "selected_courses": [
+        {
+            "uid": "teacher",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "salmon",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "zhihao",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "yeyeleaf",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "jason",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "jamie",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "ming",
+            "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "nt1026",
+            "course_id": 1,
+            "group_id": null
+        }
+    ],
+    "components": [],
+    "reports": [],
+    "report_replies": [],
+    "website_bulletins": [],
+    "course_bulletins": [],
+    "discussions": [],
+    "discussion_topics": [],
+    "discussion_topic_replies": [],
+    "course_materials": [],
+    "material_infos": [],
+    "files": []
+}
