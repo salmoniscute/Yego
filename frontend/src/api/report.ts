@@ -2,7 +2,7 @@ import { Report , ReportReply } from "schemas/report";
 import axios from "axios";
 
 export async function getReportList() : Promise<Array<Report>>{
-    let url = "/report";
+    let url = "/reports";
     try {
         const response = await axios.get(url,{
           });

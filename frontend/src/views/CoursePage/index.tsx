@@ -2,7 +2,8 @@ import {
     ReactElement,
     useMemo,
     useState,
-    useContext
+    useContext,
+    useEffect
 } from "react";
 import {
     Link,
@@ -17,7 +18,8 @@ import { LuClipboardCheck } from "react-icons/lu";
 import BulletinPage from "./BulletinPage";
 import MemberPage from "./MemberPage";
 import DiscussionPage from "./DiscussionPage";
-
+import { getCourse } from "api/course";
+import { Course } from "schemas/course";
 import "./index.scss";
 import MaterialPage from "./MaterialPage";
 import GradePage from "./GradePage";
@@ -28,10 +30,16 @@ import DiscussionReplyPage from "views/DiscussionReplyPage";
 export default function CoursePage(): ReactElement {
     const [signIn, setSignIn] = useState<string>("已簽到");
     const userData = useContext(userDataContext);
-
     const params = useParams();
     const { courseID } = params;
     const tab = params["*"]?.split("/")[0];
+    const [course , setCourse] = useState<Course>();
+    useEffect(() => {
+        getCourse(Number(courseID)).then((data)=>{
+          setCourse(data);
+        });
+    }, [])
+
 
     const tabs = useMemo(() => courseID ? [
         { label: "公告", path: "announcement", component: <BulletinPage courseID={Number(courseID)} /> },
@@ -44,7 +52,7 @@ export default function CoursePage(): ReactElement {
     const courseForum = (
         <div id="courseForum">
           <div className="titleInfor">
-            <h2>課程名稱</h2>
+            <h2>{course?.course_name}</h2>
             {userData?.role === "student" && (
               <div className="signIn" onClick={() => { }}>
                 簽到

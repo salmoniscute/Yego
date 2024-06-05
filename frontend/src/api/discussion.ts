@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 
 export async function getDiscussionList(course_id:number, uid:string | null): Promise<Array<Discussion>>{
-    let url = `/discussion/${course_id}?`;
+    let url = `/discussion/course/${course_id}?`;
     try {
         const response = await axios.get(url+"uid="+uid);
         const result = response.data;
