@@ -3,10 +3,11 @@
         margin: 5em 9em;
         margin-right: 3em;
         display: flex;
+        position: relative;
         justify-content: center;
         text-align: center;
         .leftSide{
-            width: 40%;
+            width:450px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,7 +31,7 @@
                     font-size: 30px;
                     font-weight: bold;
                     text-align: center;
-                    width: 70%;
+                    width: 50%;
                     background-color: #FFFFFF;;
                 }
             }
@@ -127,7 +128,7 @@
         left: 20%; 
         top: 15%; 
         width: 60%; 
-        //height: 80%; 
+        height: 70%; 
         opacity: 0%;
         background-color: #FFF;
         transition: opacity 0.5s;
@@ -150,6 +151,13 @@
             font-weight: 600;
             margin: 0em;
           }
+        }
+        .closeCross{
+          position: absolute;
+          right: 1em;
+          top: 1em;
+          font-size: 25px;
+          cursor: pointer;
         }
         .updataAvatar{
             width: 100%;
