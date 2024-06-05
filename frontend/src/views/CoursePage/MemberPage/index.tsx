@@ -103,7 +103,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             <div className="memberIntro">
                                 <div className="memberIntroTag">自我介紹</div>
                                 <div className="memberIntroContent">
-                                    {selectedStudent?.introduction}
+                                    <p dangerouslySetInnerHTML={{ __html: selectedStudent?.introduction || '' }}/>
                                 </div>
                             </div>
                         </div>
