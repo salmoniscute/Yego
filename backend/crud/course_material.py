@@ -13,13 +13,18 @@ ComponentCrud = ComponentCrudManager()
 @crud_class_decorator
 class CourseMaterialCrudManager:
     async def create(self, uid: str, course_id: int, newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate, db_session: AsyncSession):
+        stmt = select(CourseMaterialModel).where(CourseMaterialModel.course_id == course_id)
+        result = await db_session.execute(stmt)
+        course_material_list = [course_material[0].order for course_material in result.all()]
+        order = max(course_material_list) + 1 if course_material_list else 1
+
         newComponent_dict = {
             "title": newCourseMaterial.title,
             "content": "(empty_content)"
         }
         component = await ComponentCrud.create(uid, newComponent_dict)
         
-        course_material = CourseMaterialModel(id=component.id, course_id=course_id, order=newCourseMaterial.order)
+        course_material = CourseMaterialModel(id=component.id, course_id=course_id, order=order)
         db_session.add(course_material)
         await db_session.commit()
 
