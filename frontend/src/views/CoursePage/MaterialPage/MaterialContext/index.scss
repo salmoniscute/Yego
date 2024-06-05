@@ -1,5 +1,9 @@
 #courseMaterialPage {
     .context {
+        > a {
+            display: none;
+        }
+
         padding: 1.5rem;
         position: relative;
         background-color: #FFF;
@@ -38,15 +42,21 @@
             height: 1.5em;
             order: var(--order);
 
-            > a {
-                display: none;
-            }
 
             button {
                 svg {
                     height: 50%;
                 }
             }
+        }
+
+        .material {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .material:hover {
+            text-decoration: underline;
         }
 
         .material[data-ondrag=true] {

@@ -22,7 +22,8 @@ import axios from "axios";
 type propsType = Readonly<{
     isTeacher: boolean,
     currentData: Material,
-    updateData: () => void,
+    selectedTheme: number,
+    updateData: () => Promise<Array<Material>>,
 }>;
 
 // let exampleData: {
@@ -138,10 +139,11 @@ export default function MaterialContext(props: propsType): ReactElement {
     const {
         isTeacher,
         currentData,
+        selectedTheme,
         updateData,
     } = props;
 
-    const aRef = useRef(null);
+    const aRef = useRef<HTMLAnchorElement>(null);
 
     const [holdingKey, setHoldingKey] = useState<number>(-1);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -187,6 +189,7 @@ export default function MaterialContext(props: propsType): ReactElement {
     }, [currentWindow]);
 
     return <div className="context" data-edit={editMode ? true : undefined} onDragOver={event => event.preventDefault()}>
+        <a ref={aRef} />
         <h2>
             <span>{currentData?.title}</span>
             <button className="switchEdit caption" onClick={() => setEditMode(v => !v)}>
@@ -219,6 +222,7 @@ export default function MaterialContext(props: propsType): ReactElement {
             show={currentWindow === 4}
             themeId={currentData.id}
             files={selectFiles}
+            selectedTheme={selectedTheme}
             close={() => setCurrentWindow(-1)}
             selectFile={() => setShowSelectFile(true)}
             updateData={updateData}
@@ -258,12 +262,24 @@ export default function MaterialContext(props: propsType): ReactElement {
                 } : undefined}
                 style={{ "--order": v.order ?? 0 } as CSSProperties}
                 onClick={() => {
+                    console.log(v);
                     if (v.files.length === 0)
                         return;
-                    axios.get(`/file`)
+                    axios.get(`/file?file_id=${v.files[0].id}`, {
+                        responseType: "blob"
+                    }).then(r => {
+                        const file: Blob = r.data;
+
+                        const url = URL.createObjectURL(file);
+                        if (aRef.current !== null) {
+                            aRef.current.href = url;
+                            aRef.current.download = v.files[0].path.split("/").reverse()[0]
+                            aRef.current.click();
+                            URL.revokeObjectURL(url);
+                        }
+                    })
                 }}
             >
-                <a ref={aRef} />
                 <span>{v.title}</span>
                 {
                     isTeacher && editMode ? <button

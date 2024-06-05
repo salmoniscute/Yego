@@ -73,10 +73,10 @@ export default function MaterialPage(props: propsType): ReactElement {
         });
     }, []);
 
-    const updateThemeData = useCallback(() => {
-        getMaterials(courseID).then(data => {
-            setOriginThemeData(data);
-        })
+    const updateThemeData = useCallback(async () => {
+        const response = await getMaterials(courseID);
+        setOriginThemeData(response);
+        return response;
     }, []);
 
     useEffect(() => {
@@ -115,9 +115,10 @@ export default function MaterialPage(props: propsType): ReactElement {
         <div className="block">
             {showJoinGroup ? <JoinGroup /> : ""}
             <MaterialContext
-                isTeacher={userData?.role === "teacher" || userData?.role === "assistant"}
+                isTeacher={userData?.role === "teacher" || userData?.role === "assistant" || userData?.uid === "admin"}
+                selectedTheme={selectedTheme}
                 currentData={themeData[selectedTheme]}
-                updateData={() => {updateThemeData();}}
+                updateData={updateThemeData}
             />
         </div>
     </div>

@@ -13,14 +13,17 @@ import functionContext from "context/function";
 import NumberDropDownMenu from "components/NumberDropDownMenu";
 import { createMaterialInfo } from "api/courseMaterials";
 import userDataContext from "context/userData";
+import { Material } from "schemas/material";
+import { uploadFile } from "api/file";
 
 type propsType = Readonly<{
     show: boolean,
     themeId: number,
     files: Array<File>,
+    selectedTheme: number,
     close: () => void,
     selectFile: () => void,
-    updateData: () => void,
+    updateData: () => Promise<Array<Material>>,
 }>;
 
 const date = new Date();
@@ -31,6 +34,7 @@ export default function NewFiles(props: propsType): ReactElement {
         show,
         files,
         themeId,
+        selectedTheme,
         close,
         selectFile,
         updateData,
@@ -183,7 +187,11 @@ export default function NewFiles(props: propsType): ReactElement {
                                     end_time: `${downTimeDate}T${downTimeHour.toString().padStart(2, "0")}:${downTimeMinute.toString().padStart(2, "0")}:00`
                                 }
                             ).then(() => {
-                                updateData();
+                                updateData().then(newData => {
+                                    const materialId = Array.from(newData[selectedTheme].material_infos).pop()?.id;
+                                    if (materialId !== undefined)
+                                        uploadFile(materialId, files);
+                                });
                             });
                         }
                         close();
