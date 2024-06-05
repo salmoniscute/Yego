@@ -2,7 +2,7 @@ import { Course } from "../schemas/course";
 import axios from "axios";
 
 export async function getUserCourseList(uid : string):Promise<Array<Course>>{
-    let url = "http://localhost:8080/api/selected_course/user/" + uid;
+    let url = "/selected_course/user/" + uid;
     try {
         const response = await axios.get(url,);
         return response.data;
@@ -15,7 +15,7 @@ export async function getUserCourseList(uid : string):Promise<Array<Course>>{
 }
 
 export async function getCourse(id:number):Promise<Course|null>{
-    let url = "http://localhost:8080/api/course/" + id;
+    let url = "/course/" + id;
     try {
         const response = await axios.get(url,);
         return response.data;
