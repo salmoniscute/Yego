@@ -11,7 +11,6 @@ class MaterialInfoCreate(ComponentCreate):
     start_time: datetime
     end_time: datetime
     display: bool
-    order: int
 
     model_config = {
         "json_schema_extra": {
@@ -21,8 +20,7 @@ class MaterialInfoCreate(ComponentCreate):
                     "content": "This is the first course material of the course.",
                     "start_time": "2021-09-01T00:00:00",
                     "end_time": "2021-09-10T00:00:00",
-                    "display": True,
-                    "order": 1
+                    "display": True
                 }
             ]
         }
@@ -67,7 +65,6 @@ class AssignmentCreate(ComponentCreate):
     deadline: datetime
     reject_time: datetime
     feedback_type: str
-    order: int
 
     model_config = {
         "json_schema_extra": {
@@ -81,8 +78,7 @@ class AssignmentCreate(ComponentCreate):
                     "submitted_time": "2021-09-01T00:00:00",
                     "deadline": "2021-09-10T00:00:00",
                     "reject_time": "2021-09-15T00:00:00",
-                    "feedback_type": "review",
-                    "order": 1
+                    "feedback_type": "review"
                 }
             ]
         }
@@ -125,14 +121,12 @@ class AssignmentRead(BaseModel):
 # CourseMaterial
 class CourseMaterialCreate(BaseModel):
     title: str = Field(min_length=1, max_length=100)
-    order: int
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "title": "Course Material 1",
-                    "order": 1
+                    "title": "Course Material 1"
                 }
             ]
         }

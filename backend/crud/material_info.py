@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.component import ComponentCrudManager
 from database.mysql import crud_class_decorator
+from models.course_material import Assignment as AssignmentModel
 from models.course_material import MaterialInfo as MaterialInfoModel
 from schemas import course_material as CourseMaterialSchema
 
@@ -12,6 +13,17 @@ ComponentCrud = ComponentCrudManager()
 @crud_class_decorator
 class MaterialInfoCrudManager:
     async def create(self, uid: str, course_material_id: int, newMaterialInfo: CourseMaterialSchema.MaterialInfoCreate, db_session: AsyncSession):
+        stmt1 = select(MaterialInfoModel).where(MaterialInfoModel.material_id == course_material_id)
+        result = await db_session.execute(stmt1)
+        material_info_list = [material_info[0].order for material_info in result.all()]
+
+        stmt1 = select(AssignmentModel).where(AssignmentModel.material_id == course_material_id)
+        result = await db_session.execute(stmt1)
+        assignment_list = [assignment[0].order for assignment in result.all()]
+
+        all_materials = material_info_list + assignment_list
+        order = max(all_materials) + 1 if all_materials else 1
+
         obj = {
             "title": newMaterialInfo.title,
             "content": newMaterialInfo.content,
@@ -24,7 +36,7 @@ class MaterialInfoCrudManager:
             start_time=newMaterialInfo.start_time, 
             end_time=newMaterialInfo.end_time, 
             display=newMaterialInfo.display,
-            order=newMaterialInfo.order
+            order=order
         )
         db_session.add(material_info)
         await db_session.commit()
