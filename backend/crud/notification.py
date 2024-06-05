@@ -171,10 +171,12 @@ class NotificationCrudManager:
                 stmt = select(DiscussionTopicModel).where(DiscussionTopicModel.id == notification[0].component_info.discussion_reply.root_id)
                 result = await db_session.execute(stmt)
                 topic = result.first()
+                await db_session.refresh(topic[0], ["info"])
                 stmt = select(DiscussionModel).where(DiscussionModel.id == topic[0].discussion_id)
                 result = await db_session.execute(stmt)
                 discussion = result.first()
                 _list[-1]["course_name"] += discussion[0].course_info.name
+                _list[-1]["title"] = f"回應：{topic[0].info.title}"
             elif notification[0].type == "material_info":
                 stmt = select(CourseMaterialModel).where(CourseMaterialModel.id == notification[0].component_info.material_info.material_id)
                 result = await db_session.execute(stmt)
