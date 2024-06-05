@@ -14,13 +14,46 @@
         {
             "uid": "teacher",
             "password": "password",
-            "name": "謝老闆",
+            "name": "蟹老闆",
             "role": "teacher",
             "email": "teacher@gs.ncku.edu.tw",
             "department": "資訊系",
             "country": "Taiwan",
             "introduction": "",
             "avatar": "/assets/demo/krabs.png"
+        },
+        {
+            "uid": "teacher1",
+            "password": "password",
+            "name": "皮老闆",
+            "role": "teacher",
+            "email": "teacher1@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/sheldon.jpg"
+        },
+        {
+            "uid": "teacher2",
+            "password": "password",
+            "name": "珊迪",
+            "role": "teacher",
+            "email": "teacher2@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/sandy.jpg"
+        },
+        {
+            "uid": "teacher3",
+            "password": "password",
+            "name": "章魚哥",
+            "role": "teacher",
+            "email": "teacher3@gs.ncku.edu.tw",
+            "department": "資訊系",
+            "country": "Taiwan",
+            "introduction": "",
+            "avatar": "/assets/demo/squidward.jpg"
         },
         {
             "uid": "salmon",
@@ -45,11 +78,11 @@
             "avatar": "/assets/demo/zhihao.jpg"
         },
         {
-            "uid": "yeyeleaf",
+            "uid": "AN4116047",
             "password": "password",
             "name": "許晏綾",
             "role": "student",
-            "email": "yeyeleaf@gs.ncku.edu.tw",
+            "email": "AN4116047@gs.ncku.edu.tw",
             "department": "資工系",
             "country": "Taiwan",
             "introduction": "",
@@ -109,6 +142,33 @@
             "semester": 2,
             "name": "演算法",
             "outline": "介紹演算法的分析與設計"
+        },
+        {
+            "id": 2,
+            "uid": "teacher1",
+            "course_code": "A1-503",
+            "academic_year": 112,
+            "semester": 2,
+            "name": "日文（二）",
+            "outline": "基礎日語練習。本課程相當於歐洲語言學習評量共同參考架構（CEFR）A1等級。"
+        },
+        {
+            "id": 3,
+            "uid": "teacher2",
+            "course_code": "F7-056",
+            "academic_year": 112,
+            "semester": 2,
+            "name": "電腦網路概論",
+            "outline": "本課程講述電腦網路的通訊原理與協定，幫助學生由上至下認識網路分層架構，包括應用層、傳輸層、網路層、鏈結層，介紹各層內的技術與發展現況。"
+        },
+        {
+            "id": 4,
+            "uid": "teacher3",
+            "course_code": "A9-047",
+            "academic_year": 112,
+            "semester": 2,
+            "name": "音樂舞蹈戲劇",
+            "outline": "課程中以表演藝術的三大主軸: 音樂、舞蹈及戲劇進行理論上的解說及實際操作 ‧說明音樂、舞蹈、戲劇、編劇、舞台創作的幕後工程，介紹當代劇場不同類型的戲劇作品 ‧課程引入表演和觀點討論，讓學生對於表演藝術有更多的想法，培養表演藝術的認識與愛好"
         }
     ],
     "selected_courses": [
@@ -128,7 +188,7 @@
             "group_id": null
         },
         {
-            "uid": "yeyeleaf",
+            "uid": "AN4116047",
             "course_id": 1,
             "group_id": null
         },
@@ -150,6 +210,126 @@
         {
             "uid": "nt1026",
             "course_id": 1,
+            "group_id": null
+        },
+        {
+            "uid": "teacher1",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "salmon",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "zhihao",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "AN4116047",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "jason",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "jamie",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "ming",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "nt1026",
+            "course_id": 2,
+            "group_id": null
+        },
+        {
+            "uid": "teacher2",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "salmon",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "zhihao",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "AN4116047",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "jason",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "jamie",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "ming",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "nt1026",
+            "course_id": 3,
+            "group_id": null
+        },
+        {
+            "uid": "teacher3",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "salmon",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "zhihao",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "AN4116047",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "jason",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "jamie",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "ming",
+            "course_id": 4,
+            "group_id": null
+        },
+        {
+            "uid": "nt1026",
+            "course_id": 4,
             "group_id": null
         }
     ],
@@ -158,145 +338,151 @@
             "uid": "nt1026",
             "release_time": "2023-11-26 15:28:05",
             "title": "無法繳交作業",
-            "content": "不知為什麼在11/26凌晨開始就無法繳交作業，雖然可以進去交作業的網站卻無法上傳檔案"
+            "content": "<p>不知為什麼在11/26凌晨開始就無法繳交作業，雖然可以進去交作業的網站卻無法上傳檔案</p>"
         },
         {
             "uid": "jason",
             "release_time": "2024-02-29 19:02:31",
             "title": "即時互動",
-            "content": "請問 Yego 可以在課程中使用即時互動功能嗎？"
+            "content": "<p>請問 Yego 可以在課程中使用即時互動功能嗎？</p>"
         },
         {
             "uid": "salmon",
             "release_time": "2024-06-05 10:59:50",
             "title": "新貼文沒有寄出通知",
-            "content": "您好，我是授課教師，於4/1 18:06 在討論區發佈新貼文，並勾選「立即寄出通知而不管編輯時間是否已結束」，但遲至現在（21:35）都沒有收到通知，已檢查垃圾信匣，也沒有發現被過濾的信件。一般而言，即使不是「立即寄出通知」，這個時間也應該收到了。由於貼文是關於期中考規則，有很高的時效性及重要性，所以在21:18再度發了一則貼文，同樣勾選「立即寄出通知」，但截至目前21:35亦未有通知（過濾信匣也沒有）。以上問題回報，謝謝。"
+            "content": "<p>您好，我是授課教師，於4/1 18:06 在討論區發佈新貼文，並勾選「立即寄出通知而不管編輯時間是否已結束」，但遲至現在（21:35）都沒有收到通知，已檢查垃圾信匣，也沒有發現被過濾的信件。一般而言，即使不是「立即寄出通知」，這個時間也應該收到了。<br><br>由於貼文是關於期中考規則，有很高的時效性及重要性，所以在21:18再度發了一則貼文，同樣勾選「立即寄出通知」，但截至目前21:35亦未有通知（過濾信匣也沒有）。<br><br>以上問題回報，謝謝。</p>"
         },
         {
             "uid": "admin",
             "release_time": "2023-11-27 08:03:28",
             "title": "None",
-            "content": "您好：請再試試繳交作業，若還有問題，請提供畫面截圖。謝謝！"
+            "content": "<p>您好：請再試試繳交作業，若還有問題，請提供畫面截圖。謝謝！</p>"
         },
         {
             "uid": "admin",
             "release_time": "2024-03-01 09:15:42",
             "title": "None",
-            "content": "您好：請使用“即時投票”活動，詳細說明請參考操作手冊。謝謝！"
+            "content": "<p>您好：請使用“即時投票”活動，詳細說明請參考操作手冊。謝謝！</p>"
         },
         {
             "uid": "admin",
             "release_time": "2024-04-12 13:15:42",
             "title": "None",
-            "content": "您好：如果妳已確認沒有作答紀錄，就是沒有，而且測驗成績也不會自動消失。單元六的測驗限制作答時間30分鐘且時間到時自動提交。如果學生開始作答後，30分鐘內未自行送出，系統會自動提交。謝謝！"
+            "content": "<p>老師好:<br>經檢查，Moodle平台有送出信件，同時也與負責郵件伺服器同仁確認，這2封信件均有寄出。<br>只是4/1晚上6~10點有大量no-reply信件寄至GS導致信件擁塞，所以寄達時間晚了許久。<br>郵件伺服器因此做一些調整，再觀察寄件狀況。<br>謝謝老師的回報</p>"
         },
         {
             "uid": "admin",
             "release_time": "2023-03-29 16:19:30",
             "title": "「作業模組」繳交時間設定新增「秒」選項",
-            "content": "老師建立作業模組時，可設定開始繳交時間、規定繳交時間、拒收作業時間，為提供更有彈性設定，新增「秒」欄位。學生進入繳交頁面，作業摘要所紀錄的時間亦可顯示至「秒」。為避免無法預期的突發狀況，建議同學們在充裕的時間下繳交作業。"
+            "content": "<p>老師建立作業模組時，可設定開始繳交時間、規定繳交時間、拒收作業時間，為提供更有彈性設定，新增「秒」欄位。<br>學生進入繳交頁面，作業摘要所紀錄的時間亦可顯示至「秒」。<br>為避免無法預期的突發狀況，建議同學們在充裕的時間下繳交作業。</p>"
         },
         {
             "uid": "admin",
             "release_time": "2023-04-28 16:18:17",
             "title": "測驗題型新增「複選題」",
-            "content": "補足 Yego 平臺原有「選擇題」對於複選題型計分方式的不足，特新增「複選題」。"
+            "content": "<p>補足 Yego 平臺原有「選擇題」對於複選題型計分方式的不足，特新增「複選題」。</p>"
         },
         {
             "uid": "admin",
             "release_time": "2023-08-18 10:58:29",
             "title": "新增「教材下載」功能",
-            "content": "「教材下載」允許老師將課程所建置的教材資源以及學生繳交的作業檔案下載為一個ZIP壓縮檔案，以便自行保存。"
+            "content": "<p>「教材下載」允許老師將課程所建置的教材資源以及學生繳交的作業檔案下載為一個ZIP壓縮檔案，以便自行保存。</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-03-01 09:28:37",
-            "title": "助教課點名公告",
-            "content": "RT"
+            "title": "期中考後的一些話",
+            "content": "<p>跟同學澄清一下 Multiple choice 是多項選擇就是指單選題的意思，不是多選題<br>考前有告知這位出題助教了<br>希望不要在犯同樣的錯<br><br>由於期中考時間延長至13:00的資訊並未即時同步到4263考場的助教，使4263的同學考試時間僅延長至12:30，經老師同意後，我們決定參考大考中心的處理方式進行成績調整<br><br>這邊我們S取100、T取230、t0取200進行調整，並以調整原始成績為主，調整結果不做取整</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-04-30 12:31:55",
             "title": "Homework 2 公告事項 & 校內停電公告",
-            "content": "同學們大家早安~今日上課有公告作業 2 的補交相關事項，怕有些同學沒來上課所以這邊再公告一次！作業二目前的成績已經公布，原始成績有問題的同學歡迎來信說明。作業 2 開放補交到 6/14 的 23:59:59，補交方式與原本作業二的上傳方式相同。補交作業的分數計算公式如下：令 x 為原始成績、y 為補交後的成績、HW2_Final 為作業二最終成績，x <= 50 者，HW2_Final = min( max( x, y ), 70 )。講直白一點就是最高可以補到 70 分。x 介於 [ 51, 119 ] 區間者，HW2_Final = min( max( x, y ), min( x + 20, 120 )  )。x == 120 者 (作業原始成績就滿分) 學期總成績 +3 分，以上為這次補交成績的計算方式，設計時有希望盡量對所有同學公平，如果有些地方考慮不周的希望同學諒解 >< 另外本週日恰逢全校停電，停電前系統將會提前關閉，待下星期一後開啟，請同學先暫時使用自己電腦本機端或虛擬機的環境。如果有任何問題歡迎來信！祝 大家期末順利~"
+            "content": "<p>同學們大家早安~<br><br>今日上課有公告作業 2 的補交相關事項，怕有些同學沒來上課所以這邊再公告一次！<br><br>作業二目前的成績已經公布，原始成績有問題的同學歡迎來信說明。<br><br>作業 2 開放補交到 6/14 的 23:59:59，補交方式與原本作業二的上傳方式相同。<br><br>補交作業的分數計算公式如下：<br><br>令 x 為原始成績、y 為補交後的成績、HW2_Final 為作業二最終成績<br>x <= 50 者，HW2_Final = min( max( x, y ), 70 )。講直白一點就是最高可以補到 70 分。<br>x 介於 [ 51, 119 ] 區間者，HW2_Final = min( max( x, y ), min( x + 20, 120 )  )。<br>x == 120 者 (作業原始成績就滿分) 學期總成績 +3 分<br>以上為這次補交成績的計算方式，設計時有希望盡量對所有同學公平，如果有些地方考慮不周的希望同學諒解 ><p<br><br>另外本週日恰逢全校停電，停電前系統將會提前關閉，待下星期一後開啟，請同學先暫時使用自己電腦本機端或虛擬機的環境。<br><br>如果有任何問題歡迎來信！祝 大家期末順利~</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-05-24 15:28:05",
             "title": "退選截止後的一些話...",
-            "content": "同學們好：我們摯愛的某些退選同學於西元 2024 年 5 月 17 日下午 5 點悄悄的離開這個課程，我們痛徹心扉，就僅僅一眨眼的時間，學分永隔，退選的同學安祥的走完了這學期的編譯系統人生旅程，他們彷彿在沉睡中做了一個美夢，夢醒了，留下陪伴我們成長過程中的點點滴滴，留下我們永恆的追思與感恩。為了鼓勵留下來的同學們，我準備了一些小東西想跟大家分享！今天有同學找老師哀嚎說希望作業 2 的截止期限可以延長，但這個作業原本只想開三個星期我已經延長到一個半月了，所以本來我想要拒絕，但我睡過頭了，而且老師同意了，所以作業截止期限延長 2 天，moodle 上的截止日期應該已經更新了。原訂學期的最後一天要執行 demo，但我相信大家應該都想要回家了吧！這是資工系大學生涯的最後一堂必修課，不過我也相信大家沒有想要留戀的意思，所以我們決定取消期末 demo！作業二開始我們會抓抄襲，相似度過高有抄襲疑慮的同學我們會做一些處理，原則上是抄的人與被抄的人學期作業成績全部 0 分計算。這是一件嚴肅的事情下星期沒意外的話會公告大家最期待的作業三，我們已經做好萬全的準備了！提醒一下大家如果寄信的話盡量照著第一則公告給的格式，不然有時候可能會漏掉QQ最後祝大家接下來的課業一切順利～ 也快要期末週了，再撐一下下就結束了嗚嗚...我知道你們點進來可能在想這篇公告有沒有梗圖，但沒有。下次一定"
+            "content": "<p>同學們好：<br><br>我們摯愛的某些退選同學於西元 2024 年 5 月 17 日下午 5 點悄悄的離開這個課程，我們痛徹心扉，就僅僅一眨眼的時間，學分永隔，<br><br>退選的同學安祥的走完了這學期的編譯系統人生旅程，他們彷彿在沉睡中做了一個美夢，夢醒了，留下陪伴我們成長過程中的點點滴滴，留下我們永恆的追思與感恩。<br><br>為了鼓勵留下來的同學們，我準備了一些小東西想跟大家分享！<br><br>今天有同學找老師哀嚎說希望作業 2 的截止期限可以延長，但這個作業原本只想開三個星期我已經延長到一個半月了，所以本來我想要拒絕，但我睡過頭了，而且老師同意了，所以作業截止期限延長 2 天，moodle 上的截止日期應該已經更新了。<br><br>原訂學期的最後一天要執行 demo，但我相信大家應該都想要回家了吧！這是資工系大學生涯的最後一堂必修課，不過我也相信大家沒有想要留戀的意思，所以我們決定取消期末 demo！<br><br>作業二開始我們會抓抄襲，相似度過高有抄襲疑慮的同學我們會做一些處理，原則上是抄的人與被抄的人學期作業成績全部 0 分計算。這是一件嚴肅的事情<br><br>下星期沒意外的話會公告大家最期待的作業三，我們已經做好萬全的準備了！<br><br>提醒一下大家如果寄信的話盡量照著第一則公告給的格式，不然有時候可能會漏掉QQ<br><br>最後祝大家接下來的課業一切順利～ 也快要期末週了，再撐一下下就結束了嗚嗚...<br><br>我知道你們點進來可能在想這篇公告有沒有梗圖，但沒有。下次一定</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-02-29 12:40:15",
             "title": "交流版",
-            "content": "今年二月有29天，所以我們來開個交流版，大家可以在這邊討論一些問題，也可以分享一些有趣的事情。"
+            "content": "<p>今年二月有29天，所以我們來開個交流版，大家可以在這邊討論一些問題，也可以分享一些有趣的事情。</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-03-09 18:46:20",
             "title": "第一次作業討論",
-            "content": "討論 HW1-1、HW1-2"
+            "content": "<p>討論 HW1-1、HW1-2</p>"
         },
         {
             "uid": "teacher",
             "release_time": "2024-03-21 20:09:44",
             "title": "第二次作業討論",
-            "content": "討論 HW2-1、HW2-2、HW2-3"
+            "content": "<p>討論 HW2-1、HW2-2、HW2-3</p>"
         },
         {
             "uid": "jason",
             "release_time": "2024-05-24 20:09:44",
             "title": "你要讓iRent就這樣錯過嗎？| Yego官方合作",
-            "content": "哈嘍大家！我們是新上任的第二屆iRent的校園大使 臺南柯有倫和鮭魚🍣！歡迎各位喜愛iRent 和旅遊的車友來跟我們就交流喔🤩！"
+            "content": "<p>身為南下唸書的學子，平常緊急需要用車或是跟一群朋友有較長路線的旅行，那我的交通工具首選就會是iRent 🚗！使用過一次就真的回不去了～（忠實客戶之一🥺）<br><br>iRent 是全台規模最大的共享汽機車服務平台，24小時都提供隨租隨還的服務，且據點眾多，打破時間空間的限制👊<br><br>使用上也很簡單方便，只需要手機下載「iRent 共享車平台」App ，一機在手，就直接包辦找車、預約、操作車輛以及付款等等所有的流程！<br><br>很推薦大家第一次使用iRent還不太熟悉的話，可以在App 內點選 ”關於裡面有超多超詳細的菜介紹！保障自己的權益之外還可以獲得免費的時數，快來iRent 小學堂帶你輕鬆上手租車流程和規範～<br>（左滑看從App進入iRent 小學堂的教學！）<br><br>現在於App內輸入「ir3026426」還可以兌換優惠券！獲🉐一小時的汽車時數等等好康！</p>"
         },
         {
             "uid": "jamie",
             "release_time": "2024-05-03 02:45:21",
             "title": "有沒有要吃宵夜的",
-            "content": "現在還有人在嗎"
+            "content": "<p>現在還有人在嗎</p>"
         },
         {
             "uid": "nt1026",
             "release_time": "2024-06-07 19:17:58",
             "title": "有人知道哪裡領養期末好運貓貓嗎",
-            "content": "RT"
+            "content": "<p>RT</p>"
         },
         {
-            "uid": "ming",
+            "uid": "nt1026",
             "release_time": "2024-05-24 20:10:59",
             "title": "None",
             "content": "哥刪了唄，我是無所謂的，但是我一個朋友可能有點汗流浹背了，他不太舒服想睡了，當然不是我哈，我一直都是行的，以一個旁觀者的心態看吧，也不至於破防吧，就是想照顧下我朋友的感受，他有點破防了，還是建議刪了吧，當然刪不刪隨你，我是沒感覺的，就是為朋友感到不平罷了，也不是那麼簡單破防的。"
         },
         {
-            "uid": "nt1026",
+            "uid": "jamie",
             "release_time": "2024-05-24 20:11:12",
             "title": "None",
             "content": "我個人認為義大利麵就應該拌42號混泥土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。你往裡砸的時候，一瞬間他就會產生大量的高能蛋白，俗稱UFO，會嚴重影響經濟的發展，以至於對整個太平洋，和充電器的核污染。再或者說透過這勾股定理很容易推斷出人工飼養的東條英機，他是可以捕獲野生的三角函數，所以說不管這秦始皇的切面是否具有放射性，川普的N次方是否有沈澱物，都不會影響到沃爾瑪跟維爾康在南極匯合。"
         },
         {
-            "uid": "nt1026",
+            "uid": "ming",
             "release_time": "2024-05-24 20:13:25",
-            "title": "超推!! 但這是能蟲，能蟲屬於昆蟲綱鞘翅目，雜食非常凶殘，體内經常有很多病毒。在唐朝就已經出現，被劍客李白一劍殺死。有文獻記載：要是能蟲來，我要選李白。",
-            "content": "RT"
+            "title": "None",
+            "content": "超推!! 但這是能蟲，能蟲屬於昆蟲綱鞘翅目，雜食非常凶殘，體内經常有很多病毒。在唐朝就已經出現，被劍客李白一劍殺死。有文獻記載：要是能蟲來，我要選李白。"
         },
         {
-            "uid": "nt1026",
+            "uid": "zhihao",
             "release_time": "2024-05-24 20:14:07",
             "title": "None",
             "content": "兄，予不以畏，但恐吾友視之覆哀啼，然弟無妨，笑之。故煩兄收上述所言。故交與所言相似，某無恙，視之無感。素友於旁，揮汗如雨，如有大疾，乃席地眠之，非吾所為，余視其大恐，故顧之，觀其如豎梯立於墻，敵破而入，望兄刪其言。予不以為然。其行在兄。吾為故交所不平也。"
         },
         {
-            "uid": "nt1026",
+            "uid": "AN4116047",
             "release_time": "2024-05-24 20:38:02",
             "title": "None",
             "content": "Bro, maybe delete this post. The stories you shared are somewhat similar to my friend's experiences. Personally, I don't really care, it's not about me. I'm totally fine with it, just observing. But my friend might be a bit upset. He's feeling uncomfortable and wants to sleep, maybe even cry. Not me, definitely not me – I'm cool with it, just want to be considerate of my friend's feelings. He's a bit vulnerable right now, so I suggest deleting it. Of course, it's up to you whether to delete it or not. I don't mind, but I just want to look out for my friend. He gets emotional easily, and I end up having to comfort him. So, yeah, it might be better to delete it. Okay? Deleting it would be great. I really don't want my friend to be sad."
         },
         {
-            "uid": "nt1026",
+            "uid": "salmon",
             "release_time": "2024-05-24 20:45:11",
             "title": "None",
             "content": "柯有倫欠錢還錢"
+        },
+        {
+            "uid": "jason",
+            "release_time": "2024-05-24 20:47:52",
+            "title": "None",
+            "content": "要錢沒有爛命一條"
         }
     ],
     "reports": [
@@ -416,6 +602,11 @@
             "id": 24,
             "root_id": 16,
             "parent_id": 0
+        },
+        {
+            "id": 25,
+            "root_id": 16,
+            "parent_id": 24
         }
     ],
     "course_materials": [],

@@ -20,17 +20,20 @@ class CourseCrudManager:
         stmt = select(CourseModel).where(CourseModel.id == course_id)
         result = await db_session.execute(stmt)
         result = result.first()
-        course = {
-            "id": result[0].id,
-            "instructor_name": result[0].instructor_info.name,
-            "course_code": result[0].course_code,
-            "academic_year": result[0].academic_year,
-            "semester": result[0].semester,
-            "course_name": result[0].name,
-            "outline": result[0].outline
-        }
+        
+        if result is not None:
+            course = {
+                "id": result[0].id,
+                "instructor_name": result[0].instructor_info.name,
+                "course_code": result[0].course_code,
+                "academic_year": result[0].academic_year,
+                "semester": result[0].semester,
+                "course_name": result[0].name,
+                "outline": result[0].outline
+            }
+            return course
 
-        return course
+        return None
 
     async def get_all(self, db_session: AsyncSession):
         stmt = select(CourseModel)
