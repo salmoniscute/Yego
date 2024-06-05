@@ -34,7 +34,7 @@ export default function LoginPage(props: propsType): ReactElement {
 
   const handleLogin = async () => {
       const user = await login(userName, password);
-      if (user) {
+      if (localStorage.getItem("access_token") && user) {
         setUser(user);
         setShowWork(true);
         //navigate("/");
