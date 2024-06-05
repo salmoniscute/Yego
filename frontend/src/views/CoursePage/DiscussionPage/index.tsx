@@ -82,7 +82,8 @@ export default function DiscussionPage(props: propsType): ReactElement {
                             <div
                                 className="discussionDiscription"
                                 dangerouslySetInnerHTML={{ __html: data.content }}
-                            />       
+                            /> 
+                            <div className="discussionPadding"></div>      
                             <button onClick={() => follow(data)}>{data.subscription_status === true ? <TbBellRinging /> : <BiBell />}</button>
                         </div>
                     )

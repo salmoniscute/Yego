@@ -164,7 +164,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                             <div className="cbContent">
                                 <div>
                                     { data.pin_to_top === true && <div className="cbPin">置頂</div>}
-                                    <img src={UserIcon} />
+                                    <img src={data.publisher_avatar} />
                                     <p className="cbAuther">{data.publisher}</p>
                                     <p className="cbTime">{setTimeString(data.release_time || "")}</p>
                                 </div>
