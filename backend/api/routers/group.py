@@ -32,7 +32,7 @@ router = APIRouter(
     status_code=status.HTTP_200_OK
 )
 async def get_all_groups_in_one_coure(
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     group = await GroupCrud.get_by_course_id(course_id)
     if group:
@@ -51,7 +51,7 @@ async def auto_grouping_preview(
     number_depend_on_grouping_method: int,
     distributing_method: GroupSchema.DistributingMethod,
     naming_rule: GroupSchema.NamingRule,
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Auto grouping preview.
@@ -110,7 +110,7 @@ async def auto_grouping_preview(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def auto_grouping(
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Auto grouping.
@@ -151,7 +151,7 @@ async def auto_grouping(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def auto_grouping_cancel(
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Auto grouping cancelling.
@@ -174,7 +174,7 @@ async def student_grouping(
     number_depend_on_grouping_method: int,
     naming_rule: GroupSchema.NamingRule,
     create_deadline: str,
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Students group by themselves.
@@ -230,35 +230,15 @@ async def student_grouping(
         group_name += 1
         
     return
-       
 
-# @router.post(
-#     "/manual", 
-#     status_code=status.HTTP_204_NO_CONTENT
-# )
-# async def manual_grouping(
-#     newGroup: GroupSchema.GroupManualCreate,
-#     course_id: str = Depends(check_course_id)
-# ):
-#     """
-#     Manual grouping with the following information:
-#     - **name**
-#     - **members** (list)
-#         - **uid**
-#         - **name**
-#     """
-#     await GroupCrud.manual_create(course_id, newGroup)
-
-#     return
-
-    
+  
 @router.put(
     "/group/join",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def join_group(
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id),
+    course_id: int = Depends(check_course_id),
     group_id: int = Depends(check_group_id)
 ):
     """ 
@@ -275,7 +255,7 @@ async def join_group(
 )
 async def exit_group(
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """ 
     Exit group.

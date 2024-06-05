@@ -52,7 +52,7 @@ async def get_file(
 )
 async def create_files(
     files: list[UploadFile],
-    component_id: str = Depends(check_component_id)
+    component_id: int = Depends(check_component_id)
 ):
     target_directory = f"data/component/{component_id}"
     if not isdir(target_directory):
@@ -76,7 +76,7 @@ async def create_files(
     status_code=status.HTTP_204_NO_CONTENT,
     response_description="The file has been successfully deleted."
 )
-async def delete_file(file_id: str):
+async def delete_file(file_id: int):
     """
     Delete a file.
     """

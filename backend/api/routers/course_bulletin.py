@@ -33,7 +33,7 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 async def create_course_bulletin(
     newBulletin: BulletinSchema.BulletinCreate,
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Create a bulletin with the following information:
