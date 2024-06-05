@@ -44,8 +44,7 @@ export default function JoinGroup(): React.ReactElement {
   return (
       <div id="joinGroup">
         <button onClick={() => {setshowJoin(true)}}>
-        <MdGroupAdd />
-          {group === "" ? <p><span className="no">尚未加入</span>YEGO注意到你還沒有自己的組別，趕快加入！</p> : <p><span className="yes">已加入</span>你已經找到你的好隊友了，棒棒！</p>}
+          <img src="/assets/Yegogo.png"/>{group === "" ? <p><span className="no">尚未加入</span>YEGO注意到你還沒有自己的組別，趕快加入！</p> : <p><span className="yes">已加入</span>你已經找到你的好隊友了，棒棒！</p>}
         </button>
         {showJoin ? <JoinGroupModel close={close} course_id={Number(params.courseID)}/> : ""}
       </div>
