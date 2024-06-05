@@ -109,6 +109,7 @@ function PersonalIntroEditor() : React.ReactElement {
 export default function PersonalEdit(): ReactElement {
     const userData = useContext(userDataContext);
     const [personalData, setPersonalData] = useState<User>();
+    const [avatar, setAvatar] = useState(userData?.avatar)
     const [showWork, setShowWork] = useState<boolean>(false);
     const [selectedCharacter, setSelectedCharacter] = useState("");
     const navigate = useNavigate();
@@ -158,7 +159,6 @@ export default function PersonalEdit(): ReactElement {
           await updatePersonal(personalData);
           await refreshToken();
           navigate(`/personal/${userData?.uid}`);
-          //window.location.reload()
         }
       }
     }
@@ -171,8 +171,9 @@ export default function PersonalEdit(): ReactElement {
       { name: 'Yegogo', icon: YegogoIcon, intro: '愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。' },
       { name: 'Yego', icon: YegoIcon, intro: '成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。' }
     ];
-    const handleCharacterClick = (name:string) => {
+    const handleCharacterClick = (name:string, icon:string) => {
       setSelectedCharacter(name);
+      setAvatar(icon)
     };
     const updateRole = async (role:string) =>{
       if (userData?.uid){
@@ -186,7 +187,7 @@ export default function PersonalEdit(): ReactElement {
         <div id="PersonalEditPage">
             <div className="twoSide">
                 <div className="leftSide">
-                    <img alt="avatar" src={userData?.avatar} onClick={() => {setShowWork(true)}}/>
+                    <img alt="avatar" src={avatar} onClick={() => {setShowWork(true)}}/>
                     <div className="Name">
                         <input
                             className="NameInput"
@@ -246,6 +247,7 @@ export default function PersonalEdit(): ReactElement {
                 </div>
             </div>
             <div className="avatarWindow" data-show={showWork} >
+              <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>
               <div className="updataAvatar">
                 <h2>選擇角色</h2>
                 <div>
@@ -253,7 +255,7 @@ export default function PersonalEdit(): ReactElement {
                     <div
                       key={character.name}
                       className={`character ${selectedCharacter === character.name ? 'selected' : ''}`}
-                      onClick={() => handleCharacterClick(character.name)}
+                      onClick={() => handleCharacterClick(character.name, character.icon)}
                     >
                       <img src={character.icon} alt={character.name} />
                       <div className='hoverEffect'>
@@ -265,10 +267,9 @@ export default function PersonalEdit(): ReactElement {
                 </div>
                 <div className='button'>
                   <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                  <button onClick={() => {updateRole(selectedCharacter)}}><p>大公告成！</p></button>
+                  <button onClick={() => {updateRole(selectedCharacter)}}><p>大功告成！</p></button>
                 </div>
               </div>
-              <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>
             </div>
         </div>
     )
