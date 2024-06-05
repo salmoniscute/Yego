@@ -33,6 +33,7 @@
                 cursor: pointer;
                 padding: 1em 1em;
                 background-color: #FFEA79;
+                border: 0px;
                 font-size: 16px;
                 font-weight: bold;
                 border-radius: 0.3em;
@@ -50,6 +51,7 @@
         .courseMemberContent{
             cursor: pointer;
             display: flex;
+            align-items: center;
             p{
                 font-size: medium;
                 width: calc(100% / 5);
@@ -57,6 +59,7 @@
             img{
                 width: 40px;
                 height: 40px;
+                object-fit: cover; 
                 border-radius: 50%;
                 vertical-align: middle;
                 margin-right: 7px;
@@ -122,6 +125,7 @@
                     img{
                         width: 150px;
                         height: 150px;
+                        object-fit: cover; 
                         border-radius: 50%;
                     }
                     .memberMail{
