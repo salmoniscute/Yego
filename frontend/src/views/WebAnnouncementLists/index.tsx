@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { BsFillHouseFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 interface Info {
   id: number;
@@ -25,37 +26,19 @@ export default function WebAnnouncementList() {
   const [announcementData, setAnnouncementData] = useState<Info[]>([]);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
-    fetch("http://localhost:8080/api/website/bulletins", {
-      method: 'GET',
-      headers: {
-        'accept': 'application/json'
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    async function fetchData() {
+        try {
+            const response = await axios.get("/website/bulletins");
+            setAnnouncementData(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setAnnouncementData(data);
-        } else {
-          console.error('Fetched data is not an array:', data);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching announcement data:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    fetchData();
+}, []);
 
   return (
     <div className="web-announcement-container">
