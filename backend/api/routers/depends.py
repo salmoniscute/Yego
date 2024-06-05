@@ -154,3 +154,10 @@ async def check_group_id(group_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group does not exist")
     
     return group_id
+
+async def check_course_material_id(course_material_id: int):
+    material = await CourseMaterialCrud.get(course_material_id)
+    if not material:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course Material does not exist")
+    
+    return course_material_id

@@ -23,7 +23,8 @@ from .routers import (
     course_material_router,
     material_info_router,
     assignment_router,
-    report_reply_router
+    report_reply_router,
+    order_update_router
 )
 
 app = FastAPI()
@@ -47,6 +48,7 @@ app.include_router(assignment_router)
 app.include_router(file_router)
 app.include_router(subscription_router)
 app.include_router(notification_router)
+app.include_router(order_update_router)
 
 origins = [
     "http://localhost:3000",

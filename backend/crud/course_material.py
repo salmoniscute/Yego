@@ -5,7 +5,7 @@ from database.mysql import crud_class_decorator
 from crud.component import ComponentCrudManager
 from models.component import Component as ComponentModel
 from models.course_material import CourseMaterial as CourseMaterialModel, MaterialInfo as MaterialInfoModel, Assignment as AssignmentModel
-from schemas import course_material as CourseMaterialSchema
+from schemas import course_material as CourseMaterialSchema, order_update as OrderUpdateSchema
 
 ComponentCrud = ComponentCrudManager()
 
@@ -106,3 +106,24 @@ class CourseMaterialCrudManager:
         await db_session.commit()
 
         return
+
+    async def update_course_material_order(self, newOrder: list[OrderUpdateSchema.OrderElement], db_session: AsyncSession):
+        for element in newOrder:
+            stmt = update(CourseMaterialModel).where(CourseMaterialModel.id == element.id).values(order=element.order)
+            await db_session.execute(stmt)
+        
+        await db_session.commit()
+        return
+    
+    async def update_material_assignment_order(self, newOrder: list[OrderUpdateSchema.OrderElement], db_session: AsyncSession):
+        for element in newOrder:
+            if element.type == "material_info":
+                stmt = update(MaterialInfoModel).where(MaterialInfoModel.id == element.id).values(order=element.order)
+                await db_session.execute(stmt)
+            if element.type == "assignment":
+                stmt = update(AssignmentModel).where(AssignmentModel.id == element.id).values(order=element.order)
+                await db_session.execute(stmt)
+            
+        await db_session.commit()
+        return
+            
