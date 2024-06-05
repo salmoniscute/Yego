@@ -42,7 +42,8 @@ export default function WebAnnouncement(props: propsType): ReactElement {
                     <div key={data.id} className="block" title={data.title}>
                         <div className="caption timestamp">{timestampToString(data.release_time)}</div>
                         <div className="pin caption-bold" data-pin={data.pin_to_top}>{data.pin_to_top ? "置頂" : ""}</div>
-                        <Link className="body" to={`/webAnnouncement/${data.id}`}>{data.title}</Link>
+                        <Link className="body" style={{ fontWeight: "bold" }} to={`/webAnnouncement/${data.id}`}>{data.title}</Link>
+
                     </div>
                 ))}
                 <div className="seeMore">

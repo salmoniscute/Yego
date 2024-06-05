@@ -54,7 +54,18 @@
             width:30%;
           }
         }
-      
+        
+        a {
+          color: #000;
+          text-decoration: none;
+          transition: color 0.3s;
+          
+      }
+
+      a:hover {
+          color: #000;
+      }
+  }
         .list-item {
           display: flex;
           justify-content: space-between;
@@ -69,6 +80,6 @@
   width: 100%;
 }
 
-}
+
   
   

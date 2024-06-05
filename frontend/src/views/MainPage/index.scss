@@ -6,8 +6,10 @@
 
         .list-item {
             display: flex;
- 
-
+            gap: 0.5rem;
+            background-color: #FFF;
+            border: 0.07rem solid #000;
+            padding: 1.8rem 1rem;
             .date {
                 width: 30%;
                 font-size: 0.875rem;
