@@ -1,8 +1,6 @@
 import {
     ReactElement,
     useContext,
-    useState,
-    useEffect
 } from "react";
 
 import {
@@ -19,25 +17,17 @@ import "./index.scss";
 
 export default function Personal(): ReactElement {
     const userData = useContext(userDataContext);
-    const [personalData, setPersonalData] = useState<User>();
-
-    useEffect(() => {
-        console.log("update");
-        getPersonal(userData?.uid?? "").then(data => {
-            setPersonalData(data);
-        });
-    }, [])
 
     const personalInfo = (
         <div id="PersonalPage">
             <div className="twoSide">
                 <div className="leftSide">
-                    <img alt="avatar" src={personalData?.avatar}/>
+                    <img alt="avatar" src={userData?.avatar}/>
                     <div className="Name">
-                        {personalData?.name}
+                        {userData?.name}
                     </div>
                     <div className="eMail">
-                        {personalData?.email}
+                        {userData?.email}
                     </div>
                     <Link className="EditPerson" to="./editPerson">
                         <span className="material-symbols-outlined">edit</span>
@@ -59,7 +49,7 @@ export default function Personal(): ReactElement {
                     </div>
                     <div className="IntroTag">自我介紹</div>
                     <div className="IntroContent">
-                        <p dangerouslySetInnerHTML={{ __html: personalData?.introduction || '' }}/>
+                        <p dangerouslySetInnerHTML={{ __html: userData?.introduction || '' }}/>
                     </div>
                 </div>
             </div>
