@@ -109,6 +109,7 @@ function PersonalIntroEditor() : React.ReactElement {
 export default function PersonalEdit(): ReactElement {
     const userData = useContext(userDataContext);
     const [personalData, setPersonalData] = useState<User>();
+    const [showWork, setShowWork] = useState<boolean>(false);
     const navigate = useNavigate();
     
     const [user, setUser] = useState({
@@ -156,7 +157,7 @@ export default function PersonalEdit(): ReactElement {
           await updatePersonal(personalData);
           await refreshToken();
           navigate(`/personal/${userData?.uid}`);
-          window.location.reload()
+          //window.location.reload()
         }
       }
     }
