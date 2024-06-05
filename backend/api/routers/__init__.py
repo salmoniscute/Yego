@@ -17,3 +17,4 @@ from .assignment import router as assignment_router
 from .file import router as file_router
 from .subscription import router as subscription_router
 from .notification import router as notification_router
+from .order_update import router as order_update_router

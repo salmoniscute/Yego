@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, status, Depends
+from .depends import check_course_material_id
 
 from crud.course_material import CourseMaterialCrudManager
+from crud.material_info import MaterialInfoCrudManager
 from schemas import order_update as OrderUpdateSchema
 
 
@@ -21,14 +23,27 @@ router = APIRouter(
 )
 
 @router.post(
-    "/update_order",
-    status_code=status.HTTP_201_CREATED
+    "/update_order/course_material",
+    status_code=status.HTTP_204_NO_CONTENT
 )
-async def update_order(
+async def update_course_material_order(
     newOrderUpdate: list[OrderUpdateSchema.OrderElement]
 ):
     """
     Update order of the order elements
     """
-    order_element = await CourseMaterialCrud.update_order(newOrderUpdate)
-    return {"id": order_element.id}
+    await CourseMaterialCrud.update_course_material_order(newOrderUpdate)
+    return
+
+@router.post(
+    "/update_order/material_info_and_assignment",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_material_info_and_assignment_order(
+    newOrderUpdate: list[OrderUpdateSchema.OrderElement]
+):
+    """
+    Update order of the order elements
+    """
+    await CourseMaterialCrud.update_material_assignment_order(newOrderUpdate)
+    return
