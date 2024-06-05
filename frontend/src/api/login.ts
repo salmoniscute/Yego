@@ -7,7 +7,7 @@ let access_token = "";
 let refresh_token = "";
 
 export async function login(username: string, password: string): Promise<User> {
-    let url = "http://localhost:8080/api/auth/login";
+    let url = "/auth/login";
     try {
         const response = await axios.post(url,"username="+username+"&password="+password);
         access_token = response.data.access_token;

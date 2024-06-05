@@ -79,7 +79,7 @@ export async function get_user_group_info(uid: string | null, course_id: number)
 }
 
 export async function join_group(uid: string | null, course_id: number, group_id: number) {
-  let url = `/grouping/join?`;
+  let url = `/grouping/group/join?`;
   try {
       const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id + "&group_id=" + group_id);
   }
@@ -89,7 +89,7 @@ export async function join_group(uid: string | null, course_id: number, group_id
 }
 
 export async function exit_group(uid: string | null, course_id: number) {
-  let url = `/grouping/exit?`;
+  let url = `/grouping/group/exit?`;
   try {
       const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id);
   }
