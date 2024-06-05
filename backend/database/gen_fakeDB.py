@@ -116,6 +116,7 @@ class GenFakeDB:
             
         self.output["users"] = demoDB["users"]
         self.output["courses"] = demoDB["courses"]
+        self.output["components"] = demoDB["components"]
         self.output["selected_courses"] = demoDB["selected_courses"]
         self.output["reports"] = demoDB["reports"]
         self.output["report_replies"] = demoDB["report_replies"]
