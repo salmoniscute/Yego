@@ -65,7 +65,7 @@ async def get_discussion(
     
 
 @router.get(
-    "/{course_id}",
+    "/course/{course_id}",
     response_model=list[DiscussionSchema.DiscussionOfCourses]
 )
 async def get_course_discussions_by_course_id(
