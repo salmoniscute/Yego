@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import './index.scss';
 import { BsFillHouseFill } from "react-icons/bs";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import axios from 'axios';
 
 interface Document {
   id: number;
@@ -26,14 +27,14 @@ export default function WebAnnouncementPage() {
   const [announcementData, setAnnouncementData] = useState<Info | null>(null);
   const [allIds, setAllIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchAnnouncementData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/website/bulletin/${id}`);
-        const data = await response.json();
-        console.log("Fetched announcement data:", data);
-        setAnnouncementData(data);
+        const response = await axios.get(`/website/bulletin/${id}`);
+        console.log("Fetched announcement data:", response.data);
+        setAnnouncementData(response.data);
       } catch (error) {
         console.error('Error fetching announcement data:', error);
       } finally {
@@ -43,10 +44,8 @@ export default function WebAnnouncementPage() {
 
     const fetchAllIds = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/website/bulletins');
-        const data = await response.json();
-        console.log("Fetched all IDs:", data);
-        const ids = data.map((announcement: { id: number }) => announcement.id);
+        const response = await axios.get('/website/bulletins');
+        const ids = response.data.map((announcement: { id: number }) => announcement.id);
         setAllIds(ids);
       } catch (error) {
         console.error('Error fetching all IDs:', error);

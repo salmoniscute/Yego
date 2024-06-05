@@ -24,7 +24,7 @@ export default function WebAnnouncement(props: propsType): ReactElement {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:8080/api/website/bulletins");
+                const response = await axios.get("/website/bulletins");
                 setAnnouncementList(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -41,7 +41,7 @@ export default function WebAnnouncement(props: propsType): ReactElement {
                 {announcementList.map((data) => (
                     <div key={data.id} className="block" title={data.title}>
                         <div className="caption timestamp">{timestampToString(data.release_time)}</div>
-                        <div className="pin caption-bold" data-pin={data.pin_to_top}>{data.pin_to_top ? "置頂" : ""}</div>
+                        <div className="pin caption-bold" data-pin={data.pin_to_top} >{data.pin_to_top ? "置頂" : ""}</div>
                         <Link className="body" style={{ fontWeight: "bold" }} to={`/webAnnouncement/${data.id}`}>{data.title}</Link>
 
                     </div>
