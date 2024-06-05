@@ -9,10 +9,10 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import {getPersonal, updatePersonal} from "api/personal";
-import {refreshToken} from 'api/login';
+import {updateUserRole,refreshToken} from 'api/login';
 import { User } from "schemas/user";
 import "./index.scss";
-import { get } from "http";
+import { RxCross2 } from "react-icons/rx";
 
 // Undo & Redo icon
 const CustomUndo = () => (
@@ -110,6 +110,7 @@ export default function PersonalEdit(): ReactElement {
     const userData = useContext(userDataContext);
     const [personalData, setPersonalData] = useState<User>();
     const [showWork, setShowWork] = useState<boolean>(false);
+    const [selectedCharacter, setSelectedCharacter] = useState("");
     const navigate = useNavigate();
     
     const [user, setUser] = useState({
@@ -162,69 +163,113 @@ export default function PersonalEdit(): ReactElement {
       }
     }
 
+    const YegoIcon = `${process.env.PUBLIC_URL}/assets/Yego.png`;
+    const YegogoIcon = `${process.env.PUBLIC_URL}/assets/Yegogo.png`;
+    const DagoIcon = `${process.env.PUBLIC_URL}/assets/Dago.png`;
+    const characters = [
+      { name: 'Dago', icon: DagoIcon, intro: '每天在作業死線反覆橫跳，好幾次差點遲交，但意外的成績都不錯。' },
+      { name: 'Yegogo', icon: YegogoIcon, intro: '愛吃椰果，會對沒交作業的同學發射芒果。脖子上的領巾是老師送的。' },
+      { name: 'Yego', icon: YegoIcon, intro: '成績很好，小組報告裡面最閃亮的星，最近的煩惱是每天都想睡。' }
+    ];
+    const handleCharacterClick = (name:string) => {
+      setSelectedCharacter(name);
+    };
+    const updateRole = async (role:string) =>{
+      if (userData?.uid){
+        await updateUserRole(userData?.uid , role);
+        await refreshToken();
+        setShowWork(false);
+      }
+    }
+
     return (
         <div id="PersonalEditPage">
-              <div className="twoSide">
-                  <div className="leftSide">
-                      <img alt="avatar" src={personalData?.avatar}/>
-                      <div className="Name">
-                          <input
-                              className="NameInput"
-                              type="text"
-                              name='name' 
-                              value={user.name}
-                              onChange={handleChange}
-                              maxLength={20}
-                              placeholder="學生姓名"
-                          />
-                      </div>
-                      <div className="EditPerson"  onClick={OnSubmit}>
-                          <div>&nbsp;結束編輯</div>
-                      </div>
-
-                  </div>
-                  <div className="rightSide">
-                      <div className="OtherInfo">
-                          <div className="OtherInfoTag" >國家</div>
-                          <div className="OtherInfoContent">
-                              {userData?.country}
-                          </div>
-                      </div>
-                      <div className="OtherInfo">
-                          <div className="OtherInfoTag">科系</div>
-                          <div className="OtherInfoContent">{userData?.department}</div>
-                      </div>
-                      <div className="OtherInfo">
-                          <div className="OtherInfoTag">信箱</div>
-                          <div className="OtherInfoContent">
-                              <input
-                                  className="InfoInput"
-                                  type="email"
-                                  name='email' 
-                                  value={user.email}
-                                  onChange={handleChange}
-                                  required
-                                  placeholder="學生信箱"
-                              />
-                          </div>
-                      </div>
-                      <div className="IntroTag">自我介紹</div>
-                      <div className="IntroContent">
-                        <ReactQuill
-                            theme="snow"
-                            placeholder="請輸入自我介紹..."
-                            modules={modules}
-                            value={intro}
-                            onChange={handleIntroChange}
-                            formats={formats}
-                            ref={(el) => {
-                                if (el) quillEditor = el.getEditor();
-                              }}
+            <div className="twoSide">
+                <div className="leftSide">
+                    <img alt="avatar" src={userData?.avatar} onClick={() => {setShowWork(true)}}/>
+                    <div className="Name">
+                        <input
+                            className="NameInput"
+                            type="text"
+                            name='name' 
+                            value={user.name}
+                            onChange={handleChange}
+                            maxLength={20}
+                            placeholder="學生姓名"
                         />
-                        <PersonalIntroEditor />
+                    </div>
+                    <div className="EditPerson"  onClick={OnSubmit}>
+                        <div>&nbsp;結束編輯</div>
+                    </div>
+
+                </div>
+                <div className="rightSide">
+                    <div className="OtherInfo">
+                        <div className="OtherInfoTag" >國家</div>
+                        <div className="OtherInfoContent">
+                            {userData?.country}
+                        </div>
+                    </div>
+                    <div className="OtherInfo">
+                        <div className="OtherInfoTag">科系</div>
+                        <div className="OtherInfoContent">{userData?.department}</div>
+                    </div>
+                    <div className="OtherInfo">
+                        <div className="OtherInfoTag">信箱</div>
+                        <div className="OtherInfoContent">
+                            <input
+                                className="InfoInput"
+                                type="email"
+                                name='email' 
+                                value={user.email}
+                                onChange={handleChange}
+                                required
+                                placeholder="學生信箱"
+                            />
+                        </div>
+                    </div>
+                    <div className="IntroTag">自我介紹</div>
+                    <div className="IntroContent">
+                      <ReactQuill
+                          theme="snow"
+                          placeholder="請輸入自我介紹..."
+                          modules={modules}
+                          value={intro}
+                          onChange={handleIntroChange}
+                          formats={formats}
+                          ref={(el) => {
+                              if (el) quillEditor = el.getEditor();
+                            }}
+                      />
+                      <PersonalIntroEditor />
+                    </div>
+                </div>
+            </div>
+            <div className="avatarWindow" data-show={showWork} >
+              <div className="updataAvatar">
+                <h2>選擇角色</h2>
+                <div>
+                    {characters.map(character => (
+                    <div
+                      key={character.name}
+                      className={`character ${selectedCharacter === character.name ? 'selected' : ''}`}
+                      onClick={() => handleCharacterClick(character.name)}
+                    >
+                      <img src={character.icon} alt={character.name} />
+                      <div className='hoverEffect'>
+                        <p className='name'>{character.name}</p>
+                        <p className='intro'>{character.intro}</p>
                       </div>
-                  </div>
+                    </div>
+                  ))}
+                </div>
+                <div className='button'>
+                  <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
+                  <button onClick={() => {updateRole(selectedCharacter)}}><p>大公告成！</p></button>
+                </div>
               </div>
+              <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>
+            </div>
         </div>
     )
 }
