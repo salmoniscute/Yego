@@ -22,6 +22,7 @@ import functionContext from "context/function";
 import userDataContext from "./context/userData";
 
 import { getDueAssignments } from "api/assignment";
+
 import { getCurrentCourseList, getPastCourseList } from "api/course";
 
 import NavigateBar from "./components/NavigateBar";
@@ -53,9 +54,9 @@ function Logout(): ReactElement {
 export default function App(): ReactElement {
     const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
     const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
-    const [currentCourse, setCurrentCourse] = useState<Array<Course>>([]);
     const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
+    const [refreshToken , setRefreshToken] = useState<string>(localStorage.getItem("refresh_token")||"");
 
     const location = useLocation();
 
@@ -66,15 +67,13 @@ export default function App(): ReactElement {
         }
         catch { }
         return null;
-    }, [location.pathname]);
+    }, [location.pathname,refreshToken]);
 
     const getText = useCallback((id: string) => {
         return getTextOrigin(id, language);
     }, [language]);
 
     useEffect(() => {
-
-
         getCurrentCourseList().then(data => {
             setCurrentCourse(data);
         });
@@ -97,7 +96,6 @@ export default function App(): ReactElement {
                     <NavigateBar
                         setLanguage={setLanguage}
                         dueAssignment={dueAssignment}
-                        currentCourse={currentCourse}
                     />
                     <Routes>
                         <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
@@ -106,10 +104,8 @@ export default function App(): ReactElement {
                         /> : <MainPage
                             webAnnouncementList={webAnnouncementList}
                             dueAssignment={dueAssignment}
-                            currentCourse={currentCourse}
-                            pastCourse={pastCourse}
                         />} />
-                        <Route path="/login" element={userData === null ? <LoginPage /> : <Navigate to="/" />} />
+                        <Route path="/login" element={userData === null ? <LoginPage setRefreshToken={setRefreshToken}/> : <Navigate to="/" />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/webAnnouncement/:id" element={<WebAnnouncementPage />} />
                         <Route path="/webAnnouncementlist" element={<WebAnnouncementList />} />

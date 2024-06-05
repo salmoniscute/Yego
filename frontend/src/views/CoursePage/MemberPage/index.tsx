@@ -78,7 +78,10 @@ export default function MemberPage(props: propsType): ReactElement {
     
                     <div className="windowSet">
                         <div className="leftWindow">
-                            <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
+                            <div className="selectAvatar">
+                                <img alt="avatar" src={selectedStudent?.avatar}/>
+                            </div>
+                            
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">國家</div>
                                 <div className="OtherInfoContent">{selectedStudent?.country}</div>
@@ -100,7 +103,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             <div className="memberIntro">
                                 <div className="memberIntroTag">自我介紹</div>
                                 <div className="memberIntroContent">
-                                    {selectedStudent?.introduction}
+                                    <p dangerouslySetInnerHTML={{ __html: selectedStudent?.introduction || '' }}/>
                                 </div>
                             </div>
                         </div>

@@ -17,12 +17,12 @@ already_exists = HTTPException(
 SubscriptionCrud = SubscriptionCrudManager()
 router = APIRouter(
     tags=["Subscriptions"],
-    prefix="/api"
+    prefix="/subscription"
 )
 
 
 @router.post(
-    "/subscription", 
+    "", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_subscription(
@@ -41,7 +41,7 @@ async def create_subscription(
     
 
 @router.delete(
-    "/subscription/{uid}/{component_id}",
+    "/{uid}/{component_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_subscription(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):

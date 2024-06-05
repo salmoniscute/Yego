@@ -24,12 +24,12 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 
 router = APIRouter(
     tags=["Assignment"],
-    prefix="/api"
+    prefix="/assignment"
 )
 
 
 @router.post(
-    "/assignment", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_assignment(
@@ -48,7 +48,7 @@ async def create_assignment(
 
 
 @router.put(
-    "/assignment/{assignment_id}", 
+    "/{assignment_id}", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_assignment(
@@ -67,7 +67,7 @@ async def update_assignment(
 
 
 @router.delete(
-    "/assignment/{assignment_id}", 
+    "/{assignment_id}", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_assignment(

@@ -21,11 +21,11 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 NotificationCrud = NotificationCrudManager()
 router = APIRouter(
     tags=["Discussion"],
-    prefix="/api"
+    prefix="/discussion"
 )
 
 @router.post(
-    "/discussion", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_discussion(
@@ -48,7 +48,7 @@ async def create_discussion(
 
 
 @router.get(
-    "/discussion/{discussion_id}", 
+    "/{discussion_id}", 
     response_model=DiscussionSchema.DiscussionRead
 )
 async def get_discussion(
@@ -65,12 +65,12 @@ async def get_discussion(
     
 
 @router.get(
-    "/discussions/{course_id}",
+    "/course/{course_id}",
     response_model=list[DiscussionSchema.DiscussionOfCourses]
 )
 async def get_course_discussions_by_course_id(
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Get all discussions for a course and the subscription status of user.
@@ -83,7 +83,7 @@ async def get_course_discussions_by_course_id(
 
 
 @router.put(
-    "/discussion/{discussion_id}",
+    "/{discussion_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_discussion(
@@ -106,7 +106,7 @@ async def update_discussion(
 
 
 @router.delete(
-    "/discussion/{discussion_id}",
+    "/{discussion_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_discussion(

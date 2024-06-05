@@ -11,6 +11,7 @@ import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
 import { WebAnnouncementInfo } from "schemas/webAnnouncement";
 
+import { getUserCourseList } from "api/course";
 import functionContext from "context/function";
 import userDataContext from "context/userData";
 
@@ -97,3 +98,4 @@ export default function MainPage(props: propsType): ReactElement {
   
       ;
 };
+

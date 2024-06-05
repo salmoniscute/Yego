@@ -46,13 +46,14 @@ class User:
             for role in self.roles:
                 count = 15 if role == "student" else 4
                 for _ in range(count):
+                    uid = self.random_uid(dept)
                     self.results.append({
                         **self.default,
-                        "uid": self.random_uid(dept),
+                        "uid": uid,
                         "password": self.random_password(),
                         "name": role + str(uid_counter),
                         "role": role,
-                        "email": f"{self.random_uid(dept)}@gs.ncku.edu.tw",
+                        "email": f"{uid}@gs.ncku.edu.tw",
                         "department": dept,
                         "country": "Taiwan",
                         "introduction": self.random_introduction(),
