@@ -28,7 +28,7 @@ router = APIRouter(
 async def create_course_material(
     newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate,
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Create a course material with the following information:
@@ -44,7 +44,7 @@ async def create_course_material(
     response_model=list[CourseMaterialSchema.CourseMaterialRead]
 )
 async def get_all_course_materials_in_particular_course(
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """ 
     Get all course materials in particular course.

@@ -18,16 +18,17 @@ class Course:
             "Chemistry",
             "Biology"
         ]
+        self.course_list = fakeDB["courses"]
         self.teacher_list = [user for user in fakeDB["users"] if user["role"] == "teacher"]
         self.results = []
     
     def generate(self):
-        count = 1
+        count = len(self.course_list)
         for teacher in self.teacher_list:
             department = teacher["department"][0]
             self.results.append({
                 **self.default,
-                "id": count,
+                "id": count + 1,
                 "uid": teacher["uid"],
                 "course_code": department + "".join(random.choices(string.digits, k=3)),
                 "name": f"Introduction to {department}",
