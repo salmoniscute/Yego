@@ -104,14 +104,12 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
 
     const postReply = async (parent_id: number, index: number) => {
         if (userData) {
-            const uid = userData.uid;
-            const publisher = userData.name;
             const reply: DiscussionTopicReply = {
                 parent_id: parent_id,
                 topic_id: Number(params.discussionTopicId) || 0,
-                publisher_avatar: "",
-                uid: uid,
-                publisher: publisher,
+                publisher_avatar: userData.avatar,
+                uid: userData.uid,
+                publisher: userData.name,
                 content: "",
             };
             if (parent_id === 0) {
@@ -138,7 +136,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     });
                 }
             }
-
             setReplyContentList(new Array(categorizedReplies[0]?.length || 0).fill(''));
             setShowReplyAreaList(new Array(categorizedReplies[0]?.length || 0).fill(false));
         }

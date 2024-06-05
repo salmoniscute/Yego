@@ -45,7 +45,8 @@ import NotificationPage from "views/NotificationPage";
 import getTextOrigin from "utils/getText";
 
 function Logout(): ReactElement {
-    localStorage.removeItem("access_token")
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     return <Navigate to="/" />
 }
 
