@@ -5,6 +5,7 @@ import {
     useContext,
     useEffect,
     useMemo,
+    useRef,
     useState
 } from "react";
 
@@ -15,6 +16,7 @@ import NewFiles from "./NewFiles";
 import UploadFiles from "components/UploadFiles";
 import NewAssignments from "./NewAssignments";
 import { Material } from "schemas/material";
+import axios from "axios";
 
 
 type propsType = Readonly<{
@@ -139,6 +141,8 @@ export default function MaterialContext(props: propsType): ReactElement {
         updateData,
     } = props;
 
+    const aRef = useRef(null);
+
     const [holdingKey, setHoldingKey] = useState<number>(-1);
     const [editMode, setEditMode] = useState<boolean>(false);
     const [currentWindow, setCurrentWindow] = useState<number>(0);
@@ -235,6 +239,46 @@ export default function MaterialContext(props: propsType): ReactElement {
         }
         {
             currentData?.material_infos.map((v, i) => <div
+                key={v.id}
+                className="material"
+                data-ondrag={holdingKey === i}
+                draggable={(editMode && isTeacher) ? true : undefined}
+                onDrag={editMode ? (event) => {
+                    event.preventDefault();
+                    setHoldingKey(i);
+                } : undefined}
+                onDragEnter={editMode ? (event) => {
+                    event.preventDefault();
+                    if (holdingKey === i || holdingKey === -1) return;
+                    switchOrder(holdingKey, i);
+                } : undefined}
+                onDragEnd={editMode ? (event) => {
+                    event.preventDefault();
+                    setHoldingKey(-1);
+                } : undefined}
+                style={{ "--order": v.order ?? 0 } as CSSProperties}
+                onClick={() => {
+                    if (v.files.length === 0)
+                        return;
+                    axios.get(`/file`)
+                }}
+            >
+                <a ref={aRef} />
+                <span>{v.title}</span>
+                {
+                    isTeacher && editMode ? <button
+                        className="editMaterial"
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
+                        </svg>
+                        <span>{getText("edit_material")}</span>
+                    </button> : undefined
+                }
+            </div>)
+        }
+        {
+            currentData?.assignments.map((v, i) => <div
                 key={v.id}
                 className="material"
                 data-ondrag={holdingKey === i}

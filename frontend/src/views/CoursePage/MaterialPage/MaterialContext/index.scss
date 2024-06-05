@@ -38,6 +38,10 @@
             height: 1.5em;
             order: var(--order);
 
+            > a {
+                display: none;
+            }
+
             button {
                 svg {
                     height: 50%;

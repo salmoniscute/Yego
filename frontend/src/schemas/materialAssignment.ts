@@ -11,5 +11,6 @@ export interface MaterialAssignment {
     deadline: string
     reject_time: string
     feedback_type: string
+    order: number
     files: Array<MaterialFile>
 };
