@@ -67,7 +67,7 @@ async def get_all_courses():
     status_code=status.HTTP_200_OK,
     response_description="Get a couse",  
 )
-async def get_course(course_id: str = None):
+async def get_course(course_id: int = None):
     course = await CourseCrud.get(course_id)
     if course:
         return course
@@ -81,7 +81,7 @@ async def get_course(course_id: str = None):
 )
 async def update_course(
     updateCourse: CourseSchema.CourseUpdate,
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """ 
     Update the particular course with at least one of the following information:
@@ -101,7 +101,7 @@ async def update_course(
     "/course/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_course(course_id: str = Depends(check_course_id)):
+async def delete_course(course_id: int = Depends(check_course_id)):
     """ 
     Delete the course.
     """

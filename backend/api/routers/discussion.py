@@ -70,7 +70,7 @@ async def get_discussion(
 )
 async def get_course_discussions_by_course_id(
     uid: str = Depends(check_user_id),
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """
     Get all discussions for a course and the subscription status of user.

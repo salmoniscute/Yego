@@ -59,7 +59,7 @@ async def create_discussion_topic(
     response_model=DiscussionSchema.DiscussionTopicRead
 )
 async def get_discussion_topic(
-    topic_id: int=Depends(check_topic_id)
+    topic_id: int = Depends(check_topic_id)
 ):
     """ 
     Get a discussion topic.
