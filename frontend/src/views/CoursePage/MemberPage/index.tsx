@@ -42,12 +42,12 @@ export default function MemberPage(props: propsType): ReactElement {
         <div id="courseMemberPage">
             <div className="courseMember">
                 <div className="header">
-                    <div className="dropdownkey">
+                    {/* <div className="dropdownkey">
                         關鍵字搜尋或篩選
                         <span className="material-symbols-outlined">
                             stat_minus_1
                         </span>
-                    </div>
+                    </div> */}
                     {userData?.role === "teacher" ? <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link> : ""}
                 </div>
                 <div className="courseMemberTab">
