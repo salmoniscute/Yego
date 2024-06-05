@@ -8,7 +8,13 @@
         flex-direction: column;
         gap: 0.5rem;
         overflow: hidden;
-
+        display: flex;
+        gap: 0.5rem;
+        background-color: #FFF;
+        border: 0.07rem solid #000;
+        padding: 1.8rem 1rem;
+        border-radius: 0.25rem;
+        
         .block {
             display: flex;
             gap: 1rem;
@@ -41,6 +47,7 @@
                 transition: color 0.3s;
                 background-color: #E1E1E4;
                 padding: 0.25em 1em;
+                
             }
     
             a:hover {

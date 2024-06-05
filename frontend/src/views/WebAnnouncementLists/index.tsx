@@ -72,7 +72,7 @@ export default function WebAnnouncementList() {
           <div className="list-item" key={index}>
             <span style={{ width: "50%" }}><Link to={`/webAnnouncement/${announcement.id}`} className="announcement-title">{announcement.title}</Link></span>
             <span style={{ width: "30%" }}>{formatDateTime(announcement.release_time)}</span>
-            <span style={{ width: "20%" }}>{announcement.publisher}</span>
+             <span style={{ width: "20%" }}>{announcement.publisher}</span>
           </div>
         ))}
       </div>

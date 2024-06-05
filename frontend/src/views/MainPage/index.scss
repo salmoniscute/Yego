@@ -3,6 +3,30 @@
     max-width: 90vw;
 
     .main {
+
+        .list-item {
+            display: flex;
+            
+            .date {
+                width: 30%;
+                font-size: 0.875rem;
+            }
+        
+            .pin-status {
+                opacity: 0%;
+                background-color: #FFEA79;
+                height: 1.25em;
+                line-height: 1.25em;
+                padding: 0.5em 1em;
+                border-radius: 100vw;
+            }
+        
+            .title {
+                width: 50%;
+            }
+        }
+
+        }
         h2 {
             margin: 1.25em 0;
             user-select: none;
@@ -80,5 +104,21 @@
                 }
             }
         }
+        .seeMore {
+            margin: 1rem;
+            display: flex;
+            justify-content: right;
+    
+            a {
+                color: #000;
+                text-decoration: none;
+                transition: color 0.3s;
+                background-color: #E1E1E4;
+                padding: 0.25em 1em;
+            }
+    
+            a:hover {
+                color: #000;
+            }
+        }
     }
-}

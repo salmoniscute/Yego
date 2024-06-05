@@ -60,7 +60,7 @@ export default function WebAnnouncementPage() {
   const formatDateTime = (dateTimeString: string) => {
     const date = new Date(dateTimeString);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，因此要加1
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0');
     const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
     const hours = date.getHours().toString().padStart(2, '0');
