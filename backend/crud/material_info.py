@@ -23,7 +23,8 @@ class MaterialInfoCrudManager:
             material_id=course_material_id, 
             start_time=newMaterialInfo.start_time, 
             end_time=newMaterialInfo.end_time, 
-            display=newMaterialInfo.display
+            display=newMaterialInfo.display,
+            order=newMaterialInfo.order
         )
         db_session.add(material_info)
         await db_session.commit()

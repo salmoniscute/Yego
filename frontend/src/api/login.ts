@@ -24,7 +24,7 @@ export async function login(username: string, password: string): Promise<User> {
 }
 
 export async function updateUserRole(uid:string , role :string ){
-    let url = "/user/"+ uid+"/default_avatar?avatar="+role;
+    let url = "http://localhost:8080/api/user/"+ uid+"/default_avatar?avatar="+role;
     try {
         await axios.put(url,);
         
@@ -37,7 +37,7 @@ export async function updateUserRole(uid:string , role :string ){
 }
 
 export async function getUser(uid:string): Promise<User| null>{
-    let url = "/user/" + uid;
+    let url = "http://localhost:8080/api/user/" + uid;
     
     try {
         const response = await axios.get(url,);
@@ -51,7 +51,7 @@ export async function getUser(uid:string): Promise<User| null>{
 }
 
 export async function updateUser(user:User): Promise<User| null>{
-    let url = "/user/" + user.uid;
+    let url = "http://localhost:8080/api/user/" + user.uid;
     
     try {
         const response = await axios.put(url,user);
@@ -65,7 +65,7 @@ export async function updateUser(user:User): Promise<User| null>{
 }
 
 export async function refreshToken(){
-    let url = "/auth/refresh";
+    let url = "http://localhost:8080/api/auth/refresh";
     try {
         const response = await axios.post(url,{
             "refresh_token":localStorage.getItem("refresh_token")

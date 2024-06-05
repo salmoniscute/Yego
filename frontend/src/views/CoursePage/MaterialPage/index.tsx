@@ -113,7 +113,7 @@ export default function MaterialPage(props: propsType): ReactElement {
             }}
         />
         <div className="block">
-            {showJoinGroup ? <JoinGroup /> : ""}
+            {showJoinGroup && userData?.role === "student" ? <JoinGroup /> : ""}
             <MaterialContext
                 isTeacher={userData?.role === "teacher" || userData?.role === "assistant" || userData?.uid === "admin"}
                 selectedTheme={selectedTheme}

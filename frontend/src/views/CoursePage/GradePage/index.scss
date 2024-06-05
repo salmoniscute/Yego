@@ -1,5 +1,5 @@
 #courseGradePage{
-    //margin: 3em 4em;
+    margin: 3em 4em;
     padding: 1em 2em;
     background-color: #FFFFFF;
     border: solid 1px #474141;
@@ -23,6 +23,9 @@
         }
         .assignmentName{
             text-decoration:underline ;
+            a{
+                color: inherit;
+            }
         }
 
     }

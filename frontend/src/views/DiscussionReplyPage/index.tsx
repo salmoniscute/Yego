@@ -104,14 +104,12 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
 
     const postReply = async (parent_id: number, index: number) => {
         if (userData) {
-            const uid = userData.uid;
-            const publisher = userData.name;
             const reply: DiscussionTopicReply = {
                 parent_id: parent_id,
                 topic_id: Number(params.discussionTopicId) || 0,
-                publisher_avatar: "",
-                uid: uid,
-                publisher: publisher,
+                publisher_avatar: userData.avatar,
+                uid: userData.uid,
+                publisher: userData.name,
                 content: "",
             };
             if (parent_id === 0) {
@@ -138,7 +136,6 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                     });
                 }
             }
-
             setReplyContentList(new Array(categorizedReplies[0]?.length || 0).fill(''));
             setShowReplyAreaList(new Array(categorizedReplies[0]?.length || 0).fill(false));
         }
@@ -165,7 +162,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 </div>
                 
                 <div className="discussionTopicTop">
-                    <img src={UserIcon}/>
+                    <img src={discussionTopic?.publisher_avatar}/>
                     <h3>{discussionTopic?.publisher}</h3>
                     <p>{setTimeString(discussionTopic?.release_time||"")}</p>
                 </div>
@@ -182,7 +179,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                         categorizedReplies[0].map((data,index)=>(
                             <div key={index} className="discussionTopicReply">
                                 <div className="discussionTopicReplyTop">
-                                    <img src={UserIcon}/>
+                                    <img src={data.publisher_avatar}/>
                                     <h3>{data.publisher}</h3>
                                 </div>
                                 <p>{data.content}</p>
@@ -194,7 +191,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                     </div>
                                 </div>
                                 { showReplyAreaList[index] === true &&  <div className="discussionReplyArea">
-                                    <img src={UserIcon}/>
+                                    <img src={userData?.avatar}/>
                                     <textarea
                                         placeholder="回覆留言"
                                         value={replyContentList[index]}
@@ -207,7 +204,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                 { data.id && categorizedReplies[Number(data.id)] && (categorizedReplies[Number(data.id)].map((data2,index2)=>(
                                     <div key={index2} className="replyTheReply">
                                         <div className="replyTheReplyTop">
-                                            <img src={UserIcon}/>
+                                            <img src={data2.publisher_avatar}/>
                                             <h3>{data2.publisher}</h3>
                                         </div>
                                         <p>{data2.content}</p>
@@ -222,7 +219,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             </div>
 
             { showMainReplyArea && <div className="discussionReplyArea" ref={mainReplyAreaRef}>
-                <img src={UserIcon}/>
+                <img src={userData?.avatar}/>
                 <textarea
                     placeholder="回覆貼文"
                     value={mainReply}

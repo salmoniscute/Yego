@@ -13,11 +13,13 @@ ComponentCrud = ComponentCrudManager()
 @crud_class_decorator
 class CourseMaterialCrudManager:
     async def create(self, uid: str, course_id: int, newCourseMaterial: CourseMaterialSchema.CourseMaterialCreate, db_session: AsyncSession):
-        newComponent_dict = newCourseMaterial.model_dump()
-        newComponent_dict.update({"content": "(empty_content)"})
+        newComponent_dict = {
+            "title": newCourseMaterial.title,
+            "content": "(empty_content)"
+        }
         component = await ComponentCrud.create(uid, newComponent_dict)
         
-        course_material = CourseMaterialModel(id=component.id, course_id=course_id)
+        course_material = CourseMaterialModel(id=component.id, course_id=course_id, order=newCourseMaterial.order)
         db_session.add(course_material)
         await db_session.commit()
 
@@ -41,6 +43,7 @@ class CourseMaterialCrudManager:
             obj = {
                 "id": material[0].id,
                 "title": material[0].info.title,
+                "order": material[0].order,
                 "material_infos": [],
                 "assignments": []
             }
@@ -56,6 +59,7 @@ class CourseMaterialCrudManager:
                     "start_time": info[0].start_time,
                     "end_time": info[0].end_time,
                     "display": info[0].display,
+                    "order": info[0].order,
                     "files": info[0].info.files
                 })
 
@@ -74,6 +78,7 @@ class CourseMaterialCrudManager:
                     "deadline": assignment[0].deadline,
                     "reject_time": assignment[0].reject_time,
                     "feedback_type": assignment[0].feedback_type,
+                    "order": assignment[0].order,
                     "files": assignment[0].info.files
                 })
                 
