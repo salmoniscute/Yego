@@ -8,9 +8,21 @@ export async function getCourseBulletinList(course_id:number) :Promise<Array<Cou
     try {
         const response = await axios.get(url,{
           });
+
+        const sortByReleaseTime = (a: CourseBulletin, b: CourseBulletin) => {
+            if (a.release_time && b.release_time){
+                return new Date(b.release_time).getTime() - new Date(a.release_time).getTime();
+            }
+        };
         const result = response.data;
-        const pinedResult = result.filter((data: CourseBulletin) => data.pin_to_top);
-        const notPinedResult = result.filter((data: CourseBulletin) => !data.pin_to_top);
+
+        const pinedResult = result
+            .filter((data: CourseBulletin) => data.pin_to_top)
+            .sort(sortByReleaseTime);
+        const notPinedResult = result
+            .filter((data: CourseBulletin) => !data.pin_to_top)
+            .sort(sortByReleaseTime);
+        
         return pinedResult.concat(notPinedResult);
     }
     catch(error){
