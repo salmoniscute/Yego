@@ -23,12 +23,12 @@ NotificationCrud = NotificationCrudManager()
 SelectedCourseCrud = SelectedCourseCrudManager()
 router = APIRouter(
     tags=["Material Info"],
-    prefix="/api"
+    prefix="/material_info"
 )
 
 
 @router.post(
-    "/material_info", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_material_info(
@@ -47,7 +47,7 @@ async def create_material_info(
 
 
 @router.put(
-    "/material_info/{material_info_id}", 
+    "/{material_info_id}", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_material_info(
@@ -66,7 +66,7 @@ async def update_material_info(
 
 
 @router.delete(
-    "/material_info/{material_info_id}", 
+    "/{material_info_id}", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_material_info(

@@ -20,7 +20,7 @@ already_exists = HTTPException(
 ReportCrud = ReportCrudManager()
 router = APIRouter(
     tags=["Report"],
-    prefix="/api"
+    prefix="/report"
 )
 
 SubscriptionCrud = SubscriptionCrudManager()
@@ -29,7 +29,7 @@ UserCrud = UserCrudManager()
 
 
 @router.post(
-    "/report", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_report(
@@ -46,7 +46,7 @@ async def create_report(
 
 
 @router.get(
-    "/reports",
+    "s",
     response_model=list[ReportSchema.ReportListRead]
 )
 async def get_all_reports():
@@ -61,7 +61,7 @@ async def get_all_reports():
 
 
 @router.get(
-    "/report/{report_id}", 
+    "/{report_id}", 
     response_model=ReportSchema.ReportReadByID
 )
 async def get_report(
@@ -78,7 +78,7 @@ async def get_report(
     
 
 @router.put(
-    "/report/{report_id}",
+    "/{report_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_report(
@@ -102,7 +102,7 @@ async def update_report(
 
 
 @router.delete(
-    "/report/{report_id}",
+    "/{report_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_report(report_id: int = Depends(check_report_id)):

@@ -1,10 +1,10 @@
 import {
+    CSSProperties,
     ChangeEvent,
     ReactElement,
     useCallback,
     useContext,
     useEffect,
-    useMemo,
     useState
 } from "react";
 
@@ -20,10 +20,16 @@ type propsType = Readonly<{
     selectFile: () => void,
 }>;
 
+const formatType = [
+    "純文字",
+    "檔案",
+    "無"
+];
+
 const date = new Date();
 const dateString = `${date.getFullYear()}-${date.getMonth().toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 
-export default function NewFiles(props: propsType): ReactElement {
+export default function NewAssignments(props: propsType): ReactElement {
     const {
         show,
         files,
@@ -31,17 +37,21 @@ export default function NewFiles(props: propsType): ReactElement {
         selectFile
     } = props;
 
-    const [upTimeDate, setUpTimeDate] = useState<string>(dateString);
-    const [upTimeHour, setUpTimeHour] = useState<number>(0);
-    const [upTimeMinute, setUpTimeMinute] = useState<number>(0);
-    const [downTimeDate, setDownTimeDate] = useState<string>(dateString);
-    const [downTimeHour, setDownTimeHour] = useState<number>(0);
-    const [downTimeMinute, setDownTimeMinute] = useState<number>(0);
+    const [time1Date, setTime1Date] = useState<string>(dateString);
+    const [time1Hour, setTime1Hour] = useState<number>(0);
+    const [time1Minute, setTime1Minute] = useState<number>(0);
+    const [time2Date, setTime2Date] = useState<string>(dateString);
+    const [time2Hour, setTime2Hour] = useState<number>(0);
+    const [time2Minute, setTime2Minute] = useState<number>(0);
+    const [time3Date, setTime3Date] = useState<string>(dateString);
+    const [time3Hour, setTime3Hour] = useState<number>(0);
+    const [time3Minute, setTime3Minute] = useState<number>(0);
+    const [currentFormat, setFormat] = useState<number>(0);
 
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [visible, setVisible] = useState<boolean>(false);
-
+    
     const { getText } = useContext(functionContext);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
@@ -58,9 +68,9 @@ export default function NewFiles(props: propsType): ReactElement {
         document.removeEventListener("keydown", onKeyDown);
     }, [onKeyDown]);
 
-    return <div id="newFiles" data-show={show ? true : undefined} onClick={(event) => {
+    return <div id="newAssignments" data-show={show ? true : undefined} onClick={(event) => {
         const target: HTMLElement = event.target as HTMLElement;
-        if (target.id === "newFiles") {
+        if (target.id === "newAssignments") {
             close();
         }
     }}>
@@ -82,6 +92,38 @@ export default function NewFiles(props: propsType): ReactElement {
                                 setDescription(event.target.value);
                             }} />
                         </div>
+                        <div className="addFiles">
+                            <div className="subtitle">
+                                <div>選擇檔案</div>
+                                <button onClick={() => selectFile()}>選擇檔案</button>
+                            </div>
+                            <div className="files">
+                                {files.map((file, i) => <div
+                                    key={`${file.name}${i}`}
+                                    className="file"
+                                >
+                                    {file.name}
+                                </div>)}
+                            </div>
+                        </div>
+                        <div className="format row">
+                            <div className="subtitle">
+                                <div>選擇檔案</div>
+                            </div>
+                            <div className="dropdown">
+                                <label className="mask" style={{
+                                    "--options": formatType.length
+                                } as CSSProperties}>
+                                    <div>{formatType[currentFormat]}</div>
+                                    {formatType.map((v, i) => <div
+                                        key={i}
+                                        className="option"
+                                        onClick={() => setFormat(i)}
+                                    >{v}</div>)}
+                                    <input type="checkbox" />
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div className="right">
                         <div className="visible">
@@ -96,64 +138,73 @@ export default function NewFiles(props: propsType): ReactElement {
                         </div>
                         <div className="row first">
                             <div className="key">
-                                啟用時間
+                                可繳交時間
                             </div>
                             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 18H2V7H16M13 0V2H5V0H3V2H2C0.89 2 0 2.89 0 4V18C0 18.5304 0.210714 19.0391 0.585786 19.4142C0.960859 19.7893 1.46957 20 2 20H16C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18V4C18 2.89 17.1 2 16 2H15V0" fill="black" />
                             </svg>
-                            <input className="date" type="date" value={upTimeDate} onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                setUpTimeDate(event.target.value);
+                            <input className="date" type="date" value={time1Date} onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                setTime1Date(event.target.value);
                             }} />
                             <NumberDropDownMenu
                                 rangeStart={0}
                                 rangeEnd={23}
-                                value={upTimeHour}
-                                setValue={setUpTimeHour}
+                                value={time1Hour}
+                                setValue={setTime1Hour}
                             />
                             <NumberDropDownMenu
                                 rangeStart={0}
                                 rangeEnd={59}
-                                value={upTimeMinute}
-                                setValue={setUpTimeMinute}
+                                value={time1Minute}
+                                setValue={setTime1Minute}
+                            />
+                        </div>
+                        <div className="row second">
+                            <div className="key">
+                                規定繳交時間
+                            </div>
+                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 18H2V7H16M13 0V2H5V0H3V2H2C0.89 2 0 2.89 0 4V18C0 18.5304 0.210714 19.0391 0.585786 19.4142C0.960859 19.7893 1.46957 20 2 20H16C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18V4C18 2.89 17.1 2 16 2H15V0" fill="black" />
+                            </svg>
+                            <input className="date" type="date" value={time2Date} onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                setTime2Date(event.target.value);
+                            }} />
+                            <NumberDropDownMenu
+                                rangeStart={0}
+                                rangeEnd={23}
+                                value={time2Hour}
+                                setValue={setTime2Hour}
+                            />
+                            <NumberDropDownMenu
+                                rangeStart={0}
+                                rangeEnd={59}
+                                value={time2Minute}
+                                setValue={setTime2Minute}
                             />
                         </div>
                         <div className="row">
                             <div className="key">
-                                停用時間
+                                拒收作業時間
                             </div>
                             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 18H2V7H16M13 0V2H5V0H3V2H2C0.89 2 0 2.89 0 4V18C0 18.5304 0.210714 19.0391 0.585786 19.4142C0.960859 19.7893 1.46957 20 2 20H16C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18V4C18 2.89 17.1 2 16 2H15V0" fill="black" />
                             </svg>
-                            <input className="date" type="date" value={downTimeDate} onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                setDownTimeDate(event.target.value);
+                            <input className="date" type="date" value={time3Date} onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                setTime3Date(event.target.value);
                             }} />
                             <NumberDropDownMenu
                                 rangeStart={0}
                                 rangeEnd={23}
-                                value={downTimeHour}
-                                setValue={setDownTimeHour}
+                                value={time3Hour}
+                                setValue={setTime3Hour}
                             />
                             <NumberDropDownMenu
                                 rangeStart={0}
                                 rangeEnd={59}
-                                value={downTimeMinute}
-                                setValue={setDownTimeMinute}
+                                value={time3Minute}
+                                setValue={setTime3Minute}
                             />
                         </div>
-                    </div>
-                </div>
-                <div className="addFiles">
-                    <div className="subtitle">
-                        <div>選擇檔案</div>
-                        <button onClick={() => selectFile()}>選擇檔案</button>
-                    </div>
-                    <div className="files">
-                        {files.map((file, i) => <div
-                            key={`${file.name}${i}`}
-                            className="file"
-                        >
-                            {file.name}
-                        </div>)}
                     </div>
                 </div>
             </div>

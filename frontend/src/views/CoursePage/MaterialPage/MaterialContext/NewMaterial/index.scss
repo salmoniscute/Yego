@@ -72,10 +72,10 @@
                 .option::after {
                     content: "";
                     position: absolute;
-                    top: calc(50% - 0.425rem);
-                    left: 0.12rem;
-                    height: 0.85rem;
-                    width: 0.85rem;
+                    top: calc(50% - 0.54rem);
+                    left: 0;
+                    height: 1.08rem;
+                    width: 1.08rem;
                     border-radius: 50%;
                     background-color: #000;
                     transform: scale(0);
@@ -83,7 +83,7 @@
                 }
 
                 .option[data-select=true]::after {
-                    transform: scale(1);
+                    transform: scale(0.75);
                 }
             }
         }

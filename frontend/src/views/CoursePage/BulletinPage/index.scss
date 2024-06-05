@@ -28,9 +28,24 @@
             }
         }
     }
+    .yegogo{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 1em;
+        img{
+            width: 4.5em;
+            height: 4.5em;
+            margin: 0em 1em ;
+        }
+        div{
+            background-color: #FFEA79;
+            padding: 0.5em 1em;
+            border-radius: 0.5em;
+        }
+    }
 
     .courseBulletin{
-        margin-top: 4em;
         .courseBulletinContent{
 
             background-color: #FFFFFF;

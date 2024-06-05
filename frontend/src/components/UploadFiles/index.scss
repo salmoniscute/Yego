@@ -1,0 +1,272 @@
+.uploadFiles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6668;
+    opacity: 0%;
+    z-index: 11;
+    pointer-events: none;
+    transition: opacity 0.5s;
+
+    .box {
+        position: relative;
+        width: 48rem;
+        height: 28rem;
+        padding: 1.5rem;
+        max-width: calc(95vw - 3rem);
+        background-color: #FFF;
+        border-radius: 1rem;
+        transform: translateY(-15rem);
+        transition: transform 0.5s;
+
+        div.title {
+            height: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        button.close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: inherit;
+        }
+
+        .content {
+            display: flex;
+            gap: 1rem;
+            height: calc(100% - 5.8rem);
+            overflow: hidden;
+
+            .setting {
+                flex: 3;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                isolation: isolate;
+
+                .filename {
+                    height: 2rem;
+                    width: 12rem;
+                    display: flex;
+                    align-items: center;
+                    padding-top: 1.25rem;
+                    position: relative;
+
+                    input {
+                        width: 100%;
+                        height: 2rem;
+                        line-height: 2.3rem;
+                        font-size: 1rem;
+                        border: 0.05rem #C0C0C0 solid;
+                        border-radius: 0.5rem;
+                        outline: none;
+                        transition: border-color 0.3s;
+                        padding-inline-start: 0.25rem;
+                    }
+
+                    input:focus {
+                        border-color: #000;
+                    }
+                }
+
+                .filename::before {
+                    content: "Label";
+                    position: absolute;
+                    top: 0;
+                    left: 0.25rem;
+                    height: 1.25rem;
+                    line-height: 1.25rem;
+                    font-size: 0.75rem;
+                    color: #C0C0C0;
+                }
+
+                .dropdown {
+                    height: 2.4rem;
+
+                    .mask {
+                        position: relative;
+                        padding: 0.35rem 0;
+                        border: 0.05rem #888 solid;
+                        border-radius: 0.5rem;
+                        display: block;
+                        height: 1.7rem;
+                        overflow: hidden;
+                        transition: height 0.3s;
+                        background-color: #FFF;
+
+                        div {
+                            height: 1.2rem;
+                            line-height: 1.2rem;
+                            padding: 0.25rem 0.5rem;
+                            user-select: none;
+                            transition: background-color 0.3s, opacity 0.3s;
+                            background-color: #C0C0C000;
+                        }
+
+                        div:not(:first-child) {
+                            opacity: 0%;
+                            cursor: pointer;
+                        }
+
+                        div:not(:first-child):hover {
+                            background-color: #C0C0C0;
+                        }
+
+
+                        input {
+                            display: none;
+                        }
+                    }
+
+                    .mask::after {
+                        content: "keyboard_arrow_down";
+                        position: absolute;
+                        top: 0.35rem;
+                        height: 1.5rem;
+                        line-height: 1.5rem;
+                        right: 0.5rem;
+                        cursor: pointer;
+                        font-family: "Material Symbols Outlined";
+                        user-select: none;
+                        transition: transform 0.3s;
+                    }
+
+                    .mask:has(input:checked) {
+                        height: calc(1.7rem * (var(--options, 0) + 1));
+
+                        div:not(:first-child) {
+                            opacity: 100%;
+                        }
+                    }
+
+                    .mask:has(input:checked)::after {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                .source {
+                    position: relative;
+                    width: 9rem;
+                    z-index: 10;
+                }
+
+                .source::after {
+                    content: "上限為200MB";
+                    position: absolute;
+                    left: calc(100% + 1rem);
+                    width: auto;
+                    white-space: nowrap;
+                    height: 2.4rem;
+                    line-height: 2.4rem;
+                    color: #C0C0C0;
+                    top: 0;
+                    pointer-events: none;
+                }
+
+                .licence {
+                    width: 17rem;
+                }
+            }
+
+            .files {
+                flex: 4;
+                padding-right: 3rem;
+
+                .dragBox {
+                    height: 100%;
+                    width: 100%;
+                    overflow: hidden;
+
+                    label {
+                        display: block;
+                        height: calc(100% - 0.3rem);
+                        width: calc(100% - 0.3rem);
+                        border: 0.15rem dashed #C0C0C0;
+                        border-radius: 0.5rem;
+                        overflow-y: auto;
+                        transition: border-color 0.3s;
+
+                        input {
+                            display: none;
+                        }
+
+                        .empty {
+                            font-size: 2rem;
+                            color: #C0C0C0;
+                            margin: calc(50% - 1.5em - 1px) 0;
+                            height: 1.5em;
+                            line-height: 1.5em;
+                            width: 100%;
+                            text-align: center;
+                            transition: color 0.3s;
+                        }
+
+                        .file {
+                            display: flex;
+                            margin: 0.25rem 0.5rem;
+                            align-items: center;
+                            justify-content: space-between;
+                            user-select: none;
+
+                            .name {
+                                cursor: pointer;
+                            }
+
+                            .name:hover {   
+                                text-decoration: line-through;
+                            }
+                        }
+                    }
+
+                    label:has(input) {
+                        cursor: pointer;
+                    }
+
+                    label[data-ondrag=true],
+                    label:hover {
+                        border-color: #000;
+
+                        .empty {
+                            color: #000;
+                        }
+                    }
+                }
+            }
+        }
+
+        .buttonBar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.75rem;
+
+            button {
+                border-radius: 0.25em !important;
+                padding: 0.5em 1em !important;
+            }
+
+            .cancel {
+                background-color: #E1E1E4 !important;
+            }
+
+            .next {
+                background-color: #FFEA79 !important;
+            }
+        }
+    }
+}
+
+.uploadFiles[data-show=true] {
+    pointer-events: initial;
+    opacity: 100%;
+
+    .box {
+        transform: translateY(0rem);
+    }
+}

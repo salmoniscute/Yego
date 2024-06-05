@@ -18,7 +18,7 @@ already_exists = HTTPException(
 
 CourseBulletinCrud = CourseBulletinCrudManager()
 router = APIRouter(
-    prefix="/api/course",
+    prefix="/course",
     tags=["Course Bulletin"]
 )
 

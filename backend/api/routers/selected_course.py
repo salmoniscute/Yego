@@ -16,13 +16,13 @@ already_exists = HTTPException(
 
 SelectedCourseCrud = SelectedCourseCrudManager()
 router = APIRouter(
-    prefix="/api",
+    prefix="/selected_course",
     tags=["Selected Course"]
 )
 
 
 @router.post(
-    "/selected_course", 
+    "", 
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def create_selected_course(
@@ -40,7 +40,7 @@ async def create_selected_course(
 
 
 @router.get(
-    "/selected_course/user/{uid}", 
+    "/user/{uid}", 
     response_model=list[SelectedCourseSchema.SelectedCourseByUidRead],
     status_code=status.HTTP_200_OK
 )
@@ -56,7 +56,7 @@ async def get_selected_courses_by_uid(uid: str):
 
 
 @router.get(
-    "/selected_course/course/{course_id}", 
+    "/course/{course_id}", 
     response_model=list[SelectedCourseSchema.SelectedCourseByCourseIdRead],
     status_code=status.HTTP_200_OK
 )
@@ -72,7 +72,7 @@ async def get_selected_courses_by_course_id(course_id: int):
 
 
 @router.get(
-    "/selected_course/particular/{uid}/{course_id}", 
+    "/particular/{uid}/{course_id}", 
     status_code=status.HTTP_200_OK
 )
 async def get_user_group(
@@ -93,7 +93,7 @@ async def get_user_group(
 
 
 @router.delete(
-    "/selected_course/particular/{uid}/{course_id}",
+    "/particular/{uid}/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_selected_course(
