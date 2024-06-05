@@ -11,8 +11,10 @@
             flex-direction: row;
             align-items: center;
             img{
-                width: 2.5em;
-                height: 2.5em;
+                width: 3.5em;
+                height: 3.5em;
+                object-fit: cover; 
+                border-radius: 100%;
                 margin-right: 1em;
             }
             h3{
@@ -123,6 +125,8 @@
             img{
                 width: 2.5em;
                 height: 2.5em;
+                object-fit: cover; 
+                border-radius: 100%;
                 margin-right: 1em;
             }
             h3{
@@ -159,6 +163,8 @@
                 img{
                     width: 2.5em;
                     height: 2.5em;
+                    border-radius: 100%;
+                    object-fit: cover; 
                     margin-right: 1em;
                 }
                 h3{
@@ -185,8 +191,10 @@
         background-color: #FFFFFF;
         border: solid 1px #424242;
         img{
-            width: 2.5em;
-            height: 2.5em;
+            width: 3em;
+            height: 3em;
+            border-radius: 100%;
+            object-fit: cover; 
             margin-right: 1em;
         }
         textarea{
@@ -207,6 +215,10 @@
     div .discussionTopicReply .discussionReplyArea{
         margin-top: 0em;
         margin-bottom: 1em;
+    }
+
+    .editor {
+        display: none;
     }
 
 

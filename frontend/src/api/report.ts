@@ -14,16 +14,17 @@ export async function getReportList() : Promise<Array<Report>>{
     }
 }
 
-export async function getReport(id : number ){
+export async function getReport(id : number ):Promise <Report>{
     let url = "/report/"+id;
+    let report ;
     try {
         const response = await axios.get(url,{});
-        const result = response.data;
-        return result;
+        report = response.data;
+        return report;
     }
     catch(error){
-        return[];
     }
+    return report;
 }
 
 export async function postReport(report:Report) :Promise<Report | null>{
