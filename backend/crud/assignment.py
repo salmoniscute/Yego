@@ -29,7 +29,8 @@ class AssignmentCrudManager:
             submitted_time=newAssignment.submitted_time,
             deadline=newAssignment.deadline,
             reject_time=newAssignment.reject_time,
-            feedback_type=newAssignment.feedback_type
+            feedback_type=newAssignment.feedback_type,
+            order=newAssignment.order
         )
         db_session.add(assignment)
         await db_session.commit()
