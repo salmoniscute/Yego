@@ -24,10 +24,8 @@ interface Info {
 
 export default function WebAnnouncementPage() {
   const { id } = useParams<{ id: string }>();
-  const [announcementData, setAnnouncementData] = useState<Info | null>(null);
+  const [announcementData, setAnnouncementData] = useState<Info>();
   const [allIds, setAllIds] = useState<number[]>([]);
-  const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const fetchAnnouncementData = async () => {
@@ -38,7 +36,6 @@ export default function WebAnnouncementPage() {
       } catch (error) {
         console.error('Error fetching announcement data:', error);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -61,22 +58,18 @@ export default function WebAnnouncementPage() {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0');
-    const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
-    return `${year}年${month}月${day}日(${weekDay}) ${hours}:${minutes}`;
+    return `${year}年${month}月${day}日 ${hours}:${minutes}`;
   };
 
-  if (loading || !announcementData) {
-    return <div>Loading...</div>;
-  }
 
   const currentId = parseInt(id || '', 10);
   const currentIndex = allIds.indexOf(currentId);
   const prevId = allIds[currentIndex - 1];
   const nextId = allIds[currentIndex + 1];
-  const publisherAvatarUrl = `http://localhost:8080${announcementData.publisher_avatar}`;
+  const publisherAvatarUrl = announcementData?.publisher_avatar || "";
 
   console.log('Current ID:', currentId);
   console.log('Current Index:', currentIndex);
@@ -89,19 +82,22 @@ export default function WebAnnouncementPage() {
         <h1>網站公告</h1>
       </div>
       <div className="announcement-detail">
-        <div key={announcementData.id} className="announcement-item">
+        <div key={announcementData?.id} className="announcement-item">
           <div className="announcement-title">
-            <p>{announcementData.pin_to_top ? '置頂' : null}</p>
-            {announcementData.title}
+            {announcementData?.pin_to_top && <p>置頂</p>}
+            {announcementData?.title}
           </div>
-          <p className="announcement-timestamp">
-            <img src={publisherAvatarUrl} alt="announcement" style={{ marginRight: '8px' }} />
-            <span style={{ marginRight: '8px' }}>{announcementData.publisher}</span>
-            <span>{formatDateTime(announcementData.release_time)}</span>
-          </p>
-          <p className="announcement-content">{announcementData.content}</p>
+          <div className="announcement-timestamp">
+            <img src={publisherAvatarUrl} alt="announcement" />
+            <p className='title'>{announcementData?.publisher}</p>
+            <p className='time'>{formatDateTime(announcementData?.release_time || "")}</p>
+          </div>
+          <div
+              className="announcement-content"
+              dangerouslySetInnerHTML={{ __html: announcementData?.content || "" }}
+          />     
           <div className="announcement-documents">
-            {announcementData.files.map((doc, index) => (
+            {announcementData?.files.map((doc, index) => (
               <a key={index} href={`http://localhost:8080${doc.path}`} className="document-link">
                 {doc.name || `Document ${index + 1}`}
               </a>

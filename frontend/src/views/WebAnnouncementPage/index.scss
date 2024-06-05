@@ -1,12 +1,12 @@
 .web-announcement-container {
+  position: relative;
+  max-width: calc(1200px);
+  padding: 0.95rem max(5vw, calc(50vw - 570px));
   font-family: 'Arial', sans-serif;
   padding: 20px;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: min(90vw, 1200px);
-  width: 70rem;
-  margin: auto;
 
   .breadcrumbs {
     font-size: 1.0rem;
@@ -15,7 +15,7 @@
 
   .web-announcement-header {
     padding: 10px 15px;
-    margin-bottom: 20px;
+    margin-top: 2.5em;
 
     h1 {
       margin: 0;
@@ -25,14 +25,13 @@
   }
 
   .announcement-detail {
-    width: 1152px;
-    height: 528px;
+    height: 30em;
+    margin: 2em 3em;
     background-color: #ffffff;
     border-color: #333;
     border: 2px solid; 
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 1.5em 2.5em;
 
     .announcement-title {
       display: flex;
@@ -40,14 +39,17 @@
       align-items: center;
       padding: 2px 8px;
       border-radius: 2px; 
-      font-size: 1.5rem;
+      font-size: 20px;
+      font-weight: 600;
       margin-bottom: 15px;
 
       p{
         width: 70px;
         height: 30px;
-        font-size: small;
+        font-size: medium;
+        margin: 0em;
         background-color: #FFEA79;
+        color: #000;
         border-radius: 200px;
         align-items: center;
         justify-content: center; 
@@ -56,13 +58,29 @@
         margin-right: 20px;
       }
     }
+    .announcement-timestamp{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      img {
+        width: 3.5em;
+        height: 3.5em;
+        object-fit: cover; 
+        border-radius: 50%;
+        margin-right: 1em;
+      }
+      .title{
+        font-weight: 600;
+        font-size: larger;
+        margin-right: 1em;
+      }
+      .time{
+        font-size: large;
+      }
 
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 10px;
     }
+
+    
 
     .announcement-content {
       padding-top: 15px;
@@ -124,10 +142,6 @@
       text-decoration: none; 
       padding: 10px;
       transition: none; 
-  
-      &:hover {
-        color: #0000; 
-      }
     }
   }
 
