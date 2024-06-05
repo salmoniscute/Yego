@@ -10,6 +10,7 @@ export async function getPersonal(uid:string) : Promise <User>{
         const response = await axios.get(url,{
           });
         personal = response.data;
+        return personal;
     }
     catch(error){
     }

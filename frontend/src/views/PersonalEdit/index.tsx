@@ -4,15 +4,15 @@ import {
     useState,
     useEffect
 } from "react";
-import {
-    Link,
-} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import {getPersonal, updatePersonal} from "api/personal";
+import {refreshToken} from 'api/login';
 import { User } from "schemas/user";
 import "./index.scss";
+import { get } from "http";
 
 // Undo & Redo icon
 const CustomUndo = () => (
@@ -108,16 +108,26 @@ function PersonalIntroEditor() : React.ReactElement {
   
 export default function PersonalEdit(): ReactElement {
     const userData = useContext(userDataContext);
-    const [user, setUser] = useState({
-        name: userData?.name,
-        email: userData?.email
-    });
     const [personalData, setPersonalData] = useState<User>();
+    const navigate = useNavigate();
     
+    const [user, setUser] = useState({
+      name: "",
+      email: "",
+    });
+
+
     useEffect(() => {
-      getPersonal(userData?.name?? "").then(data => {
-          setPersonalData(data);
-      });
+      const fetchPersonal = async() => { 
+        const data = await getPersonal(userData?.uid?? "");
+        setPersonalData(data);
+        setUser({
+          name: data.name,
+          email: data.email
+        });
+        setIntro(data.introduction)
+      }
+      fetchPersonal();
     }, [])
 
     const handleChange = (e:any) => {
@@ -128,7 +138,7 @@ export default function PersonalEdit(): ReactElement {
         });
     };
     // text editor
-    const [intro, setIntro] = useState(userData?.introduction);
+    const [intro, setIntro] = useState("");
     const handleIntroChange = (value:any, delta:any) => {
         setIntro(value);
     };
@@ -144,6 +154,9 @@ export default function PersonalEdit(): ReactElement {
           personalData.email = user.email;
           personalData.introduction = intro ?? "";
           await updatePersonal(personalData);
+          await refreshToken();
+          navigate(`/personal/${userData?.uid}`);
+          window.location.reload()
         }
       }
     }
@@ -152,7 +165,7 @@ export default function PersonalEdit(): ReactElement {
         <div id="PersonalEditPage">
               <div className="twoSide">
                   <div className="leftSide">
-                      <img alt="avatar" src={userData?.avatar}/>
+                      <img alt="avatar" src={personalData?.avatar}/>
                       <div className="Name">
                           <input
                               className="NameInput"
@@ -164,9 +177,9 @@ export default function PersonalEdit(): ReactElement {
                               placeholder="學生姓名"
                           />
                       </div>
-                      <Link className="EditPerson" to={`/personal/${userData?.uid}`} onClick={OnSubmit}>
+                      <div className="EditPerson"  onClick={OnSubmit}>
                           <div>&nbsp;結束編輯</div>
-                      </Link>
+                      </div>
 
                   </div>
                   <div className="rightSide">

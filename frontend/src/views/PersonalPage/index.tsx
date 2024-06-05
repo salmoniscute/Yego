@@ -1,6 +1,6 @@
 import {
     ReactElement,
-    useContext
+    useContext,
 } from "react";
 
 import {
@@ -10,11 +10,14 @@ import {
 } from "react-router-dom";
 
 import userDataContext from "context/userData";
+import { User } from "schemas/user";
+import {getPersonal} from "api/personal";
 import PersonalEditPage from "views/PersonalEdit";
 import "./index.scss";
 
 export default function Personal(): ReactElement {
     const userData = useContext(userDataContext);
+
     const personalInfo = (
         <div id="PersonalPage">
             <div className="twoSide">
