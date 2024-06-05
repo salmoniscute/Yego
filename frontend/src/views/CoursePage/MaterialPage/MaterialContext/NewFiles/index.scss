@@ -173,10 +173,11 @@
         }
 
         .addFiles {
-            .title {
+            .subtitle {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
+                margin-bottom: 0.5rem;
 
                 button {
                     background-color: #FFEA79;
@@ -184,10 +185,23 @@
                     border-radius: 0.25rem;
                 }
             }
+
+            .files {
+                display: flex;
+                flex-direction: column;
+                height: 5em;
+                overflow-y: auto;
+                gap: 0.25em;
+
+                .file {
+                    height: 1.5em;
+                    line-height: 1.5em;
+                }
+            }
         }
     }
 }
-
+    
 #newFiles[data-show=true] {
     pointer-events: initial;
     opacity: 100%;

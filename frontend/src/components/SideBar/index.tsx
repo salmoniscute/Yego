@@ -48,7 +48,7 @@ export default function SideBar(props: propsType): ReactElement {
                 <div className="caption-bold subTitle">{getText("this_semester_courses")}</div>
                 {
                     currentCourse.map((data, i) => <div key={i} className="caption">
-                        <Link to={`/course/${data.uid}`}>{data.name}</Link>
+                        <Link to={`/course/${data.id}`}>{data.course_name}</Link>
                     </div>)
                 }
                 <div className="toolBox">

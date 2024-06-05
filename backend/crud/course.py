@@ -19,17 +19,40 @@ class CourseCrudManager:
     async def get(self, course_id: str, db_session: AsyncSession):
         stmt = select(CourseModel).where(CourseModel.id == course_id)
         result = await db_session.execute(stmt)
-        course = result.first()
+        result = result.first()
         
-        return course[0] if course else None
+        if result is not None:
+            course = {
+                "id": result[0].id,
+                "instructor_name": result[0].instructor_info.name,
+                "course_code": result[0].course_code,
+                "academic_year": result[0].academic_year,
+                "semester": result[0].semester,
+                "course_name": result[0].name,
+                "outline": result[0].outline
+            }
+            return course
+
+        return None
 
     async def get_all(self, db_session: AsyncSession):
         stmt = select(CourseModel)
         result = await db_session.execute(stmt)
-        result = result.unique()
         
-        return [course[0] for course in result.all()]
-    
+        _list = []
+        for course in result:
+            _list.append({
+                "id": course[0].id,
+                "instructor_name": course[0].instructor_info.name,
+                "course_code": course[0].course_code,
+                "academic_year": course[0].academic_year,
+                "semester": course[0].semester,
+                "course_name": course[0].name,
+                "outline": course[0].outline
+            })
+
+        return _list
+            
     async def update(self, course_id: str, updateCourse: CourseSchema.CourseUpdate, db_session: AsyncSession):
         updateCourse_dict = updateCourse.model_dump(exclude_none=True)
         if updateCourse_dict:

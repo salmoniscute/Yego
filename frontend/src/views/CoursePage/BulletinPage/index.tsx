@@ -132,23 +132,30 @@ export default function BulletinPage(props: propsType): React.ReactElement {
     return (
         <div id="courseBulletinPage">
             { userData?.role == "student" && <p>課程公告</p>}
-            <textarea
-                placeholder="輸入公告標題"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                rows={1}
-            >
-
-            </textarea>
-            <ReactQuill
-                theme="snow"
-                placeholder="發文..."
-                modules={modules}
-                value={content}
-                onChange={handleContentChange}
-                formats={formats}
-            />
-            <CourseBulletinEditor submitBulletin={onSubmit} imageUpload={()=>{}}/>
+            { userData?.role == "teacher" && ( <>
+                <textarea
+                    placeholder="輸入公告標題"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    rows={1}
+                    >
+                </textarea>
+                <ReactQuill
+                    theme="snow"
+                    placeholder="發文..."
+                    modules={modules}
+                    value={content}
+                    onChange={handleContentChange}
+                    formats={formats}
+                />
+                <CourseBulletinEditor submitBulletin={onSubmit} imageUpload={()=>{}}/>
+            </>)
+            }
+            <div className="yegogo">
+                <img src="/assets/Yegogo2.png"/>
+                <div>今天也辛苦了！</div>
+            </div>
+            
             { courseBulletinList.length == 0 && <p>尚無公告</p>}
             <div className="courseBulletin">
                 {
@@ -157,7 +164,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                             <div className="cbContent">
                                 <div>
                                     { data.pin_to_top === true && <div className="cbPin">置頂</div>}
-                                    <img src={UserIcon} />
+                                    <img src={data.publisher_avatar} />
                                     <p className="cbAuther">{data.publisher}</p>
                                     <p className="cbTime">{setTimeString(data.release_time || "")}</p>
                                 </div>

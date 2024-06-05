@@ -4,7 +4,7 @@ import {
 } from "../schemas/courseBulletin";
 
 export async function getCourseBulletinList(course_id:number) :Promise<Array<CourseBulletin>>{
-    let url = "http://localhost:8080/api/course/bulletin/particular_course/"+course_id;
+    let url = "/course/bulletin/particular_course/"+course_id;
     try {
         const response = await axios.get(url,{
           });
@@ -19,7 +19,7 @@ export async function getCourseBulletinList(course_id:number) :Promise<Array<Cou
 }
 
 export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise<CourseBulletin>{
-    let url = "http://localhost:8080/api/course/bulletin?uid="+courseBulletin.uid+"&course_id="+courseBulletin.course_id;
+    let url = "/course/bulletin?uid="+courseBulletin.uid+"&course_id="+courseBulletin.course_id;
     try {
         const response = await axios.post(url,courseBulletin);
     }
@@ -32,7 +32,7 @@ export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise
 }
 
 export async function deleteCourseBulletin(id:number){
-    let url = "http://localhost:8080/api/course/bulletin/"+id;
+    let url = "/course/bulletin/"+id;
     try {
         const response = await axios.delete(url,{});
     }
@@ -42,7 +42,7 @@ export async function deleteCourseBulletin(id:number){
 }
 
 export async function updateCourseBulletin(courseBulletin:CourseBulletin){
-    let url = "http://localhost:8080/api/course/bulletin/"+courseBulletin.id;
+    let url = "/course/bulletin/"+courseBulletin.id;
     try {
         const response = await axios.put(url,courseBulletin);
     }

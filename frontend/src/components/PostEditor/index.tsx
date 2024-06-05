@@ -166,7 +166,7 @@ export default function PostEditor(props: propsType): ReactElement {
             reply_number:0,
             content:content,
             publisher : publisher || "",
-            publisher_avatar : ""
+            publisher_avatar : userData.avatar
           }
           await postReport(report);
           updatePost();
@@ -180,7 +180,7 @@ export default function PostEditor(props: propsType): ReactElement {
             subscription_status:false,
             publisher : publisher || "",
             content:content,
-            publisher_avatar : ""
+            publisher_avatar : userData.avatar
           };
           await postDiscussionTopic(discussionTopic);
           updatePost();
@@ -217,7 +217,7 @@ export default function PostEditor(props: propsType): ReactElement {
           <input type="text" placeholder='標題｜少於20字' className='title' value={title}
                 onChange={(e) => setTitle(e.target.value)} />
           <ReactQuill
-            placeholder='內文｜'
+            placeholder=""
             modules={Editor.modules}
             formats={Editor.formats}
             value={content}

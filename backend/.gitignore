@@ -167,3 +167,4 @@ tmp/
 
 # fake DB
 database/fake_db.json
+data/
