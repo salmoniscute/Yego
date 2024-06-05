@@ -11,6 +11,8 @@ import {
 import "./index.scss"
 import functionContext from "context/function";
 import NumberDropDownMenu from "components/NumberDropDownMenu";
+import userDataContext from "context/userData";
+import { createAssignment } from "api/courseMaterials";
 
 type propsType = Readonly<{
     show: boolean,
@@ -18,6 +20,7 @@ type propsType = Readonly<{
     files: Array<File>,
     close: () => void,
     selectFile: () => void,
+    updateData: () => void,
 }>;
 
 const formatType = [
@@ -33,8 +36,10 @@ export default function NewAssignments(props: propsType): ReactElement {
     const {
         show,
         files,
+        themeId,
         close,
-        selectFile
+        selectFile,
+        updateData,
     } = props;
 
     const [time1Date, setTime1Date] = useState<string>(dateString);
@@ -53,6 +58,7 @@ export default function NewAssignments(props: propsType): ReactElement {
     const [visible, setVisible] = useState<boolean>(false);
     
     const { getText } = useContext(functionContext);
+    const userData = useContext(userDataContext);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === "Escape") {
@@ -216,6 +222,26 @@ export default function NewAssignments(props: propsType): ReactElement {
                 <button
                     className="next caption-bold"
                     onClick={() => {
+                        console.log(userData);
+                        if (userData?.uid !== undefined) {
+                            createAssignment(
+                                userData.uid,
+                                themeId,
+                                {
+                                    content: description,
+                                    deadline: `${time2Date}T${time2Hour.toString().padStart(2, "0")}:${time2Minute.toString().padStart(2, "0")}:00`,
+                                    display: visible,
+                                    feedback_type: "",
+                                    reject_time: `${time3Date}T${time3Hour.toString().padStart(2, "0")}:${time3Minute.toString().padStart(2, "0")}:00`,
+                                    submitted_object: "",
+                                    submitted_time: `${time1Date}T${time1Hour.toString().padStart(2, "0")}:${time1Minute.toString().padStart(2, "0")}:00`,
+                                    submitted_type: "",
+                                    title: name
+                                }
+                            ).then(() => {
+                                updateData();
+                            });
+                        }
                         close();
                     }}
                 >{getText("confirm")}</button>

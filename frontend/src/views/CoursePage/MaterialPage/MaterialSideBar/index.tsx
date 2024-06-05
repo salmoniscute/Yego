@@ -12,14 +12,11 @@ import {
 
 import "./index.scss";
 import functionContext from "context/function";
+import { Material } from "schemas/material";
 
 type propsType = Readonly<{
     isTeacher: boolean,
-    themeList: Array<{
-        order: number,
-        name: string,
-        id: number,
-    }>;
+    themeList: Array<Material>;
     selectedTheme: number,
     setSelectTheme: Dispatch<SetStateAction<number>>,
     switchOrder: (a: number, b: number) => void,
@@ -128,7 +125,7 @@ export default function MaterialSideBar(props: propsType): ReactElement {
                         setHoldingKey(-1);
                     } : undefined}
                     style={{ "--order": v.order } as CSSProperties}
-                >{v.name}</div>)
+                >{v.title}</div>)
             }
         </div>
     </div>

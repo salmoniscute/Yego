@@ -55,12 +55,16 @@ export default function NavigateBar(props: propsType): ReactElement {
     const DisplayNotification = () => {
         setDisplay(!display);
     }
+
     useEffect(() => {
-        getUserCourseList(userData?.uid || "").then(data => {
+        if (userData === null)
+            return;
+        getUserCourseList(userData.uid).then(data => {
             setCurrentCourse(data);
         });
     
-    }, []);
+    }, [userData]);
+
     return (
         <div id="navigateBar">
             <Link to="/" className="logo">

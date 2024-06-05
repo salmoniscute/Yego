@@ -7,7 +7,7 @@ export async function uploadFile(component_id: number, files: Array<File>): Prom
     })
     
     const response = await axios.post(
-        "/ticket",
+        `/file?component_id=${component_id}`,
         formData
     );
 
