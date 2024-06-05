@@ -2,7 +2,7 @@ import { Report , ReportReply } from "schemas/report";
 import axios from "axios";
 
 export async function getReportList() : Promise<Array<Report>>{
-    let url = "http://localhost:8080/api/reports";
+    let url = "/reports";
     try {
         const response = await axios.get(url,{
           });
@@ -15,7 +15,7 @@ export async function getReportList() : Promise<Array<Report>>{
 }
 
 export async function getReport(id : number ){
-    let url = "http://localhost:8080/api/report/"+id;
+    let url = "/report/"+id;
     try {
         const response = await axios.get(url,{});
         const result = response.data;
@@ -27,7 +27,7 @@ export async function getReport(id : number ){
 }
 
 export async function postReport(report:Report) :Promise<Report | null>{
-    let url = "http://localhost:8080/api/report?uid="+report.uid;
+    let url = "/report?uid="+report.uid;
     try {
         const response = await axios.post(url,report);
     }
@@ -38,7 +38,7 @@ export async function postReport(report:Report) :Promise<Report | null>{
 }
 
 export async function postReportReply(reply:ReportReply):Promise<ReportReply | null>{
-    let url = "http://localhost:8080/api/report_reply?uid="+reply.uid+"&report_id="+reply.report_id + "&reply_id="+reply.parent_id;
+    let url = "/report_reply?uid="+reply.uid+"&report_id="+reply.report_id + "&reply_id="+reply.parent_id;
     try {
         const response = await axios.post(url,reply);
         return response.data;

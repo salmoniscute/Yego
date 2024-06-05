@@ -17,12 +17,12 @@ already_exists = HTTPException(
 CourseCrud = CourseCrudManager()
 router = APIRouter(
     tags=["Course"],
-    prefix="/api"
+    prefix="/course"
 )
 
 
 @router.post(
-    "/course", 
+    "", 
     status_code=status.HTTP_204_NO_CONTENT,
     response_description="The course has been successfully created."
 )
@@ -46,7 +46,7 @@ async def create_course(
 
 
 @router.get(
-    "/courses",
+    "",
     response_model=list[CourseSchema.CourseRead],
     status_code=status.HTTP_200_OK,
     response_description="Get all courses"
@@ -62,12 +62,12 @@ async def get_all_courses():
 
 
 @router.get(
-    "/course/{course_id}", 
+    "/{course_id}", 
     response_model=CourseSchema.CourseRead,
     status_code=status.HTTP_200_OK,
     response_description="Get a couse",  
 )
-async def get_course(course_id: str = None):
+async def get_course(course_id: int = None):
     course = await CourseCrud.get(course_id)
     if course:
         return course
@@ -76,12 +76,12 @@ async def get_course(course_id: str = None):
 
     
 @router.put(
-    "/course/{course_id}",
+    "/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_course(
     updateCourse: CourseSchema.CourseUpdate,
-    course_id: str = Depends(check_course_id)
+    course_id: int = Depends(check_course_id)
 ):
     """ 
     Update the particular course with at least one of the following information:
@@ -98,10 +98,10 @@ async def update_course(
 
 
 @router.delete(
-    "/course/{course_id}",
+    "/{course_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
-async def delete_course(course_id: str = Depends(check_course_id)):
+async def delete_course(course_id: int = Depends(check_course_id)):
     """ 
     Delete the course.
     """

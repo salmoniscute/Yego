@@ -26,11 +26,11 @@ SelectedCourseCrud = SelectedCourseCrudManager()
 DiscussionCrud = DiscussionCrudManager()
 router = APIRouter(
     tags=["Discussion Topic"],
-    prefix="/api"
+    prefix="/discussion_topic"
 )
 
 @router.post(
-    "/discussion_topic", 
+    "", 
     status_code=status.HTTP_201_CREATED
 )
 async def create_discussion_topic(
@@ -55,11 +55,11 @@ async def create_discussion_topic(
 
 
 @router.get(
-    "/discussion_topic/{topic_id}", 
+    "/{topic_id}", 
     response_model=DiscussionSchema.DiscussionTopicRead
 )
 async def get_discussion_topic(
-    topic_id: int=Depends(check_topic_id)
+    topic_id: int = Depends(check_topic_id)
 ):
     """ 
     Get a discussion topic.
@@ -72,7 +72,7 @@ async def get_discussion_topic(
 
 
 @router.get(
-    "/discussion_topics/{discussion_id}",
+    "s/{discussion_id}",
     response_model=list[DiscussionSchema.DiscussionOfTopics]
 )
 async def get_discussion_topics_by_discussion_id(
@@ -90,7 +90,7 @@ async def get_discussion_topics_by_discussion_id(
     
 
 @router.put(
-    "/discussion_topic/{topic_id}",
+    "/{topic_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_discussion_topic(
@@ -114,7 +114,7 @@ async def update_discussion_topic(
 
 
 @router.delete(
-    "/discussion_topic/{topic_id}",
+    "/{topic_id}",
     status_code=status.HTTP_204_NO_CONTENT 
 )
 async def delete_discussion_topic(

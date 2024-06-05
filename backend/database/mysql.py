@@ -24,7 +24,7 @@ engine = create_async_engine(
     pool_pre_ping=True
 )
 SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False, autocommit=False)
-
+gen_fake_db = GenFakeDB()
 
 @asynccontextmanager
 async def get_db():
@@ -35,7 +35,9 @@ async def get_db():
 
 async def init_db():
     async with SessionLocal() as db:
-        GenFakeDB().generate()
+        # gen_fake_db.generate()
+        gen_fake_db.demo()
+
         async with db.begin():
             await db.execute(CreateTable(User.__table__, if_not_exists=True))
             await db.execute(CreateTable(Component.__table__, if_not_exists=True))

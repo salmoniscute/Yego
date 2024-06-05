@@ -16,8 +16,11 @@ export default function landing(props: propsType): ReactElement {
     return (
         <div id="landPage">
             <div className="Content">
-                <div className="description">
-                    <p>YEGO一個最</p>
+                <div className="KeyImage">
+                    <img src="/assets/landing_image.png"/>
+                </div>
+                <div className="slogan">
+                    <img src="/assets/landing_slogan.png"/>
                 </div>
                 <div className="identity">
                     <div className="IDoption">
@@ -45,7 +48,9 @@ export default function landing(props: propsType): ReactElement {
                         </div>
                     </div>
                 </div>
-
+                <div className="YegogoGreeting">
+                    <img src="/assets/landing_yegogo_greeting.png"/>
+                </div>
                 <div className="WebAnnoList">
                     <WebAnnouncement webAnnouncementList={webAnnouncementList} />
                 </div>

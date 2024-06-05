@@ -1,5 +1,6 @@
 import {
     ReactElement,
+    useContext,
     useEffect,
     useState
 } from "react";
@@ -12,6 +13,7 @@ import {
 } from "api/courseMember";
 
 import { OtherUser } from "schemas/otherUser";
+import userDataContext from "context/userData";
 
 type propsType = Readonly<{
     courseID: number,
@@ -27,6 +29,8 @@ export default function MemberPage(props: propsType): ReactElement {
     const [courseMemberList, setCourseMember] = useState<Array<OtherUser>>([]);
     const [selectedStudent, setSelectedStudent] = useState<OtherUser | undefined>();
     const [showMember, setShowMember] = useState<boolean>(false);
+
+    const userData = useContext(userDataContext);
 
     useEffect(() => {
         getCourseMemberList(courseID).then(data => {
@@ -44,7 +48,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             stat_minus_1
                         </span>
                     </div>
-                    <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link>
+                    {userData?.role === "teacher" ? <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link> : ""}
                 </div>
                 <div className="courseMemberTab">
                     {tab.map((tab, index) => (
@@ -78,7 +82,10 @@ export default function MemberPage(props: propsType): ReactElement {
     
                     <div className="windowSet">
                         <div className="leftWindow">
-                            <img alt="avatar" src="https://i.imgur.com/XdMhWxz.png"/>
+                            <div className="selectAvatar">
+                                <img alt="avatar" src={selectedStudent?.avatar}/>
+                            </div>
+                            
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">國家</div>
                                 <div className="OtherInfoContent">{selectedStudent?.country}</div>
@@ -100,7 +107,7 @@ export default function MemberPage(props: propsType): ReactElement {
                             <div className="memberIntro">
                                 <div className="memberIntroTag">自我介紹</div>
                                 <div className="memberIntroContent">
-                                    {selectedStudent?.introduction}
+                                    <p dangerouslySetInnerHTML={{ __html: selectedStudent?.introduction || '' }}/>
                                 </div>
                             </div>
                         </div>

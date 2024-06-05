@@ -11,6 +11,7 @@ class MaterialInfoCreate(ComponentCreate):
     start_time: datetime
     end_time: datetime
     display: bool
+    order: int
 
     model_config = {
         "json_schema_extra": {
@@ -20,7 +21,8 @@ class MaterialInfoCreate(ComponentCreate):
                     "content": "This is the first course material of the course.",
                     "start_time": "2021-09-01T00:00:00",
                     "end_time": "2021-09-10T00:00:00",
-                    "display": True
+                    "display": True,
+                    "order": 1
                 }
             ]
         }
@@ -29,13 +31,16 @@ class MaterialInfoCreate(ComponentCreate):
 
 class MaterialInfoUpdate(ComponentUpdate):
     display: Optional[bool] = None
+    order: Optional[int] = None
+
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
                     "display": True,
                     "title": "Another title",
-                    "content": "Another content"
+                    "content": "Another content",
+                    "order": 1
                 }
             ]
         }
@@ -49,6 +54,7 @@ class MaterialInfoRead(BaseModel):
     start_time: datetime
     end_time: datetime
     display: bool
+    order: int
     files: Optional[list[FileRead]] = None
 
 
@@ -61,6 +67,7 @@ class AssignmentCreate(ComponentCreate):
     deadline: datetime
     reject_time: datetime
     feedback_type: str
+    order: int
 
     model_config = {
         "json_schema_extra": {
@@ -74,7 +81,8 @@ class AssignmentCreate(ComponentCreate):
                     "submitted_time": "2021-09-01T00:00:00",
                     "deadline": "2021-09-10T00:00:00",
                     "reject_time": "2021-09-15T00:00:00",
-                    "feedback_type": "review"
+                    "feedback_type": "review",
+                    "order": 1
                 }
             ]
         }
@@ -83,13 +91,16 @@ class AssignmentCreate(ComponentCreate):
 
 class AssignmentUpdate(ComponentUpdate):
     display: Optional[bool] = None
+    order: Optional[int] = None
+
     model_config = {
         "json_schema_extra": {
             "examples": [
                 { 
                     "display": True,
                     "title": "Another title",
-                    "content": "Another content"
+                    "content": "Another content",
+                    "order": 1
                 }
             ]
         }
@@ -107,18 +118,21 @@ class AssignmentRead(BaseModel):
     deadline: datetime
     reject_time: datetime
     feedback_type: str
+    order: int
     files: Optional[list[FileRead]] = None
 
 
 # CourseMaterial
 class CourseMaterialCreate(BaseModel):
     title: str = Field(min_length=1, max_length=100)
+    order: int
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
                     "title": "Course Material 1",
+                    "order": 1
                 }
             ]
         }
@@ -127,10 +141,12 @@ class CourseMaterialCreate(BaseModel):
 
 class CourseMaterialUpdate(BaseModel):
     title: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    order: Optional[int] = None
 
 
 class CourseMaterialRead(BaseModel):
     id: int
     title: str
+    order: int
     material_infos: list[MaterialInfoRead]
     assignments: list[AssignmentRead]

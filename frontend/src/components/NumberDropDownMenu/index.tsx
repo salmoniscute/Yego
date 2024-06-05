@@ -37,6 +37,7 @@ export default function NumberDropDownMenu(props: propsType): ReactElement {
                         className="value"
                         onClick={() => {
                             setValue(v);
+                            setOpen(false);
                         }}
                     >{v}</div>)
                 }

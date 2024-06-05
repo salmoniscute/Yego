@@ -61,9 +61,9 @@
         .currentCourse {
             .content {
                 flex-wrap: wrap;
-                justify-content: space-between;
-
+                justify-content:space-between;
                 .block {
+                    margin-bottom: 1.5em;
                     width: calc(30% - 1rem);
                     background-color: #FFF;
                     border: 0.05rem solid #000;
@@ -90,6 +90,17 @@
                             }
                         }
                     }
+                }
+            }
+            .YegogoGreeting{
+                display: flex;
+                position: absolute;
+                justify-content: right;
+                top: 675px;
+                right: 2%;
+                z-index: 3;
+                img {
+                    max-width: 80%;
                 }
             }
         }

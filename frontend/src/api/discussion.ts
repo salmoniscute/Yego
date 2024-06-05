@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 
 export async function getDiscussionList(course_id:number, uid:string | null): Promise<Array<Discussion>>{
-    let url = `http://localhost:8080/api/discussions/${course_id}?`;
+    let url = `/discussion/course/${course_id}?`;
     try {
         const response = await axios.get(url+"uid="+uid);
         const result = response.data;
@@ -18,7 +18,7 @@ export async function getDiscussionList(course_id:number, uid:string | null): Pr
 }
 
 export async function getDiscussion(id:number) : Promise <Discussion>{
-    let url = "http://localhost:8080/api/discussion/"+id;
+    let url = "/discussion/"+id;
     let discussion;
     try {
         const response = await axios.get(url,{
@@ -30,7 +30,7 @@ export async function getDiscussion(id:number) : Promise <Discussion>{
     return discussion;
 }
 export async function postDiscussion(discussion:Discussion):Promise<Discussion | null>{
-    let url = "http://localhost:8080/api/discussion?uid="+discussion.uid+"&course_id="+discussion.course_id;
+    let url = "/discussion?uid="+discussion.uid+"&course_id="+discussion.course_id;
     try {
         const response = await axios.post(url,discussion);
     }
@@ -42,7 +42,7 @@ export async function postDiscussion(discussion:Discussion):Promise<Discussion |
 
 
 export async function getDiscussionTopicList(discussion_id:number, uid: string | null) : Promise<Array<DiscussionTopic>>{
-    let url = `http://localhost:8080/api/discussion_topics/${discussion_id}?`;
+    let url = `/discussion_topics/${discussion_id}?`;
     try {
         const response = await axios.get(url+"uid="+uid);
         const result = response.data;
@@ -54,7 +54,7 @@ export async function getDiscussionTopicList(discussion_id:number, uid: string |
 }
 
 export async function getDiscussionTopic(id:number) : Promise <DiscussionTopic>{
-    let url = "http://localhost:8080/api/discussion_topic/"+id;
+    let url = "/discussion_topic/"+id;
     let discussionTopic;
     try {
         const response = await axios.get(url,{
@@ -67,7 +67,7 @@ export async function getDiscussionTopic(id:number) : Promise <DiscussionTopic>{
 }
 
 export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Promise<DiscussionTopic | null>{
-    let url = "http://localhost:8080/api/discussion_topic?uid="+discussionTopic.uid+"&discussion_id="+discussionTopic.discussion_id;
+    let url = "/discussion_topic?uid="+discussionTopic.uid+"&discussion_id="+discussionTopic.discussion_id;
     try {
         const response = await axios.post(url,discussionTopic);
     }
@@ -78,7 +78,7 @@ export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Pro
 }
 
 export async function postDTReply(reply:DiscussionTopicReply):Promise<DiscussionTopicReply | null>{
-    let url = "http://localhost:8080/api/discussion_topic_reply?uid="+reply.uid+"&topic_id="+reply.topic_id + "&parent_id="+reply.parent_id;
+    let url = "/discussion_topic_reply?uid="+reply.uid+"&topic_id="+reply.topic_id + "&parent_id="+reply.parent_id;
     try {
         const response = await axios.post(url,reply);
         return response.data;
@@ -91,7 +91,7 @@ export async function postDTReply(reply:DiscussionTopicReply):Promise<Discussion
 }
 
 export async function updateDiscussionTopic(discussionTopic : DiscussionTopic){
-    let url = "http://localhost:8080/api/discussion_topic/"+discussionTopic.id;
+    let url = "/discussion_topic/"+discussionTopic.id;
     try {
         await axios.put(url,discussionTopic);
     }

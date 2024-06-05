@@ -27,6 +27,23 @@
         }
     }
 
+    .yegogo{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1.5em;
+        align-items: center;
+        img{
+            width: 4.5em;
+            height: 4.5em;
+            margin: 0em 1em ;
+        }
+        div{
+            background-color: #FFEA79;
+            padding: 0.5em 1em;
+            border-radius: 0.5em;
+        }
+    }
+
     .discussion{
         background-color: #FFFFFF;
         border: solid 1px #474141;
@@ -64,7 +81,10 @@
                 }
             }
             .discussionDiscription{
-                width: 63%;
+                width: 50%;
+            }
+            .discussionPadding{
+                width: 13%;
             }
             > p{
                 font-size: 18px;
