@@ -2,7 +2,9 @@ import {
     ReactElement,
     useContext,
     useState,
-    useEffect
+    useEffect,
+    SetStateAction,
+    Dispatch
 } from "react";
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
@@ -105,8 +107,10 @@ function PersonalIntroEditor() : React.ReactElement {
     )
   }
 
+
   
 export default function PersonalEdit(): ReactElement {
+    
     const userData = useContext(userDataContext);
     const [personalData, setPersonalData] = useState<User>();
     const [avatar, setAvatar] = useState(userData?.avatar)

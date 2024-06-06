@@ -62,7 +62,8 @@ export default function App(): ReactElement {
     const userData = useMemo(() => {
         const token = localStorage.getItem("access_token");
         try {
-            return token === null ? null : jwtDecode(token) as User;
+            console.log("One render");
+            return token === null ? null : jwtDecode(token) as User; 
         }
         catch { }
         return null;
