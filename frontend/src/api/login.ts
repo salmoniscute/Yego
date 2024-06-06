@@ -74,10 +74,10 @@ export async function refreshToken(){
         refresh_token = response.data.refresh_token;
         localStorage.setItem("access_token", access_token);
         localStorage.setItem("refresh_token", refresh_token);
-        
+        return refresh_token
     }
     catch {  
-        //return ;
+        return "" ;
     }
 
 }

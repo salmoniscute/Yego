@@ -159,7 +159,7 @@ export default function LoginPage(props: propsType): ReactElement {
               </div>
               <div className='button'>
                 <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                <button onClick={() => {updateRole(selectedCharacter)}}><p>大公告成！</p></button>
+                <button onClick={() => {updateRole(selectedCharacter)}}><p>大功告成！</p></button>
               </div>
             </div>}
             <RxCross2 className="closeCross" onClick={()=>setShowWork(false)}/>

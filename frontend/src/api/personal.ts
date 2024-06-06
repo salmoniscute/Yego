@@ -26,3 +26,13 @@ export async function updatePersonal(user:User){
         
     }
 }
+
+export async function updateAvatar(avatar:string){
+    let url = "/user/avatar";
+    try {
+        await axios.put(url,avatar);
+    }
+    catch(error) {  
+        
+    }
+}
