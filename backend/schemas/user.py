@@ -45,7 +45,7 @@ class UserUpdate(BaseModel):
     email: str = Field(default=None, min_length=1, max_length=100)
     department: str = Field(default=None, min_length=1, max_length=50)
     country: str = Field(default=None, min_length=1, max_length=20)
-    introduction: Optional[str] = Field(default=None, min_length=1, max_length=1000)
+    introduction: Optional[str] = Field(default=None, max_length=1000)
 
     model_config = {
         "json_schema_extra": {
