@@ -17,9 +17,8 @@ const formatDateTime = (dateTimeString: string) => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，因此要加1
   const day = date.getDate().toString().padStart(2, '0');
-  const weekDay = date.toLocaleDateString('zh-CN', { weekday: 'short' });
 
-  return `${year}年${month}月${day}日(${weekDay})`;
+  return `${year}年${month}月${day}日`;
 };
 
 export default function WebAnnouncementList() {
