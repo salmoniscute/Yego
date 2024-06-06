@@ -36,8 +36,12 @@ export default function LoginPage(props: propsType): ReactElement {
       const user = await login(userName, password);
       if (localStorage.getItem("access_token") && user) {
         setUser(user);
-        setShowWork(true);
-        //navigate("/");
+        if (user.introduction == ""){
+          setShowWork(true);
+        }
+        else{
+          navigate("/");
+        }
       } else {
           
       }
@@ -158,7 +162,7 @@ export default function LoginPage(props: propsType): ReactElement {
                 ))}
               </div>
               <div className='button'>
-                <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
+                {/* <button onClick={()=>{}}><p>從電腦裡選擇</p></button> */}
                 <button onClick={() => {updateRole(selectedCharacter)}}><p>大功告成！</p></button>
               </div>
             </div>}

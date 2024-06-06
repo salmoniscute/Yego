@@ -38,8 +38,8 @@ export default function SideBar(props: propsType): ReactElement {
                     <img alt="avatar" src={userData?.avatar} />
                     <Link to={`/personal/${userData?.uid}`} className="body-bold">{getText("personal_homepage")}</Link>
                 </div>
-                <div className="caption-bold subTitle">{getText("due_soon")}</div>
-                {
+                { userData?.role == "student" && <div className="caption-bold subTitle">{getText("due_soon")}</div>}
+                { userData?.role == "student" &&
                     dueAssignment.map((data, i) => <div key={i} className="caption">
                         <Link to={`/course/${data.course_id}/${data.uid}`}>{data.assignment_name}</Link>
                     </div>)
