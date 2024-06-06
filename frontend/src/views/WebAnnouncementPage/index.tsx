@@ -76,7 +76,7 @@ export default function WebAnnouncementPage() {
   const currentIndex = allIds.indexOf(currentId);
   const prevId = allIds[currentIndex - 1];
   const nextId = allIds[currentIndex + 1];
-  const publisherAvatarUrl = `http://localhost:8080${announcementData.publisher_avatar}`;
+  const publisherAvatarUrl = `${announcementData.publisher_avatar}`;
 
   console.log('Current ID:', currentId);
   console.log('Current Index:', currentIndex);
@@ -91,14 +91,14 @@ export default function WebAnnouncementPage() {
       <div className="announcement-detail">
         <div key={announcementData.id} className="announcement-item">
           <div className="announcement-title">
-            <p>{announcementData.pin_to_top ? '置頂' : null}</p>
+            {announcementData.pin_to_top === true && <p>置頂</p>}
             {announcementData.title}
           </div>
-          <p className="announcement-timestamp">
-            <img src={publisherAvatarUrl} alt="announcement" style={{ marginRight: '8px' }} />
-            <span style={{ marginRight: '8px' }}>{announcementData.publisher}</span>
-            <span>{formatDateTime(announcementData.release_time)}</span>
-          </p>
+          <div className="announcement-timestamp">
+            <img src={publisherAvatarUrl} alt="announcement" />
+            <p className="publisher-name">{announcementData.publisher}</p>
+            <p>{formatDateTime(announcementData.release_time)}</p>
+          </div>
           <p className="announcement-content">{announcementData.content}</p>
           <div className="announcement-documents">
             {announcementData.files.map((doc, index) => (

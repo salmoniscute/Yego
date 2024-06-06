@@ -41,27 +41,46 @@
       padding: 2px 8px;
       border-radius: 2px; 
       font-size: 1.5rem;
-      margin-bottom: 15px;
+      font-weight: bold;
+      margin: 0.5em 0em;
 
       p{
         width: 70px;
         height: 30px;
-        font-size: small;
+        font-size: medium;
         background-color: #FFEA79;
         border-radius: 200px;
         align-items: center;
         justify-content: center; 
         flex-wrap: wrap;
         display: flex;
-        margin-right: 20px;
+        margin: 0em;
+        margin-right: 0.5em;
       }
     }
 
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 10px;
+    .announcement-timestamp {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      color: #333;
+      margin: 0.5em 0.5em;
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin: 0.5em 0.5em;
+      }
+
+      .publisher-name {
+        font-weight: bold;
+      }
     }
 
     .announcement-content {
@@ -70,6 +89,7 @@
       font-size: 1.3rem;
       margin-bottom: 20px;
       line-height: 1.5;
+      margin-left: 0.5em;
     }
 
     .announcement-documents {
@@ -126,7 +146,7 @@
       transition: none; 
   
       &:hover {
-        color: #0000; 
+        color: gray; 
       }
     }
   }
