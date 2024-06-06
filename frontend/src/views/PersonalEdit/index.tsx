@@ -2,7 +2,6 @@ import {
     ReactElement,
     useContext,
     useState,
-    useEffect,
     SetStateAction,
     Dispatch
 } from "react";
@@ -10,9 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
-import {getPersonal, updatePersonal} from "api/personal";
+import {updatePersonal} from "api/personal";
 import {updateUserRole,refreshToken} from 'api/login';
-import { User } from "schemas/user";
 import "./index.scss";
 import { RxCross2 } from "react-icons/rx";
 
@@ -107,35 +105,24 @@ function PersonalIntroEditor() : React.ReactElement {
     )
   }
 
-
+type propsType = Readonly<{
+  setRefreshToken: Dispatch<SetStateAction<string>>,
+}>;
   
-export default function PersonalEdit(): ReactElement {
-    
+export default function PersonalEdit(props: propsType): ReactElement {
+    const {
+      setRefreshToken
+    } = props;
     const userData = useContext(userDataContext);
-    const [personalData, setPersonalData] = useState<User>();
     const [avatar, setAvatar] = useState(userData?.avatar)
     const [showWork, setShowWork] = useState<boolean>(false);
     const [selectedCharacter, setSelectedCharacter] = useState("");
     const navigate = useNavigate();
     
     const [user, setUser] = useState({
-      name: "",
-      email: "",
+      name: userData?.name,
+      email: userData?.email,
     });
-
-
-    useEffect(() => {
-      const fetchPersonal = async() => { 
-        const data = await getPersonal(userData?.uid?? "");
-        setPersonalData(data);
-        setUser({
-          name: data.name,
-          email: data.email
-        });
-        setIntro(data.introduction)
-      }
-      fetchPersonal();
-    }, [])
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
@@ -145,7 +132,7 @@ export default function PersonalEdit(): ReactElement {
         });
     };
     // text editor
-    const [intro, setIntro] = useState("");
+    const [intro, setIntro] = useState(userData?.introduction);
     const handleIntroChange = (value:any, delta:any) => {
         setIntro(value);
     };
@@ -156,12 +143,14 @@ export default function PersonalEdit(): ReactElement {
         return;
       }
       else {
-        if (personalData) {
-          personalData.name = user.name;
-          personalData.email = user.email;
-          personalData.introduction = intro ?? "";
-          await updatePersonal(personalData);
-          await refreshToken();
+        if (userData?.uid) {
+          userData.name = user.name;
+          userData.email = user.email;
+          userData.introduction = intro ?? "";
+          await updatePersonal(userData);
+          await updateUserRole(userData?.uid , selectedCharacter);
+          const newToken = await refreshToken();
+          setRefreshToken(newToken);
           navigate(`/personal/${userData?.uid}`);
         }
       }
@@ -179,13 +168,6 @@ export default function PersonalEdit(): ReactElement {
       setSelectedCharacter(name);
       setAvatar(icon)
     };
-    const updateRole = async (role:string) =>{
-      if (userData?.uid){
-        await updateUserRole(userData?.uid , role);
-        await refreshToken();
-        setShowWork(false);
-      }
-    }
 
     return (
         <div id="PersonalEditPage">
@@ -271,7 +253,7 @@ export default function PersonalEdit(): ReactElement {
                 </div>
                 <div className='button'>
                   <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
-                  <button onClick={() => {updateRole(selectedCharacter)}}><p>大功告成！</p></button>
+                  <button onClick={()=>setShowWork(false)}><p>大功告成！</p></button>
                 </div>
               </div>
             </div>
