@@ -38,7 +38,11 @@ export default function WebAnnouncement(props: propsType): ReactElement {
         <div className="webAnnouncement">
             <h2>{getText("website_announcement")}</h2>
             <div className="content">
-                {announcementList.map((data) => (
+                {announcementList.sort((a, b) => {
+                    if (a.pin_to_top && b.pin_to_top)
+                        return 0;
+                    return a.pin_to_top ? -1 : 1;
+                }).map((data) => (
                     <div key={data.id} className="block" title={data.title}>
                         <div className="caption timestamp">{timestampToString(data.release_time)}</div>
                         <div className="pin caption-bold" data-pin={data.pin_to_top} >{data.pin_to_top ? "置頂" : ""}</div>

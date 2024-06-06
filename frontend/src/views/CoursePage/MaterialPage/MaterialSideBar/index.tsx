@@ -50,15 +50,14 @@ export default function MaterialSideBar(props: propsType): ReactElement {
         setShowNewTheme(false);
     }, [newThemeName, addTheme]);
 
-    useEffect(() => {
-        if (!editMode) {
-            saveChange();
-        }
-    }, [editMode, saveChange]);
-
     return <div className="sideBar" data-edit={isTeacher ? editMode : undefined} onDragOver={event => event.preventDefault()}>
         {
-            isTeacher ? <button className="switchEdit body" onClick={() => setEditMode(v => !v)}>
+            isTeacher ? <button className="switchEdit body" onClick={() => setEditMode(v => {
+                if (v) {
+                    saveChange();
+                }
+                return !v
+            })}>
                 <span>{editMode ? getText("edit_finish") : getText("edit_mode")}</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
@@ -107,10 +106,10 @@ export default function MaterialSideBar(props: propsType): ReactElement {
                 themeList.map((v, i) => <div
                     key={v.id}
                     className="theme"
-                    data-selected={selectedTheme === v.id}
+                    data-selected={selectedTheme === i}
                     data-ondrag={holdingKey === i}
                     draggable={(editMode && isTeacher) ? true : undefined}
-                    onClick={() => setSelectTheme(v.id)}
+                    onClick={() => setSelectTheme(i)}
                     onDrag={editMode ? (event) => {
                         event.preventDefault();
                         setHoldingKey(i);

@@ -1,10 +1,14 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Material } from "schemas/material";
 
 export async function getMaterials(courseId: number): Promise<Array<Material>> {
-    const response = await axios.get(`/course_material/particular_course/${courseId}`);
+    let data: Array<Material> = [];
+    try {
+        const response = await axios.get(`/course_material/particular_course/${courseId}`);
+        data = response.data;
+    }
+    catch (error) {}
 
-    const data: Array<Material> = response.data;
 
     return data.map(v => {
         if (v.order === undefined) {
