@@ -39,15 +39,18 @@
       align-items: center;
       padding: 2px 8px;
       border-radius: 2px; 
+
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 15px;
+
 
       p{
         width: 70px;
         height: 30px;
         font-size: medium;
         margin: 0em;
+
         background-color: #FFEA79;
         color: #000;
         border-radius: 200px;
@@ -55,7 +58,8 @@
         justify-content: center; 
         flex-wrap: wrap;
         display: flex;
-        margin-right: 20px;
+        margin: 0em;
+        margin-right: 0.5em;
       }
     }
     .announcement-timestamp{
@@ -77,7 +81,6 @@
       .time{
         font-size: large;
       }
-
     }
 
     
@@ -88,6 +91,7 @@
       font-size: 1.3rem;
       margin-bottom: 20px;
       line-height: 1.5;
+      margin-left: 0.5em;
     }
 
     .announcement-documents {
@@ -142,6 +146,7 @@
       text-decoration: none; 
       padding: 10px;
       transition: none; 
+
     }
   }
 

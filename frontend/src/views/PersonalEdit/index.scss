@@ -3,10 +3,11 @@
         margin: 5em 9em;
         margin-right: 3em;
         display: flex;
+        position: relative;
         justify-content: center;
         text-align: center;
         .leftSide{
-            width: 40%;
+            width:450px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -15,7 +16,6 @@
                 width: 229px;
                 height: 229px;
                 object-fit: cover; 
-
                 border-radius: 50%;
                 margin-bottom: 5%;
                 cursor: pointer;
@@ -31,7 +31,7 @@
                     font-size: 30px;
                     font-weight: bold;
                     text-align: center;
-                    width: 70%;
+                    width: 50%;
                     background-color: #FFFFFF;;
                 }
             }
@@ -121,5 +121,106 @@
                 }
             }
         }
+    }
+    .avatarWindow{
+        position: fixed;
+        pointer-events: none;
+        left: 20%; 
+        top: 15%; 
+        width: 60%; 
+        height: 70%; 
+        opacity: 0%;
+        background-color: #FFF;
+        transition: opacity 0.5s;
+        display: flex;
+        padding: 3em 4em;
+        box-sizing: border-box;
+        h2{
+          margin-top: 0em;
+        }
+        button{
+          cursor: pointer;
+          display: flex;
+          align-self: end;
+          background-color: #FFEA79;
+          padding: 1em 1em;
+          border-radius: 0.3em;
+          border-width: 0em;
+          p{
+            font-size: medium;
+            font-weight: 600;
+            margin: 0em;
+          }
+        }
+        .closeCross{
+          position: absolute;
+          right: 1em;
+          top: 1em;
+          font-size: 25px;
+          cursor: pointer;
+        }
+        .updataAvatar{
+            width: 100%;
+            h2{
+              margin-bottom: 0.5em;
+            }
+            div {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              .character{
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .hoverEffect{
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 0em 1em;
+                  border-radius: 0.5em;
+                  .name{
+                    font-size: larger;
+                    font-weight: 600;
+                    margin-bottom: 0em;
+                  }
+                  .intro{
+                    width: 12em;
+                  }
+                  
+                }
+                img{
+                  width: 12em;
+                  height: 12em;
+                }
+                
+              }
+              .character:hover , .character.selected{
+                img{
+                  transform: translateY(1em) ;
+                  transition-duration: 0.3s;
+                }
+                .hoverEffect{
+                  background-color: #FFEA79;
+                  .intro{
+                    transform: translateY(-0.6em) ;
+                    transition-duration: 0.3s;
+                  }
+                }
+              }
+    
+            }
+            .button{
+              margin-top: 1.5em;
+              justify-content: end;
+              button{
+                margin-left: 2em;
+              }
+            }
+        }
+    }
+    .avatarWindow[data-show="true"] {
+        pointer-events: initial;
+        opacity: 100%;
     }
 }

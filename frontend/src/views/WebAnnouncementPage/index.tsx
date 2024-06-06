@@ -69,6 +69,7 @@ export default function WebAnnouncementPage() {
   const currentIndex = allIds.indexOf(currentId);
   const prevId = allIds[currentIndex - 1];
   const nextId = allIds[currentIndex + 1];
+
   const publisherAvatarUrl = announcementData?.publisher_avatar || "";
 
   console.log('Current ID:', currentId);

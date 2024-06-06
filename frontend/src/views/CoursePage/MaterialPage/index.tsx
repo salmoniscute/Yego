@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { Material } from "schemas/material";
 import { createMaterial, getMaterials } from "api/courseMaterials";
 import userDataContext from "context/userData";
+import { updateCourseMaterialOrder } from "api/updateOrder";
 
 type propsType = Readonly<{
     courseID: number
@@ -103,7 +104,15 @@ export default function MaterialPage(props: propsType): ReactElement {
                 return newValue;
             })}
             restore={() => setThemeData(originThemeData)}
-            saveChange={() => { /*themeExample = Array.from(themeData);*/ }}
+            saveChange={() => {
+                updateCourseMaterialOrder(themeData.map(v => ({
+                    id: v.id,
+                    order: v.order,
+                    type: "",
+                }))).then(() => {
+                    updateThemeData();
+                })
+            }}
             addTheme={(themeName: string) => {
                 if (userData !== null) {
                     createMaterial(userData.uid, courseID, themeName).then(() => {
