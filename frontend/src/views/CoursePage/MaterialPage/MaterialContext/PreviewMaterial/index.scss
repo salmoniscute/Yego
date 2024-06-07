@@ -23,6 +23,14 @@
         transform: translateY(-15rem);
         transition: transform 0.5s;
 
+        img {
+            position: absolute;
+            height: 60%;
+            right: 3rem;
+            top: 3rem;
+            object-fit: contain;
+        }
+
         div.title {
             margin-bottom: 0.75rem;
         }

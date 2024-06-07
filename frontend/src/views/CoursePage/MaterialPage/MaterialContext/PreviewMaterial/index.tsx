@@ -51,6 +51,7 @@ export default function PreviewMaterial(props: propsType): ReactElement {
     }}>
         <div className="box">
             <button className="close ms" onClick={() => close()}>close</button>
+            <img src={`${process.env.PUBLIC_URL}/assets/Yegogo.png`} />
             <div className="title body-bold">{displayData?.title}</div>
             <div className="description row">
                 <div className="subtitle">
