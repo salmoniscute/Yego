@@ -91,7 +91,7 @@ export default function MaterialPage(props: propsType): ReactElement {
 
     return <div id="courseMaterialPage">
         <MaterialSideBar
-            isTeacher={true}
+            isTeacher={userData?.role === "teacher" || userData?.role === "assistant" || userData?.uid === "admin"}
             themeList={themeData}
             selectedTheme={selectedTheme}
             setSelectTheme={setSelectTheme}
