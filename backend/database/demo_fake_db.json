@@ -83,7 +83,7 @@
             "name": "許晏綾",
             "role": "student",
             "email": "AN4116047@gs.ncku.edu.tw",
-            "department": "資工系",
+            "department": "資訊系",
             "country": "Taiwan",
             "introduction": "",
             "avatar": "/assets/demo/yeyeleaf.jpg"
@@ -105,7 +105,7 @@
             "name": "李潔宜",
             "role": "student",
             "email": "NP8121587@gs.ncku.edu.tw",
-            "department": "資工所",
+            "department": "智慧運算博士學程",
             "country": "Taiwan",
             "introduction": "",
             "avatar": "/assets/demo/jamie.jpg"
@@ -350,19 +350,19 @@
             "uid": "F74106050",
             "release_time": "2024-06-05 10:59:50",
             "title": "新貼文沒有寄出通知",
-            "content": "<p>您好，我是授課教師，於4/1 18:06 在討論區發佈新貼文，並勾選「立即寄出通知而不管編輯時間是否已結束」，但遲至現在（21:35）都沒有收到通知，已檢查垃圾信匣，也沒有發現被過濾的信件。一般而言，即使不是「立即寄出通知」，這個時間也應該收到了。<br><br>由於貼文是關於期中考規則，有很高的時效性及重要性，所以在21:18再度發了一則貼文，同樣勾選「立即寄出通知」，但截至目前21:35亦未有通知（過濾信匣也沒有）。<br><br>以上問題回報，謝謝。</p>"
+            "content": "<p>您好，我是助教，於4/1 18:06 在討論區發佈新貼文，並勾選「立即寄出通知而不管編輯時間是否已結束」，但遲至現在（21:35）都沒有收到通知，已檢查垃圾信匣，也沒有發現被過濾的信件。一般而言，即使不是「立即寄出通知」，這個時間也應該收到了。<br><br>由於貼文是關於期中考規則，有很高的時效性及重要性，所以在21:18再度發了一則貼文，同樣勾選「立即寄出通知」，但截至目前21:35亦未有通知（過濾信匣也沒有）。<br><br>以上問題回報，謝謝。</p>"
         },
         {
             "uid": "admin",
             "release_time": "2023-11-27 08:03:28",
             "title": "None",
-            "content": "您好：請再試試繳交作業，若還有問題，請提供畫面截圖。謝謝！"
+            "content": "這邊我們直接給分"
         },
         {
             "uid": "admin",
             "release_time": "2024-03-01 09:15:42",
             "title": "None",
-            "content": "您好：請使用“即時投票”活動，詳細說明請參考操作手冊。謝謝！"
+            "content": "金罵某"
         },
         {
             "uid": "admin",
@@ -741,6 +741,343 @@
         }
     ],
     "files": [],
-    "notifications": [],
+    "notifications": [
+        {
+            "uid": "teacher",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 13,
+            "have_read": false,
+            "release_time": "2024-02-29 12:40:20",
+            "type": "discussion"
+        },
+        {
+            "uid": "teacher",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 10,
+            "have_read": false,
+            "release_time": "2024-03-01 09:28:40",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "teacher",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 14,
+            "have_read": false,
+            "release_time": "2024-03-09 18:46:25",
+            "type": "discussion"
+        },
+        {
+            "uid": "teacher",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 15,
+            "have_read": false,
+            "release_time": "2024-03-21 20:09:49",
+            "type": "discussion"
+        },
+        {
+            "uid": "teacher",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 11,
+            "have_read": false,
+            "release_time": "2024-04-30 12:32:00",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "teacher",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74106050",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74124773",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "AN4116047",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "E64096300",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "NP8121587",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "F74102048",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        },
+        {
+            "uid": "C14096277",
+            "component_id": 12,
+            "have_read": false,
+            "release_time": "2024-05-24 15:28:10",
+            "type": "course_bulletin"
+        }
+    ],
     "subscriptions": []
 }

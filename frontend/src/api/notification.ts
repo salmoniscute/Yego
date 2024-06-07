@@ -31,8 +31,8 @@ export async function read_all_notifications(uid: String) {
     return notifications;
 }
 
-export async function read_notification(uid: String, component_id: number) {
-    let url = `/notification/read/${uid}/${component_id}`;
+export async function read_notification(uid: String, notification_id: number) {
+    let url = `/notification/read/${uid}/${notification_id}`;
     try {
         await axios.put(url, { have_read: true });
         return true;

@@ -46,6 +46,11 @@ async def create_discussion_topic(
     """
     topic = await TopicCrud.create(uid, discussion_id, newTopic)
     discussion = await DiscussionCrud.get(discussion_id)
+
+    # Auto subscribe
+    await SubscriptionCrud.create(uid, topic.id)
+
+    # Notify all users in the course
     users = await SelectedCourseCrud.get_by_course_id(discussion["course_id"])
     for user in users:
         if SubscriptionCrud.get(user["uid"], discussion_id):

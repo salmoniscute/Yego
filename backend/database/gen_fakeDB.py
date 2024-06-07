@@ -129,7 +129,7 @@ class GenFakeDB:
         self.output["material_infos"] = demoDB["material_infos"]
         # self.output["assignments"] = demoDB["assignments"]
         self.output["files"] = demoDB["files"]
-        # self.output["notifications"] = demoDB["notifications"]
+        self.output["notifications"] = demoDB["notifications"]
         # self.output["subscriptions"] = demoDB["subscriptions"]
 
         with open("./database/fake_db.json", mode="w", encoding="utf-8") as file:

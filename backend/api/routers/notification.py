@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from .depends import check_component_id, check_user_id
+from .depends import check_user_id, check_notification_id
 from crud.notification import NotificationCrudManager
 from schemas import notification as NotificationSchema
 
@@ -37,18 +37,18 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     raise not_found
 
 @router.put(
-    "/read/{uid}/{component_id}",
+    "/read/{uid}/{notification_id}",
     response_model=list[NotificationSchema.NotificationReadByUid],
     status_code=status.HTTP_200_OK
 )
 async def read_one_notification(
     uid: str = Depends(check_user_id),
-    component_id: int = Depends(check_component_id)
+    notification_id: int = Depends(check_notification_id)
 ):
     """
     Read a notification.
     """
-    notifications = await NotificationCrud.update(uid, component_id)
+    notifications = await NotificationCrud.update(uid, notification_id)
     if notifications:
         return notifications
 
@@ -71,13 +71,15 @@ async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
 
 
 @router.delete(
-    "/particular/{uid}/{component_id}",
+    "/particular/{notification_id}",
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_notification(uid: str = Depends(check_user_id), component_id: int = Depends(check_component_id)):
+async def delete_notification(
+    notification_id: int = Depends(check_notification_id)
+):
     """
     Delete a notification.
     """
-    await NotificationCrud.delete(uid, component_id)
+    await NotificationCrud.delete(notification_id)
 
     return

@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from .depends import check_component_id, check_user_id
 from crud.subscription import SubscriptionCrudManager
-from schemas import subscription as SubscriptionSchema
 
 not_found = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
