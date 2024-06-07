@@ -109,8 +109,8 @@ const get_members_number = async () => {
 
   return (
       <div id="selfTeam">
-        <div className="header">
-            <h3>學生自行分組 - 設定</h3>
+        <div className="boxHeader">
+            <h3 className="title">學生自行分組 - 設定</h3>
             <RxCross2 className="closeCross" onClick={close}/>
         </div>
         <p>由教師建立空群組，讓學生自行加入。</p>

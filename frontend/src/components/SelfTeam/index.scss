@@ -5,18 +5,19 @@
     transform: translate(-50%, -50%);
     z-index: 9999;
     width: 50%; 
-    height: 70%;
+    height: 65%;
     background-color: #FFF;
     padding: 3em 4em;
     box-sizing: border-box;
     
-    .header {
+    .boxHeader {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        h3 {
+        .title {
             margin: 0;
+            margin-bottom: 1em;
         }
     
         .closeCross{
@@ -85,6 +86,7 @@
     }
 
     .buttons{
+        margin-top: 3em;
         > button{
             cursor: pointer;
             border: none;

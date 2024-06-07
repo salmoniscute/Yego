@@ -40,6 +40,7 @@ export default function MemberPage(props: propsType): ReactElement {
 
     return (
         <div id="courseMemberPage">
+            {userData?.role === "teacher" ? <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link> : ""}
             <div className="courseMember">
                 <div className="header">
                     {/* <div className="dropdownkey">
@@ -48,7 +49,6 @@ export default function MemberPage(props: propsType): ReactElement {
                             stat_minus_1
                         </span>
                     </div> */}
-                    {userData?.role === "teacher" ? <Link to={`/group/${props.courseID}`}><button>分組設定</button></Link> : ""}
                 </div>
                 <div className="courseMemberTab">
                     {tab.map((tab, index) => (

@@ -36,7 +36,7 @@ export default function LoginPage(props: propsType): ReactElement {
       const user = await login(userName, password);
       if (localStorage.getItem("access_token") && user) {
         setUser(user);
-        if (user.introduction == ""){
+        if (user.introduction == "" || user.introduction == null){
           setShowWork(true);
         }
         else{

@@ -1,12 +1,8 @@
 .web-announcement-container {
     font-family: 'Arial', sans-serif;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    max-width: min(90vw, 1200px);
-    width: 70rem;
-    margin: auto;
+    max-width: calc(1200px);
+    padding: 0.95rem max(5vw, calc(50vw - 570px));
   
     .breadcrumbs {
       font-size: 1.0rem;
@@ -27,8 +23,7 @@
         width: 1232px;
         height: 246px;
         background-color: #ffffff;
-        border-color: #333;
-        border: 2px solid; 
+        border: 0.1rem solid #000;
         border-radius: 8px;
         padding: 20px;
         margin-bottom: 20px;
@@ -36,11 +31,10 @@
     }
 
     .announcement-list {
-        width: 1232px;
-        height: 300px;
+        height: 30em;
+        margin: 2em 3em;
         background-color: #ffffff;
-        border-color: #333;
-        border: 2px solid; 
+        border: 0.1rem solid #000;
         border-radius: 8px;
         padding: 20px;
 
@@ -56,6 +50,7 @@
           background-color: #ffffff;
           span {
             font-weight: bold;
+            font-size: larger;
             width:30%;
           }
         }
@@ -83,9 +78,14 @@
           line-height: 1.8rem;
           span {
             width: 30%;
+            font-size: large;
           }
           .pin {
             opacity: 0%;
+            display: flex;
+            justify-content: center;
+            font-size: medium;
+            padding: 0.5em;
             background-color: #FFEA79;
             line-height: 1.25em;
             border-radius: 100vw;
