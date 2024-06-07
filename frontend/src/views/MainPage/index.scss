@@ -38,7 +38,6 @@
 
         .content {
             display: flex;
-
             .block {
                 padding: 1rem;
                 text-overflow: ellipsis;
@@ -66,7 +65,7 @@
                     margin-bottom: 1.5em;
                     width: calc(30% - 1rem);
                     background-color: #FFF;
-                    border: 0.05rem solid #000;
+                    border: 0.1rem solid #000;
                     border-radius: 0.25rem;
                     display: flex;
                     flex-direction: column;

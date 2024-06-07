@@ -1,10 +1,11 @@
 #discussionReplyPage{
     position: relative;
-    margin: 6em 17em;
+    margin: 8em 17em;
+    min-height: 25em;
 
     .mainDiscussionTopic{
         background-color: #FFFFFF;
-        border: solid 1px #424242;
+        border: 0.1rem solid #000;
         padding: 1em 2em;
         .discussionTopicTop{
             display: flex;
@@ -91,7 +92,7 @@
             label.dropdownMenu:has(input:checked) {
                 .mask {
                     height: calc(2rem* var(--length));
-                    border: 1px solid #474141;
+                    border: 0.1rem solid #000;
                 }
             }
     
@@ -115,7 +116,7 @@
     }
     div .discussionTopicReply{
         background-color: #FFFFFF;
-        border: solid 1px #424242;
+        border: 0.1rem solid #000;
         border-top: none;
         padding: 0.5em 2em;
         .discussionTopicReplyTop{
@@ -189,7 +190,7 @@
         padding: 1em 2em;
         display: flex;
         background-color: #FFFFFF;
-        border: solid 1px #424242;
+        border: 0.1rem solid #000;
         img{
             width: 3em;
             height: 3em;

@@ -46,7 +46,7 @@ export default function WebAnnouncementList() {
       </div>
       <div className="announcement-list">
         <div className="list-header">
-          <span style={{ width: "5%" }}></span>
+          <span style={{ width: "7%" }}></span>
           <span style={{ width: "45%" }}>標題</span>
           <span style={{ width: "30%" }}>發布日期</span>
           <span style={{ width: "20%" }}>發布者</span>

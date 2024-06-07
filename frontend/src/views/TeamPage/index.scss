@@ -76,7 +76,11 @@
     }
 
     .selectedWork{
-        
+        opacity: 0%;
+        transition: opacity 0.5s;
+        position: fixed;
+        box-sizing: border-box;
+        display: flex;
         .manual{
             h3{
                 margin-top: 0em;
@@ -94,8 +98,8 @@
 
     }
 
-    .selectedWork[data-show="false"] {
-        opacity: 0%;
+    .selectedWork[data-show="true"] {
+        opacity: 100%;
     }
 
     .header {
