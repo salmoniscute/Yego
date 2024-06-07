@@ -43,8 +43,22 @@ type_actions = {
 
 @crud_class_decorator
 class NotificationCrudManager:
-    async def create(self, uid: str, component_id: int, type: NotificationType, db_session: AsyncSession):
-        notification = NotificationModel(uid=uid, component_id=component_id, release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), type=type, have_read=False)
+    async def create(self, uid: str, component_id: int, type: NotificationType, update_post: bool, db_session: AsyncSession):
+        stmt = (
+            delete(NotificationModel)
+            .where(NotificationModel.uid == uid)
+            .where(NotificationModel.component_id == component_id)
+        )
+        await db_session.execute(stmt)
+            
+        notification = NotificationModel(
+            uid=uid, 
+            component_id=component_id, 
+            release_time=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), 
+            type=type, 
+            have_read=False,
+            update_post=update_post
+        )
         db_session.add(notification)
         await db_session.commit()
 
@@ -112,6 +126,9 @@ class NotificationCrudManager:
                 course_material = result.first()
                 _list[-1]["course_name"] += course_material[0].course_info.name
 
+            if notification[0].update_post:
+                _list[-1]["title"] = f"(更新){_list[-1]['title']}"
+
         await db_session.commit() 
 
         return _list
@@ -173,6 +190,9 @@ class NotificationCrudManager:
                 course_material = result.first()
                 _list[-1]["course_name"] += course_material[0].course_info.name
 
+            if notification[0].update_post:
+                _list[-1]["title"] = f"(更新){_list[-1]['title']}"
+
         return _list
     
     async def read_all(self, uid: str, db_session: AsyncSession):
@@ -227,6 +247,9 @@ class NotificationCrudManager:
                 result = await db_session.execute(stmt)
                 course_material = result.first()
                 _list[-1]["course_name"] += course_material[0].course_info.name
+
+            if notification[0].update_post:
+                _list[-1]["title"] = f"(更新) {_list[-1]['title']}"
 
         await db_session.commit()
 

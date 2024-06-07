@@ -12,18 +12,20 @@ class Notification(Base):
     have_read: Mapped[BaseType.boolean]
     release_time: Mapped[BaseType.datetime]
     type: Mapped[BaseType.str_20]
+    update_post: Mapped[BaseType.boolean]
     
     # Relationship to parent
     user_info: Mapped["User"] = relationship("User", back_populates="notifications", lazy="joined")
     component_info: Mapped["Component"] = relationship("Component", back_populates="notifications", lazy="joined")
 
-    def __init__(self, uid: str, component_id: str, have_read: bool, type: str, release_time: str) -> None:
+    def __init__(self, uid: str, component_id: str, have_read: bool, type: str, release_time: str, update_post: bool) -> None:
         self.uid = uid
         self.component_id = component_id
         self.have_read = have_read
         self.release_time = release_time
         self.type = type
-        
+        self.update_post = update_post
+
     def __repr__(self) -> str:
-        return f"Notification(id={self.id}, uid={self.uid}, component_id={self.component_id}, have_read={self.have_read}, release_time={self.release_time}), type={self.type})"
+        return f"Notification(id={self.id}, uid={self.uid}, component_id={self.component_id}, have_read={self.have_read}, release_time={self.release_time}), type={self.type}, update_post={self.update_post})"
     

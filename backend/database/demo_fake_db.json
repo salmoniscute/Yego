@@ -747,336 +747,384 @@
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 13,
             "have_read": false,
             "release_time": "2024-02-29 12:40:20",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "teacher",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 10,
             "have_read": false,
             "release_time": "2024-03-01 09:28:40",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "teacher",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 14,
             "have_read": false,
             "release_time": "2024-03-09 18:46:25",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "teacher",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 15,
             "have_read": false,
             "release_time": "2024-03-21 20:09:49",
-            "type": "discussion"
+            "type": "discussion",
+            "update_post": false
         },
         {
             "uid": "teacher",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 11,
             "have_read": false,
             "release_time": "2024-04-30 12:32:00",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "teacher",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74106050",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74124773",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "AN4116047",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "E64096300",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "NP8121587",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "F74102048",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         },
         {
             "uid": "C14096277",
             "component_id": 12,
             "have_read": false,
             "release_time": "2024-05-24 15:28:10",
-            "type": "course_bulletin"
+            "type": "course_bulletin",
+            "update_post": false
         }
     ],
     "subscriptions": []

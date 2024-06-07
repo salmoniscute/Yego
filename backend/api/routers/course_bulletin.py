@@ -45,7 +45,7 @@ async def create_course_bulletin(
     bulletin = await CourseBulletinCrud.create(uid, course_id, newBulletin)
     users = await SelectedCourseCrud.get_by_course_id(course_id)
     for user in users:
-        await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin")
+        await NotificationCrud.create(user["uid"], bulletin.id, "course_bulletin", False)
         
     return {"id": bulletin.id}
 
@@ -101,7 +101,7 @@ async def update_course_bulletin(
     
     users = await SelectedCourseCrud.get_by_course_id(bulletin["course_id"])
     for user in users:
-        await NotificationCrud.create(user["uid"], cb_id, "course_bulletin")
+        await NotificationCrud.create(user["uid"], cb_id, "course_bulletin", True)
     
     return 
 

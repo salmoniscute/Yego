@@ -32,6 +32,7 @@ async def get_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     notifications = await NotificationCrud.get_by_uid(uid)
     if notifications:
+        notifications.reverse()
         return notifications
 
     raise not_found
@@ -50,6 +51,7 @@ async def read_one_notification(
     """
     notifications = await NotificationCrud.update(uid, notification_id)
     if notifications:
+        notifications.reverse()
         return notifications
 
     raise not_found
@@ -65,6 +67,7 @@ async def read_notifications_for_one_user(uid: str = Depends(check_user_id)):
     """
     notifications = await NotificationCrud.read_all(uid)
     if notifications:
+        notifications.reverse()
         return notifications
 
     raise not_found

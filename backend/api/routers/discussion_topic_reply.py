@@ -57,7 +57,7 @@ async def create_discussion_topic_reply(
         topic_sub = await SubscriptionCrud.get(user["uid"], root_id)
         discussion_sub = await SubscriptionCrud.get(user["uid"], topic["discussion_id"])
         if topic_sub or discussion_sub:
-            await NotificationCrud.create(user["uid"], reply["id"], "discussion_reply")
+            await NotificationCrud.create(user["uid"], reply["id"], "discussion_reply", False)
     return reply
 
 
@@ -80,7 +80,7 @@ async def update_discussion_topic_reply(
     users = await SelectedCourseCrud.get_by_course_id(discussion["course_id"])
     for user in users:
         if SubscriptionCrud.get(user["uid"], reply["root_id"]) or SubscriptionCrud.get(user["uid"], topic["discussion_id"]):
-            await NotificationCrud.create(user["uid"], reply["id"], "discussion_reply")
+            await NotificationCrud.create(user["uid"], reply["id"], "discussion_reply", True)
 
     return
 
