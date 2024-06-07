@@ -1,10 +1,11 @@
 import {
     CSSProperties,
+    Dispatch,
     ReactElement,
+    SetStateAction,
     useCallback,
     useContext,
     useEffect,
-    useRef,
     useState
 } from "react";
 
@@ -15,9 +16,11 @@ import NewFiles from "./NewFiles";
 import UploadFiles from "components/UploadFiles";
 import NewAssignments from "./NewAssignments";
 import { Material } from "schemas/material";
-import axios from "axios";
 import { updateCourseInfoOrder } from "api/updateOrder";
 import UpdateOrder from "schemas/updateOrder";
+import { MaterialInfo } from "schemas/materialInfo";
+import { MaterialAssignment } from "schemas/materialAssignment";
+import PreviewMaterial from "./PreviewMaterial";
 
 
 type propsType = Readonly<{
@@ -27,6 +30,68 @@ type propsType = Readonly<{
     updateData: () => Promise<Array<Material>>,
 }>;
 
+function MaterialBox(props: Readonly<{
+    type: "material_info" | "assignment",
+    index: number,
+    material: MaterialInfo | MaterialAssignment,
+    holdingKey: number,
+    setHoldingKey: Dispatch<SetStateAction<number>>,
+    editMode: boolean,
+    isTeacher: boolean,
+    switchOrder: (a: number, b: number, type: "material_info" | "assignment") => void
+    setMaterialShowData: Dispatch<SetStateAction<MaterialInfo | MaterialAssignment | null>>
+}>): ReactElement {
+    const {
+        type,
+        index,
+        material,
+        holdingKey,
+        setHoldingKey,
+        editMode,
+        isTeacher,
+        switchOrder,
+        setMaterialShowData
+    } = props;
+
+    const { getText } = useContext(functionContext);
+
+    return <div
+        key={`${type}${material.id}`}
+        className="material"
+        data-ondrag={holdingKey === index}
+        draggable={(editMode && isTeacher) ? true : undefined}
+        onDrag={editMode ? (event) => {
+            event.preventDefault();
+            setHoldingKey(index);
+        } : undefined}
+        onDragEnter={editMode ? (event) => {
+            event.preventDefault();
+            if (holdingKey === index || holdingKey === -1) return;
+            switchOrder(holdingKey, index, "material_info");
+        } : undefined}
+        onDragEnd={editMode ? (event) => {
+            event.preventDefault();
+            setHoldingKey(-1);
+        } : undefined}
+        style={{ "--order": material.order ?? 0 } as CSSProperties}
+        onClick={() => {
+            setMaterialShowData(material);
+        }}
+    >
+        <span>{material.title}</span>
+        {
+            isTeacher && editMode ? <button
+                className="editMaterial"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
+                </svg>
+                <span>{getText("edit_material")}</span>
+            </button> : undefined
+        }
+    </div>
+};
+
 export default function MaterialContext(props: propsType): ReactElement {
     const {
         isTeacher,
@@ -35,8 +100,6 @@ export default function MaterialContext(props: propsType): ReactElement {
         updateData,
     } = props;
 
-    const aRef = useRef<HTMLAnchorElement>(null);
-
     const [holdingKey1, setHoldingKey1] = useState<number>(-1);
     const [holdingKey2, setHoldingKey2] = useState<number>(-1);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -44,6 +107,7 @@ export default function MaterialContext(props: propsType): ReactElement {
     const [showSelectFile, setShowSelectFile] = useState<boolean>(false);
     const [selectFiles, setSelectFiles] = useState<Array<File>>([]);
     const [displayData, setDisplayData] = useState<Material>(currentData);
+    const [materialShowData, setMaterialShowData] = useState<MaterialInfo | MaterialAssignment | null>(null);
 
     const { getText } = useContext(functionContext);
 
@@ -91,10 +155,13 @@ export default function MaterialContext(props: propsType): ReactElement {
     }, [currentWindow]);
 
     return <div className="context" data-edit={editMode ? true : undefined} onDragOver={event => event.preventDefault()}>
-        <a ref={aRef} />
+        <PreviewMaterial
+            data={materialShowData}
+            close={() => setMaterialShowData(null)}
+        />
         <h2>
             <span>{displayData?.title}</span>
-            <button className="switchEdit caption" onClick={() => setEditMode(v => {
+            {isTeacher ? <button className="switchEdit caption" onClick={() => setEditMode(v => {
                 if (v) {
                     saveChange();
                 }
@@ -104,7 +171,7 @@ export default function MaterialContext(props: propsType): ReactElement {
                     <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
                 </svg>
                 <span>{editMode ? getText("edit_finish") : getText("edit_mode")}</span>
-            </button>
+            </button> : undefined}
         </h2>
         {
             isTeacher && editMode ? <NewMaterial
@@ -149,90 +216,30 @@ export default function MaterialContext(props: propsType): ReactElement {
             >{getText("add_material")}</button> : undefined
         }
         {
-            displayData?.material_infos.map((v, i) => <div
-                key={v.id}
-                className="material"
-                data-ondrag={holdingKey1 === i}
-                draggable={(editMode && isTeacher) ? true : undefined}
-                onDrag={editMode ? (event) => {
-                    event.preventDefault();
-                    setHoldingKey1(i);
-                } : undefined}
-                onDragEnter={editMode ? (event) => {
-                    event.preventDefault();
-                    if (holdingKey1 === i || holdingKey1 === -1) return;
-                    switchOrder(holdingKey1, i, "material_info");
-                } : undefined}
-                onDragEnd={editMode ? (event) => {
-                    event.preventDefault();
-                    setHoldingKey1(-1);
-                } : undefined}
-                style={{ "--order": v.order ?? 0 } as CSSProperties}
-                onClick={() => {
-                    console.log(v);
-                    if (v.files.length === 0)
-                        return;
-                    axios.get(`/file?file_id=${v.files[0].id}`, {
-                        responseType: "blob"
-                    }).then(r => {
-                        const file: Blob = r.data;
-
-                        const url = URL.createObjectURL(file);
-                        if (aRef.current !== null) {
-                            aRef.current.href = url;
-                            aRef.current.download = v.files[0].path.split("/").reverse()[0]
-                            aRef.current.click();
-                            URL.revokeObjectURL(url);
-                        }
-                    })
-                }}
-            >
-                <span>{v.title}</span>
-                {
-                    isTeacher && editMode ? <button
-                        className="editMaterial"
-                    >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
-                        </svg>
-                        <span>{getText("edit_material")}</span>
-                    </button> : undefined
-                }
-            </div>)
+            displayData?.material_infos.map((v, i) => <MaterialBox
+                type="material_info"
+                index={i}
+                material={v}
+                holdingKey={holdingKey1}
+                setHoldingKey={setHoldingKey1}
+                editMode={editMode}
+                isTeacher={isTeacher}
+                switchOrder={switchOrder}
+                setMaterialShowData={setMaterialShowData}
+            />)
         }
         {
-            displayData?.assignments.map((v, i) => <div
-                key={v.id}
-                className="material"
-                data-ondrag={holdingKey2 === i}
-                draggable={(editMode && isTeacher) ? true : undefined}
-                onDrag={editMode ? (event) => {
-                    event.preventDefault();
-                    setHoldingKey2(i);
-                } : undefined}
-                onDragEnter={editMode ? (event) => {
-                    event.preventDefault();
-                    if (holdingKey2 === i || holdingKey2 === -1) return;
-                    switchOrder(holdingKey2, i, "assignment");
-                } : undefined}
-                onDragEnd={editMode ? (event) => {
-                    event.preventDefault();
-                    setHoldingKey2(-1);
-                } : undefined}
-                style={{ "--order": v.order ?? 0 } as CSSProperties}
-            >
-                <span>{v.title}</span>
-                {
-                    isTeacher && editMode ? <button
-                        className="editMaterial"
-                    >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.71 7.04006C21.1 6.65006 21.1 6.00006 20.71 5.63006L18.37 3.29006C18 2.90006 17.35 2.90006 16.96 3.29006L15.12 5.12006L18.87 8.87006M3 17.2501V21.0001H6.75L17.81 9.93006L14.06 6.18006L3 17.2501Z" fill="black" />
-                        </svg>
-                        <span>{getText("edit_material")}</span>
-                    </button> : undefined
-                }
-            </div>)
+            displayData?.assignments.map((v, i) => <MaterialBox
+                type="assignment"
+                index={i}
+                material={v}
+                holdingKey={holdingKey2}
+                setHoldingKey={setHoldingKey2}
+                editMode={editMode}
+                isTeacher={isTeacher}
+                switchOrder={switchOrder}
+                setMaterialShowData={setMaterialShowData}
+            />)
         }
     </div>
 };
