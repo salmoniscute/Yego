@@ -50,29 +50,20 @@ class NotificationCrudManager:
 
         return notification
      
-    async def get(self, uid: str, component_id: int, db_session: AsyncSession):
+    async def get(self, notification_id: int, db_session: AsyncSession):
         stmt = (
             select(NotificationModel)
-            .where(NotificationModel.uid == uid)
-            .where(NotificationModel.component_id == component_id)
+            .where(NotificationModel.id == notification_id)
         )
         result = await db_session.execute(stmt)
         notification = result.first()
 
         return notification[0] if notification else None
-        
-    async def get_all(self, db_session: AsyncSession):
-        stmt = select(NotificationModel)
-        result = await db_session.execute(stmt)
-        result = result.unique()
 
-        return [notification[0] for notification in result.all()]
-    
-    async def update(self, uid: str, component_id: int, db_session: AsyncSession):
+    async def update(self, uid: str, notification_id: int, db_session: AsyncSession):
         stmt1 = (
             update(NotificationModel)
-            .where(NotificationModel.uid == uid)
-            .where(NotificationModel.component_id == component_id)
+            .where(NotificationModel.id == notification_id)
             .values({"have_read": True})
         )
         await db_session.execute(stmt1)
@@ -125,11 +116,10 @@ class NotificationCrudManager:
 
         return _list
     
-    async def delete(self, uid: str, component_id: int, db_session: AsyncSession):
+    async def delete(self, notification_id: int, db_session: AsyncSession):
         stmt = (
             delete(NotificationModel)
-            .where(NotificationModel.uid == uid)
-            .where(NotificationModel.component_id == component_id)
+            .where(NotificationModel.id == notification_id)
         )
         await db_session.execute(stmt)
         await db_session.commit()

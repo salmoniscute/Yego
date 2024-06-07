@@ -13,6 +13,7 @@ from crud.course_material import CourseMaterialCrudManager
 from crud.material_info import MaterialInfoCrudManager
 from crud.assignment import AssignmentCrudManager
 from crud.group import GroupCrudManager
+from crud.notification import NotificationCrudManager
 
 ComponentCrud = ComponentCrudManager()
 CourseCrud = CourseCrudManager()
@@ -29,6 +30,7 @@ CourseMaterialCrud = CourseMaterialCrudManager()
 MaterialInfoCrud = MaterialInfoCrudManager()
 AssignmentCrud = AssignmentCrudManager()
 GroupCrud = GroupCrudManager()
+NotificationCrud = NotificationCrudManager()
 
 
 async def check_user_id(uid: str):
@@ -69,6 +71,7 @@ async def check_website_bulletin_id(wb_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Website bulletin does not exist")
     
     return wb_id
+
 
 async def check_report_id(report_id: int):
     report = await ReportCrud.get(report_id)
@@ -155,9 +158,18 @@ async def check_group_id(group_id: int):
     
     return group_id
 
+
 async def check_course_material_id(course_material_id: int):
     material = await CourseMaterialCrud.get(course_material_id)
     if not material:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course Material does not exist")
     
     return course_material_id
+
+
+async def check_notification_id(notification_id: int):
+    notification = await NotificationCrud.get(notification_id)
+    if not notification:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Notification does not exist")
+    
+    return notification_id
