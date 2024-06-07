@@ -42,7 +42,7 @@ async def create_discussion(
     discussion = await DiscussionCrud.create(uid, course_id, newDiscussion)
     users = await SelectedCourseCrud.get_by_course_id(course_id)
     for user in users:
-        await NotificationCrud.create(user["uid"], discussion.id, "discussion")
+        await NotificationCrud.create(user["uid"], discussion.id, "discussion", False)
         
     return {"id": discussion.id}
 
@@ -100,7 +100,7 @@ async def update_discussion(
     
     users = await SelectedCourseCrud.get_by_course_id(discussion["course_id"])
     for user in users:
-        await NotificationCrud.create(user["uid"], discussion["id"], "discussion")
+        await NotificationCrud.create(user["uid"], discussion["id"], "discussion", True)
     
     return 
 
