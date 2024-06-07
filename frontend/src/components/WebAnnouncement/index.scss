@@ -6,7 +6,6 @@
 
     .content {
         flex-direction: column;
-        gap: 0.5rem;
         overflow: hidden;
         display: flex;
         gap: 0.5rem;
@@ -27,6 +26,7 @@
                 opacity: 0%;
                 background-color: #FFEA79;
                 height: 1.25em;
+                width: 40px;
                 line-height: 1.25em;
                 padding: 0.5em 1em;
                 border-radius: 100vw;

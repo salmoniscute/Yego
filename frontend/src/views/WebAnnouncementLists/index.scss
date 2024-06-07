@@ -45,6 +45,11 @@
         padding: 20px;
 
         .list-header {
+          gap: 1rem;
+          width: calc(100% - 2rem);
+          align-items: center;
+          height: 1.8rem;
+          line-height: 1.8rem;
           display: flex;
           justify-content: space-between;
           padding: 10px;
@@ -65,14 +70,30 @@
       a:hover {
           color: #000;
       }
-  }
+  }     
+        
         .list-item {
           display: flex;
           justify-content: space-between;
           padding: 10px;
+          gap: 1rem;
+          width: calc(100% - 2rem);
+          align-items: center;
+          height: 1.8rem;
+          line-height: 1.8rem;
           span {
             width: 30%;
           }
+          .pin {
+            opacity: 0%;
+            background-color: #FFEA79;
+            line-height: 1.25em;
+            border-radius: 100vw;
+        }
+
+        .pin[data-pin=true] {
+            opacity: 100%;
+        }
         }
       }
 .testdiv {
