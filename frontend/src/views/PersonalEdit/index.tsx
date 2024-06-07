@@ -252,7 +252,7 @@ export default function PersonalEdit(props: propsType): ReactElement {
                   ))}
                 </div>
                 <div className='button'>
-                  <button onClick={()=>{}}><p>從電腦裡選擇</p></button>
+                  {/* <button onClick={()=>{}}><p>從電腦裡選擇</p></button> */}
                   <button onClick={()=>setShowWork(false)}><p>大功告成！</p></button>
                 </div>
               </div>

@@ -74,9 +74,10 @@
                 align-items: center;
                 gap: 1rem;
                 img {
-                    height: 2rem;
-                    width: 2rem;
-                    border-radius: 50%
+                    height: 2.5rem;
+                    width: 2.5rem;
+                    border-radius: 50%;
+                    object-fit: cover; 
                 }
             }
             .toolBox {
