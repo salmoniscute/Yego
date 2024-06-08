@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Notification } from "schemas/notification";
 
 export async function get_all_notifications(uid: String) {
     let notifications = [];

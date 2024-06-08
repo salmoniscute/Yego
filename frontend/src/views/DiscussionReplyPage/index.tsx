@@ -6,7 +6,7 @@ import {
     useRef,
     useCallback
 } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./index.scss";
 import { IoSend } from "react-icons/io5";
 import { SlOptions } from "react-icons/sl";
@@ -16,7 +16,7 @@ import userDataContext from "context/userData";
 import { DiscussionTopic, DiscussionTopicReply } from "schemas/discussion";
 import { getDiscussionTopic, postDTReply } from "api/discussion";
 import functionContext from "context/function";
-const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
+// const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 type propsType = Readonly<{
 
@@ -32,8 +32,8 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
 
     const [discussionTopic, setDiscussionTopic] = useState<DiscussionTopic>();
     const [openEditor, setOpenEditor] = useState(false);
-    const [replyContentList, setReplyContentList] = useState(Array());
-    const [showReplyAreaList, setShowReplyAreaList] = useState(Array());
+    const [replyContentList, setReplyContentList] = useState<Array<string>>([]);
+    const [showReplyAreaList, setShowReplyAreaList] = useState<Array<boolean>>([]);
     const [mainReply, setMainReply] = useState("");
     const [showMainReplyArea, setShowMainReplyArea] = useState(false);
     const mainReplyAreaRef = useRef<HTMLDivElement>(null);
@@ -109,7 +109,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
         return `${releaseDate.getFullYear()}年${("0" + (releaseDate.getMonth() + 1)).slice(-2)}月${("0" + releaseDate.getDate()).slice(-2)}日(${weekdays[releaseDate.getDay()]}) ${("0" + releaseDate.getHours()).slice(-2)}:${("0" + releaseDate.getMinutes()).slice(-2)}`;
     };
 
-    const postReply = async (parent_id: number, index: number) => {
+    const postReply = useCallback(async (parent_id: number, index: number) => {
         if (userData) {
             const reply: DiscussionTopicReply = {
                 parent_id: parent_id,
@@ -146,7 +146,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             setReplyContentList(new Array(categorizedReplies[0]?.length || 0).fill(''));
             setShowReplyAreaList(new Array(categorizedReplies[0]?.length || 0).fill(false));
         }
-    };
+    }, [categorizedReplies, mainReply, params.discussionTopicId, replyContentList, userData]);
     return (
         <div id="discussionReplyPage">
             <div className="mainDiscussionTopic">
@@ -169,7 +169,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                 </div>
 
                 <div className="discussionTopicTop">
-                    <img src={discussionTopic?.publisher_avatar} />
+                    <img alt="public avatar" src={discussionTopic?.publisher_avatar} />
                     <h3>{discussionTopic?.publisher}</h3>
                     <p>{setTimeString(discussionTopic?.release_time || "")}</p>
                 </div>
@@ -186,7 +186,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                         categorizedReplies[0].map((data, index) => (
                             <div key={index} className="discussionTopicReply">
                                 <div className="discussionTopicReplyTop">
-                                    <img src={data.publisher_avatar} />
+                                    <img alt="avatar" src={data.publisher_avatar} />
                                     <h3>{data.publisher}</h3>
                                 </div>
                                 <p>{data.content}</p>
@@ -198,7 +198,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                     </div>
                                 </div>
                                 {showReplyAreaList[index] === true && <div className="discussionReplyArea">
-                                    <img src={userData?.avatar} />
+                                    <img alt="avatar" src={userData?.avatar} />
                                     <textarea
                                         placeholder="回覆留言"
                                         value={replyContentList[index]}
@@ -211,7 +211,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
                                 {data.id && categorizedReplies[Number(data.id)] && (categorizedReplies[Number(data.id)].map((data2, index2) => (
                                     <div key={index2} className="replyTheReply">
                                         <div className="replyTheReplyTop">
-                                            <img src={data2.publisher_avatar} />
+                                            <img alt="avatar" src={data2.publisher_avatar} />
                                             <h3>{data2.publisher}</h3>
                                         </div>
                                         <p>{data2.content}</p>
@@ -226,7 +226,7 @@ export default function DiscussionReplyPage(props: propsType): React.ReactElemen
             </div>
 
             {showMainReplyArea && <div className="discussionReplyArea" ref={mainReplyAreaRef}>
-                <img src={userData?.avatar} />
+                <img alt="avatar" src={userData?.avatar} />
                 <textarea
                     placeholder="回覆貼文"
                     value={mainReply}

@@ -11,7 +11,6 @@ import {
 
 import { AssignmentInfo } from "schemas/assignment";
 import { Course } from "schemas/course";
-import { WebAnnouncementInfo } from "schemas/webAnnouncement";
 
 import { getUserCourseList } from "api/course";
 import functionContext from "context/function";
@@ -23,7 +22,6 @@ import PlatformFriendlyArea from "components/PlatformFriendlyArea";
 import "./index.scss";
 
 type propsType = Readonly<{
-    webAnnouncementList: Array<WebAnnouncementInfo>,
     dueAssignment: Array<AssignmentInfo>,
 }>;
 
@@ -35,10 +33,6 @@ export default function MainPage(props: propsType): ReactElement {
     const {
         setLoading
     } = useContext(functionContext);
-    const {
-      webAnnouncementList,
-    //   dueAssignment,
-    } = props;
 
     useEffect(() => {
         setLoading(true);
@@ -47,11 +41,11 @@ export default function MainPage(props: propsType): ReactElement {
         }).finally(() => {
             setLoading(false);
         });
-    }, [setLoading]);
+    }, [setLoading, userData?.uid]);
 
     return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
-             <WebAnnouncement webAnnouncementList={webAnnouncementList} />
+             <WebAnnouncement />
             <div className="currentCourse">
                 <h2>{getText("this_semester_courses")}</h2>
                 <div className="content body">
@@ -81,7 +75,7 @@ export default function MainPage(props: propsType): ReactElement {
                     }
                 </div>
                 <div className="YegogoGreeting">
-                    <img src="/assets/landing_yegogo_greeting.png"/>
+                    <img alt="greeting" src="/assets/landing_yegogo_greeting.png"/>
                 </div>
             </div>
             <PlatformFriendlyArea titleId="platform_friendly_area" />

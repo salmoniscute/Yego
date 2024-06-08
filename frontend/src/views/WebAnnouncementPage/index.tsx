@@ -4,6 +4,7 @@ import './index.scss';
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import axios from 'axios';
 import functionContext from 'context/function';
+import { WebAnnouncementInfo } from 'schemas/webAnnouncement';
 
 interface Document {
   id: number;
@@ -48,7 +49,11 @@ export default function WebAnnouncementPage() {
     const fetchAllIds = async () => {
       try {
         const response = await axios.get('/website/bulletins');
-        const ids = response.data.map((announcement: { id: number }) => announcement.id);
+        const ids = response.data.sort((a: WebAnnouncementInfo, b: WebAnnouncementInfo) => {
+          if (a.pin_to_top && b.pin_to_top)
+            return 0;
+          return a.pin_to_top ? -1 : 1;
+        }).map((announcement: { id: number }) => announcement.id);
         setAllIds(ids);
       } catch (error) {
         console.error('Error fetching all IDs:', error);
@@ -66,7 +71,7 @@ export default function WebAnnouncementPage() {
   const formatDateTime = (dateTimeString: string) => {
     const date = new Date(dateTimeString);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -104,9 +109,9 @@ export default function WebAnnouncementPage() {
             <p className='time'>{formatDateTime(announcementData?.release_time || "")}</p>
           </div>
           <div
-              className="announcement-content"
-              dangerouslySetInnerHTML={{ __html: announcementData?.content || "" }}
-          />     
+            className="announcement-content"
+            dangerouslySetInnerHTML={{ __html: announcementData?.content || "" }}
+          />
           <div className="announcement-documents">
             {announcementData?.files.map((doc, index) => (
               <a key={index} href={`${process.env.REACT_APP_API_END_POINT}/${doc.path}`} className="document-link">
