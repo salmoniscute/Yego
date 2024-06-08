@@ -23,10 +23,15 @@ interface Info {
   files: Document[];
 }
 
+interface IdTitleMap {
+  id: number,
+  title: string,
+}
+
 export default function WebAnnouncementPage() {
   const { id } = useParams<{ id: string }>();
   const [announcementData, setAnnouncementData] = useState<Info>();
-  const [allIds, setAllIds] = useState<number[]>([]);
+  const [allIds, setAllIds] = useState<Array<IdTitleMap>>([]);
 
   const {
     setLoading
@@ -53,7 +58,10 @@ export default function WebAnnouncementPage() {
           if (a.pin_to_top && b.pin_to_top)
             return 0;
           return a.pin_to_top ? -1 : 1;
-        }).map((announcement: { id: number }) => announcement.id);
+        }).map((announcement: WebAnnouncementInfo) => ({
+          id: announcement.id,
+          title: announcement.title,
+        }));
         setAllIds(ids);
       } catch (error) {
         console.error('Error fetching all IDs:', error);
@@ -81,7 +89,7 @@ export default function WebAnnouncementPage() {
 
 
   const currentId = parseInt(id || '', 10);
-  const currentIndex = allIds.indexOf(currentId);
+  const currentIndex = allIds.map(d => d.id).indexOf(currentId);
   const prevId = allIds[currentIndex - 1];
   const nextId = allIds[currentIndex + 1];
 
@@ -123,13 +131,13 @@ export default function WebAnnouncementPage() {
       </div>
       <div className="announcement-navigation">
         {prevId && (
-          <Link to={`/webAnnouncement/${prevId}`}>
-            <AiFillCaretLeft /> 上一篇標題
+          <Link to={`/webAnnouncement/${prevId.id}`}>
+            <AiFillCaretLeft /> {prevId.title}
           </Link>
         )}
         {nextId && (
-          <Link to={`/webAnnouncement/${nextId}`}>
-            下一篇標題 <AiFillCaretRight />
+          <Link to={`/webAnnouncement/${nextId.id}`}>
+            {nextId.title} <AiFillCaretRight />
           </Link>
         )}
       </div>
