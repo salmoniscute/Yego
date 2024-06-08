@@ -1,0 +1,70 @@
+#loadingPage {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    background-color: #8888;
+    opacity: 0%;
+    pointer-events: none;
+    transition: opacity 0.5s;
+
+    .box {
+        height: 15rem;
+        width: 12rem;
+        overflow: hidden;
+        user-select: none;
+        transform: translateY(-3rem);
+        transition: transform 0.5s;
+
+        img {
+            width: 100%;
+            object-fit: contain;
+            animation: iconRotate 3s infinite;
+        }
+
+        .text {
+            height: 3rem;
+            line-height: 3rem;
+            text-align: center;
+            font-size: 1.35rem;
+            color: #444;
+            animation: textOpacity 3s infinite;
+        }
+    }
+
+    @keyframes iconRotate {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes textOpacity {
+        0% {
+            opacity: 30%;
+        }
+
+        50% {
+            opacity: 100%;
+        }
+
+        100% {
+            opacity: 30%;
+        }
+    }
+}
+
+#loadingPage[data-show=true] {
+    opacity: 100%;
+    pointer-events: initial;
+
+    .box {
+        transform: translateY(0);
+    }
+}

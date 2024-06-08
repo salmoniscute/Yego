@@ -42,6 +42,7 @@ import TeamPage from "views/TeamPage";
 import NotificationPage from "views/NotificationPage";
 
 import getTextOrigin from "utils/getText";
+import LoadingPage from "views/LoadingPage";
 
 function Logout(): ReactElement {
     localStorage.removeItem("access_token");
@@ -56,6 +57,7 @@ export default function App(): ReactElement {
     const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
     const [refreshToken , setRefreshToken] = useState<string>(localStorage.getItem("refresh_token")||"");
+    const [showLoading, setShowLoading] = useState<boolean>(false);
 
     const location = useLocation();
 
@@ -72,6 +74,10 @@ export default function App(): ReactElement {
         return getTextOrigin(id, language);
     }, [language]);
 
+    const setLoading = useCallback((show: boolean) => {
+        setShowLoading(show);
+    }, []);
+
     useEffect(() => {
         getDueAssignments().then(data => {
             setDueAssignment(data);
@@ -81,13 +87,15 @@ export default function App(): ReactElement {
     return (
         <userDataContext.Provider value={userData}>
             <functionContext.Provider value={{
-                getText: getText
+                getText: getText,
+                setLoading: setLoading,
             }}>
                 <div id="app">
                     <NavigateBar
                         setLanguage={setLanguage}
                         dueAssignment={dueAssignment}
                     />
+                    <LoadingPage show={showLoading} />
                     <Routes>
                         <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
                         <Route path="/" element={userData === null ? <LandingPage
