@@ -1,6 +1,8 @@
 import {
+    CSSProperties,
     ReactElement,
-    useContext
+    useContext,
+    useRef
 } from "react";
 import { Link } from "react-router-dom";
 
@@ -23,6 +25,8 @@ export default function SideBar(props: propsType): ReactElement {
         currentCourse,
     } = props;
 
+    const contentRef = useRef<HTMLDivElement>(null);
+
     const {
         getText
     } = useContext(functionContext);
@@ -32,8 +36,10 @@ export default function SideBar(props: propsType): ReactElement {
         <input type="checkbox" />
         <div className="body-bold">{getText("sidebar_menu")}</div>
         <div className="ms" />
-        <div className="mask">
-            <div className="content">
+        <div className="mask" style={{
+            "--size": contentRef.current?.clientHeight
+        } as CSSProperties}>
+            <div ref={contentRef} className="content">
                 <div className="personalHomepage">
                     <img alt="avatar" src={userData?.avatar} />
                     <Link to={`/personal/${userData?.uid}`} className="body-bold">{getText("personal_homepage")}</Link>
