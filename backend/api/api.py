@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import Config, Server
 
-from config import HOST, PORT
+from config import HOST, PORT, ROOT_PATH
 
 from .routers import (
     info_router,
@@ -66,7 +66,8 @@ async def api_run():
     config = Config(
         app=app,
         host=HOST,
-        port=PORT
+        port=PORT,
+        root_path=ROOT_PATH
     )
     server = Server(config=config)
 
