@@ -41,7 +41,7 @@ async def create_material_info(
     course_material = await CourseMaterialCrud.get(course_material_id)  
     users = await SelectedCourseCrud.get_by_course_id(course_material[0].course_id)
     for user in users:
-        await NotificationCrud.create(user["uid"], material_info.id, "material_info")
+        await NotificationCrud.create(user["uid"], material_info.id, "material_info", False)
 
     return {"id": material_info.id}
 
@@ -60,7 +60,7 @@ async def update_material_info(
     course_material = await CourseMaterialCrud.get(material_info[0].material_id)  
     users = await SelectedCourseCrud.get_by_course_id(course_material[0].course_id)
     for user in users:
-        await NotificationCrud.create(user["uid"], material_info[0].id, "material_info")
+        await NotificationCrud.create(user["uid"], material_info[0].id, "material_info", True)
 
     return
 
