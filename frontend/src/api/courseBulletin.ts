@@ -33,7 +33,7 @@ export async function getCourseBulletinList(course_id:number) :Promise<Array<Cou
 export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise<CourseBulletin>{
     let url = "/course/bulletin?uid="+courseBulletin.uid+"&course_id="+courseBulletin.course_id;
     try {
-        const response = await axios.post(url,courseBulletin);
+        await axios.post(url,courseBulletin);
     }
     catch(error) {  
         
@@ -46,7 +46,7 @@ export async function postCourseBulletin(courseBulletin:CourseBulletin) :Promise
 export async function deleteCourseBulletin(id:number){
     let url = "/course/bulletin/"+id;
     try {
-        const response = await axios.delete(url,{});
+        await axios.delete(url,{});
     }
     catch(error) {  
         
@@ -56,7 +56,7 @@ export async function deleteCourseBulletin(id:number){
 export async function updateCourseBulletin(courseBulletin:CourseBulletin){
     let url = "/course/bulletin/"+courseBulletin.id;
     try {
-        const response = await axios.put(url,courseBulletin);
+        await axios.put(url,courseBulletin);
     }
     catch(error) {  
         

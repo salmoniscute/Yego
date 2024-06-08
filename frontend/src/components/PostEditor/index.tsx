@@ -1,6 +1,6 @@
 import React, { Component, ReactElement, useState , useContext , useEffect } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
-import { Link ,useParams} from "react-router-dom";
+import ReactQuill from 'react-quill';
+import { useParams} from "react-router-dom";
 import 'react-quill/dist/quill.snow.css';
 import userDataContext from "context/userData";
 import "./index.scss";
@@ -126,7 +126,7 @@ export default function PostEditor(props: propsType): ReactElement {
 
   useEffect(() => {
       if (isEditing){
-        if (type == "discussionTopic"){
+        if (type === "discussionTopic"){
           getDiscussionTopic(Number(params.discussionTopicId) || 0).then( data =>{
             setDiscussionTopic(data);
             if (discussionTopic){
@@ -136,7 +136,7 @@ export default function PostEditor(props: propsType): ReactElement {
           });
         }
       }
-  }, [])
+  }, [discussionTopic, isEditing, params.discussionTopicId, type]);
 
   const handleContentChange = (value:any, delta:any) => {
     setContent(value);
@@ -190,7 +190,7 @@ export default function PostEditor(props: propsType): ReactElement {
     }
     else{
       if (uid){
-        if (type == "discussionTopic" && discussionTopic){
+        if (type === "discussionTopic" && discussionTopic){
           discussionTopic.title = title;
           discussionTopic.content = content;
           await updateDiscussionTopic(discussionTopic);

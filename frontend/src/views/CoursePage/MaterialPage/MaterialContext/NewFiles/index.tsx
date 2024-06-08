@@ -53,6 +53,9 @@ export default function NewFiles(props: propsType): ReactElement {
 
     const { getText } = useContext(functionContext);
     const userData = useContext(userDataContext);
+    const {
+        setLoading
+    } = useContext(functionContext);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === "Escape") {
@@ -176,6 +179,7 @@ export default function NewFiles(props: propsType): ReactElement {
                     className="next caption-bold"
                     onClick={() => {
                         if (userData !== null) {
+                            setLoading(true);
                             createMaterialInfo(
                                 userData.uid,
                                 themeId,
@@ -190,8 +194,16 @@ export default function NewFiles(props: propsType): ReactElement {
                                 updateData().then(newData => {
                                     const materialId = Array.from(newData[selectedTheme].material_infos).pop()?.id;
                                     if (materialId !== undefined)
-                                        uploadFile(materialId, files);
+                                        uploadFile(materialId, files).then(() => {
+                                            updateData();
+                                        }).finally(() => {
+                                            setLoading(false);
+                                        });
+                                }).catch(() => {
+                                    setLoading(false);
                                 });
+                            }).catch(() => {
+                                setLoading(false);
                             });
                         }
                         close();

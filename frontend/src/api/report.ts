@@ -30,7 +30,7 @@ export async function getReport(id : number ):Promise <Report>{
 export async function postReport(report:Report) :Promise<Report | null>{
     let url = "/report?uid="+report.uid;
     try {
-        const response = await axios.post(url,report);
+        await axios.post(url,report);
     }
     catch(error) {  
         

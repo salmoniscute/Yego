@@ -13,14 +13,14 @@ type propsType = Readonly<{
 }>;
 
 export default function NotificationColumn(props: propsType): ReactElement {
-  const {
-    seeAllBtn
-  } = props;
+  // const {
+  //   seeAllBtn
+  // } = props;
   const ctx = useContext(NotiContext);
 
   useEffect(() => {
     ctx.get_list();
-  }, [])
+  }, [ctx.get_list])
   const listRender = ctx.notifications.map((item) =>
       {if(item.have_read === false) return <Notification notification={item} key={item.id} />;
       return null;}

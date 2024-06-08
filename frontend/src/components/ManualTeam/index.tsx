@@ -1,5 +1,4 @@
 import {
-    useEffect,
     useState,
 } from "react";
 import { RxCross2 } from "react-icons/rx";
@@ -42,9 +41,9 @@ export default function ManaulTeam(props:propsType): React.ReactElement {
         newTeamMembers.splice(index, 1); 
         setTeamMembers(newTeamMembers); 
     } ; 
-    const addTeamMember = () => {
-        teamMembers.push();
-    } ; 
+    // const addTeamMember = () => {
+    //     teamMembers.push();
+    // } ; 
     
     return (
         <div id="manualTeam">

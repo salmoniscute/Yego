@@ -18,7 +18,7 @@ export async function get_auto_team_preview(grouping_method: string, number_depe
 export async function cancel(course_id: number) {
   let url = `/grouping/auto/cancel?`;
   try {
-      const response = await axios.delete(url+"course_id="+course_id);
+      await axios.delete(url+"course_id="+course_id);
       console.log("delete success");
   }
   catch {  
@@ -29,7 +29,7 @@ export async function cancel(course_id: number) {
 export async function post_auto(course_id: number) {
   let url = `/grouping/auto?`;
   try {
-      const response = await axios.post(url+"course_id="+course_id);
+      await axios.post(url+"course_id="+course_id);
       console.log("post auto groups success");
   }
   catch {  
@@ -41,7 +41,7 @@ export async function post_team_by_student(grouping_method: string, number_depen
   let url = `/grouping/student?`;
   try {
       console.log(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
-      const response = await axios.post(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
+      await axios.post(url+"grouping_method="+grouping_method+"&number_depend_on_grouping_method="+number_depend_on_grouping_method+"&naming_rule="+naming_rule+"&create_deadline="+create_deadline+"&course_id="+course_id);
       console.log("post empty groups success");
   }
   catch {  
@@ -81,7 +81,7 @@ export async function get_user_group_info(uid: string | null, course_id: number)
 export async function join_group(uid: string | null, course_id: number, group_id: number) {
   let url = `/grouping/group/join?`;
   try {
-      const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id + "&group_id=" + group_id);
+      await axios.put(url + "uid=" + uid + "&course_id=" + course_id + "&group_id=" + group_id);
   }
   catch {  
       console.log("hi");
@@ -91,7 +91,7 @@ export async function join_group(uid: string | null, course_id: number, group_id
 export async function exit_group(uid: string | null, course_id: number) {
   let url = `/grouping/group/exit?`;
   try {
-      const response = await axios.put(url + "uid=" + uid + "&course_id=" + course_id);
+      await axios.put(url + "uid=" + uid + "&course_id=" + course_id);
   }
   catch {  
       console.log("hi");
