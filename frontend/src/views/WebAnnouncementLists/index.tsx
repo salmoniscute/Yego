@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './index.scss';
-import { BsFillHouseFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
@@ -23,21 +22,20 @@ const formatDateTime = (dateTimeString: string) => {
 
 export default function WebAnnouncementList() {
   const [announcementData, setAnnouncementData] = useState<Info[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  
+
   useEffect(() => {
     async function fetchData() {
-        try {
-            const response = await axios.get("/website/bulletins");
-            setAnnouncementData(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+      try {
+        const response = await axios.get("/website/bulletins");
+        setAnnouncementData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
 
     fetchData();
-}, []);
+  }, []);
 
   return (
     <div className="web-announcement-container">
@@ -52,15 +50,15 @@ export default function WebAnnouncementList() {
           <span style={{ width: "20%" }}>發布者</span>
         </div>
         {announcementData.sort((a, b) => {
-                    if (a.pin_to_top && b.pin_to_top)
-                        return 0;
-                    return a.pin_to_top ? -1 : 1;
-                }).map((announcement, index) => (
+          if (a.pin_to_top && b.pin_to_top)
+            return 0;
+          return a.pin_to_top ? -1 : 1;
+        }).map((announcement, index) => (
           <div className="list-item" key={index}>
-            <div className="pin caption-bold" style={{ width: "5%" }}data-pin={announcement.pin_to_top} >{announcement.pin_to_top ? "置頂" : ""}</div>
+            <div className="pin caption-bold" style={{ width: "5%" }} data-pin={announcement.pin_to_top} >{announcement.pin_to_top ? "置頂" : ""}</div>
             <span style={{ width: "45%" }}><Link to={`/webAnnouncement/${announcement.id}`} className="announcement-title">{announcement.title}</Link></span>
             <span style={{ width: "30%" }}>{formatDateTime(announcement.release_time)}</span>
-             <span style={{ width: "20%" }}>{announcement.publisher}</span>
+            <span style={{ width: "20%" }}>{announcement.publisher}</span>
           </div>
         ))}
       </div>

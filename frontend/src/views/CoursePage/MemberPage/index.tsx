@@ -14,6 +14,7 @@ import {
 
 import { OtherUser } from "schemas/otherUser";
 import userDataContext from "context/userData";
+import functionContext from "context/function";
 
 type propsType = Readonly<{
     courseID: number,
@@ -23,7 +24,7 @@ export default function MemberPage(props: propsType): ReactElement {
     const {
         courseID
     } = props;
-    
+
     const tab = ["成員名稱", "學號", "系所", "身份", "組別"];
 
     const [courseMemberList, setCourseMember] = useState<Array<OtherUser>>([]);
@@ -31,12 +32,18 @@ export default function MemberPage(props: propsType): ReactElement {
     const [showMember, setShowMember] = useState<boolean>(false);
 
     const userData = useContext(userDataContext);
+    const {
+        setLoading
+    } = useContext(functionContext);
 
     useEffect(() => {
+        setLoading(true);
         getCourseMemberList(courseID).then(data => {
             setCourseMember(data);
+        }).finally(() => {
+            setLoading(false);
         });
-    }, [])
+    }, [courseID, setLoading]);
 
     return (
         <div id="courseMemberPage">
@@ -63,29 +70,29 @@ export default function MemberPage(props: propsType): ReactElement {
                             setShowMember(true);
                             setSelectedStudent(data)
                         }}>
-                            <img src={data.avatar}/>
+                            <img alt="avatar" src={data.avatar} />
                             {data.name}
                         </p>
                         <p>{data.uid}</p>
                         <p>{data.department}</p>
                         <p>{data.role}</p>
                         <p>{data.group_name}</p>
-                    </div> 
+                    </div>
                 )}
                 <div className="memberWindow" data-show={showMember}>
-                    <div className="closeWindow" onClick={() => {setShowMember(false)}} >
+                    <div className="closeWindow" onClick={() => { setShowMember(false) }} >
                         <span className="material-symbols-outlined">
                             close
                         </span>
                     </div>
-                    <br/>
-    
+                    <br />
+
                     <div className="windowSet">
                         <div className="leftWindow">
                             <div className="selectAvatar">
-                                <img alt="avatar" src={selectedStudent?.avatar}/>
+                                <img alt="avatar" src={selectedStudent?.avatar} />
                             </div>
-                            
+
                             <div className="OtherInfo">
                                 <div className="OtherInfoTag">國家</div>
                                 <div className="OtherInfoContent">{selectedStudent?.country}</div>
@@ -99,20 +106,20 @@ export default function MemberPage(props: propsType): ReactElement {
                                 <div className="OtherInfoContent">{selectedStudent?.uid}</div>
                             </div>
                             <div className="memberMail">{selectedStudent?.email}</div>
-                            <br/>
+                            <br />
                         </div>
                         <div className="rightWindow">
-                            <br/>
+                            <br />
                             <div className="memberName">{selectedStudent?.name}</div>
                             <div className="memberIntro">
                                 <div className="memberIntroTag">自我介紹</div>
                                 <div className="memberIntroContent">
-                                    <p dangerouslySetInnerHTML={{ __html: selectedStudent?.introduction || '' }}/>
+                                    <p dangerouslySetInnerHTML={{ __html: selectedStudent?.introduction || '' }} />
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>                                                       
+                </div>
             </div>
 
         </div>

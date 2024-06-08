@@ -175,7 +175,7 @@ export default function MaterialContext(props: propsType): ReactElement {
         </h2>
         {
             isTeacher && editMode ? <NewMaterial
-                show={currentWindow == 1}
+                show={currentWindow === 1}
                 themeId={displayData.id}
                 closeBeforeCallback={false}
                 close={() => setCurrentWindow(0)}

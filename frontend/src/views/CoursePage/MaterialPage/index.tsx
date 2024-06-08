@@ -1,5 +1,4 @@
 import {
-    CSSProperties,
     ReactElement,
     useCallback,
     useContext,
@@ -18,6 +17,7 @@ import { Material } from "schemas/material";
 import { createMaterial, getMaterials } from "api/courseMaterials";
 import userDataContext from "context/userData";
 import { updateCourseMaterialOrder } from "api/updateOrder";
+import functionContext from "context/function";
 
 type propsType = Readonly<{
     courseID: number
@@ -67,18 +67,23 @@ export default function MaterialPage(props: propsType): ReactElement {
     const params = useParams();
 
     const userData = useContext(userDataContext);
+    const {
+        setLoading
+    } = useContext(functionContext);
     
     const isGroup = useCallback(async () => {
         await get_all_groups_info(Number(params.courseID)).then(data => {
             if(data.length > 0) setshowJoinGroup(true);
         });
-    }, []);
+    }, [params.courseID]);
 
     const updateThemeData = useCallback(async () => {
+        setLoading(true);
         const response = await getMaterials(courseID);
         setOriginThemeData(response);
+        setLoading(false);
         return response;
-    }, []);
+    }, [courseID, setLoading]);
 
     useEffect(() => {
         setThemeData(originThemeData);

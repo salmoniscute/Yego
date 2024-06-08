@@ -98,7 +98,7 @@ export default function PreviewMaterial(props: propsType): ReactElement {
                     }
                 </div>
             </div>
-            <a ref={aRef} />
+            <a ref={aRef} href="/" />
         </div>
     </div>
 };

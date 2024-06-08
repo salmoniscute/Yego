@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './index.scss';
-import { BsFillHouseFill } from "react-icons/bs";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import axios from 'axios';
+import functionContext from 'context/function';
 
 interface Document {
   id: number;
@@ -27,7 +27,13 @@ export default function WebAnnouncementPage() {
   const [announcementData, setAnnouncementData] = useState<Info>();
   const [allIds, setAllIds] = useState<number[]>([]);
 
+  const {
+    setLoading
+  } = useContext(functionContext);
+
   useEffect(() => {
+    setLoading(true);
+
     const fetchAnnouncementData = async () => {
       try {
         const response = await axios.get(`/website/bulletin/${id}`);
@@ -49,9 +55,13 @@ export default function WebAnnouncementPage() {
       }
     };
 
-    fetchAnnouncementData();
-    fetchAllIds();
-  }, [id]);
+    Promise.all([
+      fetchAnnouncementData(),
+      fetchAllIds(),
+    ]).finally(() => {
+      setLoading(false);
+    })
+  }, [id, setLoading]);
 
   const formatDateTime = (dateTimeString: string) => {
     const date = new Date(dateTimeString);
@@ -99,7 +109,7 @@ export default function WebAnnouncementPage() {
           />     
           <div className="announcement-documents">
             {announcementData?.files.map((doc, index) => (
-              <a key={index} href={`http://localhost:8080${doc.path}`} className="document-link">
+              <a key={index} href={`${process.env.REACT_APP_API_END_POINT}/${doc.path}`} className="document-link">
                 {doc.name || `Document ${index + 1}`}
               </a>
             ))}
