@@ -7,6 +7,7 @@ from os.path import isfile
 class Config(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8080
+    root_path: str = ""
 
 
 if isfile("config.json"):
@@ -17,6 +18,7 @@ else:
 
 HOST = config.host
 PORT = config.port
+ROOT_PATH = config.root_path
 
 # Auto update old config
 with open("config.json", "wb") as config_file:
