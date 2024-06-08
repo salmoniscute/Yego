@@ -7,15 +7,17 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    > div.ms {
+
+    >div.ms {
         position: relative;
         height: 1.6rem;
         line-height: 1.6rem;
         width: 1.6rem;
         text-align: center;
     }
-    > div.ms::before,
-    > div.ms::after {
+
+    >div.ms::before,
+    >div.ms::after {
         position: absolute;
         top: 0;
         left: 0;
@@ -27,12 +29,15 @@
         transition: transform 0.3s;
         cursor: pointer;
     }
-    > div.ms::before {
+
+    >div.ms::before {
         content: "menu";
     }
-    > div.ms::after {
+
+    >div.ms::after {
         content: "close";
     }
+
     input {
         display: none;
     }
@@ -45,6 +50,7 @@
         pointer-events: none;
         border-bottom-left-radius: 100%;
         transition: height 0.5s, width 0.5s;
+
         .content {
             position: absolute;
             top: 0;
@@ -58,40 +64,48 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+
             .subTitle {
                 margin-top: 1rem;
             }
-            > div:not(.toolBox) a {
+
+            >div:not(.toolBox) a {
                 color: #000;
                 text-decoration: none;
             }
-            > div:not(.toolBox) a:hover {
+
+            >div:not(.toolBox) a:hover {
                 text-decoration: underline;
             }
+
             .personalHomepage {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 gap: 1rem;
+
                 img {
                     height: 2.5rem;
                     width: 2.5rem;
                     border-radius: 50%;
-                    object-fit: cover; 
+                    object-fit: cover;
                 }
             }
+
             .toolBox {
                 margin-top: 0.5rem;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
                 gap: 0.3rem;
-                > * {
+
+                >* {
                     color: #474141;
                     text-decoration: none;
                     transition: color 0.3s;
                 }
-                > *:hover {
+
+                >*:hover {
                     color: #000;
                     text-decoration: underline;
                 }
@@ -101,12 +115,14 @@
 }
 
 #sideBar:has(input:not(:checked)) {
-    > div.ms::before {
+    >div.ms::before {
         transform: rotate(0deg) scale(1);
     }
-    > div.ms::after {
+
+    >div.ms::after {
         transform: rotate(-90deg) scale(0);
     }
+
     .mask {
         height: 0;
         width: 0;
@@ -114,14 +130,18 @@
 }
 
 #sideBar:has(input:checked) {
-    > div.ms::before {
+    >div.ms::before {
         transform: rotate(90deg) scale(0);
     }
-    > div.ms::after {
+
+    >div.ms::after {
         transform: rotate(0deg) scale(1);
     }
+
     .mask {
-        width: min(calc(80vh - 3.5rem), 45rem);
-        height: min(calc(80vh - 3.5rem), 45rem);
+        // width: min(calc(80vh - 3.5rem), 45rem);
+        // height: min(calc(80vh - 3.5rem), 45rem);
+        width: calc(var(--size) * 1.4px);
+        height: calc(var(--size) * 1.4px);
     }
 }
