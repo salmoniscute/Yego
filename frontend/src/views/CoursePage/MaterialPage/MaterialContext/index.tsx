@@ -216,7 +216,7 @@ export default function MaterialContext(props: propsType): ReactElement {
             >{getText("add_material")}</button> : undefined
         }
         {
-            displayData?.material_infos.filter(v => v.display).map((v, i) => <MaterialBox
+            displayData?.material_infos.map((v, i) => <MaterialBox
                 type="material_info"
                 index={i}
                 material={v}
@@ -229,7 +229,7 @@ export default function MaterialContext(props: propsType): ReactElement {
             />)
         }
         {
-            displayData?.assignments.filter(v => v.display).map((v, i) => <MaterialBox
+            displayData?.assignments.map((v, i) => <MaterialBox
                 type="assignment"
                 index={i}
                 material={v}
