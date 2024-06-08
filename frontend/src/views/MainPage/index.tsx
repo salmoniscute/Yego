@@ -33,17 +33,21 @@ export default function MainPage(props: propsType): ReactElement {
     const { getText } = useContext(functionContext);
     const userData = useContext(userDataContext);
     const {
+        setLoading
+    } = useContext(functionContext);
+    const {
       webAnnouncementList,
-      dueAssignment,
+    //   dueAssignment,
     } = props;
 
     useEffect(() => {
-        
+        setLoading(true);
         getUserCourseList(userData?.uid || "").then(data => {
             setCurrentCourse(data);
+        }).finally(() => {
+            setLoading(false);
         });
-    
-    }, []);
+    }, [setLoading]);
 
     return userData === null ? <Navigate to="/" /> : <div><div id="mainPage">
         <div className="main">
