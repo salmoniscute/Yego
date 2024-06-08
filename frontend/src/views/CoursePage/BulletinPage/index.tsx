@@ -3,7 +3,6 @@ import {
     useState,
     useContext,
     CSSProperties,
-    useRef,
     useCallback
 } from "react";
 import ReactQuill from 'react-quill';
@@ -17,7 +16,7 @@ import { CourseBulletin } from "schemas/courseBulletin";
 import { getCourseBulletinList, postCourseBulletin, deleteCourseBulletin, updateCourseBulletin } from "api/courseBulletin";
 import functionContext from "context/function";
 
-const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
+// const UserIcon = `${process.env.PUBLIC_URL}/assets/testUser.png`;
 
 type propsType = Readonly<{
     courseID: number
@@ -72,7 +71,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                     content: content,
                     publisher: publisher || "",
                 }
-                const result = await postCourseBulletin(courseBulletin);
+                await postCourseBulletin(courseBulletin);
             }
             else { }
         }
@@ -88,12 +87,12 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         setContent("");
         setTitle("");
         handleCourseBulletinList();
-    }, []);
+    }, [content, courseID, editingCB, handleCourseBulletinList, isEditing, title, userData?.name, userData?.uid]);
 
     const deleteBulletin = useCallback(async (id: number) => {
         await deleteCourseBulletin(id);
         handleCourseBulletinList();
-    }, []);
+    }, [handleCourseBulletinList]);
 
     const pinBulletin = useCallback(async (id: number) => {
         const theBulletin = courseBulletinList.find(item => item.id === id);
@@ -104,7 +103,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
             console.error("theBulletin is undefined.");
         }
         handleCourseBulletinList();
-    }, [courseBulletinList]);
+    }, [courseBulletinList, handleCourseBulletinList]);
 
     const editBulletin = useCallback(async (id: number) => {
         const theBulletin = courseBulletinList.find(item => item.id === id);
@@ -123,7 +122,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
         { label: "編輯", action: () => editBulletin(id) },
         { label: "刪除", action: () => deleteBulletin(id) },
         { label: isPinned ? "取消置頂" : "置頂", action: () => pinBulletin(id) }
-    ], []);
+    ], [deleteBulletin, editBulletin, pinBulletin]);
 
     const setTimeString = useCallback((release_time: string): string => {
         const releaseDate = new Date(release_time);
@@ -138,8 +137,8 @@ export default function BulletinPage(props: propsType): React.ReactElement {
 
     return (
         <div id="courseBulletinPage">
-            {userData?.role == "student" && <p>課程公告</p>}
-            {userData?.role == "teacher" && (<>
+            {userData?.role === "student" && <p>課程公告</p>}
+            {userData?.role === "teacher" && (<>
                 <textarea
                     placeholder="輸入公告標題"
                     value={title}
@@ -159,11 +158,11 @@ export default function BulletinPage(props: propsType): React.ReactElement {
             </>)
             }
             <div className="yegogo">
-                <img src="/assets/Yegogo2.png" />
+                <img alt="Yegogo2" src="/assets/Yegogo2.png" />
                 <div>今天也辛苦了！</div>
             </div>
 
-            {courseBulletinList.length == 0 && <p>尚無公告</p>}
+            {courseBulletinList.length === 0 && <p>尚無公告</p>}
             <div className="courseBulletin">
                 {
                     courseBulletinList.map((data, i) =>
@@ -171,7 +170,7 @@ export default function BulletinPage(props: propsType): React.ReactElement {
                             <div className="cbContent">
                                 <div>
                                     {data.pin_to_top === true && <div className="cbPin">置頂</div>}
-                                    <img src={data.publisher_avatar} />
+                                    <img alt="avatar" src={data.publisher_avatar} />
                                     <p className="cbAuther">{data.publisher}</p>
                                     <p className="cbTime">{setTimeString(data.release_time || "")}</p>
                                 </div>

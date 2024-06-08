@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Material } from "schemas/material";
 
 export async function getMaterials(courseId: number): Promise<Array<Material>> {

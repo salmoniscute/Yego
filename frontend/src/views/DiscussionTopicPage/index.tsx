@@ -21,8 +21,8 @@ type propsType = Readonly<{
 
 export default function DiscussionTopicPage(props: propsType): ReactElement {
 
-  const {
-  } = props;
+  // const {
+  // } = props;
 
   const params = useParams();
 
@@ -66,12 +66,12 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
   const handleDiscussionTopicList = useCallback(async () => {
     const data = await getDiscussionTopicList(Number(params.discussionId) || 0, userData ? userData.uid : null)
     resortList(data, arrow);
-  }, []);
+  }, [arrow, resortList, params.discussionId, userData]);
 
   const Resort = useCallback(() => {
     resortList(discussionTopicList, !arrow);
     setArrow(!arrow);
-  }, []);
+  }, [arrow, discussionTopicList, resortList]);
 
   const setTimeString = useCallback((release_time: string): string => {
     const releaseDate = new Date(release_time);
@@ -85,7 +85,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
       else await cancel_subscription(userData.uid, data.id);
       handleDiscussionTopicList();
     }
-  }, [handleDiscussionTopicList]);
+  }, [handleDiscussionTopicList, userData]);
 
   useEffect(() => {
     setLoading(true);
@@ -99,7 +99,7 @@ export default function DiscussionTopicPage(props: propsType): ReactElement {
     ]).finally(() => {
       setLoading(false)
     })
-  }, [handleDiscussionTopicList, setLoading]);
+  }, [handleDiscussionTopicList, setLoading, params.discussionId]);
 
   return <div id="discussionTopicPage">
     <div className="header">

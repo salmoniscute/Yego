@@ -5,7 +5,7 @@ import {
     useEffect,
     useContext
 } from "react";
-import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import userDataContext from "context/userData";
 import PostEditor from "components/PostEditor";
 
@@ -18,7 +18,6 @@ import { Discussion } from "schemas/discussion";
 import { getDiscussionList } from "api/discussion";
 
 import { create_subscription, cancel_subscription } from "api/subscription";
-import { cancel } from "api/group";
 import functionContext from "context/function";
 
 type propsType = Readonly<{
@@ -51,7 +50,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
             setDiscussion(data);
             console.log(data);
         }).catch(error => {
-            if (error.response && error.response.status == 404) {
+            if (error.response && error.response.status === 404) {
 
             }
         }).finally(() => {
@@ -65,7 +64,7 @@ export default function DiscussionPage(props: propsType): ReactElement {
             else await cancel_subscription(userData.uid, data.id);
             handleDiscussionList();
         }
-    }, []);
+    }, [handleDiscussionList, userData]);
 
     useEffect(() => {
         handleDiscussionList();
@@ -77,14 +76,14 @@ export default function DiscussionPage(props: propsType): ReactElement {
                 <button onClick={Open}><FaPen /><span>新增討論區</span></button>
             </div>}
             <div className="yegogo">
-                <img src="/assets/Yegogo2.png" />
+                <img alt="Yegoo" src="/assets/Yegogo2.png" />
                 <div>看起來討論的很熱烈！</div>
             </div>
             <div className="discussion">
                 <div className="discussionTab">
                     <p className="discussionTitle">標題</p>
                     <p className="discussionDiscription">說明</p>
-                    <p >追蹤回覆</p>
+                    <p>追蹤回覆</p>
                 </div>
                 {
                     discussionList.map((data, i) =>

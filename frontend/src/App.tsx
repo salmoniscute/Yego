@@ -14,9 +14,8 @@ import {
 } from "react-router-dom";
 
 import { AssignmentInfo } from "schemas/assignment";
-import { Course } from "schemas/course";
+// import { Course } from "schemas/course";
 import { User } from "./schemas/user";
-import { WebAnnouncementInfo } from "./schemas/webAnnouncement";
 
 import functionContext from "context/function";
 import userDataContext from "./context/userData";
@@ -53,8 +52,7 @@ function Logout(): ReactElement {
 
 export default function App(): ReactElement {
     const [language, setLanguage] = useState<string>(localStorage.getItem("local") || "zh_Hant");
-    const [webAnnouncementList, setWebAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
-    const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
+    // const [pastCourse, setPastCourse] = useState<Array<Course>>([]);
     const [dueAssignment, setDueAssignment] = useState<Array<AssignmentInfo>>([]);
     const [refreshToken , setRefreshToken] = useState<string>(localStorage.getItem("refresh_token")||"");
     const [showLoading, setShowLoading] = useState<boolean>(false);
@@ -67,8 +65,10 @@ export default function App(): ReactElement {
             return token === null ? null : jwtDecode(token) as User; 
         }
         catch { }
+        console.debug(refreshToken);
+        console.debug(location.pathname);
         return null;
-    }, [location.pathname,refreshToken]);
+    }, [location.pathname, refreshToken]);
 
     const getText = useCallback((id: string) => {
         return getTextOrigin(id, language);
@@ -97,11 +97,8 @@ export default function App(): ReactElement {
                     />
                     <LoadingPage show={showLoading} />
                     <Routes>
-                        <Route path="/landing" element={<LandingPage webAnnouncementList={webAnnouncementList} />} />
-                        <Route path="/" element={userData === null ? <LandingPage
-                            webAnnouncementList={webAnnouncementList}
-                        /> : <MainPage
-                            webAnnouncementList={webAnnouncementList}
+                        <Route path="/landing" element={<LandingPage />} />
+                        <Route path="/" element={userData === null ? <LandingPage /> : <MainPage
                             dueAssignment={dueAssignment}
                         />} />
                         <Route path="/login" element={userData === null ? <LoginPage setRefreshToken={setRefreshToken}/> : <Navigate to="/" />} />

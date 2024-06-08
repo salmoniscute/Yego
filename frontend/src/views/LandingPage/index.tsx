@@ -1,26 +1,19 @@
 import { ReactElement } from "react";
 
-import { WebAnnouncementInfo } from "schemas/webAnnouncement";
-
 import WebAnnouncement from "components/WebAnnouncement";
 import PlatformFriendlyArea from "components/PlatformFriendlyArea";
 
 import "./index.scss";
 
-type propsType = Readonly<{
-    webAnnouncementList: Array<WebAnnouncementInfo>
-}>;
-
-export default function landing(props: propsType): ReactElement {
-    const { webAnnouncementList } = props;
+export default function landing(): ReactElement {
     return (
         <div id="landPage">
             <div className="Content">
                 <div className="KeyImage">
-                    <img src="/assets/landing_image.png"/>
+                    <img alt="landing" src="/assets/landing_image.png" />
                 </div>
                 <div className="slogan">
-                    <img src="/assets/landing_slogan.png"/>
+                    <img alt="landing" src="/assets/landing_slogan.png" />
                 </div>
                 <div className="identity">
                     <div className="IDoption">
@@ -49,10 +42,10 @@ export default function landing(props: propsType): ReactElement {
                     </div>
                 </div>
                 <div className="YegogoGreeting">
-                    <img src="/assets/landing_yegogo_greeting.png"/>
+                    <img alt="greeting" src="/assets/landing_yegogo_greeting.png" />
                 </div>
                 <div className="WebAnnoList">
-                    <WebAnnouncement webAnnouncementList={webAnnouncementList} />
+                    <WebAnnouncement />
                 </div>
 
                 <div className="platformFriendlyArea">

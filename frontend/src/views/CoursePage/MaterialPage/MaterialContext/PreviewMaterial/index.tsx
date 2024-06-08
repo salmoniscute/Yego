@@ -51,7 +51,7 @@ export default function PreviewMaterial(props: propsType): ReactElement {
     }}>
         <div className="box">
             <button className="close ms" onClick={() => close()}>close</button>
-            <img src={`${process.env.PUBLIC_URL}/assets/Yegogo.png`} />
+            <img alt="yego" src={`${process.env.PUBLIC_URL}/assets/Yegogo.png`} />
             <div className="title body-bold">{displayData?.title}</div>
             <div className="description row">
                 <div className="subtitle">
@@ -84,7 +84,7 @@ export default function PreviewMaterial(props: propsType): ReactElement {
                 <div className="rowContext">
                     {
                         displayData?.files.length !== 0 ? displayData?.files.map((v, i) => {
-                            const fileName = v.path.match(/[^\/]+$/)?.[0];
+                            const fileName = v.path.match(/[^/]+$/)?.[0];
                             if (fileName === undefined)
                                 return undefined;
 
@@ -98,7 +98,7 @@ export default function PreviewMaterial(props: propsType): ReactElement {
                     }
                 </div>
             </div>
-            <a ref={aRef} href="/" />
+            <a ref={aRef} href="/" >{}</a>
         </div>
     </div>
 };

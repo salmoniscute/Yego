@@ -8,16 +8,12 @@ import functionContext from "context/function";
 
 import "./index.scss";
 
-type propsType = Readonly<{
-    webAnnouncementList?: Array<WebAnnouncementInfo>,
-}>;
-
 function timestampToString(timestamp: string): string {
     let date = new Date(timestamp);
     return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 }
 
-export default function WebAnnouncement(props: propsType): ReactElement {
+export default function WebAnnouncement(): ReactElement {
     const { getText } = useContext(functionContext);
     const [announcementList, setAnnouncementList] = useState<Array<WebAnnouncementInfo>>([]);
 
