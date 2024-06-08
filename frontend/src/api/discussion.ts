@@ -32,7 +32,7 @@ export async function getDiscussion(id:number) : Promise <Discussion>{
 export async function postDiscussion(discussion:Discussion):Promise<Discussion | null>{
     let url = "/discussion?uid="+discussion.uid+"&course_id="+discussion.course_id;
     try {
-        const response = await axios.post(url,discussion);
+        await axios.post(url,discussion);
     }
     catch(error) {  
         
@@ -69,7 +69,7 @@ export async function getDiscussionTopic(id:number) : Promise <DiscussionTopic>{
 export async function postDiscussionTopic(discussionTopic : DiscussionTopic):Promise<DiscussionTopic | null>{
     let url = "/discussion_topic?uid="+discussionTopic.uid+"&discussion_id="+discussionTopic.discussion_id;
     try {
-        const response = await axios.post(url,discussionTopic);
+        await axios.post(url,discussionTopic);
     }
     catch(error) {  
         

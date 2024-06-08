@@ -1,6 +1,5 @@
 
 import {
-  useEffect,
   useState,
 } from "react";
 import axios from 'axios';
@@ -78,7 +77,6 @@ export default function CourseBulletinEditor(props: propsType) : React.ReactElem
 
   const {
       submitBulletin,
-      imageUpload
   } = props;
   const [image, setImage] = useState<File | null>(null);
 
@@ -90,23 +88,23 @@ export default function CourseBulletinEditor(props: propsType) : React.ReactElem
     }
   };
 
-  const handleUpload = async() => {
-    if (!image) {
-      alert("Please select an image.");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("files", image);
-    try {
-      const response = await axios.post('http://localhost:8080/api/file?component_id=1', formData, {
-      });
+  // const handleUpload = async() => {
+  //   if (!image) {
+  //     alert("Please select an image.");
+  //     return;
+  //   }
+  //   const formData = new FormData();
+  //   formData.append("files", image);
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/api/file?component_id=1', formData, {
+  //     });
 
-      console.log('Image uploaded successfully:', response.data);
-    } catch (error) {
-        console.error('Error uploading the image:', error);
-    }
+  //     console.log('Image uploaded successfully:', response.data);
+  //   } catch (error) {
+  //       console.error('Error uploading the image:', error);
+  //   }
     
-  };
+  // };
 
   return (
     <div id="toolbar">

@@ -8,19 +8,19 @@ type propsType = Readonly<{
 }>;
 
 export default function NotificationDisplayer(props: propsType): ReactElement {
-  const {
-    id
-  } = props;
+  // const {
+  //   id
+  // } = props;
   const ctx = useContext(NotiContext);
   const moment = require('moment-timezone');
   const [formattedDate, setformattedDate] = useState<String>("");
 
   useEffect(() => {
-    if(ctx.currNoti.release_time != ""){
+    if(ctx.currNoti.release_time !== ""){
       const dateConvert = moment(ctx.currNoti.release_time);
       setformattedDate(dateConvert.format("YYYY-MM-DD hh:mm"));
     }
-  }, [ctx.currNoti]);
+  }, [ctx.currNoti, moment]);
 
   useEffect(() => {
     if (ctx.notifications.length) { 
@@ -28,7 +28,7 @@ export default function NotificationDisplayer(props: propsType): ReactElement {
         if(ctx.notifications[i].id === props.id) ctx.set_curr_noti(ctx.notifications[i]);
       }
     }
-  }, [props.id, ctx.notifications]); 
+  }, [props.id, ctx]); 
 
   return (
     <div id="notificationDisplayer">

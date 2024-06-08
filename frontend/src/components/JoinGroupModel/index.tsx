@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -20,7 +21,6 @@ type propsType = Readonly<{
 export default function JoinGroupModel(props:propsType): React.ReactElement {
   const {
       close,
-      course_id
   } = props;
 
   const [groups, setgroups] = useState<Group[]>([]);
@@ -28,37 +28,35 @@ export default function JoinGroupModel(props:propsType): React.ReactElement {
   const [listRender, setlistRender] = useState<JSX.Element[]>();
   const userData = useContext(userDataContext);
 
-  const showGroups = async () => {
-    await get_all_groups_info(props.course_id).then(data => {
-      if(data) setgroups(data);
-    });
+  const showGroups = useCallback(async () => {
+    const data = await get_all_groups_info(props.course_id)
+    if(data) setgroups(data);
     console.log(groups);
-  }
+  }, []);
 
-  const get_group = async () => {
-    await get_user_group_info(userData ? userData.uid : null, props.course_id).then(data => {
-      if(data == null) setGroup("");
-      else setGroup(data);
-      console.log(group);
-    });
-  }
+  const get_group = useCallback(async () => {
+    const data = await get_user_group_info(userData ? userData.uid : null, props.course_id)
+    if(data == null) setGroup("");
+    else setGroup(data);
+    console.log(group);
+  }, []);
 
-  const exit = async () => {
+  const exit = useCallback(async () => {
     await exit_group(userData ? userData.uid : null, props.course_id);
     get_group();
     showGroups();
-  }
+  }, [get_group, showGroups]);
 
-  const join = async (data: Group) => {
+  const join = useCallback(async (data: Group) => {
     await join_group(userData ? userData.uid : null, props.course_id, data.id);
     get_group();
     showGroups();
-  }
+  }, [get_group, showGroups]);
 
   useEffect(() => {
     showGroups();
     get_group();
-  }, []);
+  }, [showGroups, get_group]);
 
   useEffect(() => {
     if (groups.length > 0) {
@@ -77,7 +75,7 @@ export default function JoinGroupModel(props:propsType): React.ReactElement {
       ));
       setlistRender(renderedList);
     }
-  }, [groups]);
+  }, [groups, exit, get_group]);
 
   return (
     <div id="joinGroupModel">
